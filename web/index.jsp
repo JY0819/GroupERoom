@@ -25,14 +25,6 @@ body {
 	text-align: center
 }
 
-/* .layer .content {
-	font-family: "Roboto", sans-serif;
-	font-weight: bold;
-	display: inline-block;
-	vertical-align: middle;
-	color: white;
-	font-size: 2.5em;
-} */
 i {
 	color: #FFF;
 	vertical-align: middle;
