@@ -16,27 +16,36 @@
 <title>GroupERoom</title>
 </head>
 <body>
-
-	<div id="sidemenu" class="sidebar">
-		<a href="#" class="closebtn" onclick='closeNav()'> <i
-			class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>
-		</a> <a href="#">회원정보</a> <a href="#">메모</a>
-	</div>
-
-	<nav>
-		<div class="fixedmenu">
-			<ul>
-				<span class="openside" onclick="openNav()"> <i
-					class="fas fa-bars"></i></span>
-				<li>Approve</li>
-				<li>Board</li>
-				<li>Schedule</li>
-				<li>MyPage</li>
-			</ul>
+	<header>
+		<div id="sidemenu" class="sidebar">
+			<a href="#" class="closebtn" onclick='closeNav()'> <i
+				class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>
+			</a> <a href="#">회원정보</a> <a href="#">메모</a>
 		</div>
-	</nav>
 
+		<nav class="navigation">
+			<div>
+				<ul>
+					<span class="openside" onclick="openNav()"> <i
+						class="fas fa-bars"></i></span>
+					<li>Approve</li>
+					<li>Board</li>
+					<li>Schedule</li>
+					<li>MyPage</li>
+					<span class="icon_main"><i class="far fa-user fa-2x"></i> <i
+						class="fas fa-chevron-down"></i></span>
+				</ul>
+			</div>
+		</nav>
+	</header>
 	<div class="mainwrapper"></div>
+
+	<!-- <footer>
+		<div>
+			<img src="https://www.sciencemag.org/sites/default/files/styles/inline__450w__no_aspect/public/bird_16x9_3.jpg?itok=JTzBFet1" width="100%" height="3000px;">
+		</div>
+	</footer> -->
+
 </body>
 
 <script>
@@ -46,31 +55,6 @@
 	function closeNav() {
 		document.getElementById('sidemenu').style.width = '0';
 	}
-	
-	
-	$(document).ready(function(){
-		 
-	    var topBar = $(".fixedmenu").offset();
-	 
-	    $(window).scroll(function(){
-	        
-	        var docScrollY = $(document).scrollTop()
-	        var barThis = $(".fixedmenu")
-	        var fixNext = $(".mainwrapper")
-	 
-	        if( docScrollY > topBar.top ) {
-	            barThis.addClass("nav_fix");
-	            fixNext.addClass("pd_top_80");
-	        }else{
-	            barThis.removeClass("nav_fix");
-	            fixNext.removeClass("pd_top_80");
-	        }
-	 
-	    });
-	 
-	})
-
-
 </script>
 
 

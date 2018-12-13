@@ -1,36 +1,23 @@
 @charset "UTF-8";
-/* 네비바 고정 ㅅㅂ */
-.pd_top_80 {
-	padding-top: 80px;
+
+body {
+	margin-top: 0;
+	margin-left: 0;
 }
 
-.fixedmenu {
-	height: 80px;
-	line-height: 80px;
-}
-
-.mainwrapper {
-	height: 1500px;
-	text-align: center;
-}
-
-.nav_fix {
+.navigation {
 	position: fixed;
-	top: 0;
-	left: 0;
+	height: 75px;
 	width: 100%;
+	color: #FFF;
+	height: 70px;
+	font-size: 1.5em;
+	line-height: 0;
 }
 
 /* 상단 네비바 style */
 nav {
 	background: #205181;
-	color: #FFF;
-	height: 70px;
-	font-size: 1.5em;
-	line-height: 60px;
-	list-style: none;
-	margin: 0;
-	padding: 0;
 }
 
 nav ul li {
@@ -41,7 +28,16 @@ nav ul li {
 }
 
 nav ul li:first-child {
-	padding: 0 0 0 55px;
+	margin: 0 100px 0 0;
+}
+
+.icon_main {
+	float: right;
+	padding-right: 20px;
+}
+
+.fa-user {
+	padding-right: 15px;
 }
 
 nav ul li:hover {
@@ -63,11 +59,11 @@ i {
 	background-color: #205181;
 	overflow-x: hidden;
 	transition: 0.5s ease-in-out;
-	padding-top: 60px;
+	padding-top: 60px !important;
 }
 
 .sidebar a {
-	padding: 8px 8px 8px 32px;
+	padding: 8px 8px 8px 32px !important;
 	text-decoration: none;
 	font-size: 25px;
 	color: #fff;
@@ -106,4 +102,8 @@ i {
 	.sidebar a {
 		font-size: 18px;
 	}
+}
+
+.mainwrapper {
+	height: 1500px;
 }
