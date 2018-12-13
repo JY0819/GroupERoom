@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+nav {
+	background: #205181;
+	color: #FFF;
+	height: 45px;
+	font-size: 1.5em;
+}
+
+nav ul li {
+	display: inline-block;
+	position: relative;
+	padding: 0 10px 0 10px;
+	vertical-align: middle;
+}
+
+nav ul li:first-child {
+	padding: 0 0 0 55px;
+}
+
+nav ul li:hover {
+	color: #f5f5dc;
+}
+
+i {
+	vertical-align: middle;
+}
