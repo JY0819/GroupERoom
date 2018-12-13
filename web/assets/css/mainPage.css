@@ -5,6 +5,7 @@ nav {
 	color: #FFF;
 	height: 45px;
 	font-size: 1.5em;
+	top: fixed;
 }
 
 nav ul li {
