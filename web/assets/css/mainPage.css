@@ -1,17 +1,18 @@
 @charset "UTF-8";
 
+/* 상단 네비바 style */
 nav {
 	background: #205181;
 	color: #FFF;
-	height: 45px;
+	height: 70px;
 	font-size: 1.5em;
-	top: fixed;
+	line-height: 60px;
 }
 
 nav ul li {
 	display: inline-block;
 	position: relative;
-	padding: 0 10px 0 10px;
+	padding: 0 20px 0 20px;
 	vertical-align: middle;
 }
 
@@ -26,3 +27,60 @@ nav ul li:hover {
 i {
 	vertical-align: middle;
 }
+
+/* 사이드 바 style */
+.sidebar {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0px;
+	left: 0;
+	background-color: #205181;
+	overflow-x: hidden;
+	transition: 0.5s ease-in-out;
+	padding-top: 60px;
+}
+
+.sidebar a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #fff;
+	display: block;
+	transition: 0.2s ease-in-out;
+}
+
+.closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px !important;
+	margin-left: 50px;
+}
+
+.openside:hover {
+	color: rgb(0, 154, 200);
+	transition: 0.5s ease-in-out;
+}
+
+.openside {
+	font-size: 25px;
+	cursor: pointer;
+	transition: 0.5s ease-in-out;
+}
+
+.openside>i {
+	font-size: 30px;
+}
+
+/* 미디어쿼리 적용 */
+@media screen and (max-height:450px) {
+	.sidebar {
+		padding-top: 15px;
+	}
+	.sidebar a {
+		font-size: 18px;
+	}
+}
+
