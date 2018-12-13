@@ -5,6 +5,19 @@ body {
 	margin-left: 0;
 }
 
+header, footer {
+	position: fixed;
+}
+
+footer {
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #F7F2E0;
+	color: #205181;
+	text-align: center;
+}
+/* 상단 네비바 style */
 .navigation {
 	position: fixed;
 	height: 75px;
@@ -13,10 +26,6 @@ body {
 	height: 70px;
 	font-size: 1.5em;
 	line-height: 0;
-}
-
-/* 상단 네비바 style */
-nav {
 	background: #205181;
 }
 
@@ -34,6 +43,7 @@ nav ul li:first-child {
 .icon_main {
 	float: right;
 	padding-right: 20px;
+	padding-bottom: 10px;
 }
 
 .fa-user {
@@ -41,7 +51,8 @@ nav ul li:first-child {
 }
 
 nav ul li:hover {
-	color: #f5f5dc;
+	color: #F7F2E0;
+	cursor: pointer;
 }
 
 i {
@@ -59,7 +70,7 @@ i {
 	background-color: #205181;
 	overflow-x: hidden;
 	transition: 0.5s ease-in-out;
-	padding-top: 60px !important;
+	padding-top: 60px !important; 
 }
 
 .sidebar a {
