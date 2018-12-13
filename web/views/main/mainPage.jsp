@@ -17,43 +17,49 @@
 </head>
 <body>
 	<header>
-		<div id="sidemenu" class="sidebar">
-			<a href="#" class="closebtn" onclick='closeNav()'> <i
-				class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>
-			</a> <a href="#">회원정보</a> <a href="#">메모</a>
-		</div>
-
 		<nav class="navigation">
 			<div>
 				<ul>
+					<i class="fa fa-home"></i>
 					<span class="openside" onclick="openNav()"> <i
 						class="fas fa-bars"></i></span>
 					<li>Approve</li>
 					<li>Board</li>
 					<li>Schedule</li>
 					<li>MyPage</li>
-					<span class="icon_main"><i class="far fa-user fa-2x"></i> <i
-						class="fas fa-chevron-down"></i></span>
 				</ul>
+				<div class="icon_main">
+					<i class="far fa-user fa-2x"></i> <i class="fas fa-chevron-down"></i>
+				</div>
 			</div>
 		</nav>
 	</header>
+
+	<div id="sidemenu" class="sidebar">
+		<a href="#" class="closebtn" onclick='closeNav()'> <i
+			class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>
+		</a> <a href="#">회원정보</a> <a href="#">메모</a>
+	</div>
+
+
 	<div class="mainwrapper"></div>
 
-	<!-- <footer>
+	<footer>
 		<div>
-			<img src="https://www.sciencemag.org/sites/default/files/styles/inline__450w__no_aspect/public/bird_16x9_3.jpg?itok=JTzBFet1" width="100%" height="3000px;">
+			<p>Copyright 2018.GroupERoom All Rights Reserved</p>
 		</div>
-	</footer> -->
+	</footer>
 
 </body>
 
 <script>
 	function openNav() {
 		document.getElementById('sidemenu').style.width = '300px';
+// 		document.getElementById('sidemenu').style.display = "block";
 	}
 	function closeNav() {
 		document.getElementById('sidemenu').style.width = '0';
+// 		document.getElementById('sidemenu').style.display = "none";
 	}
 </script>
 
