@@ -1,4 +1,25 @@
 @charset "UTF-8";
+/* 네비바 고정 ㅅㅂ */
+.pd_top_80 {
+	padding-top: 80px;
+}
+
+.fixedmenu {
+	height: 80px;
+	line-height: 80px;
+}
+
+.mainwrapper {
+	height: 1500px;
+	text-align: center;
+}
+
+.nav_fix {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
 
 /* 상단 네비바 style */
 nav {
@@ -7,6 +28,9 @@ nav {
 	height: 70px;
 	font-size: 1.5em;
 	line-height: 60px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 nav ul li {
@@ -83,4 +107,3 @@ i {
 		font-size: 18px;
 	}
 }
-
