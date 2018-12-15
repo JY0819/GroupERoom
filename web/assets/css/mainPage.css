@@ -20,31 +20,47 @@ footer {
 /* 상단 네비바 style */
 .navigation {
 	position: fixed;
-	height: 75px;
 	width: 100%;
-	color: #FFF;
 	height: 70px;
+	color: #FFF;
 	font-size: 1.5em;
 	line-height: 0;
 	background: #205181;
 }
 
-nav ul li {
+.navigation .nav-left {
+	float: left;
+	width: 70%;
+	padding: 15px;
+}
+
+.navigation .nav-left *{
+	margin-right: 10px;
+}
+
+.navigation .nav-right {
+	float: right;
+    width: 25%;
+    text-align: right;
+    padding: 10px;
+}
+
+/* 
+.navigation ul{
+	display: inline-block;
+}
+.navigation nav ul li {
 	display: inline-block;
 	position: relative;
 	padding: 0 20px 0 20px;
 	vertical-align: middle;
 }
 
-nav ul li:first-child {
+.navigation nav ul li:first-child {
 	margin: 0 100px 0 0;
 }
+ */
 
-.icon_main {
-	float: right;
-	padding-right: 20px;
-	padding-bottom: 10px;
-}
 
 .fa-user {
 	padding-right: 15px;
@@ -70,7 +86,7 @@ i {
 	background-color: #205181;
 	overflow-x: hidden;
 	transition: 0.5s ease-in-out;
-	padding-top: 60px !important; 
+	padding-top: 60px !important;
 }
 
 .sidebar a {
@@ -80,6 +96,7 @@ i {
 	color: #fff;
 	display: block;
 	transition: 0.2s ease-in-out;
+	/* 	width: 300px !important; */
 }
 
 .closebtn {
