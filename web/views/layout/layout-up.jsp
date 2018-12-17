@@ -9,11 +9,26 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	
 	<style type="text/css">
-		header{
+		header {
 			    height: 70px;
 			    width: 100%;
 			    position: absolute;
 			    top: 0;
+		}
+		.content {
+			margin-top: 69px;
+		}
+		.content-left {
+	        border-right: 1px solid #bbbbbb;
+		    height: 100%;
+		    width: 20%;
+		    position: fixed;
+		    float: left;
+		}
+		.content-right {
+		    min-height: 100%;
+		    width: 80%;
+		    float: right;
 		}
 	</style>
 	

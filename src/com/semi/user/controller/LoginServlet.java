@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       //로그인 여부 처리하기
       String page = "";
-      page = "views/main/mainPage.jsp";
+      page = "views/common/mainPage.jsp";
       
       RequestDispatcher view = request.getRequestDispatcher(page);
       view.forward(request, response);

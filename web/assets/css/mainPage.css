@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
 body {
-	margin-top: 0;
-	margin-left: 0;
+	margin: 0;
 }
 
 header, footer {
@@ -17,11 +16,11 @@ footer {
 	color: #205181;
 	text-align: center;
 }
+
 /* 상단 네비바 style */
 .navigation {
 	position: fixed;
 	width: 100%;
-	height: 70px;
 	color: #FFF;
 	font-size: 1.5em;
 	line-height: 0;
@@ -34,33 +33,21 @@ footer {
 	padding: 15px;
 }
 
-.navigation .nav-left *{
+.navigation .nav-left * {
 	margin-right: 10px;
+	text-decoration: none;
 }
+
+ .navigation a:visited {
+	color: #ffb900;
+} 
 
 .navigation .nav-right {
 	float: right;
-    width: 25%;
-    text-align: right;
-    padding: 10px;
+	width: 25%;
+	text-align: right;
+	padding: 10px;
 }
-
-/* 
-.navigation ul{
-	display: inline-block;
-}
-.navigation nav ul li {
-	display: inline-block;
-	position: relative;
-	padding: 0 20px 0 20px;
-	vertical-align: middle;
-}
-
-.navigation nav ul li:first-child {
-	margin: 0 100px 0 0;
-}
- */
-
 
 .fa-user {
 	padding-right: 15px;
@@ -130,8 +117,4 @@ i {
 	.sidebar a {
 		font-size: 18px;
 	}
-}
-
-.mainwrapper {
-	height: 1500px;
 }

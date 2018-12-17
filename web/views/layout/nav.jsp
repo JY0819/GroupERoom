@@ -22,6 +22,7 @@
 		<span><a>Board</a></span>
 		<span><a>Schedule</a></span>
 		<span><a>MyPage</a></span>
+		<span><a href="<%=request.getContextPath()%>/admin">Admin</a></span>
 		
 		
 	</div>
