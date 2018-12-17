@@ -175,41 +175,50 @@
 			<div class="scheduleBtn" id="closeBtn">닫기</div>
 		</div>
 		<div class="popUpSchedule" id="addSchedule" align="center"> <%-- 일정 추가 div --%>
-			<div class="scheduleDay" id="addScheduleDay">
-				<input type="text" placeholder="추가할 일정 입력">
+			<div class="scheduleDay" id="addScheduleDay"></div>
+			<div class="message" id="addMessage">
+				<select>
+					<option value="my">내 일정</option>
+					<option value="team">팀 일정</option>
+				</select>
+				<input type="text" size="13" maxlength="25" placeholder="추가할 일정 입력">
 			</div>
 			<div class="scheduleBtn" id="saveAddBtn">추가</div>
 			<div class="scheduleBtn" id="closeAddBtn">닫기</div>
 		</div>
 		<div class="popUpSchedule" id="modSchedule" align="center"> <%-- 일정 수정 div --%>
-			<div class="scheduleDay" id="modScheduleDay">
-				<input type="text" placeholder="수정할 일정 입력">
+			<div class="scheduleDay" id="modScheduleDay"></div>
+			<div class="message" id="modMessage">
+				<select>
+					<option value="my">내 일정</option>
+					<option value="team">팀 일정</option>
+				</select>
+				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력">
 			</div>
 			<div class="scheduleBtn" id="saveModBtn">저장</div>
 			<div class="scheduleBtn" id="closeModBtn">닫기</div>
 		</div>
 		<div class="deleteSchedule" id="delSchedule" align="center"> <%-- 일정 삭제 div --%>
-			<div class="scheduleDay" id="delScheduleDay">
-				<div> 삭 제 ?  ? ?</div>
-			</div>
+			<div class="scheduleDay" id="delScheduleDay"></div>
+			<div class="message" id="delMessage"> 삭 제 ?  ? ? </div>
 			<div class="scheduleBtn" id="closeDelBtn">닫기</div>
 			<div class="scheduleBtn" id="deleteDelBtn">삭제</div>
 		</div>
 		<div class="confirm" id="addConfirm">
-			<div class="scheduleMsg" id="addScheduleMsg">일정 추가가 <br>완료되었습니다.</div>
+			<div class="scheduleMsg" id="addScheduleMsg">일정 추가가<br>완료되었습니다.</div>
 			<div class="scheduleBtn" id="closeAddConfirm">닫기</div>
 		</div>
 		<div class="confirm" id="modConfirm">
-			<div class="scheduleMsg" id="modScheduleMsg">일정 수정이 <br>완료되었습니다.</div>
+			<div class="scheduleMsg" id="modScheduleMsg">일정 수정이<br>완료되었습니다.</div>
 			<div class="scheduleBtn" id="closeModConfirm">닫기</div>
 		</div>
 		<div class="confirm" id="delConfirm">
-			<div class="scheduleMsg" id="delConScheduleMsg">일정을 정말 <br>삭제할까요?</div>
+			<div class="scheduleMsg" id="delConScheduleMsg">일정을<br>정말 삭제할까요?</div>
 			<div class="scheduleBtn" id="delDelBtn">삭제</div>
 			<div class="scheduleBtn" id="cancleDelBtn">취소</div>
 		</div>
 		<div class="confirm" id="delDelConfirm">
-			<div class="scheduleMsg" id="delScheduleMsg">일정 삭제가 <br>완료되었습니다.</div>
+			<div class="scheduleMsg" id="delScheduleMsg">일정 삭제<br> 완료되었습니다.</div>
 			<div class="scheduleBtn" id="closeDelConfirm">닫기</div>
 		</div>
 		
@@ -254,7 +263,6 @@
 						+(today.getMonth()+1)+"월 "+$(this).text().substring(0, 2)+"일";
 					}
 					$("#viewScheduleDay").text(scheduleDate);
-					$("#calSchedule").text("^^");
 					$("#viewSchedule").show();
 					console.log(Number($(this).text().charAt(1)));
 					console.log($(this).text().length);
@@ -270,8 +278,8 @@
 		});
 		//일정 추가 팝업 열기
 		$("#addBtn").click(function(){
-			$("#addSchedule").show();
 			$("#addScheduleDay").text(scheduleDate);
+			$("#addSchedule").show();
 		});
 		
 		//일정 추가 팝업 닫기
@@ -288,8 +296,8 @@
 		
 		//일정 수정 팝업 열기
 		$("#modifyBtn").click(function(){
-			$("#modSchedule").show();
 			$("#modScheduleDay").text(scheduleDate);
+			$("#modSchedule").show();
 
 		});
 		
@@ -307,8 +315,8 @@
 		
 		//일정 삭제 팝업 열기
 		$("#delBtn").click(function(){
-			$("#delSchedule").show();
 			$("#delScheduleDay").text(scheduleDate);
+			$("#delSchedule").show();
 		});
 		
 		//일정 삭제 팝업 닫기

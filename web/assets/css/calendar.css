@@ -53,9 +53,9 @@
 		position:relative;
 		top:150px;
 		left:50px;
-		width:130px;
-		height:200px;
-		background:#ffdddd;
+		width:140px;
+		height:170px;
+		border:1px solid lightgray;
 		border-radius: 7px;
 		padding:15px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -101,31 +101,39 @@
 	}
 	div.scheduleDay{
 		width:250px;
-		height:60px;
+		height:40px;
 		padding: 5px;
 		font-size:25px;
 		margin-left:auto;
-		margin-right:auto;
-		
+		margin-right:auto;	
+	}
+	div.message{
+		padding:20px 10px 10px 5px;
+		width:250px;
+		height:80px;
+
 	}
 	div.confirm{
 		position:absolute;
 		top:55%;
-		left:55%;
-		width:200px;
-		height:150px;
+		left:53%;
+		width:220px;
+		height:140px;
 		background:#ffeded;
 		z-index:10;
-		padding:25px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
 		border:1px solid #ffcfcf;
 		margin-left:auto;
 		margin-right:auto;
+		border-radius:5px;
 	}
 	div.scheduleMsg{
-		width:180px;
+		width:200px;
 		height:80px;
 		font-size:20px;
 		text-align:center;
+		/* margin-left:auto;
+		margin-right:auto; */
 	}
 	div.scheduleBtn{
 		border-radius:5px;
@@ -134,15 +142,17 @@
 		height:30px;
 		display:inline-table;
 		text-align:center;
+		vertical-align:middle;
 		margin-left:auto;
 		margin-right:auto;
-		flex-direction:space-between;
 	}
+
 	#daySchedule{
 		width:250px;
-		height:60px;
+		height:80px;
+		padding:5px 10px 10px 5px;
 	}
-	td > p{
+	td > p {
 		text-align:left;
 		color:#ffdddd;
 		font-weight:bold;
@@ -155,8 +165,8 @@
 	    display: inline-block;  
 	    cursor: pointer;  
 	    position: relative;  
-	    padding-left: 20px;  
-	    margin-right: 15px;  
+	    padding-left: 25px;  
+	    margin-right: 10px;  
 	}
 
 	input[type=checkbox]+ label:before {     
@@ -164,9 +174,9 @@
 	    content: "";  
 	    display: inline-block;  
 
-	    width: 20px;  
-	    height: 20px;  
-	  
+	    width: 25px;  
+	    height: 25px;  
+	  	border: 1px solid lightgray;
 	    margin-right: 5px;  
 	    position: absolute;  
 	    left: 0;  
@@ -177,9 +187,10 @@
 	input[type=checkbox]:checked + label:before { 
 	    content: "\2713";  /* 체크모양 */
 	    font-size: 18px; 
-	    font-weight:800; 
+	    font-weight: 600;
 	    text-align: center;  
 	    line-height: 18px;  
+	    color:#2ebe8b;
 
 	} 
 
