@@ -213,6 +213,9 @@
 			<div class="scheduleBtn" id="closeDelConfirm">닫기</div>
 		</div>
 		
+		
+		
+		
 	</div>
 	<div class="scheduleRight">
 	</div>
