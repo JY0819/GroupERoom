@@ -137,3 +137,8 @@ i {
 .mainwrapper {
 	
 }
+
+/*메인페이지 상단네비바 각 항목들 a태그 클릭시 변경 안되게 css 조절함*/
+a:link { color: white; text-decoration: none;}
+a:visited { color: white; text-decoration: none;}
+a:hover { color: white; text-decoration: none;}
