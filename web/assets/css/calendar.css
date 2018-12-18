@@ -1,9 +1,8 @@
 @charset "UTF-8";
 	td{
-		width:110px;
+		width:120px;
 		height:90px;
 		border:1px solid #CBCBCB;
-		border-collapse:collapse;
 		padding:10px;
 	}
 	tbody{
@@ -11,6 +10,7 @@
 		text-align:right;
 	}
 	table {
+		border:0px;
 		font-size: 13px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	}
@@ -39,9 +39,30 @@
 	div.sideMenu{
 		width:15%;
 		height:100%;
-		border:1px solid;
 		float:left;
 		margin:10px;
+		align:center;
+		
+	}
+	div.sideMenuHead{
+		text-align:center;
+		width:100%;
+		height:50px;
+		line-height:50px;
+		background:#39476f;
+		color:white;
+		font-size:25px;
+		position: relative;
+	}
+	div.sideMenuBody{
+		text-align:center;
+		width:100%;
+		height:50px;
+		line-height:50px;
+		background:#52669b;
+		color:white;
+		font-size:25px;
+		position: relative;
 	}
 	div.scheduleLeft{
 		width:15%;
@@ -59,15 +80,15 @@
 		border-radius: 7px;
 		padding:15px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-		
 	}
 	div.schedule{
 		width:60%;
 		float:left;
-		margin:10px;
+		margin:15px;
+		
 	}
 	div.scheduleRight{
-		width:3%;
+		width:1%;
 		height:100%;
 		float:left;
 		margin:10px;
@@ -116,8 +137,8 @@
 	div.confirm{
 		position:absolute;
 		top:55%;
-		left:53%;
-		width:220px;
+		left:52.5%;
+		width:230px;
 		height:140px;
 		background:#ffeded;
 		z-index:10;
@@ -126,6 +147,22 @@
 		margin-left:auto;
 		margin-right:auto;
 		border-radius:5px;
+	}
+	.btnDiv{
+		width:200px;
+		height:50px;
+	}
+	.btnDiv .scheduleBtn{
+		position:absolute;
+		left:37%;
+	}
+	.btnDiv2 #delDelBtn{
+		position:absolute;
+		left:28%;
+	}
+	#cancleDelBtn{
+		position:relative;
+		left:52%
 	}
 	div.scheduleMsg{
 		width:200px;
@@ -136,6 +173,8 @@
 		margin-right:auto; */
 	}
 	div.scheduleBtn{
+		margin-left:auto;
+		margin-right:auto;
 		border-radius:5px;
 		background:white;
 		width:50px;
@@ -143,8 +182,7 @@
 		display:inline-table;
 		text-align:center;
 		vertical-align:middle;
-		margin-left:auto;
-		margin-right:auto;
+		line-height:30px;
 	}
 
 	#daySchedule{
@@ -174,9 +212,9 @@
 	    content: "";  
 	    display: inline-block;  
 
-	    width: 25px;  
+	/*     width: 25px;  
 	    height: 25px;  
-	  	border: 1px solid lightgray;
+	  	border: 1px solid lightgray; */
 	    margin-right: 5px;  
 	    position: absolute;  
 	    left: 0;  
@@ -186,10 +224,10 @@
 	
 	input[type=checkbox]:checked + label:before { 
 	    content: "\2713";  /* 체크모양 */
-	    font-size: 18px; 
+	    font-size: 22px; 
 	    font-weight: 600;
 	    text-align: center;  
-	    line-height: 18px;  
+	    /* line-height: 18px;  */ 
 	    color:#2ebe8b;
 
 	} 
