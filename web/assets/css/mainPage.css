@@ -36,33 +36,16 @@ footer {
 	padding: 15px;
 }
 
-.navigation .nav-left *{
+.navigation .nav-left * {
 	margin-right: 10px;
 }
 
 .navigation .nav-right {
 	float: right;
-    width: 25%;
-    text-align: right;
-    padding: 10px;
+	width: 25%;
+	text-align: right;
+	padding: 10px;
 }
-
-/* 
-.navigation ul{
-	display: inline-block;
-}
-.navigation nav ul li {
-	display: inline-block;
-	position: relative;
-	padding: 0 20px 0 20px;
-	vertical-align: middle;
-}
-
-.navigation nav ul li:first-child {
-	margin: 0 100px 0 0;
-}
- */
-
 
 .fa-user {
 	padding-right: 15px;
@@ -138,7 +121,43 @@ i {
 	
 }
 
+
 /*메인페이지 상단네비바 각 항목들 a태그 클릭시 변경 안되게 css 조절함*/
 a:link { color: white; text-decoration: none;}
 a:visited { color: white; text-decoration: none;}
 a:hover { color: white; text-decoration: none;}
+/* home.jsp */
+#mainTable {
+	position: relative;
+	left: 10%;
+	top: 50px;
+}
+
+#announce {
+	width: 500px;
+	position: relative;
+	left: 55%;
+}
+
+div.alignleft {
+	float: left;
+	width: 120px;
+}
+
+div.alignleftText {
+	float: left;
+	width: 100px;
+}
+
+p.imgText {
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 100px;
+	text-align: center;
+}
+
+#announce img {
+	width: 50px;
+	height: 50px;
+}
+
