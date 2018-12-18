@@ -67,6 +67,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="/views/main/mainPage.jsp"/>
 	<h1>재직증명서</h1>
 	<table>
 		<tr>
