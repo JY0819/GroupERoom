@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <jsp:include page="/views/main/mainPage.jsp" />
+<!-- <script src="/semi/views/schedule/luna.js"></script> -->
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/calendar.css">
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -102,12 +103,13 @@
 			if(cnt%7 ==0) {
 				//토요일 날짜 색 blue
 				cell.innerHTML='<span class="saturday">'+i+'</span>'+'<p id="calSchedule'+holis+'"></p>';
+
 			}
 			/*양력 공휴일 적용*/
 			for(j=0;j<holidaySol.length;j++){
 				 if(holis.toString().substring(4)===holidaySol[j][0].toString()){
 					cell.innerHTML='<span class="sunday">'+i+'<br><span>'+
-					holidaySol[j][1]+'</span>'+'<p id="calSchcdule'+holis+'"></p>';
+					holidaySol[j][1]+'</span>'+'<p id="calSchedule'+holis+'"></p>';
 					if(j==3){
 						if(cnt%7==1){
 							cell.next().innerHTML='<span class="sunday">'+i+'<br></span>'
@@ -116,6 +118,7 @@
 					}
 				} 
 			}
+			// luna();
 			/*음력 공휴일 적용*/
 			/* for(j=0;j<holidayLun.length;j++){
 				if(lunar.toString()===holidayLun[j][0].toString()){
@@ -133,7 +136,8 @@
 </head>
 <body>
 	<div class="sideMenu">
-		메뉴
+		<div class="sideMenuHead">일정</div>
+		<div class="sideMenuBody">일정관리</div>
 	</div>
 	<div class="scheduleLeft">
 		<div class="list">
@@ -146,7 +150,7 @@
 		</div>
 	</div>
 	<div class="schedule">
-		<table id="calendar" boarder="3" align="center">
+		<table id="calendar" align="center">
 			<thead>
 				<tr id="title">
 					<td onclick="prevCalendar()" id="preCal"><label style="font-size:30px"><</label></td>
@@ -181,7 +185,7 @@
 					<option value="my">내 일정</option>
 					<option value="team">팀 일정</option>
 				</select>
-				<input type="text" size="13" maxlength="25" placeholder="추가할 일정 입력">
+				<input type="text" size="13" maxlength="25" placeholder="추가할 일정 입력" name="addSchedule">
 			</div>
 			<div class="scheduleBtn" id="saveAddBtn">추가</div>
 			<div class="scheduleBtn" id="closeAddBtn">닫기</div>
@@ -193,7 +197,7 @@
 					<option value="my">내 일정</option>
 					<option value="team">팀 일정</option>
 				</select>
-				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력">
+				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력" name="modSchedule">
 			</div>
 			<div class="scheduleBtn" id="saveModBtn">저장</div>
 			<div class="scheduleBtn" id="closeModBtn">닫기</div>
@@ -206,20 +210,28 @@
 		</div>
 		<div class="confirm" id="addConfirm">
 			<div class="scheduleMsg" id="addScheduleMsg">일정 추가가<br>완료되었습니다.</div>
-			<div class="scheduleBtn" id="closeAddConfirm">닫기</div>
+			<div class="btnDiv">
+				<div class="scheduleBtn" id="closeAddConfirm">닫기</div>
+			</div>
 		</div>
 		<div class="confirm" id="modConfirm">
 			<div class="scheduleMsg" id="modScheduleMsg">일정 수정이<br>완료되었습니다.</div>
-			<div class="scheduleBtn" id="closeModConfirm">닫기</div>
+			<div class="btnDiv">
+				<div class="scheduleBtn" id="closeModConfirm">닫기</div>
+			</div>
 		</div>
 		<div class="confirm" id="delConfirm">
 			<div class="scheduleMsg" id="delConScheduleMsg">일정을<br>정말 삭제할까요?</div>
-			<div class="scheduleBtn" id="delDelBtn">삭제</div>
-			<div class="scheduleBtn" id="cancleDelBtn">취소</div>
+			<div class="btnDiv2">
+				<div class="scheduleBtn" id="delDelBtn">삭제</div>
+				<div class="scheduleBtn" id="cancleDelBtn">취소</div>
+			</div>
 		</div>
 		<div class="confirm" id="delDelConfirm">
 			<div class="scheduleMsg" id="delScheduleMsg">일정 삭제<br> 완료되었습니다.</div>
-			<div class="scheduleBtn" id="closeDelConfirm">닫기</div>
+			<div class="btnDiv">
+				<div class="scheduleBtn" id="closeDelConfirm">닫기</div>
+			</div>
 		</div>
 		
 		
