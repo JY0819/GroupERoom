@@ -9,17 +9,18 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	
 	<style type="text/css">
-		header{
-			    height: 70px;
-			    width: 100%;
-			    position: absolute;
-			    top: 0;
+		header {
+			height: 70px;
+			width: 100%;
+			position: absolute;
+			top: 0;
 		}
-	table {
-		border: 1px solid black;
-		position: relative;
 		
-	}
+		table {
+			border: 1px solid black;
+			position: relative;
+		}
+</style>
 	<title>GroupERoom</title>
 </head>
 

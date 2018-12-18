@@ -24,7 +24,7 @@
 		<span><a>Board</a></span>
 		<span><a>Schedule</a></span>
 		<span><a>MyPage</a></span>
-		<span><a>Admin</a></span>
+		<span><a href="views/admin/adminMain.jsp">Admin</a></span>
 		
 		
 	</div>
