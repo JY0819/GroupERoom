@@ -67,7 +67,9 @@
 </style>
 </head>
 <body>
+
 	<jsp:include page ="/views/main/mainPage.jsp"/>
+
 	<h1>업무계획서</h1>
 	<table>
 		<tr>

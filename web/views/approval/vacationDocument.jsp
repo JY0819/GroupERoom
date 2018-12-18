@@ -63,12 +63,27 @@
 		border-right: hidden;
 		border-bottom: hidden;
 	}
+	.saveBtn {
+		position: relative;
+		top: 250px;
+		text-align: center;
+		background-color: #205181;
+		color:white;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 100px;
+	    left: 140px;
+	    position: absolute;
+	    font-size: 16px;
+	}
 
 </style>
 </head>
 <body>
-	<jsp:include page ="/views/main/mainPage.jsp"/>
-	<h1>휴가신청서</h1>
+
+<jsp:include page="/views/main/mainPage.jsp"/>
+<h1>휴가신청서</h1>
 	<table>
 		<tr>
 			<td class="td">번호</td>
@@ -118,9 +133,7 @@
 		<tr>
 			<td class="lastContent" colspan="7"></td>
 		</tr>
-		<tr>
-			<td class="last" colspan="7"><h2>GroupERoom</h2></td>
-		</tr>
 	</table>
+	<button class="saveBtn"></button>
 </body>
 </html>
