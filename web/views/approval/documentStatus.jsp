@@ -39,8 +39,8 @@
     </style>
 </head>
 <body>
-	<jsp:include page="/views/layout/approvalLayout/approvalLayoutUp.jsp"/>
-  
+	
+  	<jsp:include page ="/views/main/mainPage.jsp"/>
   	 <table>
       <thead>
         <tr>
@@ -89,6 +89,6 @@
 	<input  id="countBtn" type="button" value="1" disabled="disabled">
    <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
    </div>
-	<jsp:include page="/views/layout/layout-down.jsp"/>
+	
 </body>
 </html>

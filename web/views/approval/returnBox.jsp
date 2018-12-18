@@ -62,7 +62,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<jsp:include page="/views/layout/approvalLayout/approvalLayoutUp.jsp"/>
+	<jsp:include page ="/views/main/mainPage.jsp"/>
   	<button class="moveBtn">이동</button>
   	<button class="garbageBtn">삭제</button>
   	 <table>
@@ -125,6 +125,6 @@
 		}
 	}
    </script>
-	<jsp:include page="/views/layout/layout-down.jsp"/>
+	
 </body>
 </html>

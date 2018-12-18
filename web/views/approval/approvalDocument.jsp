@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset=UTF-8">
-<title>Insert title here</title>
 <style>
       table {
       
@@ -32,36 +30,55 @@
      	right: 650px;
      	position: absolute;
      }
-     #countBtn {
-     	background: navy;
-     	color: white;
+     .success{
+     text-align: center;
+	   background-color: #205181;
+	   color:white;
+	   border-radius: 10px;
+	   width: 100px;
+	   height: 40px;
+	   top: 100px;
+    left: 140px;
+    position: absolute;
      }
-    </style>
+     .return{
+     	text-align: center;
+	   background-color: #205181;
+	   color:white;
+	   border-radius: 10px;
+	   width: 100px;
+	   height: 40px;
+	   top: 100px;
+    left: 260px;
+    position: absolute;
+     }
+       
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-	
-  	<jsp:include page ="/views/main/mainPage.jsp"/>
+	<jsp:include page ="/views/main/mainPage.jsp"/>
+	<button class="success">승인</button>
+  	<button class="return">반려</button>
+  		
   	 <table>
       <thead>
         <tr>
+          <th><input type="checkbox" name="checkAll" id="checkAll" onclick="checkall();"></th>
           <th>번  호</th>
           <th>작 성 자</th>
           <th>부  서</th>
           <th>문 서 번 호</th>
+          <th>제       목</th>
           <th>의  견</th>
           <th>작 성 날 짜</th>
         </tr>
       </thead>
       <tbody>
         <tr>
+          <td><input type="checkbox" name="checkRow"></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
           <td></td>
           <td></td>
           <td></td>
@@ -70,23 +87,44 @@
           <td></td>
         </tr>
         <tr>
+          <td><input type="checkbox" name="checkRow"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" name="checkRow"></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>	
+          <td></td>
           
         </tr>
         
       </tbody>
    
-    </table>
+    </table>f
     <div class="btn">
 	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
-	<input  id="countBtn" type="button" value="1" disabled="disabled">
+	<button><input type="button" readonly></button>
    <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
    </div>
-	
+	<jsp:include page="/views/layout/layout-down.jsp"/>
+	<script>
+		function checkall(){
+			if($("#checkAll").is(':checked')){
+				$("input[name=checkRow]").prop("checked",true);
+			}else{
+				$("input[name=checkRow]").prop("checked",false);
+			}
+		}
+	</script>
 </body>
 </html>
