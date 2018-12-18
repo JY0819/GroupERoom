@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/mainPage.css">
 
 <div class="main_container">
-	<table id="mainTable">
+	<table id="mainTable" style="z-index:-1;">
 		<tr>
 			<!-- 결재 게시판 마이페이지 관리자 -->
 			<td class="tdPadding">
@@ -60,7 +60,7 @@
 		<tr>
 			<!-- 공지사항 -->
 			<td>
-				<table id="announce">
+				<table id="announce" style="z-index:-1;">
 					<tr>
 						<th style="text-align: left;">공지사항</th>
 					</tr>
@@ -121,7 +121,7 @@
 			</td>
 		</tr>
 	</table>
-	<table style="margin-bottom: 100px;">
+	<table style="margin-bottom: 100px;" style="z-index:-1;">
 		<tr>
 			<!-- 달력 -->
 			<td></td>

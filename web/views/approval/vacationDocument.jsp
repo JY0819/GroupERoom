@@ -81,8 +81,9 @@
 </style>
 </head>
 <body>
+
 <jsp:include page="/views/main/mainPage.jsp"/>
-	<h1>휴가신청서</h1>
+<h1>휴가신청서</h1>
 	<table>
 		<tr>
 			<td class="td">번호</td>
