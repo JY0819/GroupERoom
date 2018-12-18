@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=UTF-8">
+<meta charset=UTF-8>
 <title>Insert title here</title>
 <style>
       table {
@@ -50,6 +50,7 @@
           <th>문 서 번 호</th>
           <th>의  견</th>
           <th>작 성 날 짜</th>
+          <th>처 리 현 황</th>
         </tr>
       </thead>
       <tbody>
@@ -60,8 +61,10 @@
           <td></td>
           <td></td>
           <td></td>
+          <td></td>
         </tr>
         <tr>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -76,9 +79,8 @@
           <td></td>
           <td></td>
           <td></td>	
-          
+          <td></td>
         </tr>
-        
       </tbody>
    
     </table>
