@@ -15,11 +15,8 @@
 			    position: absolute;
 			    top: 0;
 		}
-	table {
-		border: 1px solid black;
-		position: relative;
-		
-	}
+	</style>
+	
 	<title>GroupERoom</title>
 </head>
 
@@ -28,4 +25,4 @@
 		<jsp:include page="/views/layout/nav.jsp" />
 	</header>
 	
-	<jsp:include page="/views/layout/sidebar.jsp" />
+	<jsp:include page="/views/layout/approvalLayout/approvalSidebar.jsp" />

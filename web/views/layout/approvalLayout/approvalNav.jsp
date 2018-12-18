@@ -20,11 +20,10 @@
 		
 		<!--결재 게시판 넘어가게 a태그에 경로 입력함
 		css부분 클릭시 글씨 색이나 밑줄 변경 안하게 하려고 a태그 부분 추가함-->
-		<span><a href="views/approval/approvalMain.jsp">Approve</a></span>
+		<span><a href="/views/approval/approvalMain.jsp">Approve</a></span>
 		<span><a>Board</a></span>
 		<span><a>Schedule</a></span>
 		<span><a>MyPage</a></span>
-		<span><a>Admin</a></span>
 		
 		
 	</div>
