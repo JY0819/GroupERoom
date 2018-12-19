@@ -15,15 +15,15 @@
 	margin: 0;
 	padding: 0;
 } */
-
 .insertForm {
 	width: 500px;
+	height: 500px;
 	padding: 14px;
-	background: #205181;
-	color: #FFF;
+	background: lightblue;
+	color: #205181;
 	margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
+	margin-right: auto;
+	margin-top: 50px;
 }
 
 .insertForm h1 {
@@ -54,52 +54,36 @@
 }
 
 .insertForm button {
-	/* clear: both;
-	margin-left: 150px;
-	width: 125px;
-	height: 31px;
-	text-align: center;
-	line-height: 31px;
-	background-color: #000;
+	width: 100px;
+	height: 45px;
+	background-color: #205181;
+	border: none;
 	color: #FFFFFF;
-	font-size: 11px;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 15px;
+	margin: 5px;
+	cursor: pointer;
+	font-family: tahoma;
 	font-weight: bold;
-	font-family: tahoma; */
-	
-    width:100px;
-    background-color: #f8585b;
-    border: none;
-    color:#fff;
-    padding: 15px 0;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    cursor: pointer;
-
-}
-
-
-
+	line-height: 10px;
+	clear: both;
 }
 </style>
 
 </head>
 
 <body>
-<!-- 	<div id="stylized" class="insertForm"> -->
 	<div class="insertForm">
 		<form id="form" action="" method="post">
 			<h1>사원 등록</h1>
-			<hr>	
-			<label>이름</label>
-				<input type="text" name="name" id="name" /> 
-			<label>이메일</label>
-				<input type="text" name="email" id="email" /> 
-			<label>비밀번호</label>
-				<input type="text" name="password" id="password" />
-	
+			<hr>
+			<label>사원번호</label> <input type="text" name="userId" id="userId" />
+			<label>이름</label> <input type="text" name="name" id="name" />
+			<label>이메일</label> <input type="text" name="email" id="email" /> 
+			<label>비밀번호</label> <input type="text" name="password" id="password" />
+			<label>비밀번호 확인</label> <input type="text" name="password" id="password" />
+
 			<button type="submit">등록</button>
 		</form>
 	</div>
