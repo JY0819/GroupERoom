@@ -54,7 +54,7 @@
 		border-collapse: collapse;
 	}
 	.lastContent {
-		height: 30em;
+		height: 20em;
 		border: 1px solid black;
 	}
 	.last {
@@ -72,7 +72,7 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 100px;
+		top: 600px;
 	    left: 140px;
 	    position: absolute;
 	    font-size: 16px;
@@ -134,6 +134,6 @@
 			<td class="lastContent" colspan="7"></td>
 		</tr>
 	</table>
-	<button class="saveBtn"></button>
+	<button class="saveBtn"></button> 
 </body>
 </html>
