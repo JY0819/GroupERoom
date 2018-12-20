@@ -19,15 +19,15 @@
 	border-radius: 10px;
 	width: 100px;
 	height: 25px;
-    left: 370px;
+    left: 330px;
     position: absolute;
     font-size: 16px;
 	}
 	.proof {
-    left: 630px;
+    left: 590px;
 	}
 	.work {
-    left: 890px;
+    left: 850px;
 	}
 	#contentImgArea1, #contentImgArea2, #contentImgArea3 {
 		height: 250;

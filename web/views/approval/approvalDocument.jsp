@@ -31,26 +31,30 @@
      	position: absolute;
      }
      .success{
-     text-align: center;
+       text-align: center;
 	   background-color: #205181;
 	   color:white;
 	   border-radius: 10px;
 	   width: 100px;
 	   height: 40px;
 	   top: 100px;
-    left: 140px;
-    position: absolute;
+       left: 140px;
+       position: absolute;
+       border: 0;
+	   outline: 0;
      }
      .return{
-     	text-align: center;
+       text-align: center;
 	   background-color: #205181;
 	   color:white;
 	   border-radius: 10px;
 	   width: 100px;
 	   height: 40px;
 	   top: 100px;
-    left: 260px;
-    position: absolute;
+       left: 260px;
+       position: absolute;
+	   border: 0;
+	   outline: 0;
      }
        
 </style>

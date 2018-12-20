@@ -6,6 +6,9 @@
 <meta charset=UTF-8>
 <title>WorkplanDocument</title>
 <style>
+	body {
+		margin-bottom: 150px;
+	}
 	/*표상단 제목*/
 	h1{
 		text-align: center;
@@ -63,6 +66,39 @@
 		border-right: hidden;
 		border-bottom: hidden;
 	}
+	.saveBtn {
+		position: relative;
+		top: 250px;
+		text-align: center;
+		background-color: #205181;
+		color:white;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 950px;
+		left: 490px;
+	    position: absolute;
+	    font-size: 16px;
+	    border: 0;
+	    outline: 0;
+	}
+	.closeBtn {
+		position: relative;
+		top: 250px;
+		text-align: center;
+		background-color: #F1C40F;
+		color:white;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 950px;
+		left: 650px;
+	    position: absolute;
+	    font-size: 16px;
+	    border: 0;
+	    outline: 0;
+	}
+	
 
 </style>
 </head>
@@ -120,9 +156,8 @@
 		<tr>
 			<td class="lastContent" colspan="7"></td>
 		</tr>
-		<tr>
-			<td class="last" colspan="7"><h2>GroupERoom</h2></td>
-		</tr>
 	</table>
+		<button class="saveBtn">저장</button>
+		<button class="closeBtn">닫기</button>
 </body>
 </html>
