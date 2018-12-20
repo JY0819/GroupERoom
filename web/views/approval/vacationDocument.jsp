@@ -6,6 +6,9 @@
 <meta charset=UTF-8>
 <title>VacationDocument</title>
 <style>
+	body {
+		margin-bottom: 150px;
+	}
 	/*표상단 제목*/
 	h1{
 		text-align: center;
@@ -54,8 +57,9 @@
 		border-collapse: collapse;
 	}
 	.lastContent {
-		height: 20em;
+		height: 30em;
 		border: 1px solid black;
+		margin-
 	}
 	.last {
 		text-align: center;
@@ -72,10 +76,28 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 600px;
-	    left: 140px;
+		top: 950px;
+		left: 490px;
 	    position: absolute;
 	    font-size: 16px;
+   	    border: 0;
+	    outline: 0;
+	}
+	.closeBtn {
+		position: relative;
+		top: 250px;
+		text-align: center;
+		background-color: #F1C40F;
+		color:white;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 950px;
+		left: 650px;
+	    position: absolute;
+	    font-size: 16px;
+   	    border: 0;
+	    outline: 0;
 	}
 
 </style>
@@ -89,17 +111,21 @@
 			<td class="td">번호</td>
 			<td class="content"><input type="text" name="noContent"></td>
 			<td rowspan="2" class="gap"></td>
-			<td class="td" rowspan="2">결<br>재</td>
+			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
 			<td class="td">2차</td>
 			<td class="td">3차</td>
 		</tr>
 		<tr>
 			<td class="td">첨부파일</td>
-			<td class="content"><input type="file" name="fileNoContent"></td>
-			<td class="approvalTd"><input type="image"></td>
-			<td class="approvalTd"><input type="image"></td>
-			<td class="approvalTd"><input type="image"></td>
+			<td class="content">&nbsp;<input type="file" name="fileNoContent"></td>
+			<td class="approvalTd" rowspan="2"><input type="image"></td>
+			<td class="approvalTd" rowspan="2"><input type="image"></td>
+			<td class="approvalTd" rowspan="2"><input type="image"></td>
+		</tr>
+		<tr>
+			<td class="td">결재자</td>
+			<td class="content"><input type="text">&nbsp;<button>결재자선택</button></td>
 		</tr>
 		<tr>
 			<td class="gap2" colspan="2"></td>
@@ -134,6 +160,7 @@
 			<td class="lastContent" colspan="7"></td>
 		</tr>
 	</table>
-	<button class="saveBtn"></button> 
+	<button class="saveBtn">저장</button> 
+	<button class="closeBtn">닫기</button>
 </body>
 </html>
