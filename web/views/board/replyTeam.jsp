@@ -49,6 +49,7 @@ color:black;
 
 
 <form>
+<br>
 <h1 align="center" >부서 게시판</h1>
 <hr>
 <!-- 게시판목록 -->
@@ -108,6 +109,11 @@ color:black;
 	</tr>
 	
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 </form>
 </body>
 </html>

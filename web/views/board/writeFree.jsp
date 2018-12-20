@@ -46,7 +46,8 @@ color:black;
 
 
 <form>
-<h1 align="center" >|자유 게시판</h1>
+<br>
+<h1 align="center" >l 자유 게시판</h1>
 <hr>
 <!-- 게시판목록 -->
  <div id="sideMenu" >
@@ -85,6 +86,12 @@ color:black;
 	<td><input type="file"></td>
 	
 	</tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
 	<tr >
 		<th></th>
 		<td align="center">			
@@ -94,6 +101,12 @@ color:black;
 	</tr>
 	
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 </form>
 </body>
 </html>

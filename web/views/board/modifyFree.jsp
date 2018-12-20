@@ -34,8 +34,9 @@
 	text-decoration:none;
 	color:white;
 }
-.modify{
+#modify{
 	text-decoration:none;
+	color:black;
 }
 /* 게시판 목록끝  */
 
@@ -45,6 +46,7 @@
 
 
 <form>
+<br>
 <h1 align="center" >자유 게시판</h1>
 <hr>
 <!-- 게시판목록 -->
@@ -87,12 +89,17 @@
 	<tr >
 		<th></th>
 		<td align="center">			
-			<button type="submit"><a class="modify" href="viewFree.jsp">수정</a></button>
+			<button type="submit"><a id="modify" href="viewFree.jsp">수정</a></button>
 			<input type="reset" value="취소">
 		</td>
 	</tr>
 	
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 </form>
 <script>
 	function modify(){

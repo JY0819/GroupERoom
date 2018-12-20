@@ -105,19 +105,25 @@ body {
 /*버튼*/
 #textBtn{
 	text-decoration: none;
+	color:black;
 	
 }
 #btnBox{
-	position:relative;
+	/*  position:relative;
 	top: 190px;
-	left: 70px;
+	left: 70px; 
+	align:center;*/ 
 	
 }
+/*버튼*/
 #searchBtn{
-	position:relative;
+ 	/* position: relative;
 	top: 210px;
-	right:500px;
-	
+	right:400px;   */
+	margin-left:250px;
+	margin-right:auto;
+	margin-top:200px;
+	align:center;
 }
 </style>
 
@@ -136,6 +142,8 @@ body {
 		</div>
 		<br>
 	<hr>
+	<br>
+	<br>
  <!-- 게시판목록 -->
  <div id="sideMenu" >
 <br>
@@ -152,7 +160,13 @@ body {
     <hr>
     
 	</div> 
- 
+ <br>
+  <br>
+   <br>
+    <br>
+    <br>
+   <br>
+    <br>
 <h2 align="center">"#"에 해당하는 검색 결과</h2>
 
 <div align="center" id="board">
@@ -201,21 +215,11 @@ body {
 <br>
   
 	<div id="searchBtn" align="center">
-		<input type="search">
-		<button><a id="textBtn" href="searchViewTeam.jsp"> 검색하기 </a></button>
-	</div>	
-	
-	
-	<div id="btnBox">
-	<button align="bottom" height="50px"><a id="textBtn" href="writeTeam.jsp"> 글쓰기 </a></button>
+    	<input type="search">
+    	<button type="submit"><a href="searchViewFree.jsp" id="textBtn">검색하기</a></button>
+    	<button><a id="textBtn" href="writeFree.jsp" id="textBtn"> 글쓰기 </a></button>
 	</div>
-	<!-- <div class="list-bot">
-		<p>
-		  <a href="#">1</a>
-		  <a href="#">2</a>
-		  <a href="#">3</a>
-		</p>
-	</div> -->
+	
 
 
 
