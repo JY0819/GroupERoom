@@ -32,9 +32,9 @@
      	right: 650px;
      	position: absolute;
      }
-     .delete{
+     .move{
      text-align: center;
-	   background-color: #F1C40F;
+	   background-color: #205181;
 	   color:white;
 	   border-radius: 10px;
 	   width: 100px;
@@ -43,24 +43,33 @@
     left: 140px;
     position: absolute;
      }
-     
+     .delete{
+     	text-align: center;
+	   background-color: #F1C40F;
+	   color:white;
+	   border-radius: 10px;
+	   width: 100px;
+	   height: 40px;
+	   top: 100px;
+    left: 260px;
+    position: absolute;
+     }
        
 </style>
 </head>
 <body>
 	<jsp:include page ="/views/main/mainPage.jsp"/>
 	
-	<button class="delete">삭제</button>
-	
+	<button class="move">이동</button>
+  	<button class="delete">삭제</button>
   	 <table>
       <thead>
         <tr>
           <th><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAll();" style="height: 17px; width: 17px;"></th>
-          <th>번  호</th>
           <th>작 성 자</th>
           <th>처 리 자</th>
           <th>문 서 번 호</th>
-          <th>작 성 날 짜</th>
+          <th>결 과</th>
          
         </tr>
       </thead>
@@ -71,7 +80,7 @@
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
+         
           
         </tr>
         <tr>
@@ -80,15 +89,14 @@
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
-          
+         
         </tr>
         <tr>
           <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
+          
           <td></td>
           
           
