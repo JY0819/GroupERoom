@@ -37,8 +37,8 @@
 	text-decoration:none;
 	color:white;
 }
-#btn{
-color:black;
+#textBtn{
+	color:black;
 	text-decoration:none;
 }
 /* 게시판 목록끝  */
@@ -49,7 +49,8 @@ color:black;
 
 
 <form>
-<h1 align="center" >부서 게시판</h1>
+<br>
+<h1 align="center" >l 부서게시판</h1>
 <hr>
 <!-- 게시판목록 -->
  <div id="sideMenu" >
@@ -99,15 +100,27 @@ color:black;
 	<td><input type="file"></td>
 	
 	</tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
 	<tr >
 		<th></th>
 		<td align="center">			
-			<button type="submit"><a id="btn" href="viewTeam.jsp">등록</a></button> 
+			<button type="submit"><a id="textBtn" href="viewTeam.jsp">등록</a></button> 
 			<input type="reset" value="취소">
 		</td>
 	</tr>
 	
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 </form>
 </body>
 </html>

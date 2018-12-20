@@ -90,12 +90,17 @@ section>form>button{
 	color:black;
 }
 /*댓글*/
-
-#enrollRep{	
-	width:500px;
+#hide{
+	width:100px;
 	height:50px;
-	margin: right auto;
+	border:solid 1px black;
 }
+#enrollRep{	
+	width:560px;
+	height:50px;
+	
+}
+
 
 #info{
 /* 	border: 1px solid white;
@@ -134,7 +139,7 @@ section>form>button{
 
 <form align="center">
 <div id="boardTitle">
-<h1>|자유 게시판</h1>
+<h1>l 자유 게시판</h1>
 </div>
 <hr>
 <!-- 게시판목록 -->
@@ -153,6 +158,7 @@ section>form>button{
     <hr>
     
 	</div> 
+	
 	<div align="center">
 	<br>
 	<table id="table1" float="right">
@@ -202,9 +208,9 @@ section>form>button{
 		
 	</table>
 	<br>
-
-		<input type="textarea" id="enrollRep">&nbsp;<button height="50px" id="btn">댓글등록</button>
-
+	
+ 		<input type="textarea" id="enrollRep">&nbsp;<button height="50px" id="btn">댓글등록</button>
+ 
 	</br>
 	</br>
 	
@@ -217,6 +223,13 @@ section>form>button{
 	
 
 	</div>
+	
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<br>
 </body>
 </html>

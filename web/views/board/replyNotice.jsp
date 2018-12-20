@@ -34,8 +34,9 @@
 	text-decoration:none;
 	color:white;
 }
-.enroll{
+#enroll{
 	text-decoration:none;
+	color:black;
 }
 /* 게시판 목록끝  */
 
@@ -44,6 +45,7 @@
 <body>
 
 <form>
+<br>
 <h1 align="center" >공지 게시판</h1>
 <hr>
 <!-- 게시판목록 -->
@@ -62,6 +64,7 @@
     <hr>
     
 	</div> 
+	
 	<table align="center">
 	
 	<tr>
@@ -86,12 +89,17 @@
 	<tr >
 		<th></th>
 		<td align="center">			
-			<button type="submit"><a class="enroll" href="viewNotice.jsp">답변등록</a></button>
+			<button type="submit"><a id="enroll" href="viewNotice.jsp">답변등록</a></button>
 			<input type="reset" value="취소">
 		</td>
 	</tr>
 	
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 </form>
 <script>
 	function enroll(){

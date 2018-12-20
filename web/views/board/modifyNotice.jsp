@@ -39,12 +39,17 @@
 }
 /* 게시판 목록끝  */
 
+#modify{
+	text-decoration:none;
+	color:black;
+}
 </style>
 </head>
 <body>
 
 
 <form>
+<br>
 <h1 align="center" >공지 게시판</h1>
 <hr>
 <!-- 게시판목록 -->
@@ -88,12 +93,17 @@
 	<tr >
 		<th></th>
 		<td align="center">			
-			<button type="submit"><a class="modify" href="viewNotice.jsp">수정</a></button>
+			<button type="submit"><a id="modify" href="viewNotice.jsp">수정</a></button>
 			<input type="reset" value="취소">
 		</td>
 	</tr>
 	
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 </form>
 <script>
 	function modify(){

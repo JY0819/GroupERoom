@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <jsp:include page="/views/main/mainPage.jsp" />
-<title>부서게시판</title>
+<title></title>
 
 <style>
 
@@ -30,7 +30,7 @@ body {
   }
 
 #board {
-  width:1000px;
+  width:800px;
   margin:30px auto 10px;
   position:relative;
   left:120px;
@@ -54,7 +54,7 @@ body {
 .list dl dd {
   float:left;
 } 
-.list. team {width:60px;}
+
  .list .num {width:60px;} 
 .list .sub {width:410px;} 
 .list .name {width:95px;} 
@@ -105,19 +105,25 @@ body {
 /*버튼*/
 #textBtn{
 	text-decoration: none;
+	color:black;
 	
 }
 #btnBox{
-	position:relative;
+	/*  position:relative;
 	top: 190px;
-	left: 70px;
+	left: 70px; 
+	align:center;*/ 
 	
 }
+/*버튼*/
 #searchBtn{
-	position:relative;
+ 	/* position: relative;
 	top: 210px;
-	right:500px;
-	
+	right:400px;   */
+	margin-left:250px;
+	margin-right:auto;
+	margin-top:200px;
+	align:center;
 }
 </style>
 
@@ -132,10 +138,11 @@ body {
 
 		<div id="title">
 	    <h1>l 자유게시판</h1>
-	    
 		</div>
 		<br>
 	<hr>
+	<br>
+	<br>
  <!-- 게시판목록 -->
  <div id="sideMenu" >
 <br>
@@ -153,13 +160,16 @@ body {
     
 	</div> 
  
+ <br>
+ <br>
+ <br>
+ <br>
+ 
 <h2 align="center">"#"에 해당하는 검색 결과</h2>
-
 <div align="center" id="board">
 
 <div class="list"> 
   <dl>
-  	<dt class="team">부서</dt>
    <dt class="num">번호</dt>
    <dt class="sub">제목</dt>
    <dt class="name">작성자</dt>
@@ -168,7 +178,6 @@ body {
   </dl>
 
   <dl>
-  	<dd class="team">회계</dd>
    <dd class="num">3</dd>
    <dd class="sub"><a id="boardTitle" href"#">월요일 입니다.</a></dd>
    <dd class="name">김길동</dd>
@@ -177,7 +186,6 @@ body {
   </dl>
   
   <dl>
-  	<dd class="team">마케팅</dd>
    <dd class="num">2</dd>
    <dd class="sub"><a id="boardTitle" href"#">화요일 입니다.</a></dd>
    <dd class="name">홍길동</dd>
@@ -186,7 +194,6 @@ body {
   </dl>
 
   <dl>
-  <dd class="team">기획</dd>
    <dd class="num">1</dd>
    <dd class="sub"><a id="boardTitle" href"#">수요일 입니다.</a></dd>
    <dd class="name">강길동</dd>
@@ -200,22 +207,17 @@ body {
 <br>
 <br>
   
-	<div id="searchBtn" align="center">
+	 <!-- <div id="searchBtn">
 		<input type="search">
-		<button><a id="textBtn" href="searchViewTeam.jsp"> 검색하기 </a></button>
-	</div>	
-	
-	
-	<div id="btnBox">
-	<button align="bottom" height="50px"><a id="textBtn" href="writeTeam.jsp"> 글쓰기 </a></button>
-	</div>
-	<!-- <div class="list-bot">
-		<p>
-		  <a href="#">1</a>
-		  <a href="#">2</a>
-		  <a href="#">3</a>
-		</p>
+		<button><a id="textBtn" href="searchViewFree.jsp"> 검색하기 </a></button>		
 	</div> -->
+	
+	<div id="searchBtn" align="center">
+    	<input type="search">
+    	<button type="submit"><a href="searchViewFree.jsp" id="textBtn">검색하기</a></button>
+    	<button><a id="textBtn" href="writeFree.jsp" id="textBtn"> 글쓰기 </a></button>
+	</div>
+	
 
 
 

@@ -92,7 +92,7 @@ section>form>button{
 /*댓글*/
 
 #enrollRep{	
-	width:500px;
+	width:560px;
 	height:50px;
 	margin: right auto;
 }
@@ -134,7 +134,7 @@ section>form>button{
 
 <form align="center">
 <div id="boardTitle">
-<h1>|공지사항</h1>
+<h1>l 공지사항</h1>
 </div>
 <hr>
 <!-- 게시판목록 -->
@@ -219,6 +219,12 @@ section>form>button{
 	
 
 	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<br>
 </body>
 </html>

@@ -37,7 +37,11 @@
 .enroll{
 	text-decoration:none;
 }
-/* 게시판 목록끝  */
+/* 버튼글씨  */
+#textBtn{
+	text-decoration:none;
+	color:black;
+}
 
 </style>
 </head>
@@ -45,12 +49,13 @@
 
 
 <form>
-<h1 align="center" >|공지사항</h1>
+<br>
+<h1 align="center" >l 공지사항</h1>
 <hr>
 <!-- 게시판목록 -->
 
 <div id="sideMenu" >
-<br>
+
 		<h3><a href="boardNotice.jsp" id="menuFont">공지사항</a></h3>
 		
     <hr>
@@ -85,15 +90,27 @@
 	<td><input type="file"></td>
 	
 	</tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
 	<tr >
 		<th></th>
 		<td align="center">			
-			<button type="submit"><a class="enroll" href="viewNotice.jsp">등록</a></button>
-			<input type="reset" value="취소">
+			<button type="submit"><a id="textBtn" href="viewNotice.jsp">등록</a></button>
+			<button type="reset"><a id="textBtn">취소</a></button>
 		</td>
 	</tr>
 	
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 </form>
 <script>
 	function enroll(){
