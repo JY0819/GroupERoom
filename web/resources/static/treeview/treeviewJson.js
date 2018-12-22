@@ -11,7 +11,7 @@ var treeviewJson = {
 											{ 
 											   text: "사원 관리"
 											  ,nodes: [ 
-													     {text: "사원 추가", href: "/semi/login"}
+													     {text: "사원 추가", href: "/semi/admin/management/add"}
 													    ,{text: "사원조회 및 수정"} 
 													    ,{text: "휴가 조회"} 
 											  		  ]

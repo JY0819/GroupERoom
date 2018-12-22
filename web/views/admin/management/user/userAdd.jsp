@@ -26,6 +26,7 @@
 <script type="text/javascript">
 	//참고 : https://jonmiles.github.io/bootstrap-treeview/
 	$(function() {
+		var nodeName = "사원 추가";
 		/*  
 		expandIcon: "glyphicon glyphicon-stop",
 	    collapseIcon: "glyphicon glyphicon-unchecked",
@@ -50,26 +51,29 @@
 			   
 			   // event
 			   ,onNodeDisabled: function(event, node) {
-		         $('#disabled-output').prepend('<p>' + node.text + ' was disabled</p>');
 		       }
 		       ,onNodeEnabled: function (event, node) {
-		         $('#disabled-output').prepend('<p>' + node.text + ' was enabled</p>');
 		       }
 		       
 		       ,onNodeCollapsed: function(event, node) {
 		       	  // 메뉴 닫기
-		         $('#disabled-output').prepend('<p>' + node.text + ' was collapsed</p>');
 		       }
 		       ,onNodeExpanded: function (event, node) {
 		       	  // 메뉴 열기
-		           $('#expandible-output').prepend('<p>' + node.text + ' was expanded</p>');
 		       }
 		       
 		       ,onNodeUnchecked: function (event, node) {
-		         $('#disabled-output').prepend('<p>' + node.text + ' was unchecked</p>');
+		       }
+		       
+		       // 메뉴 선택
+		       ,onNodeSelected: function (event, node) {
+		    	   var href = node.href || "";
+		    	   if(href !== ""
+		    			&& node.text !== nodeName){
+		    		  window.location.href  = href;   
+		    	   }
 		       }
 		       ,onNodeUnselected: function (event, node) {
-		         $('#disabled-output').prepend('<p>' + node.text + ' was unselected</p>');
 		       }
 			   
 		}
@@ -80,9 +84,11 @@
 		var findNodess = function(nodeName) {
           return $tree.treeview('search', [ nodeName, { ignoreCase: false, exactMatch: false } ]);
         };
-        var nodes = findNodess("사원 추가");
+        var nodes = findNodess(nodeName);
 	    //$tree.treeview('disableNode', [ nodes ]); // 메뉴 disable
 		$tree.treeview('selectNode', [ nodes ]); 	// 메뉴 선택
+		
+		$(".search-result").removeClass(".search-result");
 	});
 </script>
 

@@ -47,7 +47,7 @@
 		onhoverColor: '#F5F5F5',
 		selectedColor: '#FFFFFF',
 		selectedBackColor: '#205181',// 선택된 값
-		searchResultColor: '#F5F5F5', // 검색된 값 '#D9534F'
+		searchResultColor: '#D9534F', // 검색된 값 '#D9534F'
 		searchResultBackColor: undefined, //'#FFFFFF',
 
 		enableLinks: false,
