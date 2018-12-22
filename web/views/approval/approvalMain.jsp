@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=UTF-8">
-<title>Insert title here</title>
+<meta charset=UTF-8>
+<title>결재메인페이지</title>
 <style>
+	 /*메인 페이지 표 테이블 스타일*/
       table {
-      
         width: 80%;
         text-align: center;
       	margin-left: auto;
@@ -27,21 +27,32 @@
      td{
      	height:40px;
      }
-     .btn {
+     /*페이지 버튼 영역*/
+     .btnArea {
      	top: 500px;
      	right: 650px;
      	position: absolute;
      }
+     /*몇번 페이지인지 출력하는 가운데 버튼*/
      #countBtn {
      	background: navy;
      	color: white;
+     }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
      }
     </style>
 </head>
 <body>
 
 	<jsp:include page="/views/main/mainPage.jsp"/>
-  
 
   	 <table>
       <thead>
@@ -84,10 +95,10 @@
       </tbody>
    
     </table>
-    <div class="btn">
-	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
+    <div class="btnArea">
+	<button><i class="fas fa-chevron-left"></i></button>
 	<input  id="countBtn" type="button" value="1" disabled="disabled">
-   <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
+   <button><i class="fas fa-chevron-right"></i></button>
    </div>
 
 </body>

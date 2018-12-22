@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>휴지통</title>
 <style>
       table {
       
@@ -27,14 +27,29 @@
      td{
      	height:40px;
      }
-     .btn {
+     .btnArea {
      	top: 500px;
      	right: 650px;
      	position: absolute;
      }
-     .delete{
+     /*몇번 페이지인지 출력하는 가운데 버튼*/
+     #countBtn {
+     	background: #205181;
+     	color: white;
+     }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
+     }
+     .move{
      text-align: center;
-	   background-color: #F1C40F;
+	   background-color: #205181;
 	   color:white;
 	   border-radius: 10px;
 	   width: 100px;
@@ -43,26 +58,33 @@
     left: 140px;
     position: absolute;
      }
-     
+     .delete{
+     	text-align: center;
+	   background-color: #F1C40F;
+	   color:white;
+	   border-radius: 10px;
+	   width: 100px;
+	   height: 40px;
+	   top: 100px;
+    left: 260px;
+    position: absolute;
+     }
        
 </style>
 </head>
 <body>
 	<jsp:include page ="/views/main/mainPage.jsp"/>
 	
-	<button class="delete">삭제</button>
-	
+	<button class="move">이동</button>
+  	<button class="delete">삭제</button>
   	 <table>
       <thead>
         <tr>
           <th><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAll();" style="height: 17px; width: 17px;"></th>
-          <th>번  호</th>
           <th>작 성 자</th>
+          <th>처 리 자</th>
           <th>문 서 번 호</th>
           <th>결 과</th>
-          <th>의 견</th>
-          <th>작 성 날 짜</th>
-          <th>처 리 날 짜</th>
          
         </tr>
       </thead>
@@ -73,9 +95,7 @@
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+         
           
         </tr>
         <tr>
@@ -84,19 +104,14 @@
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          
+         
         </tr>
         <tr>
           <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          
           <td></td>
           
           
@@ -114,10 +129,10 @@
       </tbody>
    
     </table>
-    <div class="btn">
-	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
+    <div class="btnArea">
+	<button><i class="fas fa-chevron-left"></i></button>
 	<input  id="countBtn" type="button" value="1" disabled="disabled">
-   <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
+   <button><i class="fas fa-chevron-right"></i></button>
    </div>
 </body>
 </html>

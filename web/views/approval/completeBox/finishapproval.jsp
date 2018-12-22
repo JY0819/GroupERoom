@@ -3,6 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>결제된 문서</title>
 <style>
       table {
       
@@ -25,110 +27,111 @@
      td{
      	height:40px;
      }
-     .btn {
+     .btnArea {
      	top: 500px;
      	right: 650px;
      	position: absolute;
      }
-     .success{
-       text-align: center;
-	   background-color: #205181;
+     #countBtn {
+     	background: #205181;
+     	color: white;
+     }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
+     }
+     .delete{
+     text-align: center;
+	   background-color: #F1C40F;
 	   color:white;
 	   border-radius: 10px;
 	   width: 100px;
 	   height: 40px;
 	   top: 100px;
-       left: 140px;
-       position: absolute;
-       border: 0;
-	   outline: 0;
+    left: 140px;
+    position: absolute;
      }
-     .return{
-       text-align: center;
-	   background-color: #205181;
-	   color:white;
-	   border-radius: 10px;
-	   width: 100px;
-	   height: 40px;
-	   top: 100px;
-       left: 260px;
-       position: absolute;
-	   border: 0;
-	   outline: 0;
-     }
+     
        
 </style>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 	<jsp:include page ="/views/main/mainPage.jsp"/>
-	<button class="success">승인</button>
-  	<button class="return">반려</button>
-  		
+	
+	<button class="delete">삭제</button>
+	
   	 <table>
       <thead>
         <tr>
-          <th><input type="checkbox" name="checkAll" id="checkAll" onclick="checkall();"></th>
+          <th><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAll();" style="height: 17px; width: 17px;"></th>
           <th>번  호</th>
           <th>작 성 자</th>
-          <th>부  서</th>
           <th>문 서 번 호</th>
-          <th>제       목</th>
-          <th>의  견</th>
+          <th>결 과</th>
+          <th>의 견</th>
           <th>작 성 날 짜</th>
+          <th>처 리 날 짜</th>
+         
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><input type="checkbox" name="checkRow"></td>
+          <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><input type="checkbox" name="checkRow"></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><input type="checkbox" name="checkRow"></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>	
           <td></td>
           
         </tr>
+        <tr>
+          <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          
+        </tr>
+        <tr>
+          <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          
+          
+        </tr>
+        <script>
+   		function checkAll() {
+		if($("#checkAll").is(':checked')) {
+			$("input[name=checkTd]").prop("checked", true);
+		}else {
+			$("input[name=checkTd]").prop("checked", false);
+		}
+		}
+   		</script>
         
       </tbody>
    
-    </table>f
-    <div class="btn">
-	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
-	<button><input type="button" readonly></button>
-   <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
+    </table>
+    <div class="btnArea">
+	<button><i class="fas fa-chevron-left"></i></button>
+	<input  id="countBtn" type="button" value="1" disabled="disabled">
+   <button><i class="fas fa-chevron-right"></i></button>
    </div>
-	<jsp:include page="/views/layout/layout-down.jsp"/>
-	<script>
-		function checkall(){
-			if($("#checkAll").is(':checked')){
-				$("input[name=checkRow]").prop("checked",true);
-			}else{
-				$("input[name=checkRow]").prop("checked",false);
-			}
-		}
-	</script>
 </body>
 </html>

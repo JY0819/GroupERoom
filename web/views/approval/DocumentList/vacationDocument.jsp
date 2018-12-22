@@ -56,17 +56,18 @@
 		border: 1px solid black;
 		border-collapse: collapse;
 	}
+	/*내용부분  */
 	.lastContent {
 		height: 30em;
 		border: 1px solid black;
 		margin-
 	}
-	.last {
+	/* .last {
 		text-align: center;
 		border-left: hidden;
 		border-right: hidden;
 		border-bottom: hidden;
-	}
+	} */
 	.saveBtn {
 		position: relative;
 		top: 250px;
@@ -76,7 +77,7 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 950px;
+		top: 1100px;
 		left: 490px;
 	    position: absolute;
 	    font-size: 16px;
@@ -92,14 +93,22 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 950px;
+		top: 1100px;
 		left: 650px;
 	    position: absolute;
 	    font-size: 16px;
    	    border: 0;
 	    outline: 0;
 	}
-
+	.lastContent .contentArea {
+		position: absolute;
+		border: 1px solid black;
+		size: 20;
+		width: 99.6%;
+		left: 0px;
+		top: 457px;
+		height: 478px;
+	}
 </style>
 </head>
 <body>
@@ -125,7 +134,15 @@
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text">&nbsp;<button>결재자선택</button></td>
+			<td class="content"><input type="text" id="person1" name="person1">&nbsp;<button>결재자선택</button></td>
+		</tr>
+		<tr>
+			<td class="td">결재자</td>
+			<td class="content"><input type="text" id="person2" name="person2">&nbsp;<button>결재자선택</button></td>
+		</tr>
+		<tr>
+			<td class="td">결재자</td>
+			<td class="content"><input type="text" id="person3" name="person3">&nbsp;<button>결재자선택</button></td>
 		</tr>
 		<tr>
 			<td class="gap2" colspan="2"></td>
@@ -157,7 +174,7 @@
 			<td class="content" colspan="3"><input type="text" name="noContent"></td>
 		</tr>
 		<tr>
-			<td class="lastContent" colspan="7"></td>
+			<td class="lastContent" colspan="7"><textarea class="contentArea"></textarea></td>
 		</tr>
 	</table>
 	<button class="saveBtn">저장</button> 
