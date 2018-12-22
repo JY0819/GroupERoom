@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>내문서함</title>
 <style>
       table {
       
@@ -27,7 +27,7 @@
      td{
      	height:40px;
      }
-     .btn {
+     .btnArea {
      	top: 500px;
      	right: 650px;
      	position: absolute;
@@ -36,6 +36,17 @@
      	background: #205181;
      	color: white;
      }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
+     }
+     /*작성버튼  */
      .writeBtn{
     text-align: center;
 	background-color: #205181;
@@ -46,7 +57,10 @@
 	top: 100px;
     left: 140px;
     position: absolute;
+    border: 0;
+	outline: 0;
 	}
+	/*상신버튼  */
 	.sendBtn {
 	text-align: center;
 	background-color: #205181;
@@ -57,7 +71,10 @@
 	top: 100px;
     left: 250px;
     position: absolute;
+    border: 0;
+	outline: 0;
 	}
+	/*삭제버튼  */
 	.deleteBtn {
 	text-align: center;
 	background-color: #F1C40F;
@@ -68,11 +85,14 @@
 	top: 100px;
     left: 360px;
     position: absolute;
+    border: 0;
+	outline: 0;
 	}
     </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+
 	<jsp:include page="/views/main/mainPage.jsp"/>
   	<a href="writeDocument.jsp"><button class="writeBtn">작성</button></a>
   	<button class="sendBtn">상신</button>
@@ -123,10 +143,10 @@
         </tr>
       </tbody>
     </table>
-    <div class="btn">
-	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
+    <div class="btnArea">
+	<button><i class="fas fa-chevron-left"></i></button>
 	<input  id="countBtn" type="button" value="1" disabled="disabled">
-   <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
+   <button><i class="fas fa-chevron-right"></i></button>
    </div>
    <script>
    	function checkAll() {

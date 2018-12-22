@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>문서진행현황 페이지</title>
 <style>
+/*표  */
       table {
       
         width: 80%;
@@ -18,7 +19,6 @@
       
       table, th, td {
         border: 1px double rgb(128,181,240);
-        
       }
       th{
       background-color: rgb(128,181,240);
@@ -27,14 +27,26 @@
      td{
      	height:40px;
      }
-     .btn {
+     /*표밑 버튼영역  */
+     .btnArea {
      	top: 500px;
      	right: 650px;
      	position: absolute;
      }
+     /*몇번 페이지인지 출력하는 가운데 버튼*/
      #countBtn {
-     	background: navy;
+     	background: #205181;
      	color: white;
+     }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
      }
     </style>
 </head>
@@ -86,10 +98,10 @@
       </tbody>
    
     </table>
-    <div class="btn">
-	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
+    <div class="btnArea">
+	<button><i class="fas fa-chevron-left"></i></button>
 	<input  id="countBtn" type="button" value="1" disabled="disabled">
-   <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
+   <button><i class="fas fa-chevron-right"></i></button>
    </div>
 
 </body>

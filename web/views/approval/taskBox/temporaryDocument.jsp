@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>임시보관함</title>
 <style>
       table {
-      
         width: 80%;
         text-align: center;
       	margin-left: auto;
@@ -27,10 +26,24 @@
      td{
      	height:40px;
      }
-     .btn {
+     .btnArea {
      	top: 500px;
      	right: 650px;
      	position: absolute;
+     }
+     #countBtn {
+     	background: #205181;
+     	color: white;
+     }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
      }
      .move{
      text-align: center;
@@ -54,7 +67,10 @@
     left: 260px;
     position: absolute;
      }
-       
+     .checkBox {
+     	height: 17px;
+     	width: 17px;
+     }
 </style>
 </head>
 <body>
@@ -65,7 +81,7 @@
   	 <table>
       <thead>
         <tr>
-          <th><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAll();" style="height: 17px; width: 17px;"></th>
+          <th class="checkBox"><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAll();"></th>
           <th>번  호</th>
           <th>작 성 자</th>
           <th>처 리 자</th>
@@ -76,7 +92,7 @@
       </thead>
       <tbody>
         <tr>
-          <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
+          <td class="checkBox"><input type="checkbox" name="checkTd"></td>
           <td></td>
           <td></td>
           <td></td>
@@ -85,7 +101,7 @@
           
         </tr>
         <tr>
-          <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
+          <td class="checkBox"><input type="checkbox" name="checkTd"></td>
           <td></td>
           <td></td>
           <td></td>
@@ -94,7 +110,7 @@
           
         </tr>
         <tr>
-          <td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
+          <td class="checkBox"><input type="checkbox" name="checkTd"></td>
           <td></td>
           <td></td>
           <td></td>
@@ -116,10 +132,10 @@
       </tbody>
    
     </table>
-    <div class="btn">
-	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
+    <div class="btnArea">
+	<button><i class="fas fa-chevron-left"></i></button>
 	<input  id="countBtn" type="button" value="1" disabled="disabled">
-   <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
+   <button><i class="fas fa-chevron-right"></i></button>
    </div>
 </body>
 </html>

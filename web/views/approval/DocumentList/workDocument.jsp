@@ -75,7 +75,7 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 950px;
+		top: 1100px;
 		left: 490px;
 	    position: absolute;
 	    font-size: 16px;
@@ -91,14 +91,23 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 950px;
+		top: 1100px;
 		left: 650px;
 	    position: absolute;
 	    font-size: 16px;
 	    border: 0;
 	    outline: 0;
+	    
 	}
-	
+	.lastContent .contentArea {
+		position: absolute;
+		border: 1px solid black;
+		size: 20;
+		width: 99.6%;
+		left: 0px;
+		top: 457px;
+		height: 478px;
+	}
 
 </style>
 </head>
@@ -112,7 +121,7 @@
 			<td class="td">번호</td>
 			<td class="content"><input type="text" name="noContent"></td>
 			<td rowspan="2" class="gap"></td>
-			<td class="td" rowspan="2">결<br>재</td>
+			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
 			<td class="td">2차</td>
 			<td class="td">3차</td>
@@ -120,9 +129,21 @@
 		<tr>
 			<td class="td">첨부파일</td>
 			<td class="content"><input type="file" name="fileNoContent"></td>
-			<td class="approvalTd"><input type="image"></td>
-			<td class="approvalTd"><input type="image"></td>
-			<td class="approvalTd"><input type="image"></td>
+			<td class="approvalTd" rowspan="2"><input type="image"></td>
+			<td class="approvalTd" rowspan="2"><input type="image"></td>
+			<td class="approvalTd" rowspan="2"><input type="image"></td>
+		</tr>
+		<tr>
+			<td class="td">결재자</td>
+			<td class="content"><input type="text" id="person1" name="person1">&nbsp;<button>결재자선택</button></td>
+		</tr>
+		<tr>
+			<td class="td">결재자</td>
+			<td class="content"><input type="text" id="person2" name="person2">&nbsp;<button>결재자선택</button></td>
+		</tr>
+		<tr>
+			<td class="td">결재자</td>
+			<td class="content"><input type="text" id="person3" name="person3">&nbsp;<button>결재자선택</button></td>
 		</tr>
 		<tr>
 			<td class="gap2" colspan="2"></td>
@@ -154,7 +175,7 @@
 			<td class="content" colspan="3"><input type="text" name="noContent"></td>
 		</tr>
 		<tr>
-			<td class="lastContent" colspan="7"></td>
+			<td class="lastContent" colspan="7"><textarea class="contentArea"></textarea></td>
 		</tr>
 	</table>
 		<button class="saveBtn">저장</button>

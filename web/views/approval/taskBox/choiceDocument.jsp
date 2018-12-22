@@ -7,9 +7,11 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
+/*제목  */
 	h1{
 		text-align: center;
 	}
+	/*선택 버튼들  */
 	.vacation, .proof, .work{
 	position: absolute;
 	top: 400px;
@@ -19,16 +21,19 @@
 	border-radius: 10px;
 	width: 100px;
 	height: 25px;
-    left: 330px;
+    left: 370px;
     position: absolute;
     font-size: 16px;
 	}
+	/*미리보기 재직증명서  */
 	.proof {
-    left: 590px;
+    left: 630px;
 	}
+	/*미리보기 업무계획서  */
 	.work {
-    left: 850px;
+    left: 880px;
 	}
+	/*클릭시 이동경로 영역  */
 	#contentImgArea1, #contentImgArea2, #contentImgArea3 {
 		height: 250;
 		width: 250;
@@ -46,11 +51,13 @@
 </head>
 <body>
 	<jsp:include page="/views/main/mainPage.jsp"/>
+	<!--문서 선택 버튼 영역-->
 	<div class="btnArea">
 		<a href="vacationDocument.jsp"><label class="vacation" onclick="">휴가신청서</label></a>
 		<a href="proofOfEmployment.jsp"><label class="proof">재직증명서</label></a>
 		<a href="workDocument.jsp"><label class="work">업무계획서</label></a>
 	</div>
+	<!--미리보기 문서영역-->
 	<div class="outer">
 			<br>
 			<form action="<%= request.getContextPath() %>/insert.tn" method="post" encType="multipart/form-data">
@@ -79,6 +86,7 @@
 			</form>
 		</div>
 		<script>
+		/*문서 선택시 빨간 테두리  */
 		$(function() {
 			$("#contentImgArea1").on({'mouseenter':function(){
 				$(this).css("border-color", "red")
@@ -87,6 +95,7 @@
 			}});
 			
 		});
+		/*문서 선택시 빨간 테두리  */
 		$(function() {
 			$("#contentImgArea2").on({'mouseenter':function(){
 				$(this).css("border-color", "red")
@@ -95,6 +104,7 @@
 			}});
 			
 		});
+		/*문서 선택시 빨간 테두리  */
 		$(function() {
 			$("#contentImgArea3").on({'mouseenter':function(){
 				$(this).css("border-color", "red")

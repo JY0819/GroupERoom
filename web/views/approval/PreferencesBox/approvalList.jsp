@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>결재선</title>
 <style>
 	.area1, .area2, .area3 {
 		height: 50px;

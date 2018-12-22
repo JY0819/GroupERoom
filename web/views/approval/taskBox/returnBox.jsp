@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>반려함</title>
 <style>
       table {
       
@@ -27,15 +27,26 @@
      td{
      	height:40px;
      }
-     .btn {
+     .btnArea {
      	top: 500px;
      	right: 650px;
      	position: absolute;
      }
      #countBtn {
-     	background: navy;
+     	background: #205181;
      	color: white;
      }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
+     }
+     /*내문서함으로 이동 버튼  */
      .moveBtn{
     text-align: center;
 	background-color: #205181;
@@ -47,6 +58,7 @@
     left: 140px;
     position: absolute;
 	}
+	/*휴지통으로 이동버튼  */
 	.garbageBtn {
 	text-align: center;
 	background-color: #F1C40F;
@@ -113,10 +125,10 @@
         </tr>
       </tbody>
     </table>
-    <div class="btn">
-	<button><i class="fas fa-chevron-left" style="right: 50px"></i></button>
+    <div class="btnArea">
+	<button><i class="fas fa-chevron-left"></i></button>
 	<input  id="countBtn" type="button" value="1" disabled="disabled">
-   <button><i class="fas fa-chevron-right" style="right: 50px"></i></button>
+   <button><i class="fas fa-chevron-right"></i></button>
    </div>
    <script>
    	function checkAll() {

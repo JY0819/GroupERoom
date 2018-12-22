@@ -4,16 +4,19 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>기본설정</title>
 <style>
+/*이문서 전체영역 div  */
 	.titleArea {
 		position: relative;
 		top: 30px;
 	}
+	/*문서제목  */
 	.titleArea .title {
 		position: relative;
 		left: 120px;
 	}
+	/*제목 밑에 선  */
 	.titleArea .line {
 		width: 70em;
 	}
@@ -21,10 +24,12 @@
 		position: relative;
 		left: 50px;
 	}
+	/*제목 밑에 선 밑 영역 테이블  */
 	.settingTable {
 		position: relative;
 		left: 130px;
 	}
+	/*저장버튼  */
 	.saveBtn {
 		text-align: center;
 		background-color: #205181;
@@ -38,7 +43,6 @@
 	    margin-left: auto;
 	    margin-right: auto;
 	}
-	/* top:100px; left:50px; position; relative; */
 </style>
 </head>
 <body>
