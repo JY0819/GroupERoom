@@ -3,6 +3,7 @@
  */
 
 var treeviewJson = {
+			//var jsonData = treeviewJson.adminJson;
 			adminJson : [
 							{
 								text: "관리자"
@@ -35,4 +36,5 @@ var treeviewJson = {
 								   
 							}
 					]
+			
 }
