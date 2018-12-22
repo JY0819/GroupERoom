@@ -47,7 +47,7 @@ body {
 				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
-					<input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+					<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
 						<div class="bootstrap-filestyle input-group">
 						<input type="text" id="userfile" class="form-control" name="userfile" disabled="">
 							<span class="group-span-filestyle input-group-btn" tabindex="0">
@@ -58,13 +58,14 @@ body {
 					</div>
 				</div>
 				
+				<div class="insertNoticeBtn">
 					<button type="submit" id="enrollBtn" class="btn btn-primary">등록</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
 			</form>
 		</div>
-
 	</div>
+
 	
 	<script>
 		$(function(){

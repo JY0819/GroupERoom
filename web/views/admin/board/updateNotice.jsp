@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- admin 만 글 작성 가능 -->
+<!-- admin 만 글 수정 가능 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,9 +57,10 @@ body {
 						</span>
 					</div>
 				</div>
-	
-				<button type="submit" id="updateBtn" class="btn btn-primary">수정</button>
-				<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
+				<div class="updateNoticeBtn">
+					<button type="submit" id="updateBtn" class="btn btn-primary">수정</button>
+					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
+				</div>
 			</form>
 		</div>
 

@@ -21,54 +21,49 @@ body {
 	margin-top: 100px;
 }
 
+/* .container custom-container{
+	margin-top:50px;
+} */
+
 /* 공지사항 등록, 수정 */
 #formtitle {
 	font-size: 15px;
 }
 
-.noticeBtn {
+.noticeListBtn {
 	float: right;
 	margin-right: 190px;
+	justify-content: flex-end;
+	display: flex;
 }
 
-#writeBtn, #enrollBtn {
+.detailNoticeBtn, .updateNoticeBtn, .insertNoticeBtn {
+	float: right;
+	justify-content: flex-end;
+	display: flex;
+}
+
+#writeBtn, #enrollBtn, #updateBtn, #gotoList, #deleteBtn, #gotoList {
 	width: 70px;
 	height: 35px;
 	background: #205181;
 	color: #FFF;
 	border: 0;
 	outline: 0;
-}
-
-#enrollBtn {
-	float: right;
 	margin-right: 5px;
 }
 
-#deleteBtn, #updateBtn {
-	width: 70px;
-	height: 35px;
+#deleteBtn {
 	background: #F78181;
-	color: #FFF;
-	border: 0;
-	outline: 0;
-}
-
-#updateBtn {
-	float: right;
-	margin-right: 5px;
 }
 
 #gotoList {
-	background: #A9D0F5; float : right;
-	margin-right: 5px;
-	height: 35px;
-	border: 0;
-	outline: 0;
-	border: 0;
-	float: right;
+	background: #A9D0F5;
+	width: 80px;
 }
 
-.paging{
+/* 페이지 */
+.paging {
 	margin-top: 50px;
 }
+

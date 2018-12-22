@@ -62,12 +62,12 @@
 		</table>
 	</div>
 
-	<div class="noticeBtn">
+	<div class="noticeListBtn">
 		<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
 		<button type="button" id="deleteBtn" class="btn btn-primary">삭제</button>
 	</div>
 
-	<div class="paging">
+	<div class="paging" align="center">
 		<ul class="pagination">
 			<li><a href="#">1</a></li>
 			<li><a href="#">2</a></li>
