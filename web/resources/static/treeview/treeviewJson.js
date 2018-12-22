@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 var treeviewJson = {
 			//var jsonData = treeviewJson.adminJson;
@@ -24,13 +21,13 @@ var treeviewJson = {
 												 	   ,{text: "직책 관리"}
 											 		]
 											}
-										   ,{
+										/*   ,{
 											  text: "게시판 관리"
 											 ,nodes: [
 												 		{text: "공지 관리"}
 												 	   ,{text: "일정 관리"}
 											 		]
-										   }
+										   }*/
 								   
 									   ]
 								   
