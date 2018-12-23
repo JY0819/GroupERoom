@@ -22,9 +22,6 @@
 			<h1><%= request.getAttribute("title")%></h1>
 		</div>
 		<div>
-			<input type="text">
-		</div>
-		<div>
 			<table class="table">
 				<thead>
 					<tr>
