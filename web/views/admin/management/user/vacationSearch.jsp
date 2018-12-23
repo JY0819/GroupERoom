@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	//참고 : https://jonmiles.github.io/bootstrap-treeview/
 	var jsonData = treeviewJson.adminJson;
-	var nodeName = "사원 추가";
+	var nodeName = "휴가 조회";
 </script>
 
 <section class="content">
@@ -16,7 +16,26 @@
 	</div>
 	
 	<div class="content-right container">
-		<jsp:include page="/views/admin/management/user/userForm.jsp" />
+		<div>
+			<h1>휴가 조회</h1>
+		</div>
+		<div>
+			<input type="text">
+		</div>
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>사원 번호</th>
+						<th>이름</th>
+						<th>부서</th>
+						<th>총 휴가일 수</th>
+						<th>사용일</th>
+						<th>잔여일</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </section>
 
