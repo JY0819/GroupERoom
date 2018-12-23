@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	//참고 : https://jonmiles.github.io/bootstrap-treeview/
 	var jsonData = treeviewJson.adminJson;
-	var nodeName = "사원 추가";
+	var nodeName = "사원 조회 및 수정";
 </script>
 
 <section class="content">
@@ -16,7 +16,20 @@
 	</div>
 	
 	<div class="content-right container">
-		<jsp:include page="/views/admin/management/user/userForm.jsp" />
+		<form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>사원 번호</th>
+						<th>이름</th>
+						<th>부서</th>
+						<th>직책</th>
+						<th>주소</th>
+						<th>연락처</th>
+					</tr>
+				</thead>
+			</table>
+		</form>
 	</div>
 </section>
 
