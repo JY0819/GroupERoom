@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+	 /*메인 페이지 표 테이블 스타일*/
+      table {
+        width: 75%;
+        text-align: center;
+      	left: 270px;
+      	position: absolute;
+       	top:230px;
+      }
+      
+      table, th, td {
+        border: 1px double rgb(128,181,240);
+        
+      }
+      th{
+      background-color: rgb(128,181,240);
+      border : 1px double skyblue;
+      text-align: center;
+      height:30px;
+      }
+     td{
+     	height:40px;
+     }
+     /*페이지 버튼 영역*/
+     .btnArea {
+     	top: 500px;
+     	right: 570px;
+     	position: absolute;
+     }
+     /*몇번 페이지인지 출력하는 가운데 버튼*/
+     #countBtn {
+     	background: navy;
+     	color: white;
+     }
+     /*좌측 화살표 버튼*/
+     .fas fa-chevron-left {
+     	position: absolute;
+     	right: 50px;
+     }
+     /*우측 화살표 버튼*/
+     .fas fa-chevron-right{
+     	position: absolute;
+     	right: 50px;
+     }

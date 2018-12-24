@@ -7,7 +7,7 @@
 <script>
 	var jsonData = treeviewJson.approvalJson;
 	var nodeName = "결재할 문서";
-</script>
+</script> 
 
 <section class="content">
 
