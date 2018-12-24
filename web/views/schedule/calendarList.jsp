@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
-<link rel="stylesheet" type="text/css" href="/semi/assets/css/calendarList.css">
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/schedule/calendarList.css">
 <script>
 	var jsonData=treeviewJson.calendarJson;
 	var nodeName="일정 목록";
@@ -74,8 +74,10 @@
 			var month=(today.getMonth()+1);
 			var day=holiDate.getDate();
 			weekday=holiDate.getDay()+1;
+			
 			console.log(weekday);
 			console.log(cnt);
+			
 			if(month<10){
 				if(i<10){
 					holis=year+'0'+month+'0'+day;
@@ -93,14 +95,19 @@
 			lunaMonthCal(holis);
 			
 			switch(weekday%7){
-			case 1:weekday='일'; break;
-			case 2:weekday='월'; break;
-			case 3:weekday='화'; break;
-			case 4:weekday='수'; break;
-			case 5:weekday='목'; break;
-			case 6:weekday='금'; break;
-			case 0:weekday='토'; break;
+				case 1: weekday='일'; break;
+				case 2: weekday='월'; break;
+				case 3: weekday='화'; break;
+				case 4: weekday='수'; break;
+				case 5: weekday='목'; break;
+				case 6: weekday='금'; break;
+				case 0: weekday='토'; break;
 			}
+			
+			
+			
+			<%-- <%if(요소가 있는지 확인 : true : 셀 등록되게)%> --%>
+			
 			
 			cell = row.insertCell();
 			cell.innerHTML ='<span style="font-weight:bold;">'+weekday+'</span>'+'<p></p>';
@@ -176,7 +183,7 @@
 			if(lunar_date.lunHolis.toString().substring(4,8)==='0817'){replaceLunHolis2=holis+'1';}
 
 		}
-		view();
+		
 		switch(replaceHolis){
 		//어린이날 대체휴일
 		case 1:$("#calSchedule"+holis.toString().substring(0,4)+"05061").html('<span class="sunday">6 대체휴일</span><p></p>'); replaceHolis=0; break;
@@ -518,14 +525,15 @@
 					<td onclick="nextCalendar()" id="nextCal"><label style="font-size:30px">></label></td>
 				</tr>
 				<tr id="day"> 
-					<td class="day">Day</td>
-					<td colspan="5" class="day"></td>
+					<td class="day"></td>
+					<td colspan="5" class="day">일정 내용</td>
 					<td class="day"></td>
 				</tr>
 			</thead>
 			<tbody id="calendarMain"> <%-- 날짜 들어가는 부분 --%>
 			</tbody>
 		</table>
+	<!-- 	
 		<div class="popUpSchedule" id="viewSchedule" align="center"> <%-- 일정 보기 div --%>
 			<div class="scheduleDay" id="viewScheduleDay"></div>
 			<div id="daySchedule">일 정 들 일 정 들</div>
@@ -540,12 +548,12 @@
 				<select>
 					<option value="my">내 일정</option>
 					<!-- <input type="hidden" value="1" name="calendarClass"> -->
-					<option value="team">팀 일정</option>
+					<!-- <option value="team">팀 일정</option> -->
 					
 					<!-- //if(loginUser!=null && loginUser.getUserId().equals("관리자아이디")){ %>-->
-					<option value="company">회사 일정</option>
+					<!-- <option value="company">회사 일정</option> -->
 					<!-- <input type="hidden" value="3" name="calendarClass"> -->
-				</select>
+				<!-- </select>
 				<input type="text" size="13" maxlength="25" placeholder="추가할 일정 입력" name="addSchedule">
 			</div>
 			<div class="scheduleBtn" id="saveAddBtn">추가</div>
@@ -598,6 +606,7 @@
 			</div>
 		</div>
 	</div>
+	 -->
 	<div class="scheduleRight">
 	</div>
 	<div class="bottom">
@@ -607,8 +616,33 @@
 		/*달력 생성*/
 		buildCalendar();
 		
+		$("#Myschedule").change(function(){
+			if($("#Myschedule").is(":checked")){
+				//여기에 servlet ajax
+				
+	            alert($("#Myschedule + label").text()+' 체크');
+	        }else{
+	            alert($("#Myschedule + label").text()+' 체크해제');
+	        }
+		});
 		
-		/*팝업창 우선 숨기기*/
+		$("#Teamschedule").change(function(){
+			if($("#Teamschedule").is(":checked")){
+	            alert($("#Teamschedule + label").text()+' 체크');
+	        }else{
+	            alert($("#Teamschedule + label").text()+' 체크해제');
+	        }
+		});
+		
+		$("#Companyschedule").change(function(){
+			if($("#Companyschedule").is(":checked")){
+	            alert($("#Companyschedule + label").text()+' 체크');
+	        }else{
+	            alert($("#Companyschedule + label").text()+' 체크해제');
+	        }
+		});
+		/*
+		//팝업창 우선 숨기기
 		$("#viewSchedule").hide();
 		$("#addSchedule").hide();
 		$("#modSchedule").hide();
@@ -617,7 +651,8 @@
 		$("#modConfirm").hide();
 		$("#delConfirm").hide();
 		$("#delDelConfirm").hide();
-		/*팝업창 불러오기*/
+
+		//팝업창 불러오기
 		var scheduleDate="";
 		function view(){
 			$("#calendarMain").children().children().click(function(){
@@ -649,6 +684,7 @@
 		$("#closeBtn").click(function(){
 			$("#viewSchedule").hide();
 		});
+		
 		//일정 추가 팝업 열기
 		$("#addBtn").click(function(){
 			$("#addScheduleDay").text(scheduleDate);

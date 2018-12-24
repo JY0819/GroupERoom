@@ -1,13 +1,19 @@
 @charset "UTF-8";
 	td{
-		width:140px;
-		height:90px;
+		width:100px;
 		border:1px solid #CBCBCB;
 		padding:10px;
 	}
 	tbody{
 		vertical-align:top;
 		text-align:right;
+	}
+	td.scheduleList{
+		text-align:center !important;
+		verical-align:middle;
+	}
+	#calendarTitle{
+		width:550px !important;
 	}
 	table {
 		border:0px;
@@ -33,37 +39,7 @@
 		color:#0000ff;
 		font-weight:bold;
 	}
-	td:hover{
-		background:#f0f0f0;
-	}
-	div.sideMenu{
-		width:15%;
-		height:100%;
-		float:left;
-		margin:10px;
-		align:center;
-		
-	}
-	div.sideMenuHead{
-		text-align:center;
-		width:100%;
-		height:50px;
-		line-height:50px;
-		background:#39476f;
-		color:white;
-		font-size:25px;
-		position: relative;
-	}
-	div.sideMenuBody{
-		text-align:center;
-		width:100%;
-		height:50px;
-		line-height:50px;
-		background:#52669b;
-		color:white;
-		font-size:25px;
-		position: relative;
-	}
+
 	div.scheduleLeft{
 		width:15%;
 		height:100%;
@@ -82,7 +58,7 @@
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	}
 	div.schedule{
-		width:60%;
+		width:65%;
 		float:left;
 		margin:15px;
 		
@@ -199,12 +175,30 @@
 	input[type=checkbox] {  
     	display: none;  
 	}
-	input[type=checkbox] + label{
+	
+	#Myschedule + label{
 	    display: inline-block;  
 	    cursor: pointer;  
 	    position: relative;  
 	    padding-left: 25px;  
 	    margin-right: 10px;  
+	    color:#2ebe8b;
+	}
+	#Teamschedule + label{
+	    display: inline-block;  
+	    cursor: pointer;  
+	    position: relative;  
+	    padding-left: 25px;  
+	    margin-right: 10px;  
+	    color:#736DCC;
+	}
+	#Companyschedule + label{
+	    display: inline-block;  
+	    cursor: pointer;  
+	    position: relative;  
+	    padding-left: 25px;  
+	    margin-right: 10px;  
+	    color:#C64A4A;
 	}
 
 	input[type=checkbox]+ label:before {     
@@ -212,7 +206,7 @@
 	    content: "";  
 	    display: inline-block;  
 
-	/*     width: 25px;  
+	/* width: 25px;  
 	    height: 25px;  
 	  	border: 1px solid lightgray; */
 	    margin-right: 5px;  
@@ -222,14 +216,26 @@
 	    border-radius: 2px; 
 	}
 	
-	input[type=checkbox]:checked + label:before { 
+	#Myschedule:checked + label:before {
 	    content: "\2713";  /* 체크모양 */
 	    font-size: 22px; 
 	    font-weight: 600;
 	    text-align: center;  
 	    /* line-height: 18px;  */ 
 	    color:#2ebe8b;
-
+	} 
+	#Teamschedule:checked + label:before {
+	    content: "\2713";  /* 체크모양 */
+	    font-size: 22px; 
+	    font-weight: 600;
+	    text-align: center;
+	    color:#736DCC;
 	} 
 
-	
+	#Companyschedule:checked + label:before {
+	    content: "\2713";
+	    font-size: 22px; 
+	    font-weight: 600;
+	    text-align: center;
+	    color:#C64A4A;
+	} 	
