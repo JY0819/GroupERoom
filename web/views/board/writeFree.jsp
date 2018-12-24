@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<jsp:include page="/views/main/mainPage.jsp" />
-<title>Insert title here</title>
+
+<jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
+<script>
+	var jsonData=treeviewJson.boardJson;
+	var nodeName="자유게시판";
+</script>
+
 <style>
 .title{
 	width:400px;
@@ -41,30 +42,22 @@ color:black;
 /* 게시판 목록끝  */
 
 </style>
-</head>
-<body>
+
+
+<section class="content">
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+	<div class="content-right container">
+
+	
 
 
 <form>
 <br>
 <h1 align="center" >l 자유 게시판</h1>
 <hr>
-<!-- 게시판목록 -->
- <div id="sideMenu" >
 
-		<h3><a href="boardNotice.jsp" id="menuFont">공지사항</a></h3>
-	
-    <hr>
-    
-    <h3><a href="boardTeam.jsp" id="menuFont">부서별게시판</a></h3>
-   	
-    <hr>
-    
-    <h3><a href="boardFree.jsp" id="menuFont">자유게시판</a></h3>
-   
-    <hr>
-    
-	</div> 
 	<table align="center">
 	
 	<tr>
@@ -108,5 +101,11 @@ color:black;
 	<br>
 	<br>
 </form>
-</body>
-</html>
+
+
+	
+</div>
+</section>
+
+<jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
+

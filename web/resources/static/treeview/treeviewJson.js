@@ -32,6 +32,19 @@ var treeviewJson = {
 						 ]
 						   
 					}
-			]
+			],
 			
+	boardJson : [
+				{
+					text: "게시판"	
+					,nodes: [
+						{text: "공지사항", href:"/semi/views/board/boardNotice.jsp"}
+						,{text: "부서게시판", href:"/semi/views/board/boardTeam.jsp"}
+						,{text: "자유게시판", href:"/semi/views/board/boardFree.jsp"}
+						
+					]
+				}
+		
+	]		
+		
 }

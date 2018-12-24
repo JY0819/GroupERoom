@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<jsp:include page="/views/main/mainPage.jsp" />
-<title>부서게시판</title>
+  
+<jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
+<script>
+	var jsonData=treeviewJson.boardJson;
+	var nodeName="부서게시판";
+</script>
 
 <style>
 
@@ -33,8 +33,8 @@ body {
   width:1000px;
   margin:30px auto 10px;
   position:relative;
-  left:120px;
-  top:90px;
+  left:30px;
+  top:70px;
 }
 
    #title {
@@ -43,7 +43,7 @@ body {
    font-size:16px;
   /*   clear:both; */
   position:absolute;
-  left:230px;
+  left:270px;
   top:100px;
   } 
 
@@ -113,46 +113,37 @@ body {
 	/* position: relative;
 	top: 210px;
 	right:400px;   */
-	margin-left:250px;
-	margin-right:auto;
+	margin-left:auto;
+	/* margin-right:auto; */
 	margin-top:200px;
 	align:center;
 }
 </style>
-
-</head>
-<body>
+<section class="content">
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+	<div class="content-right container">
 
 	
 <!-- <form  id="board" align="center"> -->
 	
 	
 
-		<div id="title">
-	    <h1>l 부서게시판</h1>
+		<div id="title" align="center">
+	   <h1>l 부서게시판</h1>
+	   
 		</div>
 		
-		<br>
-	<hr>
+	<br>
+	
 	<br>
 	<br>
- <!-- 게시판목록 -->
- <div id="sideMenu" >
-<br>
-		<h3><a href="boardNotice.jsp" id="menuFont">공지사항</a></h3>
-		<br>
-    <hr>
-    <br>
-    <h3><a href="boardTeam.jsp" id="menuFont">부서별게시판</a></h3>
-   	<br>
-    <hr>
-    <br>
-    <h3><a href="boardFree.jsp" id="menuFont">자유게시판</a></h3>
-    <br>
-    <hr>
-    
-	</div> 
- 
+	<br>
+	<br>
+	
+
+ <hr>
 
 <div align="center" id="board">
 
@@ -207,9 +198,10 @@ body {
 	
 
 
+</div>
+</section>
 
-</body>
-</html>
+<jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
 
 
     

@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<jsp:include page="/views/main/mainPage.jsp" />
-<title></title>
-
+<jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
+<script>
+	var jsonData=treeviewJson.boardJson;
+	var nodeName="자유게시판";
+</script>
 <style>
 
 * {
@@ -128,8 +126,13 @@ body {
 </style>
 
 
-</head>
-<body>
+<section class="content">
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+	<div class="content-right container">
+
+	
 
 	
 <!-- <form  id="board" align="center"> -->
@@ -143,22 +146,7 @@ body {
 	<hr>
 	<br>
 	<br>
- <!-- 게시판목록 -->
- <div id="sideMenu" >
-<br>
-		<h3><a href="boardNotice.jsp" id="menuFont">공지사항</a></h3>
-		<br>
-    <hr>
-    <br>
-    <h3><a href="boardTeam.jsp" id="menuFont">부서별게시판</a></h3>
-   	<br>
-    <hr>
-    <br>
-    <h3><a href="boardFree.jsp" id="menuFont">자유게시판</a></h3>
-    <br>
-    <hr>
-    
-	</div> 
+ 
  
 
 <div align="center" id="board">
@@ -213,12 +201,12 @@ body {
     	<button><a id="textBtn" href="writeFree.jsp" id="textBtn"> 글쓰기 </a></button>
 	</div>
 	
+	
+</div>
+</section>
 
+<jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
 
-
-
-</body>
-</html>
 
 
     
