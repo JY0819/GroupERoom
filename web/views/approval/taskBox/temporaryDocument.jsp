@@ -22,8 +22,8 @@
 		<table>
 			<thead>
 				<tr>
-					<th class="checkBox"><input type="checkbox" name="checkAll"
-						id="checkAll" onclick="checkAll();"></th>
+					<th><input type="checkbox" name="checkAll"
+						id="checkAll" style="height: 17px; width: 17px;"  onclick="checkAll();"></th>
 					<th>번 호</th>
 					<th>작 성 자</th>
 					<th>처 리 자</th>
@@ -34,7 +34,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td class="checkBox"><input type="checkbox" name="checkTd"></td>
+					<td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;" ></td>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -43,7 +43,7 @@
 
 				</tr>
 				<tr>
-					<td class="checkBox"><input type="checkbox" name="checkTd"></td>
+					<td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -52,7 +52,7 @@
 
 				</tr>
 				<tr>
-					<td class="checkBox"><input type="checkbox" name="checkTd"></td>
+					<td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
 					<td></td>
 					<td></td>
 					<td></td>
