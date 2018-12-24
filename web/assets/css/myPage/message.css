@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/* 받은쪽지함 */
+.btn {
+	text-align: center;
+	background-color: #205181;
+	padding: 5px;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+}
+
+#btn1 {
+	margin-bottom: 20px;
+}
+
+#btn2 {
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+
+.alignBox {
+	position: relative;
+	display: inline-block;
+}
+
+#messageList {
+	width: 700px;
+	height: 300px;
+}
+
+.line {
+	border: 2px solid skyblue;
+	border-collapse: collapse;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+#alignDiv {
+	margin-top: 80px;
+	margin-bottom: 100px;
+}
+
+.pageMove {
+	color: black;
+}
+
+.alignPageMove {
+	text-align: center;
+	font-weight: bold;
+	height: 40px;
+}
+
+/* 보낸쪽지함 */
+.alignBox {
+	position: relative;
+	display: inline-block;
+}
+
+#messageList {
+	width: 600px;
+	height: 300px;
+}
+
+.line {
+	border: 2px solid skyblue;
+	border-collapse: collapse;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+#alignDiv {
+	margin-top: 80px;
+	margin-bottom: 100px;
+}
+
+/* 쪽지 보관함 */
+.deleteBtn {
+	text-align: center;
+	background-color: #205181;
+	padding: 5px;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	margin-bottom: 20px;
+}
+
+.alignBox {
+	position: relative;
+	display: inline-block;
+}
+
+#messageList {
+	width: 600px;
+	height: 300px;
+}
+
+#alignDiv {
+	margin-top: 80px;
+	margin-bottom: 100px;
+}

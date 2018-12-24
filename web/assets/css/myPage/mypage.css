@@ -1,0 +1,97 @@
+@charset "UTF-8";
+/* 휴가 */
+.alignBox {
+	position: relative;
+	display: inline-block;
+}
+
+#useVacList {
+	width: 600px;
+}
+
+.line {
+	border: 2px solid skyblue;
+	border-collapse: collapse;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+#alignDiv {
+	margin-top: 80px;
+	margin-bottom: 100px;
+}
+
+.pageMove {
+	color: black;
+}
+
+.alignPageMove {
+	text-align: center;
+	font-weight: bold;
+	height: 40px;
+}
+
+/* 주소록 */
+.diary {
+	border: 2px solid skyblue;
+	border-radius: 15px;
+	width: 600px;
+	height: 400px;
+}
+
+.sub {
+	text-indent: 1em;
+}
+
+#sendMessagePop {
+	border: 2px solid skyblue;
+	border-radius: 5px;
+	width: 250px;
+	height: 150px;
+	margin-left: 50px;
+	padding: 5px;
+}
+
+#messageArea {
+	width: 100%;
+	height: 125px;
+	border-radius: 5px;
+	resize: none;
+	overflow-x: hidden;
+}
+
+.btn {
+	width: 50px;
+	height: 25px;
+	border-radius: 5px;
+}
+
+#sendObject {
+	border-radius: 5px;
+	width: 100%;
+	height: 30px;
+}
+
+/* 정보수정 */
+#saveBtn {
+	text-align: center;
+	background-color: #205181;
+	padding: 5px;
+	color: white;
+	border-radius: 10px;
+	width: 120px;
+	height: 40px;
+	margin-top: 15px;
+}
+
+.infoName {
+	padding-left: 10px;
+	padding-right: 15px;
+	padding-top: 15px;
+}
+
+.setInfo {
+	padding-left: 15px;
+	padding-right: 5px;
+	padding-top: 15px;
+}
