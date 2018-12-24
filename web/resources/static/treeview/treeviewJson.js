@@ -21,13 +21,13 @@ var treeviewJson = {
 									 	   ,{text: "직책 관리", href: "/semi/admin/management/base/posManagement"}
 								 		]
 								}
-							/*   ,{
+							  ,{
 								  text: "게시판 관리"
 								 ,nodes: [
-									 		{text: "공지 관리"}
+									 		{text: "공지 관리", href: "/semi/views/admin/board/noticeList.jsp"}
 									 	   ,{text: "일정 관리"}
 								 		]
-							   }*/
+							   }
 					   
 						 ]
 						   

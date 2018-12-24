@@ -2,7 +2,6 @@
 
 <jsp:include page="/views/layout/layout-up.jsp" />
 <section>
-	<h1>hiiiiiii</h1>
 	<div class="mainwrapper"></div>
 </section>
 
