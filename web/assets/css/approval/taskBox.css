@@ -1,0 +1,265 @@
+@charset "UTF-8";
+/* approvalDocument */
+/*결재할 문서 표*/
+table {
+	width: 80%;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	top: 200px;
+}
+
+table, th, td {
+	border: 1px double rgb(128, 181, 240);
+}
+
+th {
+	background-color: rgb(128, 181, 240);
+	height: 30px;
+}
+
+td {
+	height: 40px;
+}
+/*표 밑 버튼 영역*/
+.btnArea {
+	top: 500px;
+	right: 650px;
+	position: absolute;
+}
+/*승인버튼*/
+.success {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 140px;
+	position: absolute;
+	border: 0;
+	outline: 0;
+}
+/*반려버튼*/
+.return {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 260px;
+	position: absolute;
+	border: 0;
+	outline: 0;
+}
+/*좌측 화살표 버튼*/
+.fas fa-chevron-left {
+	position: absolute;
+	right: 50px;
+}
+/*우측 화살표 버튼*/
+.fas fa-chevron-right {
+	position: absolute;
+	right: 50px;
+}
+
+/* 페이징 */
+.paging {
+	
+}
+
+/* returnBox */
+/*내문서함으로 이동 버튼  */
+.moveBtn {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 140px;
+	position: absolute;
+}
+/*휴지통으로 이동버튼  */
+.garbageBtn {
+	text-align: center;
+	background-color: #F1C40F;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 250px;
+	position: absolute;
+}
+
+/* myDocument */
+/*작성버튼  */
+.writeBtn {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 140px;
+	position: absolute;
+	border: 0;
+	outline: 0;
+}
+/*상신버튼  */
+.sendBtn {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 250px;
+	position: absolute;
+	border: 0;
+	outline: 0;
+}
+/*삭제버튼  */
+.deleteBtn {
+	text-align: center;
+	background-color: #F1C40F;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 360px;
+	position: absolute;
+	border: 0;
+	outline: 0;
+}
+
+/* temporaryDocument */
+.move {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 140px;
+	position: absolute;
+}
+
+.delete {
+	text-align: center;
+	background-color: #F1C40F;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 260px;
+	position: absolute;
+}
+
+.checkBox {
+	height: 17px;
+	width: 17px;
+}
+
+/* departmentDocument */
+/*삭제버튼  */
+.delete {
+	text-align: center;
+	background-color: #F1C40F;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 140px;
+	position: absolute;
+	border: 0;
+	outline: 0;
+}
+/* finishapproval */
+.delete {
+	text-align: center;
+	background-color: #F1C40F;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 140px;
+	position: absolute;
+}
+/* trash */
+.move {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 140px;
+	position: absolute;
+}
+
+.delete {
+	text-align: center;
+	background-color: #F1C40F;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	top: 100px;
+	left: 260px;
+	position: absolute;
+}
+
+/* defaultsetting */
+/*이문서 전체영역 div  */
+.titleArea {
+	position: relative;
+	top: 30px;
+}
+/*문서제목  */
+.titleArea .title {
+	position: relative;
+	left: 120px;
+}
+/*제목 밑에 선  */
+.titleArea .line {
+	width: 70em;
+}
+
+.titleArea tbody tr:eq(0) td:eq(0) {
+	position: relative;
+	left: 50px;
+}
+/*제목 밑에 선 밑 영역 테이블  */
+.settingTable {
+	position: relative;
+	left: 130px;
+}
+/*저장버튼  */
+.saveBtn {
+	text-align: center;
+	background-color: #205181;
+	color: white;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	font-size: 16px;
+	border: 0;
+	outline: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
