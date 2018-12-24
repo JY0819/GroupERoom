@@ -1,12 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<jsp:include page="/views/main/mainPage.jsp" />
-<link rel="stylesheet" type="text/css" href="/semi/assets/css/calendar.css">
 
-<title>Calender</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/calendar.css">
+<script>
+	var jsonData=treeviewJson.calendarJson;
+	var nodeName="일정 관리";
+</script>
+
 <script language="javascript" type="text/javascript">
 	var today = new Date(); // 오늘 날짜
 	var nMonth;
@@ -443,10 +445,7 @@
 	}
 
 	function lunaMonthCal(holis){
-
 	
-	//여기만 수정하면 됨 
-	//루프가 두번도는 문제
 		console.log("lunaMonthCal_holis : "+holis);
 		lunar_date=new lunaDate(holis.toString().substring(0,4), holis.toString().substring(4,6), holis.toString().substring(6));
 		lunar_date=new SolarToLunar(solDate);
@@ -458,12 +457,12 @@
 		console.log("");
 	}
 </script>
-</head>
-<body>
-	<div class="sideMenu">
-		<div class="sideMenuHead">일정</div>
-		<div class="sideMenuBody">일정관리</div>
+<section class="content">
+	<div class="content-left">
+		<div id="treeview"></div>
 	</div>
+	<div class="content-right container">
+	
 	<div class="scheduleLeft">
 		<div class="list">
 			<input type="checkbox" id="Myschedule" name="myschedule" value="myschedule" checked>
@@ -508,7 +507,12 @@
 			<div class="message" id="addMessage">
 				<select>
 					<option value="my">내 일정</option>
+					<!-- <input type="hidden" value="1" name="calendarClass"> -->
 					<option value="team">팀 일정</option>
+					
+					<!--//if(loginUser!=null && loginUser.getUserId().equals("관리자아이디")){ %>-->
+					<option value="company">회사 일정</option>
+					<!-- <input type="hidden" value="3" name="calendarClass"> -->
 				</select>
 				<input type="text" size="13" maxlength="25" placeholder="추가할 일정 입력" name="addSchedule">
 			</div>
@@ -521,8 +525,10 @@
 				<select>
 					<option value="my">내 일정</option>
 					<option value="team">팀 일정</option>
+					<option value="company">회사 일정</option>
 				</select>
 				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력" name="modSchedule">
+				<input type="hidden">
 			</div>
 			<div class="scheduleBtn" id="saveModBtn">저장</div>
 			<div class="scheduleBtn" id="closeModBtn">닫기</div>
@@ -671,6 +677,6 @@
 			$("#delDelConfirm").hide();
 		});
 	</script>
-
-</body>
-</html>
+</div>
+</section>
+<jsp:include page="/views/layout/treeview/schedule/layout-down.jsp" />
