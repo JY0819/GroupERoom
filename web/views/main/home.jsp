@@ -4,7 +4,9 @@
 <jsp:include page="/views/main/mainPage.jsp" />
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/mainPage.css">
-
+<div class="top">
+	<h1>　</h1>
+</div>
 <div class="main_container">
 	<table id="mainTable" style="z-index:-1;">
 		<tr>

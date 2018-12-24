@@ -1,13 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-<jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
-<link rel="stylesheet" type="text/css" href="/semi/assets/css/calendar.css">
-<script>
-	var jsonData=treeviewJson.calendarJson;
-	var nodeName="일정 관리";
-</script>
-<script language="javascript" type="text/javascript">
+/**
+ * 
+ */
+
 	var today = new Date(); // 오늘 날짜
 	var nMonth;
 	var holis="";
@@ -454,227 +448,114 @@
 		console.log("");
 		console.log("");
 	}
-</script>
-<section class="content">
-	<div class="content-left">
-		<div id="treeview"></div>
-	</div>
-	<div class="content-right container">
+
 	
-	<div class="scheduleLeft">
-		<div class="list">
-			<input type="checkbox" id="Myschedule" name="myschedule" value="myschedule" checked>
-			<label for="Myschedule">내 일정</label><br><br>
-			<input type="checkbox" id="Teamschedule" name="teamschedule" value="teamschedule" checked>
-			<label for="Teamschedule">부서 일정</label><br><br>
-			<input type="checkbox" id="Companyschedule" name="companyschedule" value="companyschedule" checked>
-			<label for="Companyschedule">회사 일정</label><br>
-		</div>
-	</div>
-	<div class="schedule">
-		<table id="calendar" align="center">
-			<thead>
-				<tr id="title">
-					<td onclick="prevCalendar()" id="preCal"><label style="font-size:30px"><</label></td>
-					<td colspan="5" align="center" id="calendarTitle" style="font-size:30px">yyyy년 m월</td>
-					<td onclick="nextCalendar()" id="nextCal"><label style="font-size:30px">></label></td>
-				</tr>
-				<tr id="day"> 
-					<td class="sunday day" align="center">일</td>
-					<td class="day">월</td>
-					<td class="day">화</td>
-					<td class="day">수</td>
-					<td class="day">목</td>
-					<td class="day">금</td>
-					<td class="saturday day" align="center">토</td>
-				</tr>
-			</thead>
-			<tbody id="calendarMain"> <%-- 날짜 들어가는 부분 --%>
-			</tbody>
-		</table>
-		<div class="popUpSchedule" id="viewSchedule" align="center"> <%-- 일정 보기 div --%>
-			<div class="scheduleDay" id="viewScheduleDay"></div>
-			<div id="daySchedule">일 정 들 일 정 들</div>
-			<div class="scheduleBtn" id="addBtn">추가</div>
-			<div class="scheduleBtn" id="modifyBtn">수정</div>
-			<div class="scheduleBtn" id="delBtn">삭제</div>
-			<div class="scheduleBtn" id="closeBtn">닫기</div>
-		</div>
-		<div class="popUpSchedule" id="addSchedule" align="center"> <%-- 일정 추가 div --%>
-			<div class="scheduleDay" id="addScheduleDay"></div>
-			<div class="message" id="addMessage">
-				<select>
-					<option value="my">내 일정</option>
-					<!-- <input type="hidden" value="1" name="calendarClass"> -->
-					<option value="team">팀 일정</option>
-					
-					<!--//if(loginUser!=null && loginUser.getUserId().equals("관리자아이디")){ %>-->
-					<option value="company">회사 일정</option>
-					<!-- <input type="hidden" value="3" name="calendarClass"> -->
-				</select>
-				<input type="text" size="13" maxlength="25" placeholder="추가할 일정 입력" name="addSchedule">
-			</div>
-			<div class="scheduleBtn" id="saveAddBtn">추가</div>
-			<div class="scheduleBtn" id="closeAddBtn">닫기</div>
-		</div>
-		<div class="popUpSchedule" id="modSchedule" align="center"> <%-- 일정 수정 div --%>
-			<div class="scheduleDay" id="modScheduleDay"></div>
-			<div class="message" id="modMessage">
-				<select>
-					<option value="my">내 일정</option>
-					<option value="team">팀 일정</option>
-					<option value="company">회사 일정</option>
-				</select>
-				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력" name="modSchedule">
-				<input type="hidden">
-			</div>
-			<div class="scheduleBtn" id="saveModBtn">저장</div>
-			<div class="scheduleBtn" id="closeModBtn">닫기</div>
-		</div>
-		<div class="deleteSchedule" id="delSchedule" align="center"> <%-- 일정 삭제 div --%>
-			<div class="scheduleDay" id="delScheduleDay"></div>
-			<div class="message" id="delMessage"> 삭 제 ?  ? ? </div>
-			<div class="scheduleBtn" id="closeDelBtn">닫기</div>
-			<div class="scheduleBtn" id="deleteDelBtn">삭제</div>
-		</div>
-		<div class="confirm" id="addConfirm">
-			<div class="scheduleMsg" id="addScheduleMsg">일정 추가가<br>완료되었습니다.</div>
-			<div class="btnDiv">
-				<div class="scheduleBtn" id="closeAddConfirm">닫기</div>
-			</div>
-		</div>
-		<div class="confirm" id="modConfirm">
-			<div class="scheduleMsg" id="modScheduleMsg">일정 수정이<br>완료되었습니다.</div>
-			<div class="btnDiv">
-				<div class="scheduleBtn" id="closeModConfirm">닫기</div>
-			</div>
-		</div>
-		<div class="confirm" id="delConfirm">
-			<div class="scheduleMsg" id="delConScheduleMsg">일정을<br>정말 삭제할까요?</div>
-			<div class="btnDiv2">
-				<div class="scheduleBtn" id="delDelBtn">삭제</div>
-				<div class="scheduleBtn" id="cancleDelBtn">취소</div>
-			</div>
-		</div>
-		<div class="confirm" id="delDelConfirm">
-			<div class="scheduleMsg" id="delScheduleMsg">일정 삭제<br> 완료되었습니다.</div>
-			<div class="btnDiv">
-				<div class="scheduleBtn" id="closeDelConfirm">닫기</div>
-			</div>
-		</div>
-	</div>
-	<div class="scheduleRight">
-	</div>
-	<div class="bottom">
-		<h1> 　</h1>
-	</div>
-	<script language="javascript" type="text/javascript">
-		/*달력 생성*/
-		buildCalendar();
-		
-		/*팝업창 우선 숨기기*/
-		$("#viewSchedule").hide();
-		$("#addSchedule").hide();
-		$("#modSchedule").hide();
-		$("#delSchedule").hide();
-		$("#addConfirm").hide();
-		$("#modConfirm").hide();
-		$("#delConfirm").hide();
-		$("#delDelConfirm").hide();
-		/*팝업창 불러오기*/
-		var scheduleDate="";
-		function view(){
-			$("#calendarMain").children().children().click(function(){
-				if($(this).text().length==1){
+
+	/*달력 생성*/
+	buildCalendar();
+	
+	/*팝업창 우선 숨기기*/
+	$("#viewSchedule").hide();
+	$("#addSchedule").hide();
+	$("#modSchedule").hide();
+	$("#delSchedule").hide();
+	$("#addConfirm").hide();
+	$("#modConfirm").hide();
+	$("#delConfirm").hide();
+	$("#delDelConfirm").hide();
+	/*팝업창 불러오기*/
+	var scheduleDate="";
+	function view(){
+		$("#calendarMain").children().children().click(function(){
+			if($(this).text().length==1){
+				scheduleDate=(today.getYear()+1900)+"년 "
+				+(today.getMonth()+1)+"월 "+$(this).text().charAt(0)+"일";
+				$("#viewScheduleDay").text(scheduleDate);
+				$("#viewSchedule").show();
+				console.log("날짜클릭!");
+			}else if($(this).text().length>1){
+				if(isNaN(Number($(this).text().charAt(1)))){
 					scheduleDate=(today.getYear()+1900)+"년 "
-					+(today.getMonth()+1)+"월 "+$(this).text().charAt(0)+"일";
-					$("#viewScheduleDay").text(scheduleDate);
-					$("#viewSchedule").show();
-					console.log("날짜클릭!");
-				}else if($(this).text().length>1){
-					if(isNaN(Number($(this).text().charAt(1)))){
-						scheduleDate=(today.getYear()+1900)+"년 "
-						+(today.getMonth()+1)+"월 "+$(this).text().substring(0, 1)+"일";
-					}else{
-						scheduleDate=(today.getYear()+1900)+"년 "
-						+(today.getMonth()+1)+"월 "+$(this).text().substring(0, 2)+"일";
-					}
-					$("#viewScheduleDay").text(scheduleDate);
-					$("#viewSchedule").show();
-					console.log(Number($(this).text().charAt(1)));
-					console.log($(this).text().length);
+					+(today.getMonth()+1)+"월 "+$(this).text().substring(0, 1)+"일";
 				}else{
-					console.log("빈칸클릭!");
+					scheduleDate=(today.getYear()+1900)+"년 "
+					+(today.getMonth()+1)+"월 "+$(this).text().substring(0, 2)+"일";
 				}
-			});
-		}
+				$("#viewScheduleDay").text(scheduleDate);
+				$("#viewSchedule").show();
+				console.log(Number($(this).text().charAt(1)));
+				console.log($(this).text().length);
+			}else{
+				console.log("빈칸클릭!");
+			}
+		});
+	}
 
-		//일정 상세보기 팝업 닫기
-		$("#closeBtn").click(function(){
-			$("#viewSchedule").hide();
-		});
-		//일정 추가 팝업 열기
-		$("#addBtn").click(function(){
-			$("#addScheduleDay").text(scheduleDate);
-			$("#addSchedule").show();
-		});
-		
-		//일정 추가 팝업 닫기
-		$("#saveAddBtn").click(function(){
-			$("#addSchedule").hide();
-			$("#addConfirm").show();
-		});
-		$("#closeAddBtn").click(function(){
-			$("#addSchedule").hide();
-		});
-		$("#closeAddConfirm").click(function(){
-			$("#addConfirm").hide();
-		});
-		
-		//일정 수정 팝업 열기
-		$("#modifyBtn").click(function(){
-			$("#modScheduleDay").text(scheduleDate);
-			$("#modSchedule").show();
+	//일정 상세보기 팝업 닫기
+	$("#closeBtn").click(function(){
+		$("#viewSchedule").hide();
+	});
+	//일정 추가 팝업 열기
+	$("#addBtn").click(function(){
+		$("#addScheduleDay").text(scheduleDate);
+		$("#addSchedule").show();
+	});
+	
+	//일정 추가 팝업 닫기
+	$("#saveAddBtn").click(function(){
+		$("#addSchedule").hide();
+		$("#addConfirm").show();
+	});
+	$("#closeAddBtn").click(function(){
+		$("#addSchedule").hide();
+	});
+	$("#closeAddConfirm").click(function(){
+		$("#addConfirm").hide();
+	});
+	
+	//일정 수정 팝업 열기
+	$("#modifyBtn").click(function(){
+		$("#modScheduleDay").text(scheduleDate);
+		$("#modSchedule").show();
 
-		});
-		
-		//일정 수정 팝업 닫기
-		$("#saveModBtn").click(function(){
-			$("#modSchedule").hide();
-			$("#modConfirm").show();
-		});
-		$("#closeModBtn").click(function(){
-			$("#modSchedule").hide();
-		});
-		$("#closeModConfirm").click(function(){
-			$("#modConfirm").hide();
-		});
-		
-		//일정 삭제 팝업 열기
-		$("#delBtn").click(function(){
-			$("#delScheduleDay").text(scheduleDate);
-			$("#delSchedule").show();
-		});
-		
-		//일정 삭제 팝업 닫기
-		$("#closeDelBtn").click(function(){
-			$("#delSchedule").hide();
-		});
-		$("#deleteDelBtn").click(function(){
-			$("#delSchedule").hide(); 
-			$("#delConfirm").show(); //일정 삭제 확인 팝업 켜기
-		});
-		$("#delDelBtn").click(function(){ //일정 삭제 확인 팝업 > O
-			$("#delConfirm").hide();
-			$("#delDelConfirm").show();
-		})
-		$("#cancleDelBtn").click(function(){ //일정 삭제 확인 팝업 > X
-			$("#delConfirm").hide();
-		})
-		$("#closeDelConfirm").click(function(){ //일정 삭제 완료 팝업
-			$("#delDelConfirm").hide();
-		});
-	</script>
-</div>
-</section>
-<jsp:include page="/views/layout/treeview/schedule/layout-down.jsp" />
+	});
+	
+	//일정 수정 팝업 닫기
+	$("#saveModBtn").click(function(){
+		$("#modSchedule").hide();
+		$("#modConfirm").show();
+	});
+	$("#closeModBtn").click(function(){
+		$("#modSchedule").hide();
+	});
+	$("#closeModConfirm").click(function(){
+		$("#modConfirm").hide();
+	});
+	
+	//일정 삭제 팝업 열기
+	$("#delBtn").click(function(){
+		$("#delScheduleDay").text(scheduleDate);
+		$("#delSchedule").show();
+	});
+	
+	//일정 삭제 팝업 닫기
+	$("#closeDelBtn").click(function(){
+		$("#delSchedule").hide();
+	});
+	$("#deleteDelBtn").click(function(){
+		$("#delSchedule").hide(); 
+		$("#delConfirm").show(); //일정 삭제 확인 팝업 켜기
+	});
+	$("#delDelBtn").click(function(){ //일정 삭제 확인 팝업 > O
+		$("#delConfirm").hide();
+		$("#delDelConfirm").show();
+	})
+	$("#cancleDelBtn").click(function(){ //일정 삭제 확인 팝업 > X
+		$("#delConfirm").hide();
+	})
+	$("#closeDelConfirm").click(function(){ //일정 삭제 완료 팝업
+		$("#delDelConfirm").hide();
+	});
+
+
+

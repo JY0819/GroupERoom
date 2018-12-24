@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
-<link rel="stylesheet" type="text/css" href="/semi/assets/css/calendar.css">
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/calendarList.css">
 <script>
 	var jsonData=treeviewJson.calendarJson;
-	var nodeName="일정 관리";
+	var nodeName="일정 목록";
 </script>
 <script language="javascript" type="text/javascript">
 	var today = new Date(); // 오늘 날짜
@@ -48,19 +48,24 @@
 		var tblCalendarYM = document.getElementById("calendarTitle");    // yyyy년 m월 출력할 곳
 		tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // yyyy년 m월 출력
 		
+		var weekday;
 		
 		// 기존 테이블에 뿌려진 줄, 칸 삭제
 		while (tblCalendar.rows.length > 0) {
 			tblCalendar.deleteRow(tblCalendar.rows.length-1); //현재 있는 열 모두 삭제
 		}
 		
-		var row = null; //주차별로 추가될 열 
-		row = tblCalendar.insertRow();
+		var row =/*  null; //주차별로 추가될 열 
+		row =  */tblCalendar.insertRow();
+
 		
 		var cnt = 0; // 1일이 시작되는 칸을 맞추어 줌
+		var line=0;
 		for (var i=0; i<nMonth.getDay(); i++) {
-			cell = row.insertCell();
-			cnt = cnt + 1;
+			
+			
+			cnt+=1;
+			
 		}
  
 		for (var i=1; i<=lastDate.getDate(); i++) { //날마다 새로운 td 추가
@@ -68,7 +73,9 @@
 	 		var year=today.getYear()+1900;
 			var month=(today.getMonth()+1);
 			var day=holiDate.getDate();
-			
+			weekday=holiDate.getDay()+1;
+			console.log(weekday);
+			console.log(cnt);
 			if(month<10){
 				if(i<10){
 					holis=year+'0'+month+'0'+day;
@@ -85,15 +92,46 @@
 			//console.log("진짜 holis : "+holis);
 			lunaMonthCal(holis);
 			
-
+			switch(weekday%7){
+			case 1:weekday='일'; break;
+			case 2:weekday='월'; break;
+			case 3:weekday='화'; break;
+			case 4:weekday='수'; break;
+			case 5:weekday='목'; break;
+			case 6:weekday='금'; break;
+			case 0:weekday='토'; break;
+			}
+			
 			cell = row.insertCell();
-			cell.innerHTML ='<span style="font-weight:bold;">'+i+'</span>'+'<p></p>';
+			cell.innerHTML ='<span style="font-weight:bold;">'+weekday+'</span>'+'<p></p>';
+			
+			if(cnt%7 ==1) {
+				//일요일 날짜 색 red
+				cell.innerHTML='<span class="sunday">'+weekday+'</span>'+'<p></p>';
+			}
+			if(cnt%7 ==0) {
+				//토요일 날짜 색 blue
+				cell.innerHTML='<span class="saturday">'+weekday+'</span>'+'<p></p>';
+
+			}
+			
+			cell = row.insertCell();
+			cell.innerHTML ='<span style="font-weight:bold;">'+'일정^^'+'</span>'+'<p></p>';
 			cell.id='calSchedule'+holis;
+			$("#calSchedule"+holis).attr("colspan","5");
+			$("#calSchedule"+holis).attr("class","scheduleList");
 			
 			
+			cell = row.insertCell();
+			cell.innerHTML ='<span style="font-weight:bold;">'+day+'</span>'+'<p></p>';
+
+			cell.id='calSchedule'+holis+'1';
+			$("#calSchedule"+holis+"1").attr("colspan","2");
+			
+			line=line+3;
 			cnt = cnt + 1;
 			
-			if (cnt%7 == 0) {
+			if (line%3 == 0) {
 				// 1주일이 7일 > 7일마다 새 열 추가
 				row = calendar.insertRow();// 줄 추가
 			}
@@ -110,7 +148,7 @@
 			/*양력 공휴일 적용*/
 			for(var j=0;j<holidaySol.length;j++){
 				if(holis.toString().substring(4)===holidaySol[j][0].toString()){
-					cell.innerHTML='<span class="sunday">'+i+'<br><span>'+
+					cell.innerHTML='<span class="sunday">'+i+' '+
 					holidaySol[j][1]+'</span>'+'<p></p>';
 					if(holis.toString().substring(4)==holidaySol[2][0]){
 						if(cnt%7==1){replaceHolis=1;}
@@ -122,7 +160,7 @@
 			/*음력 공휴일 적용*/
 			for(var j=0;j<holidayLun.length;j++){
 				if(lunar_date.lunHolis.toString().substring(4,8)===holidayLun[j][0].toString()){
-					cell.innerHTML='<span class="sunday">'+i+'<br>'+
+					cell.innerHTML='<span class="sunday">'+i+' '+
 					holidayLun[j][1]+'</span>';
 					if(j==0 && cnt%7==1){replaceHolis=3;}
 					if(j==1 && cnt%7==1){replaceHolis=4;}
@@ -134,23 +172,23 @@
 				console.log(replaceHolis);
 			} 	
 			
-			if(lunar_date.lunHolis.toString().substring(4,8)==='0103'){replaceLunHolis1=holis;}
-			if(lunar_date.lunHolis.toString().substring(4,8)==='0817'){replaceLunHolis2=holis;}
+			if(lunar_date.lunHolis.toString().substring(4,8)==='0103'){replaceLunHolis1=holis+'1';}
+			if(lunar_date.lunHolis.toString().substring(4,8)==='0817'){replaceLunHolis2=holis+'1';}
 
 		}
 		view();
 		switch(replaceHolis){
 		//어린이날 대체휴일
-		case 1:$("#calSchedule"+holis.toString().substring(0,4)+"0506").html('<span class="sunday">6<br>대체휴일</span><p></p>'); replaceHolis=0; break;
-		case 2:$("#calSchedule"+holis.toString().substring(0,4)+"0507").html('<span class="sunday">7<br>대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 1:$("#calSchedule"+holis.toString().substring(0,4)+"05061").html('<span class="sunday">6 대체휴일</span><p></p>'); replaceHolis=0; break;
+		case 2:$("#calSchedule"+holis.toString().substring(0,4)+"05071").html('<span class="sunday">7 대체휴일</span><p></p>'); replaceHolis=0;break;
 		//설날 대체휴일
-		case 3: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 4: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 5: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 3: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 4: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 5: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
 		//추석 대체휴일
-		case 6: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 7: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 8: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 6: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 7: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 8: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
 		default:break;
 		}
 		//$('#calSchecdule'+holis.toString().substring(0,4)+"1231 > span").html('6<br>대체휴일');
@@ -476,17 +514,13 @@
 			<thead>
 				<tr id="title">
 					<td onclick="prevCalendar()" id="preCal"><label style="font-size:30px"><</label></td>
-					<td colspan="5" align="center" id="calendarTitle" style="font-size:30px">yyyy년 m월</td>
+					<td colspan="5" align="center"id="calendarTitle" style="font-size:30px">yyyy년 m월</td>
 					<td onclick="nextCalendar()" id="nextCal"><label style="font-size:30px">></label></td>
 				</tr>
 				<tr id="day"> 
-					<td class="sunday day" align="center">일</td>
-					<td class="day">월</td>
-					<td class="day">화</td>
-					<td class="day">수</td>
-					<td class="day">목</td>
-					<td class="day">금</td>
-					<td class="saturday day" align="center">토</td>
+					<td class="day">Day</td>
+					<td colspan="5" class="day"></td>
+					<td class="day"></td>
 				</tr>
 			</thead>
 			<tbody id="calendarMain"> <%-- 날짜 들어가는 부분 --%>
@@ -508,7 +542,7 @@
 					<!-- <input type="hidden" value="1" name="calendarClass"> -->
 					<option value="team">팀 일정</option>
 					
-					<!--//if(loginUser!=null && loginUser.getUserId().equals("관리자아이디")){ %>-->
+					<!-- //if(loginUser!=null && loginUser.getUserId().equals("관리자아이디")){ %>-->
 					<option value="company">회사 일정</option>
 					<!-- <input type="hidden" value="3" name="calendarClass"> -->
 				</select>
@@ -523,6 +557,7 @@
 				<select>
 					<option value="my">내 일정</option>
 					<option value="team">팀 일정</option>
+					
 					<option value="company">회사 일정</option>
 				</select>
 				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력" name="modSchedule">
@@ -571,6 +606,7 @@
 	<script language="javascript" type="text/javascript">
 		/*달력 생성*/
 		buildCalendar();
+		
 		
 		/*팝업창 우선 숨기기*/
 		$("#viewSchedule").hide();
@@ -674,7 +710,8 @@
 		$("#closeDelConfirm").click(function(){ //일정 삭제 완료 팝업
 			$("#delDelConfirm").hide();
 		});
-	</script>
+	*/
+	</script> 
 </div>
 </section>
 <jsp:include page="/views/layout/treeview/schedule/layout-down.jsp" />
