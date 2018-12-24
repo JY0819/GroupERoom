@@ -201,7 +201,7 @@ th {
   }
   a,
   a:visited {
-    text-decoration: underline;
+    text-decoration: none
   }
   a[href]:after {
     content: " (" attr(href) ")";
@@ -1107,7 +1107,7 @@ a {
 a:hover,
 a:focus {
   color: #23527c;
-  text-decoration: underline;
+  text-decoration: none
 }
 a:focus {
   outline: thin dotted;
@@ -2365,7 +2365,6 @@ table th[class*="col-"] {
   background-color: #dff0d8;
 }
 .table-hover > tbody > tr > td.success:hover,
-.table-hover > tbody > tr > th.success:hover,
 .table-hover > tbody > tr.success:hover > td,
 .table-hover > tbody > tr:hover > .success,
 .table-hover > tbody > tr.success:hover > th {
@@ -3333,7 +3332,7 @@ fieldset[disabled] .btn-link {
 .btn-link:hover,
 .btn-link:focus {
   color: #23527c;
-  text-decoration: underline;
+  text-decoration: none
   background-color: transparent;
 }
 .btn-link[disabled]:hover,
@@ -6784,7 +6783,7 @@ th {
   }
   a,
   a:visited {
-    text-decoration: underline;
+    text-decoration: none
   }
   a[href]:after {
     content: " (" attr(href) ")";
@@ -7690,7 +7689,7 @@ a {
 a:hover,
 a:focus {
   color: #23527c;
-  text-decoration: underline;
+  text-decoration: none
 }
 a:focus {
   outline: thin dotted;
@@ -9916,7 +9915,7 @@ fieldset[disabled] .btn-link {
 .btn-link:hover,
 .btn-link:focus {
   color: #23527c;
-  text-decoration: underline;
+  text-decoration: none
   background-color: transparent;
 }
 .btn-link[disabled]:hover,

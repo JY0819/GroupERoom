@@ -24,7 +24,7 @@
 		<span><a>Board</a></span>
 		<span><a>Schedule</a></span>
 		<span><a>MyPage</a></span>
-		<span><a href="/semi/admin/management/user/userAdd">Admin</a></span>
+		<span><a href="/semi/admin/management/user/addUser">Admin</a></span>
 		
 		
 	</div>
