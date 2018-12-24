@@ -1,4 +1,4 @@
-package com.semi.user.controller;
+package com.semi.admin.user.controller;
 
 import java.io.IOException;
 

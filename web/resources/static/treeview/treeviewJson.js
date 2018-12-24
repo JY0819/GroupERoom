@@ -9,16 +9,16 @@ var treeviewJson = {
 								{ 
 								   text: "사원 관리"
 								  ,nodes: [ 
-										     {text: "사원 추가", href: "/semi/admin/management/user/addUser"}
-										    ,{text: "사원 조회 및 수정", href: "/semi/admin/management/user/searchAndUpdate"} 
-										    ,{text: "휴가 조회", href: "/semi/admin/management/user/vacationSearch"} 
+										     {text: "사원 추가", href: "/semi/views/admin/user/addUser.jsp"}
+										    ,{text: "사원 조회 및 수정", href: "/semi/views/admin/user/userSearchAndUpdate.jsp"} 
+										    ,{text: "휴가 조회", href: "/semi/views/admin/user/vacationSearch.jsp"} 
 								  		  ]
 								}
 							   ,{ 
-								  text: "기초정보"
+								  text: "기초 정보"
 								 ,nodes: [
-									 		{text: "부서 관리", href: "/semi/admin/management/base/depManagement"}
-									 	   ,{text: "직책 관리", href: "/semi/admin/management/base/posManagement"}
+									 		{text: "부서 관리", href: "/semi/views/admin/base/depManagement.jsp"}
+									 	   ,{text: "직책 관리", href: "/semi/views/admin/base/posManagement.jsp"}
 								 		]
 								}
 							  ,{

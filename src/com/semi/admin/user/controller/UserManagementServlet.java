@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/admin/management/user/addUser")
 public class UserManagementServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-    private static final String path = "/views/admin/management/user/";
+    private static final String path = "/views/admin/user/";
 	
     public UserManagementServlet() {
         super();

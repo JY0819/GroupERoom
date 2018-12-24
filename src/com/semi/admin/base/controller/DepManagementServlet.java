@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/admin/management/base/depManagement")
 public class DepManagementServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-    private static final String path = "/views/admin/management/base/";
+    private static final String path = "/views/admin/base/";
 	
     public DepManagementServlet() {
         super();

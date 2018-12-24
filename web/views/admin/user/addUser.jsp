@@ -15,10 +15,10 @@
 	</div>
 
 	<div class="content-right container">
-		<h2 align="left">사원 등록</h3>
+		<h2 align="left">사원 등록</h2>
 		<hr>
 
-		<form class="form-horizontal" role="form" method="post" action="javascript:alert( 'success!' );">
+		<form class="form-horizontal" id="addUserForm" method="post" action="<%=request.getContextPath()%>/insertMember.me">
 			<!-- 
 			사진 첨부 ㅠㅠ
 			<div class="form-group" id="divUserImg">
@@ -131,11 +131,23 @@
 
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
-					<button type="submit" class="btn btn-default" id="enrllBtn">등록</button>
+					<button type="button" class="btn btn-default" id="goList" onclick="goList();">목록으로</button>
+					<button type="submit" class="btn btn-default" id="enrollBtn" onclick="insertMember();">등록</button>
 				</div>
 			</div>
 		</form>
 
+		<script>
+			function goMain() {
+<%-- 				location.href="<%=request.getContextPath()%>/index.jsp"; --%>
+			}
+	
+			function insertMember() {
+				$("#addUserForm").submit();
+			}
+		
+		</script>
+	
 
 		<script>
 			$(function() {
