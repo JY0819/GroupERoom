@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<jsp:include page="/views/main/mainPage.jsp" />
-<title>Insert title here</title>
+<jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
+<script>
+	var jsonData=treeviewJson.boardJson;
+	var nodeName="부서게시판";
+</script>
+
 <style>
+#boardTitle{
+	height:45px;
+   font-weight:bold;
+   font-size:16px;
+    clear:both;
+
+}
 .teamId{
 	width:100px;
 }
@@ -42,33 +49,34 @@
 	text-decoration:none;
 }
 /* 게시판 목록끝  */
-
+#table{
+	 width:1000px;
+  margin:30px auto 10px;
+  position:relative;
+  left:30px;
+  top:70px;
+}
 </style>
-</head>
-<body>
+<section class="content">
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+	
+	<div class="content-right container">
+
 
 
 <form>
 <br>
-<h1 align="center" >l 부서게시판</h1>
+<div id="boardTitle">
+<h1>l 부서게시판</h1>
+</div>
 <hr>
-<!-- 게시판목록 -->
- <div id="sideMenu" >
 
-		<h3><a href="boardNotice.jsp" id="menuFont">공지사항</a></h3>
-	
-    <hr>
-    
-    <h3><a href="boardTeam.jsp" id="menuFont">부서별게시판</a></h3>
-   	
-    <hr>
-    
-    <h3><a href="boardFree.jsp" id="menuFont">자유게시판</a></h3>
    
-    <hr>
     
-	</div> 
-	<table align="center">
+<div id="table">
+	<table  align="center" width="800px">
 	<tr>
 		<th>부서</th>
 		<td>
@@ -115,12 +123,16 @@
 	</tr>
 	
 	</table>
+	</div>
 	<br>
 	<br>
 	<br>
 	<br>
 	<br>
 	<br>
+
 </form>
-</body>
-</html>
+</div>
+</section>
+
+<jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
