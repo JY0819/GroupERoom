@@ -63,7 +63,12 @@ var treeviewJson = {
 		{
 			text: "결재"
 		   ,nodes: [
-			   
+			   		{
+			   			text: "Main",
+			   			nodes: [
+			   				{text: "Main", href: "/semi/views/approval/approvalMain.jsp"}
+			   			]
+			   		},
 					{ 
 					   text: "작업 문서함"
 					  ,nodes: [ 

@@ -5,111 +5,8 @@
 <head>
 <meta charset=UTF-8>
 <title>WorkplanDocument</title>
-<style>
-	body {
-		margin-bottom: 150px;
-	}
-	/*표상단 제목*/
-	h1{
-		text-align: center;
-	}
-	/*표 선, 표 사이즈*/
-	table{
-		border: 1px solid black;
-		border-collapse: collapse;
-		width: 85%;
-		height: 100%;
-		margin-left: auto;
-		margin-right: auto;
-	}
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/approval/document.css">
 
-	/*입력상자 앞에 항목부분*/
-	.td{
-		height: 50px;
-		width: 40px;
-		text-align: center;
-		border: 1px solid black;
-		border-collapse: collapse;
-		background-color: lightgray;
-	}
-	/*번호td와 결재td 사이 공백 td  */
-	.gap {
-		height: 30px;
-		width: 80px;
-		border: 1px solid black;
-		border-top: hidden;
-		border-bottom: hidden;
-	}
-	.gap2{
-		height: 30px;
-		border-left: hidden;
-	}
-	.gap3{
-		border-right: hidden;
-	}
-	.approvalTd {
-		text-align: center;
-	}
-	/*항목뒤 입력상자*/
-	.approvalTd, .content{
-		width: 50px;
-		border: 1px solid black;
-		border-collapse: collapse;
-	}
-	.lastContent {
-		height: 30em;
-		border: 1px solid black;
-	}
-	.last {
-		text-align: center;
-		border-left: hidden;
-		border-right: hidden;
-		border-bottom: hidden;
-	}
-	.saveBtn {
-		position: relative;
-		top: 250px;
-		text-align: center;
-		background-color: #205181;
-		color:white;
-		border-radius: 10px;
-		width: 100px;
-		height: 40px;
-		top: 1100px;
-		left: 490px;
-	    position: absolute;
-	    font-size: 16px;
-	    border: 0;
-	    outline: 0;
-	}
-	.closeBtn {
-		position: relative;
-		top: 250px;
-		text-align: center;
-		background-color: #F1C40F;
-		color:white;
-		border-radius: 10px;
-		width: 100px;
-		height: 40px;
-		top: 1100px;
-		left: 650px;
-	    position: absolute;
-	    font-size: 16px;
-	    border: 0;
-	    outline: 0;
-	    
-	}
-	.lastContent .contentArea {
-		position: absolute;
-		border: 1px solid black;
-		size: 20;
-		width: 99.6%;
-		left: 0px;
-		top: 457px;
-		height: 478px;
-	}
-
-</style>
 </head>
 <body>
 
@@ -157,10 +54,10 @@
 			<td class="employeeNumber" colspan="3"><input type="text" name="noContent"></td> 
 		</tr>
 		<tr>
-			<td class="td">업무계획</td>
+			<td class="td">제목</td>
 			<td class="content" colspan="2"><input type="text" name="noContent"></td>
-			<td class="td">분류</td>
-			<td class="content" colspan="3">
+			<td class="td" rowspan="2">분류</td>
+			<td class="content" colspan="3" rowspan="2">
 				<select name="documentKind">
 					<option>휴가신청서</option>
 					<option>업무계획서</option>
@@ -169,10 +66,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="noContent"></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="noContent"></td>
+			<td class="content" colspan="2"><input type="text" name="noContent"></td>
 		</tr>
 		<tr>
 			<td class="lastContent" colspan="7"><textarea class="contentArea"></textarea></td>
