@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -7,7 +6,6 @@
 <jsp:include page="/views/main/mainPage.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/calendar.css">
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Calender</title>
 <script language="javascript" type="text/javascript">
 	var today = new Date(); // 오늘 날짜

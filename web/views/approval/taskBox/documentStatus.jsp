@@ -1,108 +1,75 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset=UTF-8>
-<title>문서진행현황 페이지</title>
-<style>
-/*표  */
-      table {
-      
-        width: 80%;
-        text-align: center;
-      	margin-left: auto;
-      	margin-right: auto;
-      	position: relative;
-       	top:200px;
-      }
-      
-      table, th, td {
-        border: 1px double rgb(128,181,240);
-      }
-      th{
-      background-color: rgb(128,181,240);
-      height:30px;
-      }
-     td{
-     	height:40px;
-     }
-     /*표밑 버튼영역  */
-     .btnArea {
-     	top: 500px;
-     	right: 650px;
-     	position: absolute;
-     }
-     /*몇번 페이지인지 출력하는 가운데 버튼*/
-     #countBtn {
-     	background: #205181;
-     	color: white;
-     }
-     /*좌측 화살표 버튼*/
-     .fas fa-chevron-left {
-     	position: absolute;
-     	right: 50px;
-     }
-     /*우측 화살표 버튼*/
-     .fas fa-chevron-right{
-     	position: absolute;
-     	right: 50px;
-     }
-    </style>
-</head>
-<body>
+	pageEncoding="UTF-8"%>
 
+<jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
+<link rel="stylesheet" type="text/css"
+	href="/semi/assets/css/approval/taskBox.css">
 
-  	<jsp:include page ="/views/main/mainPage.jsp"/>
+<script>
+	var jsonData = treeviewJson.approvalJson;
+	var nodeName = "문서 진행 현황";
+</script>
+<section class="content">
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+	<div class="content-right container">
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>번 호</th>
+						<th>작 성 자</th>
+						<th>부 서</th>
+						<th>문 서 번 호</th>
+						<th>의 견</th>
+						<th>작 성 날 짜</th>
+						<th>처 리 현 황</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="btnArea">
+				<div class="paging" align="center">
+					<ul class="pagination">
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-  	 <table>
-      <thead>
-        <tr>
-          <th>번  호</th>
-          <th>작 성 자</th>
-          <th>부  서</th>
-          <th>문 서 번 호</th>
-          <th>의  견</th>
-          <th>작 성 날 짜</th>
-          <th>처 리 현 황</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>	
-          <td></td>
-        </tr>
-      </tbody>
-   
-    </table>
-    <div class="btnArea">
-	<button><i class="fas fa-chevron-left"></i></button>
-	<input  id="countBtn" type="button" value="1" disabled="disabled">
-   <button><i class="fas fa-chevron-right"></i></button>
-   </div>
-
-</body>
-</html>
+<jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />
