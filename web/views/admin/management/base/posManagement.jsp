@@ -3,8 +3,6 @@
 	request.setAttribute("title", "직책 관리");
 %>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <script type="text/javascript">
 	//참고 : https://jonmiles.github.io/bootstrap-treeview/

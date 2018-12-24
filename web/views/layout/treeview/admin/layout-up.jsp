@@ -12,12 +12,12 @@
 	}
 	.content>.content-left{
 		float: left;
-	    width: 30%;
+	    width: 18%;
 	    height: 100%;
 	}
 	.content>.content-right{
 		float: right;
-	    width: 68%;
+	    width: 80%;
 	    height: 100%;
 	}
 </style>
