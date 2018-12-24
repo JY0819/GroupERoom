@@ -34,6 +34,30 @@ var treeviewJson = {
 					}
 			],
 
+			
+	calendarJson:[
+					{
+						text:"일정",
+						nodes:[
+							{text:"일정 관리",href:"/semi/views/schedule/calendar.jsp"},
+							{text:"일정 목록",href:"/semi/views/schedule/calendarList.jsp"}
+						]
+					}
+		
+	],
+	
+	boardJson:[
+				{
+					text:"게시판",
+					nodes:[
+						{text:"공지사항",href:"/semi/views/board/boardNotice.jsp"},
+						{text:"부서게시판",href:"/semi/views/board/boardTeam.jsp"},
+						{text:"자유게시판",href:"/semi/views/board/boardFree.jsp"}
+					]
+				}
+	],
+
+
 
 	approvalJson : [
 		{
@@ -112,21 +136,7 @@ var treeviewJson = {
 			 ]
 			   
 		}
-	],
+
+	]
 	
-	
-			
-	boardJson : [
-				{
-					text: "게시판"	
-					,nodes: [
-						{text: "공지사항", href:"/semi/views/board/boardNotice.jsp"}
-						,{text: "부서게시판", href:"/semi/views/board/boardTeam.jsp"}
-						,{text: "자유게시판", href:"/semi/views/board/boardFree.jsp"}
-						
-					]
-				}
-		
-	]		
-		
 }
