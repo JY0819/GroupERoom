@@ -1,14 +1,12 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
-<link rel="stylesheet" type="text/css" href="/semi/assets/css/calendar.css">
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/schedule/calendar.css">
 <script>
 	var jsonData=treeviewJson.calendarJson;
 	var nodeName="일정 관리";
 </script>
-
 <script language="javascript" type="text/javascript">
 	var today = new Date(); // 오늘 날짜
 	var nMonth;
@@ -496,19 +494,19 @@
 		</table>
 		<div class="popUpSchedule" id="viewSchedule" align="center"> <%-- 일정 보기 div --%>
 			<div class="scheduleDay" id="viewScheduleDay"></div>
-			<div id="daySchedule">일 정 들 일 정 들</div>
+			<div id="daySchedule" vertical-align="center" text-align="center">AM 9:30 일정 1 아망ㄴ럼ㄴㅇㄹ<br>AM 11:00 일정 2<br>PM 7:00 일정4<br>PM 10 일정 5</div>
 			<div class="scheduleBtn" id="addBtn">추가</div>
 			<div class="scheduleBtn" id="modifyBtn">수정</div>
 			<div class="scheduleBtn" id="delBtn">삭제</div>
 			<div class="scheduleBtn" id="closeBtn">닫기</div>
 		</div>
-		<div class="popUpSchedule" id="addSchedule" align="center"> <%-- 일정 추가 div --%>
+		<div class="deleteSchedule" id="addSchedule" align="center"> <%-- 일정 추가 div --%>
 			<div class="scheduleDay" id="addScheduleDay"></div>
 			<div class="message" id="addMessage">
 				<select>
 					<option value="my">내 일정</option>
 					<!-- <input type="hidden" value="1" name="calendarClass"> -->
-					<option value="team">팀 일정</option>
+					<option value="team">팀 <!--request.getdeptname -->일정</option>
 					
 					<!--//if(loginUser!=null && loginUser.getUserId().equals("관리자아이디")){ %>-->
 					<option value="company">회사 일정</option>
@@ -519,12 +517,12 @@
 			<div class="scheduleBtn" id="saveAddBtn">추가</div>
 			<div class="scheduleBtn" id="closeAddBtn">닫기</div>
 		</div>
-		<div class="popUpSchedule" id="modSchedule" align="center"> <%-- 일정 수정 div --%>
+		<div class="deleteSchedule" id="modSchedule" align="center"> <%-- 일정 수정 div --%>
 			<div class="scheduleDay" id="modScheduleDay"></div>
 			<div class="message" id="modMessage">
 				<select>
 					<option value="my">내 일정</option>
-					<option value="team">팀 일정</option>
+					<option value="team">팀<!--request.getdeptname --> 일정</option>
 					<option value="company">회사 일정</option>
 				</select>
 				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력" name="modSchedule">
@@ -571,6 +569,7 @@
 		<h1> 　</h1>
 	</div>
 	<script language="javascript" type="text/javascript">
+	
 		/*달력 생성*/
 		buildCalendar();
 		
@@ -583,6 +582,7 @@
 		$("#modConfirm").hide();
 		$("#delConfirm").hide();
 		$("#delDelConfirm").hide();
+		
 		/*팝업창 불러오기*/
 		var scheduleDate="";
 		function view(){
@@ -676,6 +676,32 @@
 		$("#closeDelConfirm").click(function(){ //일정 삭제 완료 팝업
 			$("#delDelConfirm").hide();
 		});
+		
+		/*일정 추가 삭제 관련*/
+		$("#Myschedule").change(function(){
+			if($("#Myschedule").is(":checked")){
+	            alert($("#Myschedule + label").text()+'체크');
+	        }else{
+	            alert($("#Myschedule + label").text()+' 체크해제');
+	        }
+		});
+		
+		$("#Teamschedule").change(function(){
+			if($("#Teamschedule").is(":checked")){
+	            alert($("#Teamschedule + label").text()+'체크');
+	        }else{
+	            alert($("#Teamschedule + label").text()+' 체크해제');
+	        }
+		});
+		
+		$("#Companyschedule").change(function(){
+			if($("#Companyschedule").is(":checked")){
+	            alert($("#Companyschedule + label").text()+'체크');
+	        }else{
+	            alert($("#Companyschedule + label").text()+' 체크해제');
+	        }
+		});
+		
 	</script>
 </div>
 </section>
