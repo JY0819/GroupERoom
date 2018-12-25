@@ -11,11 +11,12 @@
 <body>
 
 <jsp:include page="/views/main/mainPage.jsp"/>
+<form action="<%= request.getContextPath() %>/insertDocument.do" method="post" encType="multipart/form-data">
 <h1>휴가신청서</h1>
 	<table>
 		<tr>
 			<td class="td">번호</td>
-			<td class="content"><input type="text" name="noContent"></td>
+			<td class="content"><input type="text" name="num"></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -24,10 +25,10 @@
 		</tr>
 		<tr>
 			<td class="td">첨부파일</td>
-			<td class="content">&nbsp;<input type="file" name="fileNoContent"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
+			<td class="content">&nbsp;<input type="file" name="file"></td>
+			<td class="approvalTd" rowspan="2"><input type="image" name="img1"></td>
+			<td class="approvalTd" rowspan="2"><input type="image" name="img2"></td>
+			<td class="approvalTd" rowspan="2"><input type="image" name="img3"></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
@@ -48,9 +49,9 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="noContent"></td>
+			<td class="content" colspan="2"><input type="text" name="docNum"></td>
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="noContent"></td> 
+			<td class="content" colspan="3"><input type="text" name="empNo"></td> 
 		</tr>
 		<tr>
 			<td class="td">휴가기간</td>
@@ -66,19 +67,20 @@
 		</tr>
 		<tr>
 			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="noContent"></td>
+			<td class="content" colspan="2"><input type="text" name="title"></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="noContent"></td>
+			<td class="content" colspan="3"><input type="text" name="date"></td>
 		</tr>
 		<tr>
 			<td class="td">사유</td>
-			<td class="content" colspan="7"><input type="text" name="noContent"></td>
+			<td class="content" colspan="7"><input type="text" name="reason"></td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><textarea class="contentArea"></textarea></td>
+			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
 		</tr>
 	</table>
 	<button class="saveBtn">저장</button> 
 	<button class="closeBtn">닫기</button>
+</form>
 </body>
 </html>

@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/*문서양식 선택 페이지*/
+/*제목  */
+	h1{
+		text-align: center;
+	}
+	/*선택 버튼들  */
+	.vacation, .proof, .work{
+	position: absolute;
+	top: 400px;
+	text-align: center;
+	background-color: #205181;
+	color:white;
+	border-radius: 10px;
+	width: 100px;
+	height: 25px;
+    left: 370px;
+    position: absolute;
+    font-size: 16px;
+	}
+	/*미리보기 재직증명서  */
+	.proof {
+    left: 630px;
+	}
+	/*미리보기 업무계획서  */
+	.work {
+    left: 880px;
+	}
+	/*클릭시 이동경로 영역  */
+	#contentImgArea1, #contentImgArea2, #contentImgArea3 {
+		height: 250;
+		width: 250;
+		border: 1px solid black;
+	}
+	#contentImgArea1 {
+		position: relative;
+		left: -50px;
+	}
+	#contentImgArea3 {
+		position: relative;
+		left: 50px;
+	}
