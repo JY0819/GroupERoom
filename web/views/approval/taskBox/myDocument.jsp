@@ -17,7 +17,7 @@
 
 	<div class="content-right container">
 
-		<a href="writeDocument.jsp"><button class="writeBtn">작성</button></a>
+		<a href="choiceDocument.jsp"><button class="writeBtn">작성</button></a>
 		<button class="sendBtn">상신</button>
 		<button class="deleteBtn">삭제</button>
 		<table>
