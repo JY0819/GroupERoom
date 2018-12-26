@@ -1,3 +1,4 @@
+<%@page import="com.sun.org.apache.xml.internal.security.utils.resolver.ResourceResolverException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,9 +14,9 @@
 	<jsp:include page="/views/main/mainPage.jsp"/>
 	<!--문서 선택 버튼 영역-->
 	<div class="btnArea">
-		<a href="../DocumentList/vacationDocument.jsp"><label class="vacation" onclick="">휴가신청서</label></a>
-		<a href="../DocumentList/employmentDocument.jsp"><label class="proof">재직증명서</label></a>
-		<a href="../DocumentList/workDocument.jsp"><label class="work">업무계획서</label></a>
+		<a href="../documentList/vacationDocument.jsp"><label class="vacation">휴가신청서</label></a>
+		<a href="../documentList/employmentDocument.jsp"><label class="proof">재직증명서</label></a>
+		<a href="../documentList/workDocument.jsp"><label class="work">업무계획서</label></a>
 	</div>
 	<!--미리보기 문서영역-->
 	<div class="outer">
@@ -27,17 +28,17 @@
 						<tr>
 							<td>
 								<div id="contentImgArea1">
-									<a href="../DocumentList/vacationDocument.jsp"><img id="contentImg1" width="200" height="200" src="/semi/assets/images/approval/vacationDocument.PNG" alt="vacationDocument"></a>
+									<a href="../documentList/vacationDocument.jsp"><img id="contentImg1" width="200" height="200" src="/semi/assets/images/approval/vacationDocument.PNG" alt="vacationDocument"></a>
 								</div>
 							</td>
 							<td>
 								<div id="contentImgArea2">
-									<a href="../DocumentList/employmentDocument.jsp"><img id="contentImg2" width="200" height="200" src="/semi/assets/images/approval/employeeDocument.PNG" alt="employeeDocument"></a>
+									<a href="../documentList/employmentDocument.jsp"><img id="contentImg2" width="200" height="200" src="/semi/assets/images/approval/employeeDocument.PNG" alt="employeeDocument"></a>
 								</div>
 							</td>
 							<td>
 								<div id="contentImgArea3">
-									<a href="../DocumentList/workDocument.jsp"><img id="contentImg3" width="200" height="200" src="/semi/assets/images/approval/workDocument.PNG" alt="workDocument"></a>
+									<a href="../documentList/workDocument.jsp"><img id="contentImg3" width="200" height="200" src="/semi/assets/images/approval/workDocument.PNG" alt="workDocument"></a>
 								</div>
 							</td>
 						</tr>
@@ -69,7 +70,9 @@
 			}, 'mouseleave':function(){
 				$(this).css("border-color", "black")
 			}});
-			
+		});
+		$(function() {
+				location.href="<%= request.getContextPath()%>/selectDocument.sd";
 		});
 		</script>
 </body>
