@@ -161,7 +161,7 @@ public class FreeDao {
 				
 				list.add(f);
 			}
-			//dd
+			//ddasfdsafd
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
