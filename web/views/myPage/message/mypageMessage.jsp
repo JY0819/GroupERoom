@@ -1,8 +1,80 @@
+<%@page import="com.semi.myPage.model.vo.Msg"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<% 
+	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
+	int count = 1;
+	boolean exist = false;
+	if(list != null){
+		exist = true;
+	}else{
+		exist = false;
+	}
+%>
+
 <jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
-<link rel="stylesheet" type="text/css" href="/semi/assets/css/myPage/message.css">
+
+<style>
+.btn{
+	text-align: center;
+	background-color: #205181;
+	padding: 5px;
+	color:white;
+	border-radius: 10px;
+	width: 120px;
+	height: 40px;
+}
+#btn1{
+	margin-bottom: 20px;
+}
+#btn2{
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+.line{
+	border: 2px solid skyblue;
+	border-collapse: collapse;
+}
+/* .btn{
+	text-align: center;
+	background-color: #205181;
+	padding: 5px;
+	color:white;
+	border-radius: 10px;
+	width: 120px;
+	height: 40px;
+}
+#btn1{
+	margin-bottom: 20px;
+}
+#btn2{
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+.alignBox{
+	position: relative;
+	display: inline-block;
+}
+#messageList{
+	width: 600px;
+}
+.line{
+	border: 2px solid skyblue;
+	border-collapse: collapse;
+	text-align: center;
+	vertical-align: middle;
+	height: 60px;
+}
+#alignDiv{
+	margin-top: 80px;
+}
+#alignPtag{
+	vertical-align: middle;
+	padding : 10px;
+} */
+</style>
 
 <script>
 	var jsonData = treeviewJson.myPageJson;
@@ -21,7 +93,7 @@
 			<table>
 				<tr>
 					<td>
-						<div class="alignBox">
+						<div class="alignBox" style="float: left; display: inline-block;">
 							<input class="btn" id="btn1" type="button" value="선택 쪽지 삭제">
 						</div>
 						<div class="alignBox">
@@ -31,61 +103,34 @@
 				</tr>
 				<tr>
 					<td>
-						<table id="messageList" class="line">
+						<table id="messageList" class="line" align="center">
+							<% if(exist) { %>
 							<tr>
-								<th class="line"><input id="all" type="checkbox"
-									name="chkList" value="all"></th>
-								<th class="line"><p>보낸 날짜</p></th>
-								<th class="line"><p>보낸 사람</p></th>
-								<th class="line"><p>받는 사람</p></th>
-								<th class="line"><p>내용</p></th>
-								<th class="line"><p>읽은 날짜</p></th>
+								<th class="line"><p id="alignPtag"><input id="all" type="checkbox"
+									name="chkList" value="all"></p></th>
+								<th class="line"><p id="alignPtag" style="font-weight: bold; ">보낸 날짜</p></th>
+								<th class="line"><p id="alignPtag">보낸 사람</p></th>
+								<th class="line"><p id="alignPtag">받는 사람</p></th>
+								<th class="line"><p id="alignPtag" style="width: 180px;">내용</p></th>
+								<th class="line"><p id="alignPtag">읽은 날짜</p></th>
 							</tr>
+							<% 		for(Msg m : list) { %>
 							<tr>
-								<td class="line"><input type="checkbox" name="chkList"
-									value="1"></td>
-								<td class="line"><p>2018-01-01</p></td>
-								<td class="line"><p>김둘리 (SI팀장)</p></td>
-								<td class="line"><p>개발팀 전체</p></td>
-								<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-								<td class="line"><p>2018-01-10</p></td>
+								<td class="line"><p id="alignPtag"><input type="checkbox" name="chkList"
+									value="<%= count %>"><%= count %></p></td>
+								<td class="line"><p id="alignPtag"><%= m.getMsgSendD() %></p></td>
+								<td class="line"><p id="alignPtag"><%= m.getMsgSender() %></p></td>
+								<td class="line"><p id="alignPtag"><%= m.getMsgReceiver() %></p></td>
+								<td class="line"><p id="alignPtag"><%= m.getMsgContents() %></p></td>
+								<td class="line"><p id="alignPtag"><%= m.getMsgReceiveD() %></p></td>
 							</tr>
+							<% 		count++; %>
+							<% 		} %>
+							<% } else { %>
 							<tr>
-								<td class="line"><input type="checkbox" name="chkList"
-									value="2"></td>
-								<td class="line"><p>2018-01-01</p></td>
-								<td class="line"><p>김둘리 (SI팀장)</p></td>
-								<td class="line"><p>개발팀 전체</p></td>
-								<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-								<td class="line"><p>2018-01-10</p></td>
+								<th class="line" colspan="6"><p>받은 메세지가 없어요!</p></th>
 							</tr>
-							<tr>
-								<td class="line"><input type="checkbox" name="chkList"
-									value="3"></td>
-								<td class="line"><p>2018-01-01</p></td>
-								<td class="line"><p>김둘리 (SI팀장)</p></td>
-								<td class="line"><p>개발팀 전체</p></td>
-								<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-								<td class="line"><p>2018-01-10</p></td>
-							</tr>
-							<tr>
-								<td class="line"><input type="checkbox" name="chkList"
-									value="4"></td>
-								<td class="line"><p>2018-01-01</p></td>
-								<td class="line"><p>김둘리 (SI팀장)</p></td>
-								<td class="line"><p>개발팀 전체</p></td>
-								<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-								<td class="line"><p>2018-01-10</p></td>
-							</tr>
-							<tr>
-								<td class="line"><input type="checkbox" name="chkList"
-									value="5"></td>
-								<td class="line"><p>2018-01-01</p></td>
-								<td class="line"><p>김둘리 (SI팀장)</p></td>
-								<td class="line"><p>개발팀 전체</p></td>
-								<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-								<td class="line"><p>2018-01-10</p></td>
-							</tr>
+							<% } %>
 						</table>
 					</td>
 				</tr>
