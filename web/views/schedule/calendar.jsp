@@ -1,5 +1,9 @@
+<%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.semi.schedule.model.vo.*"%>
+<%
+	ArrayList<HashMap<String, Object>> list=(ArrayList<HashMap<String, Object>>)request.getAttribute("list");
+%>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/schedule/calendar.css">
@@ -154,6 +158,12 @@
 		default:break;
 		}
 		//$('#calSchecdule'+holis.toString().substring(0,4)+"1231 > span").html('6<br>대체휴일');
+		<%for(int i=0;i<list.size();i++){
+			HashMap<String, Object> hmap=list.get(i);
+		%>
+			$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").html("<%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%>");
+			$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").css("color","#2ebe8b");
+		<%}%>
 	}
 		
 	//음력 월 data
@@ -463,11 +473,11 @@
 	
 	<div class="scheduleLeft">
 		<div class="list">
-			<input type="checkbox" id="Myschedule" name="myschedule" value="myschedule" checked>
+			<input type="checkbox" id="Myschedule" name="myschedule" value="1" checked>
 			<label for="Myschedule">내 일정</label><br><br>
-			<input type="checkbox" id="Teamschedule" name="teamschedule" value="teamschedule" checked>
+			<input type="checkbox" id="Teamschedule" name="teamschedule" value="2" checked>
 			<label for="Teamschedule">부서 일정</label><br><br>
-			<input type="checkbox" id="Companyschedule" name="companyschedule" value="companyschedule" checked>
+			<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
 			<label for="Companyschedule">회사 일정</label><br>
 		</div>
 	</div>
@@ -494,7 +504,7 @@
 		</table>
 		<div class="popUpSchedule" id="viewSchedule" align="center"> <%-- 일정 보기 div --%>
 			<div class="scheduleDay" id="viewScheduleDay"></div>
-			<div id="daySchedule" vertical-align="center" text-align="center">AM 9:30 일정 1 아망ㄴ럼ㄴㅇㄹ<br>AM 11:00 일정 2<br>PM 7:00 일정4<br>PM 10 일정 5</div>
+			<div id="daySchedule" vertical-align="center" text-align="center"></div>
 			<div class="scheduleBtn" id="addBtn">추가</div>
 			<div class="scheduleBtn" id="modifyBtn">수정</div>
 			<div class="scheduleBtn" id="delBtn">삭제</div>
@@ -503,7 +513,7 @@
 		<div class="deleteSchedule" id="addSchedule" align="center"> <%-- 일정 추가 div --%>
 			<div class="scheduleDay" id="addScheduleDay"></div>
 			<div class="message" id="addMessage">
-				<select>
+				<select name="scheduleClass">
 					<option value="my">내 일정</option>
 					<!-- <input type="hidden" value="1" name="calendarClass"> -->
 					<option value="team">팀 <!--request.getdeptname -->일정</option>
@@ -589,17 +599,17 @@
 			$("#calendarMain").children().children().click(function(){
 				if($(this).text().length==1){
 					scheduleDate=(today.getYear()+1900)+"년 "
-					+(today.getMonth()+1)+"월 "+$(this).text().charAt(0)+"일";
+					+(today.getMonth()+1)+"월 "+$(this).children("span").html()+"일";
 					$("#viewScheduleDay").text(scheduleDate);
 					$("#viewSchedule").show();
 					console.log("날짜클릭!");
 				}else if($(this).text().length>1){
 					if(isNaN(Number($(this).text().charAt(1)))){
 						scheduleDate=(today.getYear()+1900)+"년 "
-						+(today.getMonth()+1)+"월 "+$(this).text().substring(0, 1)+"일";
+						+(today.getMonth()+1)+"월 "+$(this).children("span").html().substring(0,1)+"일";
 					}else{
 						scheduleDate=(today.getYear()+1900)+"년 "
-						+(today.getMonth()+1)+"월 "+$(this).text().substring(0, 2)+"일";
+						+(today.getMonth()+1)+"월 "+$(this).children("span").html().substring(0,2)+"일";
 					}
 					$("#viewScheduleDay").text(scheduleDate);
 					$("#viewSchedule").show();
@@ -608,9 +618,10 @@
 				}else{
 					console.log("빈칸클릭!");
 				}
+				console.log($(this).children("span").html());
 			});
 		}
-
+		
 		//일정 상세보기 팝업 닫기
 		$("#closeBtn").click(function(){
 			$("#viewSchedule").hide();
@@ -679,29 +690,115 @@
 		
 		/*일정 추가 삭제 관련*/
 		$("#Myschedule").change(function(){
+			var name=$("#Myschedule").val();
 			if($("#Myschedule").is(":checked")){
-	            alert($("#Myschedule + label").text()+'체크');
+	            $.ajax({
+					url:"checkMy.sche",
+					data:{name:name}, //name은 키값, 뒤의 name은 value값
+					type:"get",
+					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
+						console.log("서버 전송 성공");
+					},
+					error:function(data){ //실패시 받은 값을 함수로~
+						console.log("서버 전송 실패"); 
+					},
+					complete:function(data){
+						console.log("내 일정 체크");
+						console.log(name);
+					}
+				});
 	        }else{
-	            alert($("#Myschedule + label").text()+' 체크해제');
+	        	$.ajax({
+					url:"clearMy.sche",
+					data:{name:name}, //name은 키값, 뒤의 name은 value값
+					type:"get",
+					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
+						console.log("서버 전송 성공");
+					},
+					error:function(data){ //실패시 받은 값을 함수로~
+						console.log("서버 전송 실패"); 
+					},
+					complete:function(data){
+						console.log("내 일정 체크해제");
+						console.log(name);
+					}
+				});
 	        }
 		});
 		
 		$("#Teamschedule").change(function(){
+			var name=$("#Teamschedule").val();
 			if($("#Teamschedule").is(":checked")){
-	            alert($("#Teamschedule + label").text()+'체크');
+				$.ajax({
+					url:"checkMy.sche",
+					data:{name:name}, //name은 키값, 뒤의 name은 value값
+					type:"get",
+					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
+						console.log("서버 전송 성공");
+					},
+					error:function(data){ //실패시 받은 값을 함수로~
+						console.log("서버 전송 실패"); 
+					},
+					complete:function(data){
+						console.log("팀 일정 체크");
+						console.log(name);
+					}
+				});
 	        }else{
-	            alert($("#Teamschedule + label").text()+' 체크해제');
+	        	$.ajax({
+					url:"clearTeam.sche",
+					data:{name:name}, //name은 키값, 뒤의 name은 value값
+					type:"get",
+					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
+						console.log("서버 전송 성공");
+					},
+					error:function(data){ //실패시 받은 값을 함수로~
+						console.log("서버 전송 실패"); 
+					},
+					complete:function(data){
+						console.log("팀 일정 체크해제");
+						console.log(name);
+					}
+				});
 	        }
 		});
 		
 		$("#Companyschedule").change(function(){
+			var name=$("#Companyschedule").val();
 			if($("#Companyschedule").is(":checked")){
-	            alert($("#Companyschedule + label").text()+'체크');
+				$.ajax({
+					url:"checkCompany.sche",
+					data:{name:name}, //name은 키값, 뒤의 name은 value값
+					type:"get",
+					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
+						console.log("서버 전송 성공");
+					},
+					error:function(data){ //실패시 받은 값을 함수로~
+						console.log("서버 전송 실패"); 
+					},
+					complete:function(data){
+						console.log("회사 일정 체크");
+						console.log(name);
+					}
+				});
 	        }else{
-	            alert($("#Companyschedule + label").text()+' 체크해제');
+	        	$.ajax({
+					url:"clearCompany.sche",
+					data:{name:name}, //name은 키값, 뒤의 name은 value값
+					type:"get",
+					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
+						console.log("서버 전송 성공");
+					},
+					error:function(data){ //실패시 받은 값을 함수로~
+						console.log("서버 전송 실패"); 
+					},
+					complete:function(data){
+						console.log("회사 일정 체크 해제");
+						console.log(name);
+					}
+				});
 	        }
 		});
-		
 	</script>
 </div>
 </section>
