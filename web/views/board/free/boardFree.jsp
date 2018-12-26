@@ -1,5 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*, com.semi.board.Free.model.vo.*"%>
+<%
+	ArrayList<Free> list = (ArrayList<Free>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+%>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
 
@@ -38,31 +46,15 @@
 	
 			<tbody>
 				<tr>
-					
-					<td>3</td>
-					<td>자유게시글 3</td>
-					<td>김길동</td>
-					<td>2018.12.22</td>
-					<td>0</td>
+					<% for(Free f : list) {%>
+					<td><%= f.getBno() %></td>
+					<td><%= f.getbTitle() %></td>
+					<td><%= f.getWriterId() %></td>
+					<td><%= f.getbDate() %></td>
+					<td><%= f.getbClicks() %></td>
 				</tr>
+					<% } %>
 	
-				<tr>
-					
-					<td>2</td>
-					<td>자유게시글 2</td>
-					<td>강길동</td>
-					<td>2018.12.22</td>
-					<td>0</td>
-				</tr>
-	
-				<tr>
-					
-					<td>1</td>
-					<td>자유게시글 1</td>
-					<td>민길동</td>
-					<td>2018.12.22</td>
-					<td>0</td>
-				</tr>
 			</tbody>
 		</table>
 		
@@ -72,7 +64,35 @@
     	
 	</div>	
 		
-		<div class="paging" align="center">
+		<div class="pagingArea" align="center">
+			<button onclick="location.href='<%=request.getContextPath()%>/selectList.fr?currentPage=1'"><<<</button>
+			
+			<% if(currentPage <= 1) {%>
+			<button disabled><</button>
+			<% }else{ %>
+			<button onclick="location.href='<%=request.getContextPath() %>/selectList.fr?currentPage=<%=currentPage -1 %>'"><</button>
+			<% } %>
+			
+			<% for(int p = startPage; p <= endPage; p++) {
+				if(p == currentPage){
+			%>
+				<button disabled><%= p %></button>
+			<% }else{ %>
+				<button onclick="location.href='<%=request.getContextPath() %>/selectList.fr?currentPage=<%= p %>'"><%= p %></button>	
+			<% 	} %>
+			<% } %>
+			
+			<% if(currentPage >= maxPage){ %>
+			<button disabled>></button>
+			<% }else{ %>
+			<button onclick="location.href='<%=request.getContextPath() %>/selectList.fr?currentPage=<%= currentPage +1 %>'">></button>
+			<% } %>
+			<button onclick="location.href='<%=request.getContextPath() %>/selectList.fr?currentPage=<%=maxPage %>'">>></button>
+			
+			
+			
+			
+			
 			<ul class="pagination">
 				<li><a href="#">1</a></li>
 				<li><a href="#">2</a></li>
