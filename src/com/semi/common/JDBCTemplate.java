@@ -31,7 +31,6 @@ public class JDBCTemplate {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);
 			con.setAutoCommit(false);	// 자동 커밋 방지
-//			System.out.println(con);
 
 		} catch (IOException e) {
 			e.printStackTrace();

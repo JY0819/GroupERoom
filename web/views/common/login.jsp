@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.semi.admin.user.model.vo.Employee"%>
+<%
+	Employee loginUser = (Employee) session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,13 +68,18 @@ body {
 
 	<div class="login-page">
 		<div class="form">
-			<form class="login-form" action="<%=request.getContextPath()%>/login"
-				method="post">
-				<input type="text" placeholder="userId" /> <input type="password"
-					placeholder="password" /> <input type="submit" id="login"
-					value="LOGIN">
+			<form class="loginForm" action="<%=request.getContextPath()%>/login.me" method="post">
+				<input type="text" name="userId" placeholder="userId">
+				<input type="password" name="userPwd" placeholder="password">
+				<input type="submit" id="login" value="LOGIN" onclick="login();">
 			</form>
 		</div>
 	</div>
+	
+	<script>
+		function login(){
+			$("#loginForm").submit();
+		}
+	</script>
 </body>
 </html>
