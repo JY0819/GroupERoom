@@ -1,220 +1,144 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
+
+
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
+
 <script>
-	var jsonData=treeviewJson.boardJson;
-	var nodeName="부서게시판";
+	
+	var jsonData = treeviewJson.boardJson;
+	var nodeName = "부서게시판";
 </script>
+
+
 <style>
-/*게시판 스타일*/
-#boardTitle{
-	height:45px;
-   font-weight:bold;
-   font-size:16px;
-    clear:both;
-
-}
-section{
-	float:left;
-	height:200px;
-	width:100%;
-}
-table, td, th,tr{
-    
-    /*border:1px solid black;*/
-    border:1px solid black;
-	position:relative;
-	/*top에서부터 100px 움직이고 left서부터 200px움직인다.*/
-	
-	
-	
-}
-
-tr{
-    height:30px;
-}
-
-.head{
-    background-color:rgb(31,81,129);
-    color:white;
-
-}
-
-.list{
-    background-color: white;
-    color:black;
-    
-}
-
-
-/*게시판 메뉴*/
-#sideMenu{
-	position:absolute;
-	left:5px;
-	/* float:left; */
-	/*width:15%;*/
-	background-color:#205181;
-	width:200px;
-	height:500px;
-}
-#menuFont{
-	align:center;
-	font-size:20px;
-	text-decoration:none;
-	color:white;
-}
-/* 게시판 목록끝  */
-
-section>form>button{
-	 float:right;
-}
-
-#btn{
-	text-decoration:none;
-}
-/*글 내용*/
-#content{
-	width:600px;
-	height:300px;
-	border:1px solid black;
-	
-}
-/*글 정보*/
-#info{
-	margin: right auto;
-	
-}
-#btn{
-	text-decoration:none;
-	color:black;
-}
-/*댓글*/
-
-#enrollRep{	
-	width:560px;
-	height:50px;
-	margin: right auto;
-}
-
-#info{
-/* 	border: 1px solid white;
- */
-	background-color:#205181;
-	width:100px;
-	color:white;
-	text-align:center;
-}
-#reple{
-	border: 1px solid white;
-	font-color:white;
-}
-#rep-info{
-	background-color:#205181;
-	color:white;
-	width:100px;
-	text-align:center;
-	
-}
-#table1{
-	border: 1px solid white;
-	color:white;
-}
-#table2{
-	border: 1px solid white;
-	color:white;
+body {
+	height: 780px;
 }
 </style>
+
+
 
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
 	</div>
+	
 	<div class="content-right container">
-
 	
-	<!-- 게시판 -->
+	<div id="title">
+			<h1 align="left"> | 부서게시판 |</h1>
+		</div>
+		<hr>
+	
+	<div class="container">
 
-<div id="boardTitle">
-<h1>l 부서게시판</h1>
-</div>
-<hr>
-
-	<div align="center">
-	<br>
-	<table id="table1" float="right">
-		<tr>
-			<td id="info">글번호</td><td width="500px"><!-- 글번호불러와 --></td>
+		<div class="row">
+			<table class="table table-striped" style="text-align: center; border: 1px;">
+				<thead>
+					<tr>
+						<th colspan="3" style="background-color: #eeeeee; text-align: center;">자유게시판 상세보기</th>
+					</tr> 
+				</thead>
+	
+				<tbody>
+				<tr>
+						<td>부서</td>
+						<td colspan="2"></td>
+					</tr>
+				<tr>
+						<td>글번호</td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td>조회수</td>
+						<td colspan="2"></td>
+					</tr>
+					
+					
+					<tr>
+						<td>작성자</td>
+						<td colspan="2"></td>
+					</tr>
+					
+					<tr>
+						<td>작성일자</td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td style="width: 20%;">글 제목</td>
+<%-- 						<td colspan="3"><%= %></td> --%>
+						<td colspan="3"></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td colspan="2" style="min-height: 200px; text-align: left;"></td>
+					</tr>
+				</tbody>
+			</table>
 			
-		</tr>
-		<tr>
-			<td id="info">조회수</td><td width="500px"><!-- 조회수불러와 --></td>
-		</tr>
-		<tr>
-			<td id="info">작성일<td width="500px"><!-- 작성일러와 --></td>
-		</tr>
-		<tr>
-			<td id="info">작성자</td><td width="500px"><!-- 작성자불러와 --></td>
-		</tr>
-		<tr>
-			<td id="info">제목</td><td width="500px"><!-- 제목불러와 --></td>
-		</tr>
-		
-		
-	</table>
-	<br>
-	<hr>
-	<br>
-		<br>
-
-		<div id="content"><a>글 내용</a></div></br>
-	<table id="table2">
-		<tr>
-			<td id="info" >첨부파일</td><td width="500px"><!-- 첨부파일 --></td>
-		</tr>
-	</table>
-	
-	</br>
-	</br>
-	
-	<table id="reple">
-		<tr>
-			<td id="rep-info">작성자</td><td width="450px" rowspan="2">댓글내용</td><td id="reple">&nbsp;<button id="btn">댓글삭제</button></td>
-		</tr>
-		<tr>	
-			<td id="rep-info">댓글작성일</td><td id="reple">&nbsp;<button type="submit"><a id="btn" href="#" id="btn">댓글수정</button></td>
-		</tr>
-		
-		
-		
-	</table>
-	<br>
-
-		<input type="textarea" id="enrollRep">&nbsp;<button height="50px" id="btn">댓글등록</button>
-
-	</br>
-	</br>
-	
-	<form align="center">
-		<button><a href="modifyTeam.jsp" id="btn">수정</a></button>
-		<button><a href="deleteTeam.jsp" id="btn">삭제</a></button>
-		<button><a href="boardTeam.jsp" id="btn">목록</a></button>
-		<button><a href="replyTeam.jsp" id="btn">답글</a></button>
-	</form>
-	
-
+			<div class="attachfile">
+				<label for="inputattach">첨부된 파일</label>
+				<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+					<div class="bootstrap-filestyle input-group">
+					<input type="text" id="userfile" class="form-control" name="userfile" disabled="">
+						<span class="group-span-filestyle input-group-btn" tabindex="0">
+						<label for="fileInput" class="btn btn-default ">
+							<span><i class="fas fa-file-upload"></i></span>
+						</label>
+					</span>
+				</div>
+				<br>
+				
+			<table class="table table-striped" style="text-align: center; border: 1px;">
+			<tr>
+				<td td style="width: 20%;">댓글</td>
+				<td colspan="3"></td>			
+			</tr>
+			<tr>
+						 <td style="width: 20%;">댓글작성
+						</td> 
+						<td width="800px">
+						<input type="text" class="form-control" placeholder="댓글을 작성해주세요">
+						</td>
+						<td>
+						<button id="enroll" class="btn btn-primary" >댓글등록</button>
+						
+						</td>
+						
+					</tr>
+			</table>
+				
+			</div>
+			
+			<br>
+			<div class="detailNoticeBtn">
+				<button id="gotoList" class="btn btn-primary">목록으로</button>
+				<button id="enrollBtn" class="btn btn-primary">수정</button>
+				<button id="deleteBtn" class="btn btn-primary">삭제</button>
+			</div>
+			
+		</div>
 	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 	
-</div>
+	</div>
 </section>
 
+	<script>
+	$(function(){
+		$("#gotoList").click(function(){
+			location.href="/semi/views/board/team/boardTeam.jsp";
+		});
+	});
+	
+	$(function(){
+		$("#enrollBtn").click(function(){
+			location.href="/semi/views/board/team/modifyTeam.jsp";
+		});
+	});
+	
+</script>
 <jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
-
-
-    
+	

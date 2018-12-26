@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
+
+
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
 
 <script>
@@ -42,11 +44,15 @@ body {
 				</thead>
 	
 				<tbody>
-					<tr>
-						<td style="width: 20%;">글 제목</td>
-<%-- 						<td colspan="3"><%= %></td> --%>
-						<td colspan="3"></td>
+				<tr>
+						<td>글번호</td>
+						<td colspan="2"></td>
 					</tr>
+					<tr>
+						<td>조회수</td>
+						<td colspan="2"></td>
+					</tr>
+					
 					
 					<tr>
 						<td>작성자</td>
@@ -57,7 +63,11 @@ body {
 						<td>작성일자</td>
 						<td colspan="2"></td>
 					</tr>
-					
+					<tr>
+						<td style="width: 20%;">글 제목</td>
+<%-- 						<td colspan="3"><%= %></td> --%>
+						<td colspan="3"></td>
+					</tr>
 					<tr>
 						<td>내용</td>
 						<td colspan="2" style="min-height: 200px; text-align: left;"></td>
@@ -76,7 +86,29 @@ body {
 						</label>
 					</span>
 				</div>
+				<br>
+				
+			<table class="table table-striped" style="text-align: center; border: 1px;">
+			<tr>
+				<td td style="width: 20%;">댓글</td>
+				<td colspan="3"></td>			
+			</tr>
+			<tr>
+						 <td style="width: 20%;">댓글작성
+						</td> 
+						<td width="800px">
+						<input type="text" class="form-control" placeholder="댓글을 작성해주세요">
+						</td>
+						<td>
+						<button id="enroll" class="btn btn-primary" >댓글등록</button>
+						
+						</td>
+						
+					</tr>
+			</table>
+				
 			</div>
+			
 			<br>
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>

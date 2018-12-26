@@ -37,7 +37,7 @@ body {
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
-							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">부서게시판 글 수정</th>
+							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">부서게시판 글 작성</th>
 						</tr> 
 					</thead>
 

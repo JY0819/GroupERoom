@@ -11,6 +11,8 @@
 	function closeNav() {
 		document.getElementById('sidemenu').style.width = '0';
 	}
+	
+	
 </script>
 
 <nav class="navigation">
