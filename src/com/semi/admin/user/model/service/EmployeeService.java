@@ -1,13 +1,17 @@
 package com.semi.admin.user.model.service;
 
-import com.semi.admin.user.model.dao.EmployeeDao;
-import com.semi.admin.user.model.vo.Employee;
-import com.semi.common.vo.Attachments;
-
-import static com.semi.common.JDBCTemplate.*;
+import static com.semi.common.JDBCTemplate.close;
+import static com.semi.common.JDBCTemplate.commit;
+import static com.semi.common.JDBCTemplate.getConnection;
+import static com.semi.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+
+import com.semi.admin.user.model.dao.EmployeeDao;
+import com.semi.admin.user.model.vo.Employee;
+import com.semi.common.service.CommonSeqService;
+import com.semi.common.vo.Attachments;
 
 public class EmployeeService {
 	// 로그인 처리
@@ -26,8 +30,13 @@ public class EmployeeService {
 		Connection con = getConnection();
 		int result = 0;
 		
-		int result1 = new EmployeeDao().insertMember(con, emp);
-		int result2 = new EmployeeDao().insertAttachment(con, fileList);
+		int photoId = new CommonSeqService(con).getFileSeq();
+		
+		// 사원 정보
+		int result1 = new EmployeeDao().insertAttachment(con, fileList, photoId);
+		// 첨부 파일
+		int result2 = new EmployeeDao().insertMember(con, emp, photoId); 
+		
 		
 		if(result1 > 0 && result2 > 0) {
 			commit(con);
