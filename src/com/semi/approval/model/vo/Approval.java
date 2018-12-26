@@ -4,6 +4,14 @@ import java.sql.Date;
 
 public class Approval implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	
 	private int apprNo;
 	private int apprWriter;
 	private String deptId;
