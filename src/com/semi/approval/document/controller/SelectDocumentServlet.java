@@ -22,9 +22,11 @@ public class SelectDocumentServlet extends HttpServlet {
 		//사원번호받아오기
 		Document document = new DocumentService().selectForm();
 		String page = "";
+		String pageName = request.getParameter("page");
+		
 		if(document != null) {
 			page = "views/approval/documentList/vacationDocument.jsp";
-			request.getSession().setAttribute("doc", document);
+			request.setAttribute("doc", document);
 			request.getRequestDispatcher(page).forward(request, response);
 		}else {
 			page = "views/approval/common/errorPage.jsp";

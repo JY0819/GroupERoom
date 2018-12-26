@@ -1,4 +1,4 @@
-package com.semi.approval.model.service.trashService;
+/*package com.semi.approval.model.service.trashService;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -19,3 +19,4 @@ public class trashService {
 	}
 
 }
+*/
