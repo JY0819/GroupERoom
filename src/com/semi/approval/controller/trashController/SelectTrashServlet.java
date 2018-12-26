@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.approval.model.service.ApprovalService;
+import com.semi.approval.model.service.trashService.trashService;
 import com.semi.approval.model.vo.Approval;
 
 /**
@@ -32,7 +33,7 @@ public class SelectTrashServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Approval> list = new ApprovalService().selectList();
+		ArrayList<Approval> list = new trashService().selectList();
 		
 		String page = "";
 		if(list != null) {

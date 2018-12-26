@@ -33,6 +33,11 @@ public class trashDao {
 			stmt = con.createStatement();
 			rset = stmt.executeQuery(query);
 			list = new ArrayList<Approval>();
+			while(rset.next()) {
+				Approval a = new Approval();
+				a.setApprNo(rset.getInt("EMPID"));
+				
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
