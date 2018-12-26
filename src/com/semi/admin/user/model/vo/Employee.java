@@ -11,6 +11,8 @@ public class Employee implements java.io.Serializable {
 	private String empGender;
 	private Date empBirth;
 	private String empAddr;
+	private String empPhone;
+	private int empVacCount;
 	private String adminAuthority;
 	private String whetherOfRetire;
 	private int photoId;
@@ -21,7 +23,8 @@ public class Employee implements java.io.Serializable {
 	}
 
 	public Employee(int empid, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
-			String empAddr, String adminAuthority, String whetherOfRetire, int photoId, Date entryDay, Date leaveDay) {
+			String empAddr, String empPhone, int empVacCount, String adminAuthority, String whetherOfRetire,
+			int photoId, Date entryDay, Date leaveDay) {
 		super();
 		this.empid = empid;
 		this.empName = empName;
@@ -30,6 +33,8 @@ public class Employee implements java.io.Serializable {
 		this.empGender = empGender;
 		this.empBirth = empBirth;
 		this.empAddr = empAddr;
+		this.empPhone = empPhone;
+		this.empVacCount = empVacCount;
 		this.adminAuthority = adminAuthority;
 		this.whetherOfRetire = whetherOfRetire;
 		this.photoId = photoId;
@@ -93,6 +98,22 @@ public class Employee implements java.io.Serializable {
 		this.empAddr = empAddr;
 	}
 
+	public String getEmpPhone() {
+		return empPhone;
+	}
+
+	public void setEmpPhone(String empPhone) {
+		this.empPhone = empPhone;
+	}
+
+	public int getEmpVacCount() {
+		return empVacCount;
+	}
+
+	public void setEmpVacCount(int empVacCount) {
+		this.empVacCount = empVacCount;
+	}
+
 	public String getAdminAuthority() {
 		return adminAuthority;
 	}
@@ -136,9 +157,13 @@ public class Employee implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Employee [empid=" + empid + ", empName=" + empName + ", empPwd=" + empPwd + ", approvePwd=" + approvePwd
-				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", adminAuthority="
-				+ adminAuthority + ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay="
-				+ entryDay + ", leaveDay=" + leaveDay + "]";
+				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", empPhone="
+				+ empPhone + ", empVacCount=" + empVacCount + ", adminAuthority=" + adminAuthority
+				+ ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay=" + entryDay
+				+ ", leaveDay=" + leaveDay + "]";
 	}
 
+	
+	
+	
 }
