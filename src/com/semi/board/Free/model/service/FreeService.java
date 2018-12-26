@@ -14,9 +14,42 @@ public class FreeService {
 		
 		ArrayList<Free> list = new FreeDao().selectList(con);
 		
+		System.out.println("freeService list: "+list);
 		close(con);
 		
 		return list;
+	}
+	//글 작성용 메소드
+	public int insertFree(Free f) {
+		Connection con = getConnection();
+		
+		int result = new FreeDao().insertFree(con, f);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		return result;
+	}
+	//글 상세보기
+	public Free selectOne(int num) {
+		Connection con = getConnection();
+		Free f = null;
+		
+		//조회수 증가
+		int result = new FreeDao().updateCount(con, num);
+		
+		if(result > 0) {
+			commit(con);
+			f = new FreeDao().selectOne(con, num);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return f;
 	}
 	
 	

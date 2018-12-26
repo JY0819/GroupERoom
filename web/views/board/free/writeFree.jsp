@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.vo.*"%>
+<% 
+	Employee loginUser = (Employee)session.getAttribute("loginUser"); 
+ %>
 <!-- admin 만 글 작성 가능 -->
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
@@ -17,6 +20,7 @@ body {
 }
 </style>
 
+<% if(loginUser != null) {%>
 
 <section class="content">
 	<div class="content-left">
@@ -33,7 +37,7 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form method="post" action="">
+			<form action="<%= request.getContextPath()%>/insert.fr" method="post">
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
@@ -43,17 +47,17 @@ body {
 
 					<tbody>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="작성자" maxlength="30"></td>
+						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 						<tr>
 							<td>
-							<input type="text" class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
+							<input type="text" name ="title"class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<textarea class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
+							<textarea name="content" class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
 							</td>
 						</tr>
 					</tbody>
@@ -80,8 +84,10 @@ body {
 			</form>
 		</div>
 	</div>
-
-	
+<% }else{ %>
+	request.setAttribute("msg", "잘못된 경로로 접근하셨습니다.");
+	request.getRequestDispatcher("/semi/views/common/errorPage.jsp");
+<% } %>
 	<script>
 		$(function(){
 			$("#fileInput").on('change', function(){  // 값이 변경되면

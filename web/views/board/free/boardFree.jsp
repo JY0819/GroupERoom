@@ -1,12 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*, com.semi.board.Free.model.vo.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" 
+import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.vo.*"%>
 <%
 	ArrayList<Free> list = (ArrayList<Free>)request.getAttribute("list");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	Employee loginUser = (Employee)session.getAttribute("loginUser"); 
+	
+	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+	int endPage = pi.getEndPage(); */
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
@@ -29,10 +33,12 @@
 		<hr>
 		
 		<div class="noticeListBtn">
+		<% if(loginUser != null){ %>
 			<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
-			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
-		</div>
-		<table class="table table-striped">
+<!-- 			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
+ -->		</div>
+ 	<%} %>
+		<table class="table table-striped" id="listArea">
 			<thead>
 				<tr>
 					
@@ -45,8 +51,9 @@
 			</thead>
 	<!-- 으아d아 asdfdkddkd???jjhgff?kk-->
 			<tbody>
+			<% for(Free f : list) {%>
 				<tr>
-					<% for(Free f : list) {%>
+					
 					<td><%= f.getBno() %></td>
 					<td><%= f.getbTitle() %></td>
 					<td><%= f.getWriterId() %></td>
@@ -54,7 +61,8 @@
 					<td><%= f.getbClicks() %></td>
 				</tr>
 					<% } %>
-	
+					
+				
 			</tbody>
 		</table>
 		
@@ -67,7 +75,7 @@
 		<div class="pagingArea" align="center">
 			<button onclick="location.href='<%=request.getContextPath()%>/selectList.fr?currentPage=1'"><<<</button>
 			
-			<% if(currentPage <= 1) {%>
+<%-- 			<% if(currentPage <= 1) {%>
 			<button disabled><</button>
 			<% }else{ %>
 			<button onclick="location.href='<%=request.getContextPath() %>/selectList.fr?currentPage=<%=currentPage -1 %>'"><</button>
@@ -89,8 +97,8 @@
 			<% } %>
 			<button onclick="location.href='<%=request.getContextPath() %>/selectList.fr?currentPage=<%=maxPage %>'">>></button>
 			
-			
-			
+			 --%>
+	
 			
 			
 			<ul class="pagination">
@@ -103,11 +111,32 @@
 		</div>
 	</div>
 </section>
+
+		
 <script>
+	$(function(){
+		$("#listArea td").mouseenter(function(){
+			$(this).parent().css({"color":"darkgrey", "cursor":"pointer"});
+		
+		
+		}).mouseout(function(){
+			$(this).parent().css({"color":"black"})
+		
+		}).click(function(){
+			var num = $(this).parent().children().eq(0).text();//->글번호 가져오기
+			console.log(num);
+			
+			location.href="<%=request.getContextPath()%>/selectOne.fr?num="+num;
+		});
+	});
+
+
 	$(function(){
 		$("#writeBtn").click(function(){
 			location.href="/semi/views/board/free/writeFree.jsp";
 		});
 	});
 </script>
+
+
 <jsp:include page="/views/layout/treeview/board/layout-down.jsp" />

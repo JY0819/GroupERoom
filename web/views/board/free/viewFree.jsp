@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.semi.board.Free.model.vo.*"%>
+<% Free f = (Free)request.getAttribute("f"); %>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 
@@ -46,31 +47,32 @@ body {
 				<tbody>
 				<tr>
 						<td>글번호</td>
-						<td colspan="2"></td>
+						<td colspan="2" readonly><%=f.getBno() %></td>
 					</tr>
 					<tr>
 						<td>조회수</td>
-						<td colspan="2"></td>
+						<td colspan="2" readonly><%=f.getbClicks() %></td>
 					</tr>
 					
 					
 					<tr>
 						<td>작성자</td>
-						<td colspan="2"></td>
+						<td colspan="2" readonly><%=f.getWriterId() %></td>
 					</tr>
 					
 					<tr>
 						<td>작성일자</td>
-						<td colspan="2"></td>
+						<td colspan="2" readonly><%=f.getbDate() %></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
-<%-- 						<td colspan="3"><%= %></td> --%>
-						<td colspan="3"></td>
+						<td colspan="3" readonly><%=f.getbTitle() %></td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="2" style="min-height: 200px; text-align: left;"></td>
+						<td colspan="2" style="min-height: 200px; text-align: left;" readonly>
+						<%=f.getbContent() %>
+						</td>
 					</tr>
 				</tbody>
 			</table>

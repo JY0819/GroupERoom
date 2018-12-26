@@ -37,6 +37,7 @@ public class SelectFreeBoardListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Free> list = new FreeService().selectList();
 		
+		System.out.println("servlet list : "+list);
 		String page ="";
 		
 		if(list != null) {
