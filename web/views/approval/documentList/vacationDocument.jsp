@@ -19,7 +19,8 @@
 	<table>
 		<tr>
 			<td class="td">번호</td>
-			<td class="content"><input type="text" name="num" value=<%= document.getManageEmpId() %>></td>
+			<td class="content"><input type="text" name="num" value=<%= document.getManageEmpId()%>></td>
+			<!--value=document.getManageEmpId()-->
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -52,9 +53,11 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo() %>></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()%>></td>
+			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="empNo" value=<%= document.getManageNo() %>></td> 
+			<td class="content" colspan="3"><input type="text" name="empNo" value=<%= document.getManageNo() %>></td>
+			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>
 			<td class="td">휴가기간</td>

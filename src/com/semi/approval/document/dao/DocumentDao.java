@@ -18,7 +18,6 @@ public class DocumentDao {
 	public DocumentDao() {
 		
 		String fileName = DocumentDao.class.getResource("/sql/approval/approval-query.properties").getPath();
-		System.out.println(fileName);
 		try {
 		
 			prop.load(new FileReader(fileName));
@@ -35,19 +34,16 @@ public class DocumentDao {
 		Document document = null;
 		
 		String query = prop.getProperty("selectForm");
-		System.out.println(query);
 		
 		try {
 			
 			pstmt = con.prepareStatement(query);
 			rset = pstmt.executeQuery();
-			System.out.println(rset.next());
 			if(rset.next()) {
 				document = new Document();
 				document.setManageEmpId(rset.getInt("MANAGEEMPID"));
 				document.setManageDocNo(rset.getInt("MANAGEDOCNO"));
 				document.setManageNo(rset.getInt("MANAGENO"));
-				System.out.println(document.getManageEmpId());
 			}
 			
 		} catch (SQLException e) {

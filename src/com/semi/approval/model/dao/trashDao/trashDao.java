@@ -1,4 +1,4 @@
-package com.semi.approval.model.dao.trashDao;
+/*package com.semi.approval.model.dao.trashDao;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,3 +47,4 @@ public class trashDao {
 	}
 
 }
+*/

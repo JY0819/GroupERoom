@@ -1,4 +1,4 @@
-package com.semi.approval.controller.trashController;
+/*package com.semi.approval.controller.trashController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,24 +14,24 @@ import com.semi.approval.model.service.ApprovalService;
 import com.semi.approval.model.service.trashService.trashService;
 import com.semi.approval.model.vo.Approval;
 
-/**
+*//**
  * Servlet implementation class SelectTrashServlet
- */
+ *//*
 @WebServlet("/trashselect.tr")
 public class SelectTrashServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
+    *//**
      * @see HttpServlet#HttpServlet()
-     */
+     *//*
     public SelectTrashServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
+	*//**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 *//*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Approval> list = new trashService().selectList();
 		
@@ -48,12 +48,13 @@ public class SelectTrashServlet extends HttpServlet {
 		
 	}
 
-	/**
+	*//**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 *//*
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 }
+*/

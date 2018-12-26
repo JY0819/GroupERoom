@@ -28,7 +28,7 @@
 						<tr>
 							<td>
 								<div id="contentImgArea1">
-									<a href="../documentList/vacationDocument.jsp"><img id="contentImg1" width="200" height="200" src="/semi/assets/images/approval/vacationDocument.PNG" alt="vacationDocument"></a>
+									<img id="contentImg1" width="200" height="200" src="/semi/assets/images/approval/vacationDocument.PNG" alt="vacationDocument">
 								</div>
 							</td>
 							<td>
@@ -71,9 +71,12 @@
 				$(this).css("border-color", "black")
 			}});
 		});
-		$(function() {
-				location.href="<%= request.getContextPath()%>/selectDocument.sd";
-		});
+	    $(function() {
+			$("#contentImgArea1").click(function() {
+				var page = "va";
+				location.href="<%= request.getContextPath()%>/selectDocument.sd?page=" + page;
+			});
+		}); 
 		</script>
 </body>
 </html>
