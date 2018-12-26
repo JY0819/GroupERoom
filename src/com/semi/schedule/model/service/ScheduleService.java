@@ -12,12 +12,36 @@ import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleService {
 
-	public ArrayList<HashMap<String, Object>> selectAllSchedule() {
+	public ArrayList<HashMap<String, Object>> selectAllSchedule(int empId) {
 		Connection con=getConnection();
-		ArrayList<HashMap<String, Object>> list=new ScheduleDao().selectAllSchedule(con);
+		ArrayList<HashMap<String, Object>> list=new ScheduleDao().selectAllSchedule(con, empId);
 		
 		close(con);
 		return list;
+	}
+
+	public int insertMySchedule(Schedule reqSche) {
+		Connection con=getConnection();
+		int result=new ScheduleDao().insertMySchedule(con, reqSche);
+		
+		close(con);
+		return result;
+	}
+
+	public int insertTeamSchedule(Schedule reqSche) {
+		Connection con=getConnection();
+		int result=new ScheduleDao().insertTeamSchedule(con, reqSche);		
+		
+		close(con);
+		return result;
+	}
+
+	public int insertCompanySchedule(Schedule reqSche) {
+		Connection con=getConnection();
+		int result=new ScheduleDao().insertCompanySchedule(con, reqSche);		
+		
+		close(con);
+		return result;
 	}
 
 }

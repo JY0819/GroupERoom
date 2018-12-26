@@ -1,7 +1,9 @@
+<%@page import="com.semi.admin.user.model.vo.*"%>
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.semi.schedule.model.vo.*"%>
 <%
+	Employee loginUser=(Employee)request.getSession().getAttribute("loginUser");
 	ArrayList<HashMap<String, Object>> list=(ArrayList<HashMap<String, Object>>)request.getAttribute("list");
 %>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
@@ -46,12 +48,10 @@
 		/*달력 생성용*/
 		nMonth = new Date(today.getFullYear(), today.getMonth(), 1);  // 이번 달의 첫째 날
 		var lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0); // 이번 달의 마지막 날
-		
 
 		var tblCalendar = document.getElementById("calendarMain");     // 테이블 달력을 만들 테이블
 		var tblCalendarYM = document.getElementById("calendarTitle");    // yyyy년 m월 출력할 곳
 		tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // yyyy년 m월 출력
-		
 		
 		// 기존 테이블에 뿌려진 줄, 칸 삭제
 		while (tblCalendar.rows.length > 0) {
@@ -157,7 +157,9 @@
 		case 8: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
 		default:break;
 		}
-		//$('#calSchecdule'+holis.toString().substring(0,4)+"1231 > span").html('6<br>대체휴일');
+		
+		//불러온 일정 삽입
+		
 		<%for(int i=0;i<list.size();i++){
 			HashMap<String, Object> hmap=list.get(i);
 		%>
@@ -470,7 +472,7 @@
 		<div id="treeview"></div>
 	</div>
 	<div class="content-right container">
-	
+	<%if(loginUser!=null){ %>
 	<div class="scheduleLeft">
 		<div class="list">
 			<input type="checkbox" id="Myschedule" name="myschedule" value="1" checked>
@@ -514,29 +516,55 @@
 			<div class="scheduleDay" id="addScheduleDay"></div>
 			<div class="message" id="addMessage">
 				<select name="scheduleClass">
-					<option value="my">내 일정</option>
-					<!-- <input type="hidden" value="1" name="calendarClass"> -->
-					<option value="team">팀 <!--request.getdeptname -->일정</option>
-					
-					<!--//if(loginUser!=null && loginUser.getUserId().equals("관리자아이디")){ %>-->
-					<option value="company">회사 일정</option>
-					<!-- <input type="hidden" value="3" name="calendarClass"> -->
+					<option value="1" selected>내 일정</option>
+					<option value="2">팀 일정</option>
+<%-- 					<%if(loginUser!=null && loginUser.getAdminAuthority().equals("Y")){ %>
+ --%>					<option value="3">회사 일정</option>
+					<%-- <%} %> --%>
 				</select>
-				<input type="text" size="13" maxlength="25" placeholder="추가할 일정 입력" name="addSchedule">
+				<input type="time" name="addScheduleTime"><br>
+				<input type="text" size="25" maxlength="200" placeholder="추가할 일정 입력" name="addSchedule">
 			</div>
 			<div class="scheduleBtn" id="saveAddBtn">추가</div>
+			<script>
+				$("#saveAddBtn").click(function(){
+					var scheduleClass=$("select[name='scheduleClass']").val();
+					var time=$('input[name=addScheduleTime]').val();
+					var scheContents=$('input[name=addSchedule]').val();
+					var scheDate=$("#addScheduleDay").text();
+					console.log(scheDate);
+					$.ajax({
+						url:"insertSchedule.sche",
+						type:"post",
+						data:{scheduleClass:scheduleClass, scheDate:scheDate, time:time, scheContents:scheContents},
+						success:function(data){
+							buildCalendar();
+						},
+						error:function(data){
+							console.log("실패");
+						},
+						complete:function(){
+							console.log(scheDate/* .split("년 ","").split("월 ","").split("일","") */);
+							console.log(scheduleClass+'/'+time+'/'+scheContents);
+						}
+					});
+					
+				});
+			</script>
 			<div class="scheduleBtn" id="closeAddBtn">닫기</div>
 		</div>
 		<div class="deleteSchedule" id="modSchedule" align="center"> <%-- 일정 수정 div --%>
 			<div class="scheduleDay" id="modScheduleDay"></div>
 			<div class="message" id="modMessage">
 				<select>
-					<option value="my">내 일정</option>
-					<option value="team">팀<!--request.getdeptname --> 일정</option>
-					<option value="company">회사 일정</option>
-				</select>
-				<input type="text" size="13" maxlength="25" placeholder="수정할 일정 입력" name="modSchedule">
-				<input type="hidden">
+					<option value="1">내 일정</option>
+					<option value="2"><!--request.getdeptname -->팀 일정</option>
+<%-- 					<%if(loginUser!=null && loginUser.getAdminAuthority().equals("Y")){ %>
+ --%>					<option value="3">회사 일정</option>
+<%-- 					<%} %>
+ --%>				</select>
+				<input type="time" name="addScheduleTime"><br>
+				<input type="text" size="25" maxlength="200" placeholder="수정할 일정 입력" name="modSchedule">
 			</div>
 			<div class="scheduleBtn" id="saveModBtn">저장</div>
 			<div class="scheduleBtn" id="closeModBtn">닫기</div>
@@ -801,5 +829,10 @@
 		});
 	</script>
 </div>
+<%}else{%>
+<%
+		request.setAttribute("msg", "잘못된 경로로 접근했습니다.");
+		request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+	} %>
 </section>
 <jsp:include page="/views/layout/treeview/schedule/layout-down.jsp" />

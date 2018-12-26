@@ -32,7 +32,7 @@ public class ScheduleDao {
 		}
 	}
 
-	public ArrayList<HashMap<String, Object>> selectAllSchedule(Connection con) {
+	public ArrayList<HashMap<String, Object>> selectAllSchedule(Connection con, int empId) {
 		ArrayList<HashMap<String, Object>> list=null;
 		HashMap<String, Object> hmap=null;
 		PreparedStatement pstmt=null;
@@ -42,7 +42,7 @@ public class ScheduleDao {
 		
 		try {
 			pstmt=con.prepareStatement(query);
-			pstmt.setInt(1, 1);
+			pstmt.setInt(1, empId);
 			
 			rset=pstmt.executeQuery();
 			
@@ -51,9 +51,9 @@ public class ScheduleDao {
 			
 			while(rset.next()) {				
 				hmap=new HashMap<String, Object>();
-				
 
 				System.out.println(rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
+				
 				hmap.put("calendarId", rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
 				hmap.put("calendarNo", rset.getInt("CALENDARNO"));
 				hmap.put("calendarClass", rset.getInt("CALENDARCLASS"));
@@ -78,6 +78,94 @@ public class ScheduleDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	//개인 일정
+	public int insertMySchedule(Connection con, Schedule reqSche) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query=prop.getProperty("insertMySchedule");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, reqSche.getCalendarClass());
+			pstmt.setString(2, reqSche.getCalendarContents());
+			pstmt.setString(3, reqSche.getScheduleDate());
+			pstmt.setInt(4, reqSche.getEmpId());
+			
+			result=pstmt.executeUpdate();
+			
+			if(result>0) {
+				commit(con);
+			}else {
+				rollback(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//팀 일정
+	public int insertTeamSchedule(Connection con, Schedule reqSche) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query=prop.getProperty("insertTeamSchedule");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, reqSche.getCalendarClass());
+			pstmt.setString(2, reqSche.getCalendarContents());
+			pstmt.setString(3, reqSche.getScheduleDate());
+			pstmt.setInt(4, reqSche.getEmpId());
+			pstmt.setInt(5, reqSche.getEmpId());
+			
+			result=pstmt.executeUpdate();
+			
+			if(result>0) {
+				commit(con);
+			}else {
+				rollback(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//회사 일정
+	public int insertCompanySchedule(Connection con, Schedule reqSche) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query=prop.getProperty("insertCompanySchedule");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, reqSche.getCalendarClass());
+			pstmt.setString(2, reqSche.getCalendarContents());
+			pstmt.setString(3, reqSche.getScheduleDate());
+			pstmt.setInt(4, reqSche.getEmpId());
+			
+			result=pstmt.executeUpdate();
+			
+			if(result>0) {
+				commit(con);
+			}else {
+				rollback(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }
