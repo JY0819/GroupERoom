@@ -1,4 +1,17 @@
+<%@page import="com.semi.myPage.model.vo.Msg"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<% 
+	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
+	int count = 1;
+	boolean exist = false;
+	if(list != null){
+		exist = true;
+	}else{
+		exist = false;
+	}
+%>
 
 <jsp:include page="/views/main/mainPage.jsp" />
 
@@ -38,12 +51,11 @@
 }
 #mainTable{
 	position: relative; 
-	top: 50px;
+	top: 100px;
 	margin-bottom: 200px;
 }
 #messageList{
 	width: 700px;
-	height: 300px;
 }
 .line{
 	border: 2px solid skyblue;
@@ -54,10 +66,10 @@
 </style>
 
 <div align="center">
-	<table id="mainTable">
+	<table id="mainTable" align="center">
 		<tr>
 			<td>
-				<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함"></div>
+				<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'"></div>
 			</td>
 			<td>
 				<div class="alignBox"><input class="btn" id="btn2" type="button" value="주소록"></div>
@@ -65,7 +77,8 @@
 		</tr>
 		<tr>
 			<td>
-				<table id="messageList" class="line">
+				<table id="messageList" class="line" align="center">
+					<% if(exist) { %>
 					<tr>
 						<th class="line"><p></p></th>
 						<th class="line"><p>보낸 날짜</p></th>
@@ -74,51 +87,27 @@
 						<th class="line"><p>내용</p></th>
 						<th class="line"><p>읽은 날짜</p></th>
 					</tr>
+					<% 		for(Msg m : list) { %>
 					<tr>
-						<td class="line"><p>1</p></td>
-						<td class="line"><p>2018-01-01</p></td>
-						<td class="line"><p>김둘리 (SI팀장)</p></td>
-						<td class="line"><p>개발팀 전체</p></td>
-						<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-						<td class="line"><p>2018-01-10</p></td>
+						<td class="line"><p><%= count %></p></td>
+						<td class="line"><p><%= m.getMsgSendD() %></p></td>
+						<td class="line"><p><%= m.getMsgSender() %></p></td>
+						<td class="line"><p><%= m.getMsgReceiver() %></p></td>
+						<td class="line"><p><%= m.getMsgContents() %></p></td>
+						<td class="line"><p><%= m.getMsgReceiveD() %></p></td>
 					</tr>
+					<% 		count++; %>
+					<% 		} %>
+					<% } else { %>
 					<tr>
-						<td class="line"><p>2</p></td>
-						<td class="line"><p>2018-01-01</p></td>
-						<td class="line"><p>김둘리 (SI팀장)</p></td>
-						<td class="line"><p>개발팀 전체</p></td>
-						<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-						<td class="line"><p>2018-01-10</p></td>
+						<th class="line" colspan="6"><p>받은 메세지가 없어요!</p></th>
 					</tr>
-					<tr>
-						<td class="line"><p>3</p></td>
-						<td class="line"><p>2018-01-01</p></td>
-						<td class="line"><p>김둘리 (SI팀장)</p></td>
-						<td class="line"><p>개발팀 전체</p></td>
-						<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-						<td class="line"><p>2018-01-10</p></td>
-					</tr>
-					<tr>
-						<td class="line"><p>4</p></td>
-						<td class="line"><p>2018-01-01</p></td>
-						<td class="line"><p>김둘리 (SI팀장)</p></td>
-						<td class="line"><p>개발팀 전체</p></td>
-						<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-						<td class="line"><p>2018-01-10</p></td>
-					</tr>
-					<tr>
-						<td class="line"><p>5</p></td>
-						<td class="line"><p>2018-01-01</p></td>
-						<td class="line"><p>김둘리 (SI팀장)</p></td>
-						<td class="line"><p>개발팀 전체</p></td>
-						<td class="line"><p>결재에 덧붙인 내용 체크</p></td>
-						<td class="line"><p>2018-01-10</p></td>
-					</tr>
+					<% } %>
 				</table>
 			</td>
 			<td>
 				<div class="diary" style="margin-left: 50px;">
-				<table>
+				<table align="center">
 					<tr>
 						<td>즐겨찾기</td>
 					</tr>
