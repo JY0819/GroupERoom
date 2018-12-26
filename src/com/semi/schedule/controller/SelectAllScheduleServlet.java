@@ -10,7 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.service.ScheduleService;
 import com.semi.schedule.model.vo.Schedule;
 
@@ -33,8 +35,9 @@ public class SelectAllScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ArrayList<HashMap<String, Object>> list=new ScheduleService().selectAllSchedule();
+		HttpSession session=request.getSession();
+		int empId=((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid();
+		ArrayList<HashMap<String, Object>> list=new ScheduleService().selectAllSchedule(empId);
 		System.out.println("list : "+list);
 		
 		String page="";
@@ -43,7 +46,8 @@ public class SelectAllScheduleServlet extends HttpServlet {
 			page="views/schedule/calendar.jsp";
 			request.setAttribute("list", list);
 		}else {
-			page="views/main/home.jsp";
+			page="views/common/errorPage.jsp";
+			request.setAttribute("msg", "일정 조회 실패");
 		}
 		
 		RequestDispatcher view=request.getRequestDispatcher(page);
