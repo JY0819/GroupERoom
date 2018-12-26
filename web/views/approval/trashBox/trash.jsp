@@ -29,7 +29,7 @@
 					<th>처 리 자</th>
 					<th>문 서 번 호</th>
 					<th>결 과</th>
-
+					
 				</tr>
 			</thead>
 			<tbody>
