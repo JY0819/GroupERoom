@@ -43,7 +43,7 @@
 					<th>조회수</th>
 				</tr>
 			</thead>
-	<!-- 으아d아 asdfdkdk-->
+	<!-- 으아d아 asdfdkddkdkk-->
 			<tbody>
 				<tr>
 					<% for(Free f : list) {%>
