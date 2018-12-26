@@ -87,9 +87,21 @@
 			<div class="form-group" id="divBirth">
 				<label for="inputBirth" class="col-lg-2 control-label">생년월일</label>
 				<div class="col-lg-10">
-					<input id="fromDate" type="text" class="form-control onlyNumber" id="birth" name="birth" data-rule-required="true" placeholder="YYYY-MM-DD" maxlength="50">
+					<input id="fromDate" type="date" class="form-control onlyNumber" id="birth" name="birth" data-rule-required="true" placeholder="YYYY-MM-DD" maxlength="50">
 				</div>
 			</div>
+			
+		<!-- 	
+			<div class="form-group">
+				<label for="inputAdminYN" class="col-lg-2 control-label">관리자 여부</label>
+				<div class="col-lg-10">
+					<select class="form-control" id="adminYN" name="adminYN">
+						<option value="Y">Y</option>
+						<option value="N" selected="selected">N</option>
+					</select>
+				</div>
+			</div>
+			 -->
 			
 			<div class="form-group" id="divApprovalPwd">
 				<label for="inputApprovePassword" class="col-lg-2 control-label">결재 비밀번호</label>

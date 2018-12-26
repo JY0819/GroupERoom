@@ -3,6 +3,7 @@ package com.semi.admin.user.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 
@@ -32,14 +33,13 @@ public class InsertMemberServlet extends HttpServlet {
 		// 첨부파일
 		/*String title = request.getParameter("title");
 		System.out.println(title);*/
-		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			int maxSize = 1024 * 1024 * 10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
-			System.out.println(root);
+//			System.out.println(root);
 
-			String filePath = root + "assets/images/upload_EmployeeImg/";
+			String filePath = root + "assets/images/upload_EmpImg/";
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			ArrayList<String> saveFiles = new ArrayList<String>();
@@ -52,6 +52,7 @@ public class InsertMemberServlet extends HttpServlet {
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
 			}
+			
 			Integer multiUserId = Integer.parseInt(multiRequest.getParameter("userId"));
 			String multiUserName = multiRequest.getParameter("userName");
 			String multiUserPwd = multiRequest.getParameter("userPwd");
@@ -60,12 +61,11 @@ public class InsertMemberServlet extends HttpServlet {
 			String multiAddress = multiRequest.getParameter("address");
 			String multiBirth = multiRequest.getParameter("birth");
 			String multiApprovePwd = multiRequest.getParameter("approvePwd");
-		
+
 			java.sql.Date day = null;
 			if(multiBirth != "") {
 				String[] dateArr = multiBirth.split("-");
 				int[] drr = new int[dateArr.length];
-				
 				for(int i = 0; i < dateArr.length; i++) {
 					drr[i] = Integer.parseInt(dateArr[i]);
 				}
@@ -76,8 +76,18 @@ public class InsertMemberServlet extends HttpServlet {
 				day = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 			}
 		
+			System.out.println(multiUserId);
+			System.out.println(multiUserName);
+			System.out.println(multiUserPwd);
+			System.out.println(multiGender);
+			System.out.println(multiPhone);
+			System.out.println(multiAddress);
+			System.out.println(multiBirth);
+			System.out.println(multiApprovePwd);
+			
 			Employee emp = new Employee();
 			emp.setEmpid(multiUserId);
+			
 			emp.setEmpName(multiUserName);
 			emp.setEmpPwd(multiUserPwd);
 			emp.setEmpGender(multiGender);
@@ -95,6 +105,7 @@ public class InsertMemberServlet extends HttpServlet {
 				
 				fileList.add(at);
 			}
+																		
 			
 			int result = new EmployeeService().insertEmployee(emp, fileList);
 			
@@ -111,7 +122,6 @@ public class InsertMemberServlet extends HttpServlet {
 				request.setAttribute("msg", "사원 등록에 실패했습니다.");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
-		
 		}
 		
 	}
