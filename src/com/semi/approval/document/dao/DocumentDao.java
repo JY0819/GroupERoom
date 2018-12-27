@@ -27,9 +27,8 @@ public class DocumentDao {
 		}
 	}
 
-	public Document selectForm(Connection con) {
+	public Document selectForm(Connection con, int id) {
 		PreparedStatement pstmt = null;
-		Statement stmt = null;
 		ResultSet rset = null;
 		Document document = null;
 		
@@ -38,6 +37,7 @@ public class DocumentDao {
 		try {
 			
 			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, id);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				document = new Document();
