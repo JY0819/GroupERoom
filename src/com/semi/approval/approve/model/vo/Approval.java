@@ -4,6 +4,10 @@ import java.sql.Date;
 
 public class Approval implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	
 	private int apprNo; //결재번호
 	private String apprWriter; //작성자
 	private String deptId; //부서ID
