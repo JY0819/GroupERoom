@@ -109,37 +109,29 @@ var treeviewJson = {
 	
 	myPageJson : [
 		{
-			text: "마이페이지"
+			text: "마이페이지", href: "/semi/myPageMain"
 		   ,nodes: [
 			   
 					{ 
-					   text: "쪽지"
+					   text: "쪽지", href: "/semi/myPageMessage"
 					  ,nodes: [ 
-							     {text: "받은 쪽지함", href: "/semi/views/myPage/message/mypageMessage.jsp"}
-							    ,{text: "보낸 쪽지함", href: "/semi/views/myPage/message/mypageSendMessageList.jsp"} 
-							    ,{text: "쪽지 보관함", href: "/semi/views/myPage/message/mypageMessageLocker.jsp"}
+							     {text: "받은 쪽지함", href: "/semi/myPageMessage"}
+							    ,{text: "보낸 쪽지함", href: "/semi/myPageSendMessage"} 
+							    ,{text: "쪽지 보관함", href: "/semi/myPageLockerMessage"}
 					  		  ]
 					}
 				   ,{ 
-					  text: "휴가"
-					 ,nodes: [
-						 		{text: "휴가 관리", href: "/semi/views/myPage/vacation/LeftVacDays.jsp"}
-					 		]
+					  text: "휴가", href: "/semi/myPageLogOfVac"
 					}
 				  ,{
-					  text: "주소록"
-					 ,nodes: [
-						 		{text: "주소록", href: "/semi/views/myPage/addressBook/AddressBook.jsp"}
-					 		]
+					  text: "주소록", href: "/semi/views/myPage/addressBook/AddressBook.jsp"
 				   }
 				  ,{
-					  text: "정보수정"
-					 ,nodes: [
-						 		{text: "정보수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"}
-					 		]
-					  
-				  }
-		   
+					  text: "정보수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
+				   }
+				  ,{
+					  text: "근태관리", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
+				   }
 			 ]
 			   
 		}

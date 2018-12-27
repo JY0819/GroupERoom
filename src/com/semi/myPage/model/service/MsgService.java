@@ -19,4 +19,44 @@ public class MsgService {
 		return list;
 	}
 
+	public int deleteMsg(ArrayList<Integer> deletelist) {
+		Connection con = getConnection();
+		
+		int result = new MsgDao().deleteMsg(con, deletelist);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int saveMsg(ArrayList<Integer> savelist) {
+		Connection con = getConnection();
+		
+		int result = new MsgDao().saveMsg(con, savelist);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<Msg> showMyPageSendMessage(int userId) {
+		Connection con = getConnection();
+		
+		ArrayList<Msg> list = new MsgDao().showMyPageSendMessage(con, userId);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public ArrayList<Msg> ShowMyPageLockerMessage(int userId) {
+		Connection con = getConnection();
+		
+		ArrayList<Msg> list = new MsgDao().ShowMyPageLockerMessage(con, userId);
+		
+		close(con);
+		
+		return list;
+	}
+
 }
