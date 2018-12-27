@@ -32,14 +32,14 @@ public class ScheduleDao {
 		}
 	}
 
-	public ArrayList<HashMap<String, Object>> selectAllSchedule(Connection con, int empId) {
+	//내 일정 select
+	public ArrayList<HashMap<String, Object>> selectMySchedule(Connection con, int empId) {
 		ArrayList<HashMap<String, Object>> list=null;
 		HashMap<String, Object> hmap=null;
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 
 		String query=prop.getProperty("selectMySchedule");
-		
 		try {
 			pstmt=con.prepareStatement(query);
 			pstmt.setInt(1, empId);
@@ -47,7 +47,7 @@ public class ScheduleDao {
 			rset=pstmt.executeQuery();
 			
 			list=new ArrayList<HashMap<String, Object>>();
-			System.out.println("list 선언");
+			System.out.println("개인 list 선언");
 			
 			while(rset.next()) {				
 				hmap=new HashMap<String, Object>();
@@ -69,8 +69,11 @@ public class ScheduleDao {
 				
 				list.add(hmap);
 				System.out.println("리스트 +"+list.size());
+				
 			}
+
 			System.out.println("list:"+list);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -79,6 +82,97 @@ public class ScheduleDao {
 		}
 		return list;
 	}
+	
+	//팀 일정 select
+	public ArrayList<HashMap<String, Object>> selectTeamSchedule(Connection con, int empId) {
+		ArrayList<HashMap<String, Object>> list=null;
+		HashMap<String, Object> hmap=null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectTeamSchedule");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, empId);
+			
+			rset=pstmt.executeQuery();
+			
+			list=new ArrayList<HashMap<String, Object>>();
+			System.out.println("팀 list 선언");
+			
+			while(rset.next()) {
+				hmap=new HashMap<String, Object>();
+
+				System.out.println(rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
+				System.out.println(rset.getString("CALENDARDATE").substring(11, 16));
+
+				hmap.put("calendarId", rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
+				hmap.put("calendarNo", rset.getInt("CALENDARNO"));
+				hmap.put("calendarClass", rset.getInt("CALENDARCLASS"));
+				hmap.put("deptName",rset.getString("DEPTNAME"));
+				hmap.put("calendarContents", rset.getString("CALENDARCONTENTS"));
+				hmap.put("calendarDate", rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
+				String time=rset.getString("CALENDARDATE").substring(11, 16);
+				if(time.equals("00:00")) {
+					time="";
+				}
+				hmap.put("calendarTime", time);
+				
+				list.add(hmap);
+				System.out.println("리스트 +"+list.size());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	//회사 일정 select
+	public ArrayList<HashMap<String, Object>> selectCompanySchedule(Connection con, int empId) {
+		ArrayList<HashMap<String, Object>> list=null;
+		HashMap<String, Object> hmap=null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectCompanySchedule");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			rset=pstmt.executeQuery();
+			list=new ArrayList<HashMap<String,Object>>();
+			System.out.println("팀 list 선언");
+			
+			while(rset.next()) {
+				hmap=new HashMap<String, Object>();
+
+				System.out.println(rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
+				System.out.println(rset.getString("CALENDARDATE").substring(11, 16));
+
+				hmap.put("calendarId", rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
+				hmap.put("calendarNo", rset.getInt("CALENDARNO"));
+				hmap.put("calendarClass", rset.getInt("CALENDARCLASS"));
+				hmap.put("companyName", rset.getString("COMPANYNAME"));
+				hmap.put("calendarContents", rset.getString("CALENDARCONTENTS"));
+				hmap.put("calendarDate", rset.getString("CALENDARDATE").substring(0, 10).replaceAll("/",""));
+				String time=rset.getString("CALENDARDATE").substring(11, 16);
+				if(time.equals("00:00")) {
+					time="";
+				}
+				hmap.put("calendarTime", time);
+				
+				list.add(hmap);
+				System.out.println("리스트 +"+list.size());
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		return list;
+	}
+	
 	
 	//개인 일정
 	public int insertMySchedule(Connection con, Schedule reqSche) {
