@@ -26,7 +26,7 @@ public class InsertDocumentServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(ServletFileUpload.isMultipartContent(request)) {
+		/*if(ServletFileUpload.isMultipartContent(request)) {
 			//파일이 담겨있으면 true 반환
 			
 			//전송 파일 용량 제한 : 10MB로 제한
@@ -80,6 +80,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			String multiContent = multipartRequest.getParameter("content");
 			System.out.println(multiTitle);
 			System.out.println(multiContent);
+		
 			
 			//Board객체 생성
 			Board b = new Board();
@@ -113,7 +114,7 @@ public class InsertDocumentServlet extends HttpServlet {
 				request.setAttribute("msg", "사진게시판 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
-		}		
+		}	*/	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
