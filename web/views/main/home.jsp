@@ -21,7 +21,7 @@
 				</div>
 			</td>
 			<td class="tdPadding">
-				<div class="alignleft" onclick="goBoard();">
+				<div class="alignleft" >
 					<img src="/semi/assets/images/img.JPG" alt="게시판 이미지" width="120"
 						height="120" />
 				</div>
@@ -29,10 +29,7 @@
 					<p class="imgText">게시판</p>
 				</div>
 				<script>
-					function goBoard(){
-						location.href="/semi/selectList.fr";
-					}
-				</script>
+			
 			</td>
 			<td class="tdPadding">
 				<div onclick="move();">

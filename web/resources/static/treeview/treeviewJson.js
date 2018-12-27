@@ -53,7 +53,7 @@ var treeviewJson = {
 					nodes:[
 						{text:"공지사항", href:"/semi/views/board/notice/noticeList.jsp"},
 						{text:"부서게시판", href:"/semi/views/board/team/boardTeam.jsp"},
-						{text:"자유게시판", href:"/semi/views/board/free/boardFree.jsp"}
+						{text:"자유게시판", href:"/semi/selectList.fr"}
 					]
 				}
 			],
