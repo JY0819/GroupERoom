@@ -22,14 +22,14 @@ public class InsertDepartmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String deptId = request.getParameter("deptId");
 		String deptName = request.getParameter("deptName");
-		String deptAct = request.getParameter("deptAct");
+		String deptActive = request.getParameter("deptActive");
 		String deptNote = request.getParameter("deptNote");
 		Integer deptHeadId = Integer.parseInt(request.getParameter("deptHead"));
 	
 		Department dept = new Department();
 		dept.setDeptId(deptId);
 		dept.setDeptName(deptName);
-		dept.setDeptAct(deptAct);
+		dept.setDeptAct(deptActive);
 		dept.setDeptNote(deptNote);
 		dept.setDeptHeadId(deptHeadId);
 		
@@ -42,7 +42,7 @@ public class InsertDepartmentServlet extends HttpServlet {
 //	    	  page = "/semi/deptList.dp";
 	    	  response.sendRedirect(page);
 	      } else {
-	    	  request.setAttribute("msg", "공지사항 등록 실패");
+	    	  request.setAttribute("msg", "부서 등록 실패");
 	          request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 	      }
 	}

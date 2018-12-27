@@ -10,7 +10,7 @@ var treeviewJson = {
 								   text: "사원 관리"
 								  ,nodes: [ 
 										     {text: "사원 추가", href: "/semi/views/admin/user/addUserForm.jsp"}
-										    ,{text: "사원 조회 및 수정", href: "/semi/views/admin/user/userSearchAndUpdate.jsp"} 
+										    ,{text: "사원 조회 및 수정", href: "/semi/views/admin/user/userList.jsp"} 
 										    ,{text: "휴가 조회", href: "/semi/views/admin/user/vacationSearch.jsp"} 
 								  		  ]
 								}

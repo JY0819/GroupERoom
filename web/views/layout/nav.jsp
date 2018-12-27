@@ -26,7 +26,7 @@
 		<span><a onclick="location.href='<%=request.getContextPath()%>/selectList.fr'">Board</a></span>
 		<span><a onclick="location.href='<%=request.getContextPath()%>/schedule.sche'">Schedule</a></span>
 		<span><a>MyPage</a></span>
-		<span><a href="/semi/views/admin/user/userSearchAndUpdate.jsp">Admin</a></span>
+		<span><a href="/semi/views/admin/user/userList.jsp">Admin</a></span>
 		
 		
 	</div>

@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import com.semi.admin.base.model.vo.Department;
@@ -30,9 +31,24 @@ public class DepartmentDao {
 		
 		String query = prop.getProperty("insertDepartment");
 		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, dept.getDeptId());
+			pstmt.setString(2, dept.getDeptName());
+			pstmt.setString(3, dept.getDeptAct());
+			pstmt.setString(4, dept.getDeptNote());
+			pstmt.setInt(5, dept.getDeptHeadId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		
-		
-		return 0;
+		return result;
 	}
 
 }
