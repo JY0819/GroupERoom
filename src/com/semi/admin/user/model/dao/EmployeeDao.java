@@ -51,7 +51,7 @@ public class EmployeeDao {
 				loginUser.setEmpPwd(rset.getString("EMPPWD"));
 				loginUser.setApprovePwd(rset.getString("APPROVEPWD"));
 				loginUser.setEmpGender(rset.getString("EMPGENDER"));
-				loginUser.setEmpBirth(rset.getDate("BIRTH"));
+				loginUser.setEmpBirth(rset.getDate("EMPBIRTH"));
 				loginUser.setEmpAddr(rset.getString("EMPADDR"));
 				loginUser.setEmpPhone(rset.getString("EMPPHONE"));
 				loginUser.setEmpVacCount(rset.getInt("EMPVACCOUNT"));
@@ -61,7 +61,7 @@ public class EmployeeDao {
 				loginUser.setEntryDay(rset.getDate("ENTRYDAY"));
 				loginUser.setLeaveDay(rset.getDate("LEAVEDAY"));
 			}
-			
+			System.out.println(loginUser.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -121,6 +121,34 @@ public class EmployeeDao {
 				pstmt.setString(4, fileList.get(i).getAttachPath());
 				result = pstmt.executeUpdate();
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateMember(Connection con, Employee emp, int photoId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, emp.getEmpPwd());
+			pstmt.setString(2, emp.getEmpPhone());
+			pstmt.setString(3, emp.getEmpAddr());
+			pstmt.setString(4, emp.getApprovePwd());
+			pstmt.setInt(5, photoId); // PHOTOID
+			
+//			System.out.println("insertMember photoId > " + photoId);
+			System.out.println(" emp : >> \n" + emp.toString());
+			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

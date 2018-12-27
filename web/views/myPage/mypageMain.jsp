@@ -1,4 +1,4 @@
-<%@page import="com.semi.myPage.model.vo.Msg"%>
+<%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 

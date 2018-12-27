@@ -1,11 +1,12 @@
-package com.semi.myPage.model.service;
+package com.semi.myPage.model.Msg.service;
+
+import static com.semi.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.semi.myPage.model.dao.MsgDao;
-import com.semi.myPage.model.vo.Msg;
-import static com.semi.common.JDBCTemplate.*;
+import com.semi.myPage.model.Msg.dao.MsgDao;
+import com.semi.myPage.model.Msg.vo.Msg;
 
 public class MsgService {
 

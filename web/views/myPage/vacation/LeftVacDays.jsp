@@ -1,10 +1,11 @@
-<%@page import="com.semi.myPage.model.vo.Msg"%>
+<%@page import="oracle.net.aso.b"%>
+<%@page import="com.semi.myPage.model.Etc.vo.LogOfVacation"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <% 
-	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
+	ArrayList<LogOfVacation> list = (ArrayList<LogOfVacation>)request.getAttribute("list");
 	int count = 1;
 	boolean exist = false;
 	if(list.size() == 0){
@@ -65,21 +66,39 @@
 				<% if(exist) { %>
 				<tr>
 					<th class="line"></th>
-					<th class="line">보낸 날짜</th>
-					<th class="line">보낸 사람</th>
-					<th class="line">받는 사람</th>
-					<th class="line" style="width: 300px;">내용</th>
+					<th class="line">휴가 구분</th>
+					<th class="line" style="width: 250px;">휴가 기간</th>
+					<th class="line" style="width: 250px;">사유</th>
+					<th class="line">차감 일자</th>
 				</tr>
-				<% 		for(Msg m : list) { %>
+				<% 	for(LogOfVacation lv : list) { %>
+					<% if(lv.getType().equals("반차")) { %>
 				<tr>
-					<td class="line"><%= m.getMsgNo() %></td>
-					<td class="line"><%= m.getMsgSendD() %></td>
-					<td class="line"><%= m.getMsgSender() %></td>
-					<td class="line"><%= m.getMsgReceiver() %></td>
-					<td class="line"><%= m.getMsgContents() %></td>
+					<td class="line"><%= lv.getNo() %></td>
+					<td class="line"><%= lv.getType() %></td>
+					<td class="line"><%= lv.getUseStart() %></td>
+					<td class="line"><%= lv.getUseReason() %></td>
+					<td class="line">0.5</td>
 				</tr>
+					<% } else if(lv.getDays() > 1){ %>
+				<tr>
+					<td class="line"><%= lv.getNo() %></td>
+					<td class="line"><%= lv.getType() %></td>
+					<td class="line"><%= lv.getUseStart() %> ~ <%= lv.getUseEnd() %></td>
+					<td class="line"><%= lv.getUseReason() %></td>
+					<td class="line"><%= lv.getDays() %></td>
+				</tr>
+					<% } else { %>
+				<tr>
+					<td class="line"><%= lv.getNo() %></td>
+					<td class="line"><%= lv.getType() %></td>
+					<td class="line"><%= lv.getUseStart() %></td>
+					<td class="line"><%= lv.getUseReason() %></td>
+					<td class="line"><%= lv.getDays() %></td>
+				</tr>
+					<% } %>
 				<% 		count++; %>
-				<% 		} %>
+				<% 	} %>
 				<% } else { %>
 				<tr>
 					<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
