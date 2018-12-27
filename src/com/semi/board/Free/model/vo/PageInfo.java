@@ -1,7 +1,6 @@
 package com.semi.board.Free.model.vo;
 
 public class PageInfo implements java.io.Serializable{
-
 	private int currentPage;
 	private int listCount;
 	private int limit;
@@ -74,7 +73,6 @@ public class PageInfo implements java.io.Serializable{
 		return "PageInfo [currentPage=" + currentPage + ", listCount=" + listCount + ", limit=" + limit + ", maxPage="
 				+ maxPage + ", startPage=" + startPage + ", endPage=" + endPage + "]";
 	}
-	
 	
 	
 }

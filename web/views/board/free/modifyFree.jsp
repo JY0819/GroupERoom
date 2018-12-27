@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!-- admin 만 글 작성 가능 -->
+	pageEncoding="UTF-8" import="com.semi.board.Free.model.vo.*, com.semi.admin.user.model.vo.*"%>
+<%
+	
+	Free f = (Free)request.getAttribute("f"); 
+	Employee loginUser = (Employee)session.getAttribute("loginUser");
+%>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
@@ -43,17 +47,18 @@ body {
 
 					<tbody>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="작성자" maxlength="30"></td>
-						
+						 <td>작성자</td>
+						<td readonly><%=f.getWriterId() %></td>
+						 
 					</tr>
 						<tr>
 							<td>
-							<input type="text" class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
+							<td ><%=f.getbTitle() %></td>
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<textarea class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
+						<td style="min-height: 200px; text-align: left; "><%=f.getbContent() %></td>
 							</td>
 						</tr>
 					</tbody>
