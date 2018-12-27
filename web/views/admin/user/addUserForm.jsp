@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+	request.setAttribute("title", "사원 추가");
+%>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/user.css">
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
-	var nodeName = "사원 추가";
+	var nodeName = "<%= request.getAttribute("title")%>";
 </script>
 
 <section class="content">
@@ -15,14 +17,16 @@
 	</div>
 
 	<div class="content-right container">
-		<h2 align="left">사원 등록</h2>
+		<div>
+			<h2><%= request.getAttribute("title")%></h2>
+		</div>
 		<hr>
 
 		<form class="form-horizontal" id="addUserForm" method="post" action="<%=request.getContextPath()%>/insertMember.me" encType="multipart/form-data">
 			
 			<!-- 첨부파일 ** 이미지 미리보기 -->
 			<div class="form-group" id="contentImgArea" align="center">
-				<img id="contentImg" width="150" height="150">
+				<img id="contentImg" width="160" height="160">
 			</div>
 			
 			<div class="form-group" id="inputFileArea" align="center">
@@ -91,8 +95,14 @@
 				</div>
 			</div>
 			
-		<!-- 	
-			<div class="form-group">
+			<div class="form-group" id="divEntryDay">
+				<label for="inputEntryDay" class="col-lg-2 control-label">입사일</label>
+				<div class="col-lg-10">
+					<input id="fromDate" type="date" class="form-control onlyNumber" id="entryDay" name="entryDay" data-rule-required="true" placeholder="YYYY-MM-DD" maxlength="50">
+				</div>
+			</div>
+		 	
+			<div class="form-group" id="divAdminYN">
 				<label for="inputAdminYN" class="col-lg-2 control-label">관리자 여부</label>
 				<div class="col-lg-10">
 					<select class="form-control" id="adminYN" name="adminYN">
@@ -101,7 +111,6 @@
 					</select>
 				</div>
 			</div>
-			 -->
 			
 			<div class="form-group" id="divApprovalPwd">
 				<label for="inputApprovePassword" class="col-lg-2 control-label">결재 비밀번호</label>
@@ -109,6 +118,8 @@
 					<input type="password" class="form-control" id="approvePwd" name="approvePwd" data-rule-required="true" placeholder="결재 시 사용할 비밀번호를 입력하세요." maxlength="30">
 				</div>
 			</div>
+
+
 
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
@@ -132,30 +143,6 @@
 
 		<script>
 			$(function() {
-				/* //모달을 전역변수로 선언
-				var modalContents = $(".modal-contents");
-				var modal = $("#defaultModal");
-
-				$('.onlyAlphabetAndNumber').keyup(function(event) {
-					if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
-						var inputVal = $(this).val();
-						$(this).val($(this).val().replace(/[^_a-z0-9]/gi, '')); //_(underscore), 영어, 숫자만 가능
-					}
-				});
-
-				$(".onlyHangul").keyup(function(event) {
-					if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
-						var inputVal = $(this).val();
-						$(this).val(inputVal.replace(/[a-z0-9]/gi, ''));
-					}
-				});
-
-				$(".onlyNumber").keyup(function(event) {
-					if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
-						var inputVal = $(this).val();
-						$(this).val(inputVal.replace(/[^0-9]/gi, ''));
-					}
-				}); */
 
 				//------- 검사하여 상태를 class에 적용
 				$('#id').keyup(function(event) {
@@ -249,13 +236,40 @@
 						divBirth.removeClass("has-error");
 						divBirth.addClass("has-success");
 					}
+					
+				});
+				
+				$('#entryDay').keyup(function(event) {
+
+					var divEntryDay = $('#divEntryDay');
+
+					if ($.trim($('#entryDay').val()) == "") {
+						divEntryDay.removeClass("has-success");
+						divEntryDay.addClass("has-error");
+					} else {
+						divEntryDay.removeClass("has-error");
+						divEntryDay.addClass("has-success");
+					}
+				});
+				
+				$('#adminYN').keyup(function(event) {
+
+					var divEntryDay = $('#divAdminYN');
+	
+					if ($.trim($('#adminYN').val()) == "") {
+						divAdminYN.removeClass("has-success");
+						divAdminYN.addClass("has-error");
+					} else {
+						divAdminYN.removeClass("has-error");
+						divAdminYN.addClass("has-success");
+					}
 				});
 				
 				$('#approvePwd').keyup(function(event) {
 
 					var divApprovalPwd = $('#divApprovalPwd');
 
-					if ($.trim($('#address').val()) == "") {
+					if ($.trim($('#approvePwd').val()) == "") {
 						divApprovalPwd.removeClass("has-success");
 						divApprovalPwd.addClass("has-error");
 					} else {
@@ -279,6 +293,8 @@
 							var divGender = $('#divGender')
 							var divAddress = $('#divAddress');
 							var divBirth = $('#divBirth');
+							var divEntryDay = $('#divEntryDay');
+							var divAdminYN = $('#divAdminYN');
 							var divApprovalPwd = $('#divApprovalPwd');
 
 							//아이디 검사
