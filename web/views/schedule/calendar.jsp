@@ -91,7 +91,7 @@
 			
 
 			cell = row.insertCell();
-			cell.innerHTML ='<span style="font-weight:bold;">'+i+'</span>'+'<p></p>';
+			cell.innerHTML ='<span style="font-weight:bold;">'+i+'</span>';
 			cell.id='calSchedule'+holis;
 			
 			
@@ -103,11 +103,11 @@
 			}
 			if(cnt%7 ==1) {
 				//일요일 날짜 색 red
-				cell.innerHTML='<span class="sunday">'+i+'</span>'+'<p></p>';
+				cell.innerHTML='<span class="sunday">'+i+'</span>';
 			}
 			if(cnt%7 ==0) {
 				//토요일 날짜 색 blue
-				cell.innerHTML='<span class="saturday">'+i+'</span>'+'<p></p>';
+				cell.innerHTML='<span class="saturday">'+i+'</span>';
 
 			}
 			
@@ -115,7 +115,7 @@
 			for(var j=0;j<holidaySol.length;j++){
 				if(holis.toString().substring(4)===holidaySol[j][0].toString()){
 					cell.innerHTML='<span class="sunday">'+i+'<br><span>'+
-					holidaySol[j][1]+'</span>'+'<p></p>';
+					holidaySol[j][1]+'</span>';
 					if(holis.toString().substring(4)==holidaySol[2][0]){
 						if(cnt%7==1){replaceHolis=1;}
 						if(cnt%7==0){replaceHolis=2;}
@@ -142,19 +142,19 @@
 			if(lunar_date.lunHolis.toString().substring(4,8)==='0817'){replaceLunHolis2=holis;}
 
 		}
-		view();
+		
 		switch(replaceHolis){
 		//어린이날 대체휴일
 		case 1:$("#calSchedule"+holis.toString().substring(0,4)+"0506").html('<span class="sunday">6<br>대체휴일</span><p></p>'); replaceHolis=0; break;
 		case 2:$("#calSchedule"+holis.toString().substring(0,4)+"0507").html('<span class="sunday">7<br>대체휴일</span><p></p>'); replaceHolis=0;break;
 		//설날 대체휴일
-		case 3: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 4: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 5: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 3: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span>'); replaceHolis=0;break;
+		case 4: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span>'); replaceHolis=0;break;
+		case 5: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+'<br>대체휴일</span>'); replaceHolis=0;break;
 		//추석 대체휴일
-		case 6: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 7: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 8: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 6: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span>'); replaceHolis=0;break;
+		case 7: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span>'); replaceHolis=0;break;
+		case 8: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+'<br>대체휴일</span>'); replaceHolis=0;break;
 		default:break;
 		}
 		
@@ -162,10 +162,27 @@
 		
 		<%for(int i=0;i<list.size();i++){
 			HashMap<String, Object> hmap=list.get(i);
+			if((int)hmap.get("calendarClass")==1){
 		%>
-			$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").html("<%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%>");
-			$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").css("color","#2ebe8b");
-		<%}%>
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+		<%
+			}
+			if((int)hmap.get("calendarClass")==2){
+		%>	
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+		<%
+			}
+			if((int)hmap.get("calendarClass")==3){
+		%>
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+		<%
+			}
+			
+		}%>
+		
 	}
 		
 	//음력 월 data
@@ -505,14 +522,14 @@
 			</tbody>
 		</table>
 		<div class="popUpSchedule" id="viewSchedule" align="center"> <%-- 일정 보기 div --%>
-			<div class="scheduleDay" id="viewScheduleDay"></div>
+			<div class="scheduleDay" id="viewScheduleDay"></div> <%--날짜 --%>
 			<div id="daySchedule" vertical-align="center" text-align="center"></div>
 			<div class="scheduleBtn" id="addBtn">추가</div>
 			<div class="scheduleBtn" id="modifyBtn">수정</div>
 			<div class="scheduleBtn" id="delBtn">삭제</div>
 			<div class="scheduleBtn" id="closeBtn">닫기</div>
 		</div>
-		<div class="deleteSchedule" id="addSchedule" align="center"> <%-- 일정 추가 div --%>
+		<div class="deleteSchedule" id="addSchedule" align="center"><%-- 일정 추가 div --%>
 			<div class="scheduleDay" id="addScheduleDay"></div>
 			<div class="message" id="addMessage">
 				<select name="scheduleClass">
@@ -538,13 +555,16 @@
 						type:"post",
 						data:{scheduleClass:scheduleClass, scheDate:scheDate, time:time, scheContents:scheContents},
 						success:function(data){
+							$("#viewSchedule").hide();
 							buildCalendar();
+							$("#addConfirm").show();
+							console.log("성공");
 						},
 						error:function(data){
 							console.log("실패");
 						},
 						complete:function(){
-							console.log(scheDate/* .split("년 ","").split("월 ","").split("일","") */);
+							console.log(scheDate);
 							console.log(scheduleClass+'/'+time+'/'+scheContents);
 						}
 					});
@@ -601,8 +621,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="scheduleRight">
-	</div>
+	
 	<div class="bottom">
 		<h1> 　</h1>
 	</div>
@@ -610,6 +629,7 @@
 	
 		/*달력 생성*/
 		buildCalendar();
+		view();
 		
 		/*팝업창 우선 숨기기*/
 		$("#viewSchedule").hide();
@@ -623,11 +643,13 @@
 		
 		/*팝업창 불러오기*/
 		var scheduleDate="";
+		var scheduleDateId="";
 		function view(){
 			$("#calendarMain").children().children().click(function(){
 				if($(this).text().length==1){
 					scheduleDate=(today.getYear()+1900)+"년 "
 					+(today.getMonth()+1)+"월 "+$(this).children("span").html()+"일";
+					scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+''+$(this).children("span").html();
 					$("#viewScheduleDay").text(scheduleDate);
 					$("#viewSchedule").show();
 					console.log("날짜클릭!");
@@ -635,23 +657,27 @@
 					if(isNaN(Number($(this).text().charAt(1)))){
 						scheduleDate=(today.getYear()+1900)+"년 "
 						+(today.getMonth()+1)+"월 "+$(this).children("span").html().substring(0,1)+"일";
+						scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+$(this).children("span").html().substring(0,1);
 					}else{
 						scheduleDate=(today.getYear()+1900)+"년 "
 						+(today.getMonth()+1)+"월 "+$(this).children("span").html().substring(0,2)+"일";
+						scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+$(this).children("span").html().substring(0,2);
 					}
 					$("#viewScheduleDay").text(scheduleDate);
 					$("#viewSchedule").show();
-					console.log(Number($(this).text().charAt(1)));
-					console.log($(this).text().length);
+					
+					
 				}else{
 					console.log("빈칸클릭!");
 				}
+				console.log($(this).children("p").children("input[type='hidden']").val());
 				console.log($(this).children("span").html());
 			});
 		}
 		
 		//일정 상세보기 팝업 닫기
 		$("#closeBtn").click(function(){
+			console.log()
 			$("#viewSchedule").hide();
 		});
 		//일정 추가 팝업 열기
@@ -663,8 +689,8 @@
 		//일정 추가 팝업 닫기
 		$("#saveAddBtn").click(function(){
 			$("#addSchedule").hide();
-			$("#addConfirm").show();
 		});
+		
 		$("#closeAddBtn").click(function(){
 			$("#addSchedule").hide();
 		});
@@ -726,6 +752,7 @@
 					type:"get",
 					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
 						console.log("서버 전송 성공");
+						
 					},
 					error:function(data){ //실패시 받은 값을 함수로~
 						console.log("서버 전송 실패"); 

@@ -35,7 +35,7 @@ public class SelectAllScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
+		//세션이 없으면 >> 세션만료 메시지 띄우기
 		int empId=((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid();
 		ArrayList<HashMap<String, Object>> list=new ScheduleService().selectAllSchedule(empId);
 		System.out.println("list : "+list);

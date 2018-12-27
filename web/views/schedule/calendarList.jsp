@@ -112,25 +112,26 @@
 			cell = row.insertCell();
 			cell.innerHTML ='<span style="font-weight:bold;">'+weekday+'</span>'+'<p></p>';
 			
-			if(cnt%7 ==1) {
+			if((cnt+1)%7 ==1) {
 				//일요일 날짜 색 red
 				cell.innerHTML='<span class="sunday">'+weekday+'</span>'+'<p></p>';
 			}
-			if(cnt%7 ==0) {
+			if((cnt+1)%7 ==0) {
 				//토요일 날짜 색 blue
 				cell.innerHTML='<span class="saturday">'+weekday+'</span>'+'<p></p>';
 
 			}
+			cell.id='calSchedule'+holis+'0';
 			
 			cell = row.insertCell();
-			cell.innerHTML ='<span style="font-weight:bold;">'+'일정^^'+'</span>'+'<p></p>';
+			cell.innerHTML ='<span style="font-weight:bold;">'+'일정^^'+'</span>';
 			cell.id='calSchedule'+holis;
 			$("#calSchedule"+holis).attr("colspan","5");
 			$("#calSchedule"+holis).attr("class","scheduleList");
 			
 			
 			cell = row.insertCell();
-			cell.innerHTML ='<span style="font-weight:bold;">'+day+'</span>'+'<p></p>';
+			cell.innerHTML ='<span style="font-weight:bold;">'+day+'</span>';
 
 			cell.id='calSchedule'+holis+'1';
 			$("#calSchedule"+holis+"1").attr("colspan","2");
@@ -155,8 +156,8 @@
 			/*양력 공휴일 적용*/
 			for(var j=0;j<holidaySol.length;j++){
 				if(holis.toString().substring(4)===holidaySol[j][0].toString()){
-					cell.innerHTML='<span class="sunday">'+i+' '+
-					holidaySol[j][1]+'</span>'+'<p></p>';
+					cell.innerHTML='<span class="sunday">'+holidaySol[j][1]+' '+i+'</span>';
+					$("#calSchedule"+holis+'0').html('<span class="sunday">'+weekday+'</span>');
 					if(holis.toString().substring(4)==holidaySol[2][0]){
 						if(cnt%7==1){replaceHolis=1;}
 						if(cnt%7==0){replaceHolis=2;}
@@ -167,8 +168,7 @@
 			/*음력 공휴일 적용*/
 			for(var j=0;j<holidayLun.length;j++){
 				if(lunar_date.lunHolis.toString().substring(4,8)===holidayLun[j][0].toString()){
-					cell.innerHTML='<span class="sunday">'+i+' '+
-					holidayLun[j][1]+'</span>';
+					cell.innerHTML='<span class="sunday">'+holidayLun[j][1]+' '+i+'</span>';
 					if(j==0 && cnt%7==1){replaceHolis=3;}
 					if(j==1 && cnt%7==1){replaceHolis=4;}
 					if(j==2 && cnt%7==1){replaceHolis=5;}
@@ -179,23 +179,37 @@
 				console.log(replaceHolis);
 			} 	
 			
-			if(lunar_date.lunHolis.toString().substring(4,8)==='0103'){replaceLunHolis1=holis+'1';}
-			if(lunar_date.lunHolis.toString().substring(4,8)==='0817'){replaceLunHolis2=holis+'1';}
+			if(lunar_date.lunHolis.toString().substring(4,8)==='0103'){
+				replaceLunHolis1=holis+'1';
+				replaceLunHolis3=holis+'0';
+			}
+			if(lunar_date.lunHolis.toString().substring(4,8)==='0817'){
+				replaceLunHolis2=holis+'1';
+				replaceLunHolis4=holis+'0';
+			}
 
 		}
 		
 		switch(replaceHolis){
 		//어린이날 대체휴일
-		case 1:$("#calSchedule"+holis.toString().substring(0,4)+"05061").html('<span class="sunday">6 대체휴일</span><p></p>'); replaceHolis=0; break;
-		case 2:$("#calSchedule"+holis.toString().substring(0,4)+"05071").html('<span class="sunday">7 대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 1: $("#calSchedule"+holis.toString().substring(0,4)+"05061").html('<span class="sunday">대체휴일 6</span>'); replaceHolis=0; 
+					$("#calSchedule"+holis.toString().substring(0,4)+"05060").html('<span class="sunday">월</span>');break;			
+		case 2: $("#calSchedule"+holis.toString().substring(0,4)+"05071").html('<span class="sunday">대체휴일 6</span>'); replaceHolis=0;
+					$("#calSchedule"+holis.toString().substring(0,4)+"05070").html('<span class="sunday">월</span>');break;
 		//설날 대체휴일
-		case 3: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 4: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 5: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">'+replaceLunHolis1.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 3: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">대체휴일 '+replaceLunHolis1.substring(6, 8)+'</span>'); replaceHolis=0;
+					$("#calSchedule"+replaceLunHolis3).html('<span class="sunday">월</span>');break;
+		case 4: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">대체휴일 '+replaceLunHolis1.substring(6, 8)+'</span>'); replaceHolis=0;
+					$("#calSchedule"+replaceLunHolis3).html('<span class="sunday">월</span>');break;
+		case 5: $("#calSchedule"+replaceLunHolis1).html('<span class="sunday">대체휴일 '+replaceLunHolis1.substring(6, 8)+'</span>'); replaceHolis=0;
+					$("#calSchedule"+replaceLunHolis3).html('<span class="sunday">월</span>');break;
 		//추석 대체휴일
-		case 6: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 7: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
-		case 8: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">'+replaceLunHolis2.substring(6, 8)+' 대체휴일</span><p></p>'); replaceHolis=0;break;
+		case 6: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">대체휴일 '+replaceLunHolis2.substring(6, 8)+'</span>'); replaceHolis=0;
+					$("#calSchedule"+replaceLunHolis4).html('<span class="sunday">월</span>');break;
+		case 7: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">대체휴일 '+replaceLunHolis2.substring(6, 8)+'</span>'); replaceHolis=0;
+					$("#calSchedule"+replaceLunHolis4).html('<span class="sunday">월</span>');break;
+		case 8: $("#calSchedule"+replaceLunHolis2).html('<span class="sunday">대체휴일 '+replaceLunHolis2.substring(6, 8)+'</span>'); replaceHolis=0;
+					$("#calSchedule"+replaceLunHolis4).html('<span class="sunday">월</span>');break;
 		default:break;
 		}
 		//$('#calSchecdule'+holis.toString().substring(0,4)+"1231 > span").html('6<br>대체휴일');
