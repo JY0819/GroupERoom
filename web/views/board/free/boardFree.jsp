@@ -9,7 +9,7 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
+	int startPage = pi.getStartPage();dd
 	int endPage = pi.getEndPage(); */
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
