@@ -49,6 +49,30 @@ public class EmployeeService {
 		
 		return result;
 	}
+
+	public int updateEmployee(Employee emp, ArrayList<Attachments> fileList) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		int photoId = new CommonSeqService(con).getFileSeq();
+		
+		// 첨부 파일
+		int result1 = new EmployeeDao().insertAttachment(con, fileList, photoId);
+		// 사원 정보
+		int result2 = new EmployeeDao().updateMember(con, emp, photoId); 
+		
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
 	
 
 

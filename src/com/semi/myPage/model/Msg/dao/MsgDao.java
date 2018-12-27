@@ -1,4 +1,6 @@
-package com.semi.myPage.model.dao;
+package com.semi.myPage.model.Msg.dao;
+
+import static com.semi.common.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,8 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.semi.myPage.model.vo.Msg;
-import static com.semi.common.JDBCTemplate.*;
+import com.semi.myPage.model.Msg.vo.Msg;
 
 public class MsgDao {
 	private Properties prop = new Properties();

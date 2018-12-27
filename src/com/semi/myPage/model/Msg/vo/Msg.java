@@ -1,4 +1,4 @@
-package com.semi.myPage.model.vo;
+package com.semi.myPage.model.Msg.vo;
 
 import java.sql.Date;
 
