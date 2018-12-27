@@ -89,9 +89,11 @@ public class EmployeeDao {
 			pstmt.setDate(6, emp.getEmpBirth());
 			pstmt.setString(7, emp.getEmpAddr());
 			pstmt.setString(8, emp.getEmpPhone());
-			pstmt.setInt(9, photoId); // PHOTOID
+			pstmt.setString(9, emp.getAdminAuthority());
+			pstmt.setInt(10, photoId); // PHOTOID
+			pstmt.setDate(11, emp.getEntryDay());
 			
-			System.out.println("insertMember photoId > " + photoId);
+//			System.out.println("insertMember photoId > " + photoId);
 			System.out.println(" emp : >> \n" + emp.toString());
 			result = pstmt.executeUpdate();
 			
@@ -117,7 +119,6 @@ public class EmployeeDao {
 				pstmt.setString(2, fileList.get(i).getAttachPreName());
 				pstmt.setString(3, fileList.get(i).getAttachName());
 				pstmt.setString(4, fileList.get(i).getAttachPath());
-				System.out.println("insertEmpAttatchment photoId > " + photoId);
 				result = pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {

@@ -60,9 +60,12 @@ public class InsertMemberServlet extends HttpServlet {
 			String multiPhone = multiRequest.getParameter("phone");
 			String multiAddress = multiRequest.getParameter("address");
 			String multiBirth = multiRequest.getParameter("birth");
+			String miltiEntryDay = multiRequest.getParameter("entryDay");
+			String multiAdminYN = multiRequest.getParameter("adminYN");
 			String multiApprovePwd = multiRequest.getParameter("approvePwd");
 
-			java.sql.Date day = null;
+			// 사원 생일
+			java.sql.Date birth = null;
 			if(multiBirth != "") {
 				String[] dateArr = multiBirth.split("-");
 				int[] drr = new int[dateArr.length];
@@ -71,29 +74,37 @@ public class InsertMemberServlet extends HttpServlet {
 				}
 				
 				// GregorianCalendar
-				day = new java.sql.Date(new GregorianCalendar(drr[0], drr[1] - 1, drr[2]).getTimeInMillis());
+				birth = new java.sql.Date(new GregorianCalendar(drr[0], drr[1] - 1, drr[2]).getTimeInMillis());
 			} else {
-				day = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				birth = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+			}
+			
+			// 사원 입사일
+			java.sql.Date entryday = null;
+			if(miltiEntryDay != "") {
+				String[] dateArr = miltiEntryDay.split("-");
+				int[] drr = new int[dateArr.length];
+				for(int i = 0; i < dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				
+				// GregorianCalendar
+				entryday = new java.sql.Date(new GregorianCalendar(drr[0], drr[1] - 1, drr[2]).getTimeInMillis());
+			} else {
+				entryday = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 			}
 		
-			System.out.println(multiUserId);
-			System.out.println(multiUserName);
-			System.out.println(multiUserPwd);
-			System.out.println(multiGender);
-			System.out.println(multiPhone);
-			System.out.println(multiAddress);
-			System.out.println(multiBirth);
-			System.out.println(multiApprovePwd);
 			
 			Employee emp = new Employee();
 			emp.setEmpid(multiUserId);
-			
 			emp.setEmpName(multiUserName);
 			emp.setEmpPwd(multiUserPwd);
 			emp.setEmpGender(multiGender);
 			emp.setEmpPhone(multiPhone);
 			emp.setEmpAddr(multiAddress);
-			emp.setEmpBirth(day);
+			emp.setEmpBirth(birth);
+			emp.setEntryDay(entryday);
+			emp.setAdminAuthority(multiAdminYN);
 			emp.setApprovePwd(multiApprovePwd);
 			
 			ArrayList<Attachments> fileList = new ArrayList<Attachments>();

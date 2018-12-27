@@ -5,7 +5,6 @@
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 
 <script type="text/javascript">
-	//참고 : https://jonmiles.github.io/bootstrap-treeview/
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "<%= request.getAttribute("title")%>";
 </script>
@@ -17,8 +16,17 @@
 	
 	<div class="content-right container">
 		<div>
-			<h1><%= request.getAttribute("title")%></h1>
+			<div>
+				<h1><%= request.getAttribute("title")%></h1>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-lg-offset-2 col-lg-10">
+					<button type="button" class="btn btn-default" id="addDeptBtn" onclick="addDept();">추가</button>
+				</div>
+			</div>
 		</div>
+		
 		<div>
 			<table class="table">
 				<thead>
@@ -32,7 +40,14 @@
 				</thead>
 			</table>
 		</div>
+		
 	</div>
+	
+	<script>
+		function addDept(){
+			location.href="/semi/views/admin/base/depForm.jsp";
+		}
+	</script>
 </section>
 
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
