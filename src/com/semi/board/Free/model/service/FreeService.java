@@ -8,20 +8,52 @@ import com.semi.board.Free.model.vo.Free;
 import static com.semi.common.JDBCTemplate.*;
 
 public class FreeService {
-	//∞‘Ω√π∞ ¡∂»∏
+	//Í∏Ä Î™©Î°ù Ï°∞Ìöå
 	public ArrayList<Free> selectList() {
 		Connection con = getConnection();
-		
+		System.out.println("dd");
 		ArrayList<Free> list = new FreeDao().selectList(con);
-		
+		System.out.println("freeService list: "+list);
 		close(con);
 		
 		return list;
 	}
 	
+	//Í∏ÄÏûëÏÑ±
+		public int insertFree(Free f) {
+			Connection con = getConnection();
+
+			int result = new FreeDao().insertFree(con, f);
+
+			if(result > 0) {
+				commit(con);
+			}else {
+				rollback(con);
+			}
+
+			return result;
+		}
+		//
+		public Free selectOne(int num) {
+			Connection con = getConnection();
+			Free f = null;
+
+			//
+			int result = new FreeDao().updateCount(con, num);
+
+			if(result > 0) {
+				commit(con);
+				f = new FreeDao().selectOne(con, num);
+			}else {
+				rollback(con);
+			}
+			close(con);
+
+			return f;
+		}
 	
 	/*
-	//∞‘Ω√π∞ ¡∂»∏øÎ ∏ﬁº“µÂ
+	//
 	public ArrayList<Free> selectList(int currentPage, int limit) {
 		Connection con = getConnection();
 		ArrayList<Free> list = new FreeDao().selectList(con, currentPage, limit);

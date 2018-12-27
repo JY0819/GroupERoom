@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.vo.*"%>
 <!-- admin 만 글 작성 가능 -->
-
+<% 
+	Employee loginUser = (Employee)session.getAttribute("loginUser"); 
+ %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
 
@@ -17,7 +19,7 @@ body {
 }
 </style>
 
-
+<% if(loginUser != null) {%>
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
@@ -33,7 +35,7 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form method="post" action="">
+			<form action="<%= request.getContextPath()%>/insert.fr" method="post">
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
@@ -43,18 +45,16 @@ body {
 
 					<tbody>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="작성자" maxlength="30"></td>
+						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 						<tr>
 							<td>
-							<input type="text" class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
-							</td>
+<input type="text" name ="title"class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">							</td>
 						</tr>
 						<tr>
 							<td>
-							<textarea class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
-							</td>
+<textarea name="content" class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>							</td>
 						</tr>
 					</tbody>
 					
@@ -73,6 +73,9 @@ body {
 					</div>
 				</div>
 				
+				
+	
+				
 				<div class="insertNoticeBtn">
 					<button type="submit" id="enrollBtn" class="btn btn-primary">등록</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
@@ -81,6 +84,10 @@ body {
 		</div>
 	</div>
 
+			<% }else{ %>
+	request.setAttribute("msg", "잘못된 경로로 접근하셨습니다.");
+	request.getRequestDispatcher("/semi/views/common/errorPage.jsp");
+<% } %>
 	
 	<script>
 		$(function(){
