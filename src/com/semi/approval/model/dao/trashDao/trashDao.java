@@ -24,19 +24,23 @@ public class trashDao {
 		}
 	}
 	public ArrayList<Approval> selectList(Connection con) {
-		
+		System.out.println("dao들어옴");
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<Approval> list = null;
 		
 		String query = prop.getProperty("selecttrashList");
+		
 		try {
+			
 			stmt = con.createStatement();
 			rset = stmt.executeQuery(query);
 			list = new ArrayList<Approval>();
 			while(rset.next()) {
 				Approval a = new Approval();
-				a.setApprNo(rset.getInt("APPRNO"));
+				
+				a.setApprNo(rset.getInt("DOCNO"));
+				
 				a.setApprWriter(rset.getString("EMPNAME"));
 				a.setDeptId(rset.getString("DEPTID"));
 				a.setApprDay(rset.getDate("APPRDAY"));
@@ -51,10 +55,11 @@ public class trashDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
+			System.out.println(list.size());
 			close(rset);
 			close(stmt);
 		}
-		System.out.println(list.get(0).getApprNo());
+		
 		return list;
 		
 	}
