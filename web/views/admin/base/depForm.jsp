@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 
 <script type="text/javascript">
@@ -35,7 +35,7 @@
 					<tr>
 						<td><label for="inputDeptActive">활성화 여부</label></td>
 						<td>
-							<select class="form-control" id="activeYN" name="activeYN">
+							<select class="form-control" id="deptActive" name="deptActive">
 								<option value="Y" selected="selected">활성화</option>
 								<option value="N">비활성화</option>
 							</select>
@@ -50,10 +50,16 @@
 	
 	
 				<div class="deptSaveBtn">
-					<input type="submit" class="btn btn-default" id="saveBtn" value="저장하기">
+					<input type="submit" class="btn btn-default" id="saveBtn" value="저장">
 				</div> 
 			</form>
 		</div>
 	</div>
+	
+	<script>
+		function insertDept(){
+			$("#addDeptForm").submit();
+		}
+	</script>
 </section>
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
