@@ -6,10 +6,10 @@
 	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
 	int count = 1;
 	boolean exist = false;
-	if(list != null){
-		exist = true;
-	}else{
+	if(list.size() == 0){
 		exist = false;
+	}else{
+		exist = true;
 	}
 %>
 
@@ -49,7 +49,7 @@
 .sub{
 	text-indent: 1em;
 }
-#mainTable{
+#myPageMainTable{
 	position: relative; 
 	top: 100px;
 	margin-bottom: 200px;
@@ -60,13 +60,13 @@
 .line{
 	border: 2px solid skyblue;
 	border-collapse: collapse;
-	padding-left: 8px;
-	padding-right: 8px;
+	padding: 8px;
+	text-align: center;
 }
 </style>
 
 <div align="center">
-	<table id="mainTable" align="center">
+	<table id="myPageMainTable" align="center">
 		<tr>
 			<td>
 				<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'"></div>
@@ -80,27 +80,25 @@
 				<table id="messageList" class="line" align="center">
 					<% if(exist) { %>
 					<tr>
-						<th class="line"><p></p></th>
-						<th class="line"><p>보낸 날짜</p></th>
-						<th class="line"><p>보낸 사람</p></th>
-						<th class="line"><p>받는 사람</p></th>
-						<th class="line"><p>내용</p></th>
-						<th class="line"><p>읽은 날짜</p></th>
+						<th class="line"></th>
+						<th class="line">보낸 날짜</th>
+						<th class="line">보낸 사람</th>
+						<th class="line">받는 사람</th>
+						<th class="line" style="width: 300px;">내용</th>
 					</tr>
 					<% 		for(Msg m : list) { %>
 					<tr>
-						<td class="line"><p><%= count %></p></td>
-						<td class="line"><p><%= m.getMsgSendD() %></p></td>
-						<td class="line"><p><%= m.getMsgSender() %></p></td>
-						<td class="line"><p><%= m.getMsgReceiver() %></p></td>
-						<td class="line"><p><%= m.getMsgContents() %></p></td>
-						<td class="line"><p><%= m.getMsgReceiveD() %></p></td>
+						<td class="line"><%= m.getMsgNo() %></td>
+						<td class="line"><%= m.getMsgSendD() %></td>
+						<td class="line"><%= m.getMsgSender() %></td>
+						<td class="line"><%= m.getMsgReceiver() %></td>
+						<td class="line"><%= m.getMsgContents() %></td>
 					</tr>
 					<% 		count++; %>
 					<% 		} %>
 					<% } else { %>
 					<tr>
-						<th class="line" colspan="6"><p>받은 메세지가 없어요!</p></th>
+						<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
 					</tr>
 					<% } %>
 				</table>

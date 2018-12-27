@@ -7,10 +7,10 @@
 	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
 	int count = 1;
 	boolean exist = false;
-	if(list != null){
-		exist = true;
-	}else{
+	if(list.size() == 0){
 		exist = false;
+	}else{
+		exist = true;
 	}
 %>
 
@@ -36,44 +36,15 @@
 .line{
 	border: 2px solid skyblue;
 	border-collapse: collapse;
-}
-/* .btn{
+	padding: 8px;
 	text-align: center;
-	background-color: #205181;
-	padding: 5px;
-	color:white;
-	border-radius: 10px;
-	width: 120px;
-	height: 40px;
-}
-#btn1{
-	margin-bottom: 20px;
-}
-#btn2{
-	margin-left: 20px;
-	margin-bottom: 20px;
-}
-.alignBox{
-	position: relative;
-	display: inline-block;
 }
 #messageList{
-	width: 600px;
-}
-.line{
-	border: 2px solid skyblue;
-	border-collapse: collapse;
-	text-align: center;
-	vertical-align: middle;
-	height: 60px;
+	width: 700px;
 }
 #alignDiv{
 	margin-top: 80px;
 }
-#alignPtag{
-	vertical-align: middle;
-	padding : 10px;
-} */
 </style>
 
 <script>
@@ -88,17 +59,27 @@
 	</div>
 
 	<div class="content-right container">
-
+		<form action="" method="post" id="formId">
 		<div align="center" id="alignDiv">
 			<table>
 				<tr>
 					<td>
 						<div class="alignBox" style="float: left; display: inline-block;">
-							<input class="btn" id="btn1" type="button" value="선택 쪽지 삭제">
+							<input class="btn" id="btn1" type="button" value="선택 쪽지 삭제" onclick="btn1Clk()">
 						</div>
 						<div class="alignBox">
-							<input class="btn" id="btn2" type="button" value="선택 쪽지 보관">
+							<input class="btn" id="btn2" type="button" value="선택 쪽지 보관" onclick="btn2Clk()">
 						</div>
+						<script type="text/javascript">
+							function btn1Clk() {
+								$("#formId").attr("action", "<%=request.getContextPath()%>/deleteMsg");
+								$("#formId").submit();
+							}
+							function btn2Clk() {
+								$("#formId").attr("action", "<%=request.getContextPath()%>/saveMsg");
+								$("#formId").submit();
+							}
+						</script>
 					</td>
 				</tr>
 				<tr>
@@ -106,29 +87,27 @@
 						<table id="messageList" class="line" align="center">
 							<% if(exist) { %>
 							<tr>
-								<th class="line"><p id="alignPtag"><input id="all" type="checkbox"
-									name="chkList" value="all"></p></th>
-								<th class="line"><p id="alignPtag" style="font-weight: bold; ">보낸 날짜</p></th>
-								<th class="line"><p id="alignPtag">보낸 사람</p></th>
-								<th class="line"><p id="alignPtag">받는 사람</p></th>
-								<th class="line"><p id="alignPtag" style="width: 180px;">내용</p></th>
-								<th class="line"><p id="alignPtag">읽은 날짜</p></th>
+								<th class="line"><input id="all" type="checkbox" value="all"></th>
+								<th class="line">보낸 날짜</th>
+								<th class="line">보낸 사람</th>
+								<th class="line">받는 사람</th>
+								<th class="line" style="width: 300px;">내용</th>
 							</tr>
 							<% 		for(Msg m : list) { %>
 							<tr>
-								<td class="line"><p id="alignPtag"><input type="checkbox" name="chkList"
-									value="<%= count %>"><%= count %></p></td>
-								<td class="line"><p id="alignPtag"><%= m.getMsgSendD() %></p></td>
-								<td class="line"><p id="alignPtag"><%= m.getMsgSender() %></p></td>
-								<td class="line"><p id="alignPtag"><%= m.getMsgReceiver() %></p></td>
-								<td class="line"><p id="alignPtag"><%= m.getMsgContents() %></p></td>
-								<td class="line"><p id="alignPtag"><%= m.getMsgReceiveD() %></p></td>
+								<td class="line">
+									<input type="checkbox" name="chkList" value="<%= m.getMsgNo() %>">&nbsp; &nbsp;<%= m.getMsgNo() %>
+								</td>
+								<td class="line"><%= m.getMsgSendD() %></td>
+								<td class="line"><%= m.getMsgSender() %></td>
+								<td class="line"><%= m.getMsgReceiver() %></td>
+								<td class="line"><%= m.getMsgContents() %></td>
 							</tr>
 							<% 		count++; %>
 							<% 		} %>
 							<% } else { %>
 							<tr>
-								<th class="line" colspan="6"><p>받은 메세지가 없어요!</p></th>
+								<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
 							</tr>
 							<% } %>
 						</table>
@@ -145,6 +124,7 @@
 				</ul>
 			</div>
 		</div>
+		</form>
 	</div>
 </section>
 
