@@ -21,7 +21,7 @@ public class Free implements java.io.Serializable{
 	private int file01;
 	private int file02;
 	private int file03;
-	
+	//dddd
 	public Free () {}
 
 	public Free(int bno, String bClass, String bTitle, String bContent, Date bDate, int bclicks, String bAttach,
