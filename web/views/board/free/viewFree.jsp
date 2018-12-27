@@ -41,7 +41,7 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<table class="table table-striped" style="text-align: center; border: 1px;">
+			<table class="table table-striped"  border: 1px;">
 				<thead>
 					<tr>
 						<th colspan="3" style="background-color: #eeeeee; text-align: center;">자유게시판 상세보기</th>
@@ -51,31 +51,31 @@ body {
 				<tbody>
 				<tr>
 						<td>글번호</td>
-						<td colspan="2"readonly><%=f.getBno() %></td>
+						<td readonly><%=f.getBno() %></td>
 					</tr>
 					<tr>
 						<td>조회수</td>
-						<td colspan="2" readonly><%=f.getbClicks() %></td>
+						<td readonly><%=f.getbClicks() %></td>
 					</tr>
 					
 					
 					<tr>
 						<td>작성자</td>
-						<td colspan="2" readonly><%=f.getWriterId() %></td>
+						<td readonly><%=f.getWriterId() %></td>
 					</tr>
 					
 					<tr>
 						<td>작성일자</td>
-						<td colspan="2" readonly><%=f.getbDate() %></td>
+						<td readonly><%=f.getbDate() %></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
 
-						<td colspan="3" readonly><%=f.getbTitle() %></td>
+						<td readonly><%=f.getbTitle() %></td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="2" style="min-height: 200px; text-align: left; readonly"><%=f.getbContent() %></td>
+						<td style="min-height: 200px; text-align: left; readonly"><%=f.getbContent() %></td>
 					</tr>
 				</tbody>
 			</table>
@@ -117,7 +117,7 @@ body {
 			<br>
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
-				<button id="enrollBtn" class="btn btn-primary">수정</button>
+				<button id="editBtn" class="btn btn-primary">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
 			</div>
 			
@@ -130,12 +130,12 @@ body {
 	<script>
 	$(function(){
 		$("#gotoList").click(function(){
-			location.href="/semi/views/board/free/boardFree.jsp";
+			location.href="/semi/selectList.fr";
 		});
 	});
 	
 	$(function(){
-		$("#enrollBtn").click(function(){
+		$("#editBtn").click(function(){
 			location.href="/semi/views/board/free/modifyFree.jsp";
 		});
 	});

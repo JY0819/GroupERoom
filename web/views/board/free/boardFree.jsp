@@ -4,9 +4,17 @@
 	ArrayList<Free> list = (ArrayList<Free>)request.getAttribute("list");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
 	
@@ -26,9 +34,10 @@
 		<hr>
 		
 		<div class="noticeListBtn">
-			<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
-			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
+			<button type="button" id="writeBtn" class="btn btn-primary">작성하기</button>
+			<!-- <button type="button" id="deleteBtn" class="btn btn-warning">삭제</button> -->
 		</div>
+		<br>
 		<table class="table table-striped" id="listArea">
 			
 				<tr>
@@ -61,17 +70,76 @@
     	<button type="submit" class="btn btn-primary"><a href="searchViewFree.jsp" id="textBtn" >검색</a></button>
     	
 	</div>	
+	<br>
+<div class="pagingArea" align="center">
+<ul class="pagination">
+<%-- <button onclick="location.href='<%=request.getContextPath()%>/selectList.fr?currentPage=1'"><<</button> --%>
+<li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=1"><<</a></li>
+​
 
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
+<% if(currentPage <= 1){ %>
+<script>console.log(<%=currentPage%>);</script>
+
+<li><a><</a></li>
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%=currentPage - 1%>"><</a></li>
+<% } %>
+
+​
+
+<% for(int p = startPage; p <= endPage; p++){ 
+
+if(p == currentPage){
+
+%>
+
+
+<li><a><%= p %></a></li>
+<% }else{ %>
+
+
+<li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%= p %>"><%= p %></a></li>
+<% } %>
+
+​
+
+<% } %>
+
+​
+
+​
+
+<% if(currentPage >= maxPage){ %>
+
+
+<li><a>></a></li>
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%=currentPage + 1%>">></a></li>
+<% } %>
+
+​
+
+
+<li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%=maxPage%>">>></a></li>
+</ul>
+​
+
+
 	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
 </section>
+
+
+
 <script>
 	$(function(){
 		$("#writeBtn").click(function(){
