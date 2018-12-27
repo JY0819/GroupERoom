@@ -1,6 +1,9 @@
 <%@page import="com.sun.org.apache.xml.internal.security.utils.resolver.ResourceResolverException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.semi.admin.user.model.vo.*"%>
+<%
+	Employee emp = (Employee)session.getAttribute("loginUser");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,12 +36,12 @@
 							</td>
 							<td>
 								<div id="contentImgArea2">
-									<a href="../documentList/employmentDocument.jsp"><img id="contentImg2" width="200" height="200" src="/semi/assets/images/approval/employeeDocument.PNG" alt="employeeDocument"></a>
+									<img id="contentImg2" width="200" height="200" src="/semi/assets/images/approval/employeeDocument.PNG" alt="employeeDocument">
 								</div>
 							</td>
 							<td>
 								<div id="contentImgArea3">
-									<a href="../documentList/workDocument.jsp"><img id="contentImg3" width="200" height="200" src="/semi/assets/images/approval/workDocument.PNG" alt="workDocument"></a>
+									<img id="contentImg3" width="200" height="200" src="/semi/assets/images/approval/workDocument.PNG" alt="workDocument">
 								</div>
 							</td>
 						</tr>
@@ -73,8 +76,20 @@
 		});
 	    $(function() {
 			$("#contentImgArea1").click(function() {
-				var page = "va";
-				location.href="<%= request.getContextPath()%>/selectDocument.sd?page=" + page;
+				var id = <%=emp.getEmpid() %> + "va";
+				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
+			});
+		}); 
+	    $(function() {
+			$("#contentImgArea2").click(function() {
+				var id = <%=emp.getEmpid() %> + "wo";
+				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
+			});
+		}); 
+	    $(function() {
+			$("#contentImgArea3").click(function() {
+				var id = <%=emp.getEmpid() %> + "em";
+				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
 			});
 		}); 
 		</script>

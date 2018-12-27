@@ -11,9 +11,9 @@ import com.semi.approval.document.dao.DocumentDao;
 import com.semi.approval.document.vo.Document;
 public class DocumentService {
 
-	public Document selectForm() {
+	public Document selectForm(int id) {
 		Connection con = getConnection();
-		Document document = new DocumentDao().selectForm(con);
+		Document document = new DocumentDao().selectForm(con, id);
 		if(document != null) {
 			commit(con);
 		}else {

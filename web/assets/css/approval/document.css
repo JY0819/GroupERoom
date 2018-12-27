@@ -59,34 +59,30 @@
 	}
 	/*저장버튼  */
 	.saveBtn {
-		position: relative;
-		top: 250px;
 		text-align: center;
 		background-color: #205181;
 		color:white;
+	    position: absolute;
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 1150px;
+		top: 500px;
 		left: 490px;
-	    position: absolute;
 	    font-size: 16px;
 	    border: 0;
 	    outline: 0;
 	}
 	/*닫기버튼  */
 	.closeBtn {
-		position: relative;
-		top: 250px;
 		text-align: center;
+	    position: absolute;
 		background-color: #F1C40F;
 		color:white;
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 1150px;
+		top: 900px;
 		left: 650px;
-	    position: absolute;
 	    font-size: 16px;
 	    border: 0;
 	    outline: 0;

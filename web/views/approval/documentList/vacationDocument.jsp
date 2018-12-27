@@ -14,13 +14,12 @@
 <body>
 
 <jsp:include page="/views/main/mainPage.jsp"/>
-<form action="<%= request.getContextPath() %>/insertDocument.do" method="post" encType="multipart/form-data">
+<form action="<%= request.getContextPath() %>/insertDocument.id" method="post" encType="multipart/form-data">
 <h1>휴가신청서</h1>
 	<table>
 		<tr>
-			<td class="td">번호</td>
-			<td class="content"><input type="text" name="num" value=<%= document.getManageEmpId()%>></td>
-			<!--value=document.getManageEmpId()-->
+			<td class="td">번호<input type="hidden" name="va" value="va"></td>
+			<td class="content"><input type="text" name="num" value=<%= document.getManageEmpId()+1%>></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -53,7 +52,7 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()%>></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%>></td>
 			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
 			<td class="content" colspan="3"><input type="text" name="empNo" value=<%= document.getManageNo() %>></td>
@@ -85,8 +84,13 @@
 			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
 		</tr>
 	</table>
-	<button class="saveBtn">저장</button> 
-	<button class="closeBtn">닫기</button>
+	<button class="saveBtn" type="submit" style="top: 900px">저장</button> 
+	<button class="closeBtn" onclick="back();">닫기</button>
 </form>
+	<script>
+		function back() {
+			location.href="../taskBox/choiceDocument.jsp";
+		}
+	</script>
 </body>
 </html>
