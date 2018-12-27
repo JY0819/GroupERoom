@@ -1,4 +1,4 @@
-/*package com.semi.approval.controller.trashController;
+package com.semi.approval.controller.trashController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,34 +10,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.approval.model.service.ApprovalService;
+import com.semi.approval.approve.model.vo.Approval;
 import com.semi.approval.model.service.trashService.trashService;
-import com.semi.approval.model.vo.Approval;
 
-*//**
- * Servlet implementation class SelectTrashServlet
- *//*
-@WebServlet("/trashselect.tr")
-public class SelectTrashServlet extends HttpServlet {
+/**
+ * Servlet implementation class TrashServletSelect
+ */
+@WebServlet("/selecttrash.tr")
+public class TrashServletSelect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    *//**
+    /**
      * @see HttpServlet#HttpServlet()
-     *//*
-    public SelectTrashServlet() {
+     */
+    public TrashServletSelect() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	*//**
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 *//*
+	 */
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("서블릿");
 		ArrayList<Approval> list = new trashService().selectList();
-		
+		//System.out.println(list.get(0).getApprNo());
 		String page = "";
 		if(list != null) {
 			request.setAttribute("list", list);
+			
 			page = "views/approval/trashBox/trash.jsp";
 		}else {
 			request.setAttribute("msg", "휴지통 조회실패");
@@ -47,14 +49,13 @@ public class SelectTrashServlet extends HttpServlet {
 		view.forward(request, response);
 		
 	}
-
-	*//**
+	
+	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 *//*
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 }
-*/
