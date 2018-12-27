@@ -10,7 +10,7 @@ var treeviewJson = {
 								   text: "사원 관리"
 								  ,nodes: [ 
 										     {text: "사원 추가", href: "/semi/views/admin/user/addUserForm.jsp"}
-										    ,{text: "사원 조회 및 수정", href: "/semi/views/admin/user/userSearchAndUpdate.jsp"} 
+										    ,{text: "사원 조회 및 수정", href: "/semi/views/admin/user/userList.jsp"} 
 										    ,{text: "휴가 조회", href: "/semi/views/admin/user/vacationSearch.jsp"} 
 								  		  ]
 								}
@@ -65,10 +65,8 @@ var treeviewJson = {
 			text: "결재"
 		   ,nodes: [
 			   		{
-			   			text: "Main",
-			   			nodes: [
-			   				{text: "Main", href: "/semi/views/approval/approvalMain.jsp"}
-			   			]
+			   			text: "Main" ,href : "/semi/views/approval/approvalMain.jsp"
+			   			
 			   		},
 					{ 
 					   text: "작업 문서함"
@@ -88,18 +86,12 @@ var treeviewJson = {
 					 		]
 					}
 				  ,{
-					  text: "휴지통"
-					 ,nodes: [
-						 		
-						 		{text: "휴지통", href: "/semi/selecttrash.tr"}
-						 		
-					 		]
+					  text: "휴지통" , href: "/semi/selecttrash.tr"
+					 
 				   }
 				  ,{
-					  text: "환경설정"
-					 ,nodes: [
-						 		{text: "기본 설정", href: "/semi/views/approval/PreferencesBox/defaultSetting.jsp"}
-					 		]
+					  text: "환경설정" , href: "/semi/views/approval/PreferencesBox/defaultSetting.jsp"
+					 
 					  
 				  }
 		   

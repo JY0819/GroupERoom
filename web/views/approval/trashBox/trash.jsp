@@ -5,7 +5,7 @@
 
 <%
 	ArrayList<Approval> list = (ArrayList<Approval>)request.getAttribute("list");
-	//Approval a = new Approval();
+	
 	
 %>
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
@@ -44,40 +44,20 @@
 			
 			<tbody>
 				
-				<tr>
+					<% for(Approval a : list) {%>
+					<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
-					
-					
+					<td><%= a.getApprWriter() %></td>
 					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					
-
-				</tr>
-				
-				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-
-					<td></td>
-
-
-				</tr>
-
+					<td><%= a.getApprNo() %></td>
+					<% if(a.getApprYn().equals("N")) {%>
+					<td><%= a.getApprYn().replaceAll("N", "승인대기중") %></td>
+					<%}else{ %>
+					<td><%= a.getApprYn().replaceAll("Y", "승인") %>
+					<%} %>
+					</tr>
+					<%} %>
 
 			</tbody>
 
