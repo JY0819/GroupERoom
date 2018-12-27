@@ -262,4 +262,11 @@ public class ScheduleDao {
 		return result;
 	}
 
+	public HashMap<String, Object> selectDaySchedule(Connection con, String[] calendarNoArray2) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		
+		return null;
+	}
+
 }
