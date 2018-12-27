@@ -12,6 +12,7 @@ import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleService {
 
+	//전체 캘린더에 일정 가져오는 메소드
 	public ArrayList<HashMap<String, Object>> selectAllSchedule(int empId) {
 		Connection con=getConnection();
 		ArrayList<HashMap<String, Object>> list=null;
@@ -45,6 +46,7 @@ public class ScheduleService {
 		return list;
 	}
 
+	//내 일정 insert
 	public int insertMySchedule(Schedule reqSche) {
 		Connection con=getConnection();
 		int result=new ScheduleDao().insertMySchedule(con, reqSche);
@@ -53,6 +55,7 @@ public class ScheduleService {
 		return result;
 	}
 
+	//팀 일정 insert
 	public int insertTeamSchedule(Schedule reqSche) {
 		Connection con=getConnection();
 		int result=new ScheduleDao().insertTeamSchedule(con, reqSche);		
@@ -61,12 +64,22 @@ public class ScheduleService {
 		return result;
 	}
 
+	//회사 일정 insert
 	public int insertCompanySchedule(Schedule reqSche) {
 		Connection con=getConnection();
 		int result=new ScheduleDao().insertCompanySchedule(con, reqSche);		
 		
 		close(con);
 		return result;
+	}
+
+	//daySchedule 라벨 표시
+	public HashMap<String, Object> selectDaySchedule(String[] calendarNoArray2) {
+		Connection con=getConnection();
+		
+		HashMap<String, Object> hmap=new ScheduleDao().selectDaySchedule(con, calendarNoArray2);
+		close(con);
+		return hmap;
 	}
 
 }

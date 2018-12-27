@@ -182,7 +182,7 @@
 			}
 			
 		}%>
-		
+		view();
 	}
 		
 	//음력 월 data
@@ -523,7 +523,7 @@
 		</table>
 		<div class="popUpSchedule" id="viewSchedule" align="center"> <%-- 일정 보기 div --%>
 			<div class="scheduleDay" id="viewScheduleDay"></div> <%--날짜 --%>
-			<div id="daySchedule" vertical-align="center" text-align="center"></div>
+			<div id="daySchedule" vertical-align="center" text-align="center"></div> <%--그날의 일정보기 --%>
 			<div class="scheduleBtn" id="addBtn">추가</div>
 			<div class="scheduleBtn" id="modifyBtn">수정</div>
 			<div class="scheduleBtn" id="delBtn">삭제</div>
@@ -578,7 +578,7 @@
 			<div class="message" id="modMessage">
 				<select>
 					<option value="1">내 일정</option>
-					<option value="2"><!--request.getdeptname -->팀 일정</option>
+					<option value="2"><%=loginUser.getEmpGender() %>팀 일정</option>
 <%-- 					<%if(loginUser!=null && loginUser.getAdminAuthority().equals("Y")){ %>
  --%>					<option value="3">회사 일정</option>
 <%-- 					<%} %>
@@ -629,7 +629,7 @@
 	
 		/*달력 생성*/
 		buildCalendar();
-		view();
+		
 		
 		/*팝업창 우선 숨기기*/
 		$("#viewSchedule").hide();
@@ -644,6 +644,8 @@
 		/*팝업창 불러오기*/
 		var scheduleDate="";
 		var scheduleDateId="";
+		var length;
+		var calendarNoArray1=new Array();
 		function view(){
 			$("#calendarMain").children().children().click(function(){
 				if($(this).text().length==1){
@@ -651,6 +653,7 @@
 					+(today.getMonth()+1)+"월 "+$(this).children("span").html()+"일";
 					scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+''+$(this).children("span").html();
 					$("#viewScheduleDay").text(scheduleDate);
+					
 					$("#viewSchedule").show();
 					console.log("날짜클릭!");
 				}else if($(this).text().length>1){
@@ -670,8 +673,8 @@
 				}else{
 					console.log("빈칸클릭!");
 				}
-				console.log($(this).children("p").children("input[type='hidden']").val());
-				console.log($(this).children("span").html());
+
+				
 			});
 		}
 		
@@ -853,6 +856,42 @@
 					}
 				});
 	        }
+		});
+		
+		$(function(){
+			$("#calendarMain").children().children().click(function(){
+				var calendarNoArray1=new Array();
+				if($(this).children("p").children("input[type='hidden']").length){
+					length=$(this).children("p").children("input[type='hidden']").length;
+					for(var i=0;i<length;i++){
+						console.log(i+" :ajax "+$(this).children("p").children("input[type='hidden']").eq(i).val());
+						calendarNoArray1[i]=$(this).children("p").children("input[type='hidden']").eq(i).val();
+					}
+					console.log(calendarNoArray1);
+				}
+				var calendarNoArray = JSON.stringify(calendarNoArray1);
+				$.ajax({
+					url:"/semi/selectDay.sche",
+					data:{calendarNoArray:calendarNoArray},
+					type:"post",
+					success:function(data){
+						console.log("성공");
+						var $scheduleLabel=$("#daySchedule");
+						$scheduleLabel.html('');
+						
+						for(var key in data){
+							var $label=$("<label>");
+							var $timeLabel=$("")
+						}
+					},
+					error:function(data){
+						console.log("실패");
+					},
+					complete:function(data){
+						console.log("ajax");
+					}
+				});
+			});		
 		});
 	</script>
 </div>
