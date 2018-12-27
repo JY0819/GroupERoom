@@ -50,7 +50,7 @@ public class EmployeeDao {
 				loginUser.setEmpName(rset.getString("EMPNAME"));
 				loginUser.setEmpPwd(rset.getString("EMPPWD"));
 				loginUser.setApprovePwd(rset.getString("APPROVEPWD"));
-				loginUser.setEmpGender(rset.getString("GENDER"));
+				loginUser.setEmpGender(rset.getString("EMPGENDER"));
 				loginUser.setEmpBirth(rset.getDate("BIRTH"));
 				loginUser.setEmpAddr(rset.getString("EMPADDR"));
 				loginUser.setEmpPhone(rset.getString("EMPPHONE"));

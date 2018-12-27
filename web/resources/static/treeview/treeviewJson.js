@@ -90,7 +90,9 @@ var treeviewJson = {
 				  ,{
 					  text: "휴지통"
 					 ,nodes: [
-						 		{text: "휴지통", href: "/semi/views/approval/trashBox/trash.jsp"}
+						 		
+						 		{text: "휴지통", href: "/semi/selecttrash.tr"}
+						 		
 					 		]
 				   }
 				  ,{

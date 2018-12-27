@@ -1,6 +1,13 @@
+<%@page import="com.semi.approval.approve.model.vo.Approval"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%
+	ArrayList<Approval> list = (ArrayList<Approval>)request.getAttribute("list");
+	//Approval a = new Approval();
+	
+%>
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
 <link rel="stylesheet" type="text/css"
 	href="/semi/assets/css/approval/taskBox.css">
@@ -20,6 +27,8 @@
 
 		<button class="move">이동</button>
 		<button class="delete">삭제</button>
+		<div class="tableArea">
+		<%-- <form action="<%=request.getContextPath() %>/selecttrash.tr" method="get"> --%>
 		<table>
 			<thead>
 				<tr>
@@ -32,17 +41,22 @@
 					
 				</tr>
 			</thead>
+			
 			<tbody>
+				
 				<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
+					
+					
 					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
-
+					
 
 				</tr>
+				
 				<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
@@ -68,6 +82,8 @@
 			</tbody>
 
 		</table>
+		<!-- </form> -->
+		</div>
 		<div class="btnArea">
 			<div class="paging" align="center">
 				<ul class="pagination">
