@@ -1,7 +1,12 @@
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.semi.approval.document.vo.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.semi.approval.document.vo.Document"%>
 <%
 	Document document = (Document)request.getAttribute("doc");
+	HashMap<Integer, ArrayList<SumEmpInfo>> hmap = (HashMap<Integer, ArrayList<SumEmpInfo>>)request.getAttribute("map");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,7 +24,7 @@
 	<table>
 		<tr>
 			<td class="td">번호<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value=<%= document.getManageEmpId()+1%>></td>
+			<td class="content"><input type="text" name="num" value=<%= document.getManageNo()+1%>></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -39,21 +44,23 @@
 		</tr>
     	<div class="white_content" id="open">
         	<div>
-        		<dl><h4>주소록</h4>
+        		<dl><h4>주소록</h4> 
         			<dt id="dt"><i class="fas fa-bookmark"></i>즐겨찾기</dt>
         				<dd id="d1"><i class="fas fa-star"></i>홍길동(팀장)</dd>
         				<dd id="d2"><i class="fas fa-star"></i>고길동(사원)</dd>
-        			<dt><i class="fas fa-user-edit"></i>관리자</dt>
-        			<dt><i class="fab fa-bandcamp"></i>인사회계팀</dt>
-        				<dd id="d3"><i class="far fa-star"></i>홍길동(팀장)</dd>
-        				<dd id="d4"><i class="far fa-star"></i>고길동(사원)</dd>
-        			<dt><i class="fab fa-bandcamp"></i>마케팅팀</dt>
+        			<%-- <% for(int i=0; i<hmap.size(); i++) { %>
+        			<dt><i class="fas fa-user-edit"><%= hmap.get(i).get(i).getDeptName() %></i></dt>
+        				<% for(int j=0; j<hmap.get(i).size(); j++) { %>
+        				<dd id="d3"><i class="far fa-star"></i><%= hmap.get(i).get(j).getEmpNo() %><br><%= hmap.get(i).get(j).getEmpName() %></dd>
+        					<% } %>
+        				<% } %> --%>
+        			<!-- <dt><i class="fab fa-bandcamp"></i>마케팅팀</dt>
         				<dd id="d5"><i class="far fa-star"></i>고길동(사원)</dd>
         				<dd id="d6"><i class="far fa-star"></i>고길동(사원)</dd>
         			<dt><i class="fab fa-bandcamp"></i>개발팀</dt>
         				<dd id="d7"><i class="far fa-star"></i>고길동(사원)</dd>
         				<dd id="d8"><i class="far fa-star"></i>고길동(사원)</dd>
-        			<dt><i class="fab fa-bandcamp"></i>디자인팀</dt>        			
+        			<dt><i class="fab fa-bandcamp"></i>디자인팀</dt> -->        			
         		</dl>
             	<a class="close" href="#"><button type="button" class="saveBtn2">저장</button></a><a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
         	</div>
@@ -76,7 +83,7 @@
 			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%>></td>
 			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="empNo" value=<%= document.getManageNo() %>></td>
+			<td class="content" colspan="3"><input type="text" name="empNo" value=<%= document.getManageEmpId() %>></td>
 			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>

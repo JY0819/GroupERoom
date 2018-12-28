@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.semi.admin.user.model.vo.Employee;
@@ -39,7 +41,11 @@ public class EmployeeDao {
 			pstmt = con.prepareStatement(query);
 			
 			pstmt.setInt(1, emp.getEmpid());
-			pstmt.setString(2, emp.getEmpPwd());
+			pstmt.setInt(2, emp.getEmpid());
+			pstmt.setInt(3, emp.getEmpid());
+			pstmt.setInt(4, emp.getEmpid());
+			pstmt.setInt(5, emp.getEmpid());
+			pstmt.setString(6, emp.getEmpPwd());
 			
 			rset = pstmt.executeQuery();
 			
@@ -60,8 +66,15 @@ public class EmployeeDao {
 				loginUser.setPhotoId(rset.getInt("PHOTOID"));
 				loginUser.setEntryDay(rset.getDate("ENTRYDAY"));
 				loginUser.setLeaveDay(rset.getDate("LEAVEDAY"));
+				loginUser.setDeptId(rset.getString("DEPTID"));
+				loginUser.setDeptName(rset.getString("DEPTNAME"));
+				loginUser.setPositionId(rset.getString("POSITIONID"));
+				loginUser.setPositionName(rset.getString("POSITIONNAME"));
+				
 			}
+			
 			System.out.println(loginUser.toString());
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -71,7 +84,7 @@ public class EmployeeDao {
 		
 		return loginUser;
 	}
-
+	
 	// 사원 등록
 	public int insertMember(Connection con, Employee emp, int photoId) {
 		PreparedStatement pstmt = null;
@@ -157,5 +170,7 @@ public class EmployeeDao {
 		
 		return result;
 	}
+
+	
 
 }

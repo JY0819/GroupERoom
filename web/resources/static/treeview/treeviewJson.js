@@ -17,8 +17,8 @@ var treeviewJson = {
 							   ,{ 
 								  text: "기초 정보"
 								 ,nodes: [
-									 		{text: "부서 관리", href: "/semi/views/admin/base/depManagement.jsp"}
-									 	   ,{text: "직책 관리", href: "/semi/views/admin/base/posManagement.jsp"}
+									 		{text: "부서 관리", href: "/semi/depList.dp"}
+									 	   ,{text: "직책 관리", href: "/semi/posList.po"}
 								 		]
 								}
 							  ,{
@@ -121,7 +121,7 @@ var treeviewJson = {
 					  text: "주소록", href: "/semi/views/myPage/addressBook/AddressBook.jsp"
 				   }
 				  ,{
-					  text: "정보수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
+					  text: "정보 수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
 				   }
 				  ,{
 					  text: "근태관리", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"

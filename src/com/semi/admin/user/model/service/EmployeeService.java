@@ -7,6 +7,7 @@ import static com.semi.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.semi.admin.user.model.dao.EmployeeDao;
 import com.semi.admin.user.model.vo.Employee;
@@ -24,7 +25,7 @@ public class EmployeeService {
 		
 		return loginUser;
 	}
-
+	
 	// 파일 포함한 회원 가입
 	public int insertEmployee(Employee emp, ArrayList<Attachments> fileList) {
 		Connection con = getConnection();
@@ -73,6 +74,8 @@ public class EmployeeService {
 		
 		return result;
 	}
+
+	
 	
 
 

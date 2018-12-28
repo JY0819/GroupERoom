@@ -94,6 +94,7 @@ public class FreeService {
 			
 			int result = new FreeDao().deleteFree(con, bno);
 			
+			System.out.println("service bno: "+bno);
 			if(result>0) {
 				commit(con);
 			}else {
@@ -101,6 +102,25 @@ public class FreeService {
 			}
 			
 			return result;
+		}
+		//글 수정
+		public Free selectOne(String num) {
+			Connection con = getConnection();
+			
+			Free f = new FreeDao().selectOne(con, num);
+			
+			int result = 0;
+			
+			if(f != null) {
+				result = new FreeDao().updateCount(con, f.getBno());
+				if(result > 0) commit(con);
+				else rollback(con);	
+				
+			}
+			
+			close(con);
+			
+			return f;
 		}
 	
 	

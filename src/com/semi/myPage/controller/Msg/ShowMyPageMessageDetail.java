@@ -1,4 +1,4 @@
-package com.semi.admin.base.controller;
+package com.semi.myPage.controller.Msg;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,33 +10,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.admin.base.model.service.PositionService;
-import com.semi.admin.base.model.vo.Position;
+import com.semi.admin.user.model.vo.Employee;
+import com.semi.myPage.model.Msg.service.MsgService;
+import com.semi.myPage.model.Msg.vo.Msg;
 
-@WebServlet("/posList.po")
-public class SelectPositionListServlet extends HttpServlet {
+@WebServlet("/myPageMessageDetail")
+public class ShowMyPageMessageDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectPositionListServlet() {
+    public ShowMyPageMessageDetail() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Position> list = new PositionService().selectList();
+		Msg msg = new Msg();
+		
+		msg.setMsgNo(Integer.parseInt(request.getParameter("msgno")));
+		
+		msg = new MsgService().messageDetail(msg);
 		
 		String page = "";
-		if(list != null) {
-//			System.out.println(list);
-			page = "views/admin/base/posManagement.jsp";
-			request.setAttribute("list", list);
-		} else {
-			page = "views/common/errorPage";
-			request.setAttribute("msg", "직책 조회에 실패했습니다.");
+		if (msg != null) {
+			request.setAttribute("msg", msg);
+			
+			page = "views/myPage/message/mypageMessageDetail.jsp";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-	
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

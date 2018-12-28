@@ -5,17 +5,15 @@ public class Department {
 	private String deptName;
 	private String deptAct;
 	private String deptNote;
-	private int deptHeadId;
 	
 	public Department(){}
 
-	public Department(String deptId, String deptName, String deptAct, String deptNote, int deptHeadId) {
+	public Department(String deptId, String deptName, String deptAct, String deptNote) {
 		super();
 		this.deptId = deptId;
 		this.deptName = deptName;
 		this.deptAct = deptAct;
 		this.deptNote = deptNote;
-		this.deptHeadId = deptHeadId;
 	}
 
 	public String getDeptId() {
@@ -50,19 +48,12 @@ public class Department {
 		this.deptNote = deptNote;
 	}
 
-	public int getDeptHeadId() {
-		return deptHeadId;
-	}
-
-	public void setDeptHeadId(int deptHeadId) {
-		this.deptHeadId = deptHeadId;
-	}
-
 	@Override
 	public String toString() {
 		return "Department [deptId=" + deptId + ", deptName=" + deptName + ", deptAct=" + deptAct + ", deptNote="
-				+ deptNote + ", deptHeadId=" + deptHeadId + "]";
+				+ deptNote + "]";
 	}
-	
+
+
 	
 }

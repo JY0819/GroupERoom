@@ -37,33 +37,38 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form method="post" action="">
+			
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
 							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">자유게시판 글 수정</th>
 						</tr> 
 					</thead>
-
+<form action="", method="post" id="editTable">
 					<tbody>
 					<tr>
-						 <td>작성자</td>
-						<td readonly><%=f.getWriterId() %></td>
+						
+						<td>
+						<input type="hidden" id="bno" value="<%=f.getBno() %>" name="bno" >
+						<input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly>
+						
+						</td>
 						 
 					</tr>
 						<tr>
 							<td>
-							<td ><%=f.getbTitle() %></td>
-							</td>
+							
+							<input type="text" name ="title"class="form-control" value="<%=f.getbTitle() %>" maxlength="50">
+							</td>						
 						</tr>
 						<tr>
-							<td>
-						<td style="min-height: 200px; text-align: left; "><%=f.getbContent() %></td>
-							</td>
-						</tr>
+							
+<td>
+<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=f.getbContent() %></textarea>							</td>						</tr>
 					</tbody>
 					
 				</table>
+				</form>
 				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
@@ -79,10 +84,10 @@ body {
 				</div>
 				
 				<div class="insertNoticeBtn">
-					<button type="submit" id="enrollBtn" class="btn btn-primary">수정</button>
+					<button id="enrollBtn" class="btn btn-primary">수정</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
-			</form>
+			
 		</div>
 	</div>
 
@@ -102,9 +107,21 @@ body {
 		
 		$(function(){
 			$("#gotoList").click(function(){
-				location.href="/semi/views/board/free/boardFree.jsp";
+				location.href="/semi/selectList.fr";
 			});
 		});
+		
+		$(function(){
+			$("#enrollBtn").click(function(){
+				
+				$("#editTable").attr("action", "<%=request.getContextPath()%>/updateFree.fr");
+				$("#editTable").submit();
+				
+			});
+			
+		});
+			
+		
 	</script>
 	
 </section>

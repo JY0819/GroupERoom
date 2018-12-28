@@ -54,7 +54,8 @@ footer {
 }
 
 nav ul li:hover {
-	color: #F7F2E0;
+	color: rgb(0, 154, 200);
+	transition: 0.5s ease-in-out;
 	cursor: pointer;
 }
 
@@ -135,32 +136,11 @@ a:visited {
 }
 
 a:hover {
-	color: white;
 	text-decoration: none;
+	color: rgb(0, 154, 200);
+	transition: 0.5s ease-in-out;
 }
 /* home.jsp */
-#mainTable {
-	position: relative;
-	left: 10%;
-	top: 50px;
-}
-
-#announce {
-	width: 500px;
-	position: relative;
-	left: 55%;
-}
-
-div.alignleft {
-	float: left;
-	width: 120px;
-}
-
-div.alignleftText {
-	float: left;
-	width: 100px;
-}
-
 p.imgText {
 	font-weight: bold;
 	font-size: 15px;
