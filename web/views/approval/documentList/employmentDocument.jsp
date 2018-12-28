@@ -19,7 +19,7 @@
 	<table>
 		<tr>
 			<td class="td">번호</td>
-			<td class="content"><input type="text" name="num" value=<%= document.getManageEmpId()+1%>></td>
+			<td class="content"><input type="text" name="num" value=<%= document.getManageDocNo()+1%>></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -54,7 +54,7 @@
 			<td class="td">문서번호</td>
 			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%>></td>
 			<td class="td">사원번호</td>
-			<td class="employeeNumber" colspan="3"><input type="text" name="empNo" value=<%= document.getManageNo() %>></td> 
+			<td class="employeeNumber" colspan="3"><input type="text" name="empNo" value=<%= document.getManageEmpId() %>></td> 
 		</tr>
 		<tr>
 			<td class="td">직책</td>
