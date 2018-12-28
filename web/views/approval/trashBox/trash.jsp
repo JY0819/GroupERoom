@@ -1,13 +1,20 @@
+<%@page import="com.semi.approval.approve.model.vo.ApprLine"%>
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@page import="com.semi.approval.approve.model.vo.Approval"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>	
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
 	ArrayList<Approval> list = (ArrayList<Approval>)request.getAttribute("list");
+	ArrayList<ApprLine> line = (ArrayList<ApprLine>)request.getAttribute("line");
+	Employee employee = (Employee)session.getAttribute("loginUser");
 	
 	
 %>
+
+
+
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
 <link rel="stylesheet" type="text/css"
 	href="/semi/assets/css/approval/taskBox.css">
@@ -23,7 +30,7 @@
 	</div>
 
 	<div class="content-right container">
-
+		
 
 		<button class="move">이동</button>
 		<button class="delete">삭제</button>
@@ -43,20 +50,28 @@
 			</thead>
 			
 			<tbody>
-				
+					
 					<% for(Approval a : list) {%>
-					<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td><%= a.getApprWriter() %></td>
-					<td></td>
-					<td><%= a.getApprNo() %></td>
-					<% if(a.getApprYn().equals("N")) {%>
-					<td><%= a.getApprYn().replaceAll("N", "승인대기중") %></td>
-					<%}else{ %>
-					<td><%= a.getApprYn().replaceAll("Y", "승인") %>
+						<%if(employee.getEmpName().equals(a.getApprWriter()) ){ %>
+						<tr>
+						<td><input type="checkbox" name="checkTd"
+							style="height: 17px; width: 17px;" ></td>
+						<td><%= a.getApprWriter() %></td>
+						<%for(ApprLine l : line){ %>
+						<%if(a.getApprNo()==l.getApprNo()) {%>
+						<td><%=l.getApprEmpId() %></td>
+						<%}else{ %>
+						<td></td>
+						<%} %>
+						<td><%= a.getApprNo() %></td>
+						<% if(a.getApprYn().equals("N")) {%>
+						<td><%= a.getApprYn().replaceAll("N", "승인대기중") %></td>
+						<%}else{ %>
+						<td><%= a.getApprYn().replaceAll("Y", "승인") %>
+						<%} %>
+						</tr>
+						<%} %>
 					<%} %>
-					</tr>
 					<%} %>
 
 			</tbody>
@@ -78,6 +93,7 @@
 	</div>
 
 	<script>
+		
 		function checkAll() {
 			if ($("#checkAll").is(':checked')) {
 				$("input[name=checkTd]").prop("checked", true);
@@ -85,6 +101,12 @@
 				$("input[name=checkTd]").prop("checked", false);
 			}
 		}
+		
+	
+
+		
+
+		
 	</script>
 </section>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />
