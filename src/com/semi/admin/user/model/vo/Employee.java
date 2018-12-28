@@ -3,7 +3,7 @@ package com.semi.admin.user.model.vo;
 import java.sql.Date;
 
 public class Employee implements java.io.Serializable {
-
+	// emp
 	private int empid;
 	private String empName;
 	private String empPwd;
@@ -18,13 +18,25 @@ public class Employee implements java.io.Serializable {
 	private int photoId;
 	private Date entryDay;
 	private Date leaveDay;
+	
+	// dept
+	private String deptId;
+	private String deptName;
 
+	// position
+	
+	private String positionId;
+	private String positionName;
+	
+	
 	public Employee() {
 	}
 
+
 	public Employee(int empid, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
 			String empAddr, String empPhone, int empVacCount, String adminAuthority, String whetherOfRetire,
-			int photoId, Date entryDay, Date leaveDay) {
+			int photoId, Date entryDay, Date leaveDay, String deptId, String deptName, String positionId,
+			String positionName) {
 		super();
 		this.empid = empid;
 		this.empName = empName;
@@ -40,8 +52,13 @@ public class Employee implements java.io.Serializable {
 		this.photoId = photoId;
 		this.entryDay = entryDay;
 		this.leaveDay = leaveDay;
+		this.deptId = deptId;
+		this.deptName = deptName;
+		this.positionId = positionId;
+		this.positionName = positionName;
 	}
 
+	
 	public int getEmpid() {
 		return empid;
 	}
@@ -154,16 +171,49 @@ public class Employee implements java.io.Serializable {
 		this.leaveDay = leaveDay;
 	}
 
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getPositionId() {
+		return positionId;
+	}
+
+	public void setPositionId(String positionId) {
+		this.positionId = positionId;
+	}
+
+	public String getPositionName() {
+		return positionName;
+	}
+
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "Employee [empid=" + empid + ", empName=" + empName + ", empPwd=" + empPwd + ", approvePwd=" + approvePwd
 				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", empPhone="
 				+ empPhone + ", empVacCount=" + empVacCount + ", adminAuthority=" + adminAuthority
 				+ ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay=" + entryDay
-				+ ", leaveDay=" + leaveDay + "]";
+				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId + ", deptName=" + deptName + ", positionId="
+				+ positionId + ", positionName=" + positionName + "]";
 	}
 
-	
 	
 	
 }
