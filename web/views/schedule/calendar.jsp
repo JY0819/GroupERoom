@@ -576,14 +576,15 @@
 		<div class="deleteSchedule" id="modSchedule" align="center"> <%-- 일정 수정 div --%>
 			<div class="scheduleDay" id="modScheduleDay"></div>
 			<div class="message" id="modMessage">
-				<select>
+				<select id="modscheduleClass">
 					<option value="1">내 일정</option>
 					<option value="2"><%=loginUser.getEmpGender() %>팀 일정</option>
 <%-- 					<%if(loginUser!=null && loginUser.getAdminAuthority().equals("Y")){ %>
  --%>					<option value="3">회사 일정</option>
 <%-- 					<%} %>
  --%>				</select>
-				<input type="time" name="addScheduleTime"><br>
+				<input type="time" name="modScheduleTime"><br>
+				<input type="hidden" name="modScheduleNo">
 				<input type="text" size="25" maxlength="200" placeholder="수정할 일정 입력" name="modSchedule">
 			</div>
 			<div class="scheduleBtn" id="saveModBtn">저장</div>
@@ -676,11 +677,9 @@
 
 				
 			});
-		}
-		
-		//일정 상세보기 팝업 닫기
+			
 		$("#closeBtn").click(function(){
-			console.log()
+			console.log();
 			$("#viewSchedule").hide();
 		});
 		//일정 추가 팝업 열기
@@ -691,6 +690,7 @@
 		
 		//일정 추가 팝업 닫기
 		$("#saveAddBtn").click(function(){
+			
 			$("#addSchedule").hide();
 		});
 		
@@ -711,7 +711,34 @@
 		//일정 수정 팝업 닫기
 		$("#saveModBtn").click(function(){
 			$("#modSchedule").hide();
-			$("#modConfirm").show();
+			
+			console.log($('#modscheduleClass').val());
+			console.log(scheduleDateId);
+			console.log($('input[name=modScheduleTime]').val());
+			console.log($('input[name=modSchedule]').val());
+			console.log($('input[name=modScheduleNo]').val());
+			var modscheduleClass=$('#modscheduleClass').val();
+			var modscheduleTime=$('input[name=modScheduleTime]').val();
+			var modschedule=$('input[name=modSchedule]').val();
+			var modcalendarNo=$('input[name=modScheduleNo]').val();
+			$.ajax({
+				url:"modDay.sche",
+				type:"post",
+				data:{scheduleDateId:scheduleDateId,modscheduleClass:modscheduleClass,
+					modscheduleTime:modscheduleTime,modschedule:modschedule,modcalendarNo:modcalendarNo},
+				success:function(data){
+					console.log(data);
+				},
+				error:function(data){
+					console.log("실패");
+				},
+				complete:function(data){
+					console.log("수정 ajax");
+					console.log();
+				}
+				
+			});
+			//$("#modConfirm").show();
 		});
 		$("#closeModBtn").click(function(){
 			$("#modSchedule").hide();
@@ -747,7 +774,9 @@
 		
 		/*일정 추가 삭제 관련*/
 		$("#Myschedule").change(function(){
-			var name=$("#Myschedule").val();
+			var name=(Number)($("#Myschedule").val());
+			console.log(name);
+			console.log(typeof(name));
 			if($("#Myschedule").is(":checked")){
 	            $.ajax({
 					url:"checkMy.sche",
@@ -857,7 +886,60 @@
 				});
 	        }
 		});
+		$(function(){
+			$("#calendarMain").children().children().children("p").click(function(){
+				var calendarNo=$(this).children("input[type='hidden']").val();
+				console.log($(this).children("input[type='hidden']").val());
+				$.ajax({
+					url:"/semi/selectDay.sche",
+					data:{scheduleDateId:scheduleDateId,calendarNo:calendarNo},
+					type:"post",
+					success:function(data){
+						console.log("성공");
+						var $scheduleLabel=$("#daySchedule");
+						$scheduleLabel.html('');
+						console.log(data);
+						console.log(data.calendarContents);
+						console.log(data.scheduleDate);
+						/* $("#daySchedule").html(data.scheduleTime+" "+data.calendarContents); */
+					
+						var $labelHidden=$("<input type='hidden'>").val(data.calendarNo);
+						var $br=$("<br>");
+						
+						var $labelTime=$("<label>").html(data.scheduleTime);
+						var $labelContents=$("<label>").html(data.calendarContents);
+						
+						$scheduleLabel.append($labelHidden);
+						$scheduleLabel.append($labelTime);
+						$scheduleLabel.append($br);
+						$scheduleLabel.append($labelContents);
+						if(data.calendarClass==1){
+							$('#modscheduleClass option:eq(0)').prop("selected", true);
+						}
+						if(data.calendarClass==2){
+							$('#modscheduleClass option:eq(1)').prop("selected", true);
+						}
+						if(data.calendarClass==3){
+							$('#modscheduleClass option:eq(2)').prop("selected", true);
+						}
+						$('input[name=modScheduleTime]').val(data.scheduleTime);
+						$('input[name=modSchedule]').val(data.calendarContents);
+						$('input[name=modScheduleNo]').val(data.calendarNo);
+						
+					},
+					error:function(data){
+						console.log("실패");
+					},
+					complete:function(data){
+						console.log("ajax");
+					}
+				});
+			});
+		});
+		}
 		
+		//일정 상세보기 팝업 닫기
+		<%--
 		$(function(){
 			$("#calendarMain").children().children().click(function(){
 				var calendarNoArray1=new Array();
@@ -869,10 +951,11 @@
 					}
 					console.log(calendarNoArray1);
 				}
+				console.log(scheduleDateId);
 				var calendarNoArray = JSON.stringify(calendarNoArray1);
 				$.ajax({
 					url:"/semi/selectDay.sche",
-					data:{calendarNoArray:calendarNoArray},
+					data:{scheduleDateId:scheduleDateId,calendarNoArray:calendarNoArray},
 					type:"post",
 					success:function(data){
 						console.log("성공");
@@ -893,6 +976,7 @@
 				});
 			});		
 		});
+		--%>
 	</script>
 </div>
 <%}else{%>

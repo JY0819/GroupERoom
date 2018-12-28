@@ -1,10 +1,6 @@
 package com.semi.schedule.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,16 +12,16 @@ import com.semi.schedule.model.service.ScheduleService;
 import com.semi.schedule.model.vo.Schedule;
 
 /**
- * Servlet implementation class SelectDayScheduleServlet
+ * Servlet implementation class UpdateDayScheduleServlet
  */
-@WebServlet("/selectDay.sche")
-public class SelectDayScheduleServlet extends HttpServlet {
+@WebServlet("/modDay.sche")
+public class UpdateDayScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectDayScheduleServlet() {
+    public UpdateDayScheduleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,42 +30,42 @@ public class SelectDayScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//선택한 일정의 No 전달
-		int calendarNo=Integer.parseInt(request.getParameter("calendarNo"));
-		System.out.println(calendarNo);
-		//String calendarNoArray=request.getParameter("calendarNoArray");
-		//System.out.println(calendarNoArray);
+		
 		String scheduleDateId=request.getParameter("scheduleDateId");
-		System.out.println(scheduleDateId);
+		int calendarNo=Integer.parseInt(request.getParameter("modcalendarNo"));
+		int calendarClass=Integer.parseInt(request.getParameter("modscheduleClass"));
+		String scheduleTime=request.getParameter("modscheduleTime");
+		String calendarContents=request.getParameter("modschedule");
 		
-		Schedule sche=new ScheduleService().selectDaySchedule(calendarNo);
+		System.out.println(scheduleDateId+'/'+calendarNo+'/'+calendarClass+'/'+scheduleTime+'/'+calendarContents);
+		Schedule reqSche=new Schedule();
+		reqSche.setCalendarClass(calendarClass);
+		reqSche.setCalendarNo(calendarNo);
+		reqSche.setCalendarContents(calendarContents);
+		reqSche.setScheduleDate(scheduleDateId);
+		scheduleTime=scheduleTime+":00";
+		reqSche.setScheduleTime(scheduleTime);
 		
+		int result=0;
+		if(reqSche.getCalendarClass()==1) {
+			result=new ScheduleService().updateMyDaySchedule(reqSche);
+		}else if(reqSche.getCalendarClass()==2) {
+			result=new ScheduleService().updatTeamDaySchedule(reqSche);
+		}else if(reqSche.getCalendarClass()==3) {
+			result=new ScheduleService().updateCompanyDaySchedule(reqSche);
+		}
 		
-		//문자열이기 때문에 int 배열로 변환해줌
-		/*
-		calendarNoArray2=calendarNoArray2.replaceAll("\"","");
-		calendarNoArray2=calendarNoArray2.replace("[","");
-		calendarNoArray2=calendarNoArray2.replace("]","");
-		
-		System.out.println("2: "+calendarNoArray2);
-		String[] calendarNoArray1 = calendarNoArray2.split(","); //문자배열로 변환
-		int[] calendarNoArray=Arrays.asList(calendarNoArray1).stream().mapToInt(Integer::parseInt).toArray(); //int 배열로 변환
-		*/
-	
-			
 		
 		String page="";
-		if(sche!=null) {
+		if(result>0) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			new Gson().toJson(sche, response.getWriter());
+			new Gson().toJson(result, response.getWriter());
 		}else {
 			page="views/common/errorPage.jsp";
 			request.setAttribute("msg", "일정 상세조회 실패");
 			request.getRequestDispatcher(page).forward(request, response);
 		}
-		
-
 	}
 
 	/**
