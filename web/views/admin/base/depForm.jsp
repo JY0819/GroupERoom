@@ -28,11 +28,6 @@
 					</tr>
 	
 					<tr>
-						<td><label for="inputDeptHead">부서장</label></td>
-						<td><input type="text" class="form-control" id="deptHead" name="deptHead"></td>
-					</tr>
-	
-					<tr>
 						<td><label for="inputDeptActive">활성화 여부</label></td>
 						<td>
 							<select class="form-control" id="deptActive" name="deptActive">
@@ -50,7 +45,7 @@
 	
 	
 				<div class="deptSaveBtn">
-					<input type="submit" class="btn btn-default" id="saveBtn" value="저장">
+					<input type="submit" class="btn btn-default" id="saveBtn" value="저장" onclick="insertDept();">
 				</div> 
 			</form>
 		</div>

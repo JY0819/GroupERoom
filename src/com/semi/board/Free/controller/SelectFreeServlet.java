@@ -13,16 +13,16 @@ import com.semi.board.Free.model.service.FreeService;
 import com.semi.board.Free.model.vo.Free;
 
 /**
- * Servlet implementation class UpdateFreeServlet
+ * Servlet implementation class SelectFreeServlet
  */
-@WebServlet("/updateFree.fr")
-public class UpdateFreeServlet extends HttpServlet {
+@WebServlet("/selectFree.fr")
+public class SelectFreeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateFreeServlet() {
+    public SelectFreeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,32 +31,23 @@ public class UpdateFreeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		int bno = Integer.parseInt(request.getParameter("bno"));
-		String content = request.getParameter("content");
-
-	System.out.println(title);
-	System.out.println(content);
-	System.out.println(bno);
-
-	Free f = new Free();
-	f.setbTitle(title);
-	f.setBno(bno);
-	f.setbContent(content);
-	
-	int result = new FreeService().updateFree(f);
-	
-	String page="";
-	
-	if(result > 0) {
-		response.sendRedirect("/semi/selectOne.fr?num="+bno);
-	}else {
-		request.setAttribute("msg", "자유게시판 글 수정 실,,패,,");
-		page="views/common/errorPage.jsp";
+		String num = request.getParameter("num");
 		
+		Free f = new FreeService().selectOne(num);
+		
+		String page="";
+		
+		if(f != null) {
+			page="views/board/free/modifyFree.jsp";
+			request.setAttribute("f", f);
+			
+		}else {
+			page="views/common/errorPage.jsp";
+			request.setAttribute("msg", "자유 게시판 글 수정 상세보기 실패");
+		}
+	
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-	}
 	
 	
 	

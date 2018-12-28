@@ -377,8 +377,77 @@ System.out.println(query);
 		}
 		//글삭제
 		public int deleteFree(Connection con, int bno) {
-
+			PreparedStatement pstmt = null;
+			int result = 0;
+			String query = prop.getProperty("deleteFree");
+			
+			System.out.println("dao query: "+query);
+			System.out.println("dao bno:"+bno);
+			
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setInt(1, bno);
 				
-			return 0;
+				result=pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+				
+			return result;
+		}
+		//수정
+		public Free selectOne(Connection con, String num) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			Free f = null;
+			
+			String query = prop.getProperty("selectOne");
+			
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setInt(1, Integer.parseInt(num));
+				
+				rset=pstmt.executeQuery();
+				
+				if(rset.next()) {
+					f = new Free();
+
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbClass(rset.getString("BOARDCLASS"));
+					f.setbTitle(rset.getString("BOARDTITLE"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+
+					f.setbDate(rset.getDate("BOARDDATE"));
+					f.setbClicks(rset.getInt("BOARDCLICKS"));
+					f.setbAttach(rset.getString("BOARDATTACH"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setRecomId(rset.getString("RECOMMENTID"));
+					
+
+					f.setDeptId(rset.getString("DEPTID"));
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setStatus(rset.getString("WHETHEROFDELETE"));
+					f.setFile01(rset.getInt("FILE01"));
+					f.setFile02(rset.getInt("FILE02"));
+					f.setFile03(rset.getInt("FILE03"));
+					
+					
+				}
+				
+				
+			} catch (SQLException e) {				
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+	
+			return f;
 		}
 }
