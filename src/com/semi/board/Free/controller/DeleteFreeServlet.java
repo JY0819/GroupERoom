@@ -14,7 +14,7 @@ import com.semi.board.Free.model.service.FreeService;
 /**
  * Servlet implementation class DeleteFreeServlet
  */
-@WebServlet("/delete.fr")
+@WebServlet("/deleteFree.fr")
 public class DeleteFreeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,7 +30,13 @@ public class DeleteFreeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		int bno = Integer.parseInt(request.getParameter("bno"));
+		
+		
+		System.out.println("bno값: "+bno);
+		
+		
 		
 		int result = new FreeService().deleteFree(bno);
 		

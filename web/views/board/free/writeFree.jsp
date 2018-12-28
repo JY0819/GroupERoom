@@ -19,7 +19,7 @@ body {
 }
 </style>
 
-<% if(loginUser != null) {%>
+
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
@@ -31,7 +31,7 @@ body {
 		</div>
 		<hr>
 		
-
+<% if(loginUser != null) %>
 	<div class="container">
 
 		<div class="row">
@@ -45,7 +45,7 @@ body {
 
 					<tbody>
 					<tr>
-						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
+ 						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 						<tr>
@@ -83,11 +83,11 @@ body {
 			</form>
 		</div>
 	</div>
-
-			<% }else{ %>
+</section>
+ }else{ 
 	request.setAttribute("msg", "잘못된 경로로 접근하셨습니다.");
-	request.getRequestDispatcher("/semi/views/common/errorPage.jsp");
-<% } %>
+	request.getRequestDispatcher("../common/errorPage.jsp").forward(request,response);
+	} 
 	
 	<script>
 		$(function(){
@@ -109,6 +109,6 @@ body {
 		});
 	</script>
 	
-</section>
+
 
 <jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
