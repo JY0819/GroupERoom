@@ -71,6 +71,7 @@ public class InsertScheduleServlet extends HttpServlet {
 			result=new ScheduleService().insertCompanySchedule(reqSche);
 		}
 		
+		
 		String page="";
 		
 		if(result>0) {

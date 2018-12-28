@@ -55,6 +55,7 @@ public class UpdateDayScheduleServlet extends HttpServlet {
 			result=new ScheduleService().updateCompanyDaySchedule(reqSche);
 		}
 		
+		
 		String page="";
 		if(result>0) {
 			response.setContentType("application/json");

@@ -94,6 +94,7 @@ public class ScheduleService {
 		int result=new ScheduleDao().updatTeamDaySchedule(con, reqSche);
 		return result;
 	}
+	
 
 	public int updateCompanyDaySchedule(Schedule reqSche) {
 		Connection con=getConnection();

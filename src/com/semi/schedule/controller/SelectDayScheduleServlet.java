@@ -44,6 +44,7 @@ public class SelectDayScheduleServlet extends HttpServlet {
 		
 		Schedule sche=new ScheduleService().selectDaySchedule(calendarNo);
 		
+		
 		//문자열이기 때문에 int 배열로 변환해줌
 		/*
 		calendarNoArray2=calendarNoArray2.replaceAll("\"","");
