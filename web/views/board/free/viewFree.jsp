@@ -47,11 +47,12 @@ body {
 						<th colspan="3" style="background-color: #eeeeee; text-align: center;">자유게시판 상세보기</th>
 					</tr> 
 				</thead>
-	
+	<form action="", method="post" id="viewTable">
 				<tbody>
 				<tr>
+				  
 						<td>글번호</td>
-						<td readonly><%=f.getBno() %></td>
+						<td readonly><input type="hidden" id="bno" value="<%=f.getBno() %>" name="bno" ><%=f.getBno() %></td>
 					</tr>
 					<tr>
 						<td>조회수</td>
@@ -79,6 +80,7 @@ body {
 					</tr>
 				</tbody>
 			</table>
+			</form>
 			
 			<div class="attachfile">
 				<label for="inputattach">첨부된 파일</label>
@@ -93,6 +95,7 @@ body {
 				</div>
 				<br>
 				
+			<div class="repleArea">
 			<table class="table table-striped" style="text-align: center; border: 1px;">
 			<tr>
 				<td td style="width: 20%;">댓글</td>
@@ -111,13 +114,13 @@ body {
 						
 					</tr>
 			</table>
-				
+				</div>	
 			</div>
 			
 			<br>
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
-				<button id="editBtn" class="btn btn-primary">수정</button>
+				<button id="editBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectFree.fr?num=<%=f.getBno()%>'">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
 			</div>
 			
@@ -134,12 +137,25 @@ body {
 		});
 	});
 	
+	
 	$(function(){
-		$("#editBtn").click(function(){
-			location.href="/semi/views/board/free/modifyFree.jsp";
+		$("#deleteBtn").click(function(){
+			
+			alert("정말로 삭제하시겠습니까?");
+			
+		$("#viewTable").attr("action", "<%=request.getContextPath()%>/deleteFree.fr");
+		$("#viewTable").submit();	
+			
 		});
 	});
 	
+	$(function(){
+		$("#enroll").click(function(){
+			var writer	
+			var bno = <%=f.getBno()%>;
+			var content 
+		});
+	});
 </script>
 <jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
 	
