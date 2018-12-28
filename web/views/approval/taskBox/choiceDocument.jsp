@@ -31,7 +31,7 @@
 						<tr>
 							<td>
 								<div id="contentImgArea1">
-									<img id="contentImg1" width="200" height="200" src="/semi/assets/images/approval/vacationDocument.PNG" alt="vacationDocument">
+									<img oncl id="contentImg1" width="200" height="200" src="/semi/assets/images/approval/vacationDocument.PNG" alt="vacationDocument">
 								</div>
 							</td>
 							<td>
@@ -90,7 +90,7 @@
 			$("#contentImgArea3").click(function() {
 				var id = <%=emp.getEmpid() %> + "em";
 				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
-			});
+			}); 
 		}); 
 		</script>
 </body>
