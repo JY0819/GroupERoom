@@ -60,4 +60,14 @@ public class MsgService {
 		return list;
 	}
 
+	public Msg messageDetail(Msg msg) {
+		Connection con = getConnection();
+		
+		msg = new MsgDao().messageDetail(con, msg);
+		
+		close(con);
+		
+		return msg;
+	}
+
 }

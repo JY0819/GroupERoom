@@ -195,4 +195,70 @@ public class MsgDao {
 	}
 
 
+	public Msg messageDetail(Connection con, Msg msg) {
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		ResultSet rset = null;
+		ResultSet rset2 = null;
+		int result = 0;
+		
+		query = prop.getProperty("msgDetail");
+			
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, msg.getMsgNo());
+			
+			rset = pstmt.executeQuery();
+			
+			msg.setMsgContents(rset.getString("msgContents"));
+			msg.setMsgSender(rset.getString("sender"));
+			msg.setMsgReceiver(rset.getString("receiver"));
+			msg.setMsgSendD(rset.getDate("msgSendD"));
+			msg.setMsgReceiveD(rset.getDate("msgReceiveD"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		if (msg.getMsgReceiveD() == null) {
+			query = prop.getProperty("updateMsgD");
+			
+			try {
+				pstmt2 = con.prepareStatement(query);
+				
+				pstmt2.setInt(1, msg.getMsgNo());
+				
+				result = pstmt2.executeUpdate();
+				
+				System.out.println("메세지를 읽었습니다.");
+				
+				query = prop.getProperty("readMsgD");
+				
+				pstmt3 = con.prepareStatement(query);
+				
+				pstmt3.setInt(1, msg.getMsgNo());
+				
+				rset2 = pstmt3.executeQuery();
+				
+				msg.setMsgReceiveD(rset.getDate("msgReceiveD"));
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		close(pstmt2);
+		close(pstmt3);
+		close(rset2);
+		
+		
+		return msg;
+	}
+
+
 }

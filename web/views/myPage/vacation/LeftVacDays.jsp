@@ -50,7 +50,7 @@
 
 <script>
 	var jsonData = treeviewJson.myPageJson;
-	var nodeName = "휴가 관리";
+	var nodeName = "휴가";
 </script>
 
 <section class="content">
