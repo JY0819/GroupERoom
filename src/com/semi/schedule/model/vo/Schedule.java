@@ -9,6 +9,7 @@ public class Schedule implements java.io.Serializable{
 	private String calendarContents;
 	private Date calendarDate;
 	private String scheduleDate;
+	private String scheduleTime;
 	private int empId;
 	private String empName;
 	private String deptId;
@@ -18,14 +19,18 @@ public class Schedule implements java.io.Serializable{
 	
 	public Schedule() {}
 
+	
+
 	public Schedule(int calendarNo, int calendarClass, String calendarContents, Date calendarDate, String scheduleDate,
-			int empId, String empName, String deptId, String deptName, String companyName, String whetherOfDelete) {
+			String scheduleTime, int empId, String empName, String deptId, String deptName, String companyName,
+			String whetherOfDelete) {
 		super();
 		this.calendarNo = calendarNo;
 		this.calendarClass = calendarClass;
 		this.calendarContents = calendarContents;
 		this.calendarDate = calendarDate;
 		this.scheduleDate = scheduleDate;
+		this.scheduleTime = scheduleTime;
 		this.empId = empId;
 		this.empName = empName;
 		this.deptId = deptId;
@@ -33,6 +38,8 @@ public class Schedule implements java.io.Serializable{
 		this.companyName = companyName;
 		this.whetherOfDelete = whetherOfDelete;
 	}
+
+
 
 	public int getCalendarNo() {
 		return calendarNo;
@@ -89,6 +96,19 @@ public class Schedule implements java.io.Serializable{
 	public void setScheduleDate(String scheduleDate) {
 		this.scheduleDate = scheduleDate;
 	}
+	
+
+	public String getScheduleTime() {
+		return scheduleTime;
+	}
+
+
+
+	public void setScheduleTime(String scheduleTime) {
+		this.scheduleTime = scheduleTime;
+	}
+
+
 
 	public int getEmpId() {
 		return empId;
@@ -160,14 +180,18 @@ public class Schedule implements java.io.Serializable{
 		this.whetherOfDelete = whetherOfDelete;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Schedule [calendarNo=" + calendarNo + ", calendarClass=" + calendarClass + ", calendarContents="
-				+ calendarContents + ", calendarDate=" + calendarDate + ", scheduleDate=" + scheduleDate + ", empId="
-				+ empId + ", empName=" + empName + ", deptId=" + deptId + ", deptName=" + deptName + ", companyName="
-				+ companyName + ", whetherOfDelete=" + whetherOfDelete + "]";
+				+ calendarContents + ", calendarDate=" + calendarDate + ", scheduleDate=" + scheduleDate
+				+ ", scheduleTime=" + scheduleTime + ", empId=" + empId + ", empName=" + empName + ", deptId=" + deptId
+				+ ", deptName=" + deptName + ", companyName=" + companyName + ", whetherOfDelete=" + whetherOfDelete
+				+ "]";
 	}
 
+	
 
 
 

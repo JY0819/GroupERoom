@@ -74,12 +74,31 @@ public class ScheduleService {
 	}
 
 	//daySchedule 라벨 표시
-	public HashMap<String, Object> selectDaySchedule(String[] calendarNoArray2) {
+	public Schedule selectDaySchedule(int calendarNo) {
 		Connection con=getConnection();
 		
-		HashMap<String, Object> hmap=new ScheduleDao().selectDaySchedule(con, calendarNoArray2);
+		Schedule sche=new ScheduleDao().selectDaySchedule(con, calendarNo);
 		close(con);
-		return hmap;
+		return sche;
+	}
+
+
+	public int updateMyDaySchedule(Schedule reqSche) {
+		Connection con=getConnection();
+		int result=new ScheduleDao().updateMyDaySchedule(con, reqSche);
+		return result;
+	}
+
+	public int updatTeamDaySchedule(Schedule reqSche) {
+		Connection con=getConnection();
+		int result=new ScheduleDao().updatTeamDaySchedule(con, reqSche);
+		return result;
+	}
+
+	public int updateCompanyDaySchedule(Schedule reqSche) {
+		Connection con=getConnection();
+		int result=new ScheduleDao().updateCompanyDaySchedule(con, reqSche);
+		return result;
 	}
 
 }
