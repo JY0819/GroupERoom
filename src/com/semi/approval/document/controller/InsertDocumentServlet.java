@@ -14,6 +14,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.semi.approval.document.service.DocumentService;
+import com.semi.approval.document.vo.Document;
 import com.semi.common.MyFileRenamePolicy;
 
 
@@ -25,8 +26,8 @@ public class InsertDocumentServlet extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*if(ServletFileUpload.isMultipartContent(request)) {
+	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(ServletFileUpload.isMultipartContent(request)) {
 			//파일이 담겨있으면 true 반환
 			
 			//전송 파일 용량 제한 : 10MB로 제한
@@ -76,14 +77,15 @@ public class InsertDocumentServlet extends HttpServlet {
 				System.out.println("originFile name : " + multipartRequest.getOriginalFileName(name));
 			}
 			
-			String multiTitle = multipartRequest.getParameter("title");
+			String name = multipartRequest.getParameter("num");
 			String multiContent = multipartRequest.getParameter("content");
 			System.out.println(multiTitle);
 			System.out.println(multiContent);
 		
 			
-			//Board객체 생성
-			Board b = new Board();
+			//문서객체생성
+			Document document = new Document();
+			document.set
 			b.setbTitle(multiTitle);
 			b.setbContent(multiContent);
 			b.setbWriter(String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getUno()));
@@ -114,8 +116,8 @@ public class InsertDocumentServlet extends HttpServlet {
 				request.setAttribute("msg", "사진게시판 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
-		}	*/	
-	}
+		}	
+	}*/
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

@@ -84,36 +84,23 @@ public class DocumentDao {
 			hmap = new HashMap<Integer, ArrayList<SumEmpInfo>>();
 
 			while(rset.next()) {
-				emp = new SumEmpInfo();
-				emp.setDeptName(rset.getString("DEPTNAME"));
 				int count = rset.getInt(2);
-				System.out.println("부서행갯수: " + count);
-				System.out.println("부서이름: " + emp.getDeptName());
-				
+				empList = new ArrayList<SumEmpInfo>();
 					while(rset2.next()) {
-				
-							emp.setEmpNo(rset2.getInt("EMPID"));
-							System.out.println("직원번호: " + emp.getEmpNo());
-							emp.setEmpName(rset2.getString("EMPNAME"));
-							System.out.println("직원이름: " + emp.getEmpName());
-							empList = new ArrayList<SumEmpInfo>();
-							empList.add(emp);
-							if(num == count) {
-								break;
-							}
-							num++;
+						emp = new SumEmpInfo();
+						emp.setDeptName(rset.getString("DEPTNAME"));
+						emp.setEmpNo(rset2.getInt("EMPID"));
+						emp.setEmpName(rset2.getString("EMPNAME"));
+							
+						empList.add(emp);
+						if(num == count) {
+							break;
+						}
+						num++;
 				}
 				hmap.put(key, empList);
 				key++;
 				num = 1;
-			}
-			System.out.println("어레이길이: " + hmap.get(0).size());
-			for(int i=0; i<hmap.size(); i++) {
-				System.out.println(hmap.get(i).get(i).getDeptName());
-				
-				/*for(int j=0; j<hmap.size(); j++) {
-					System.out.println(hmap.get(i).get(j).getEmpNo() + "\t" + hmap.get(i).get(j).getEmpName());
-				}*/
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

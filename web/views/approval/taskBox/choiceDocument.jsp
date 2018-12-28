@@ -91,7 +91,7 @@
 				var id = <%=emp.getEmpid() %> + "em";
 				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
 			}); 
-		}); 
+		});  
 		</script>
 </body>
 </html>
