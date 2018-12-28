@@ -1,4 +1,4 @@
-package com.semi.approval.controller.trashController;
+package com.semi.approval.controller.apprLineController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,20 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.approval.approve.model.vo.ApprLine;
-import com.semi.approval.approve.model.vo.Approval;
-import com.semi.approval.model.service.trashService.TrashService;
+import com.semi.approval.model.service.apprLineService.ApprLineService;
 
 /**
- * Servlet implementation class TrashServletSelect
+ * Servlet implementation class apprLineSelect
  */
-@WebServlet("/selecttrash.tr")
-public class TrashServletSelect extends HttpServlet {
+@WebServlet("/apprlineselect.li")
+public class ApprLineSelect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TrashServletSelect() {
+    public ApprLineSelect() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,38 +31,20 @@ public class TrashServletSelect extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("서블릿");
-		ArrayList<Approval> list = new TrashService().selectList();
-		//System.out.println(list.get(0).getApprNo());
-		
-		
-		
-		ArrayList<ApprLine> line = new TrashService().selectLineList();
-		
-		
-		
+		ArrayList<ApprLine> line = new ApprLineService().selectList();
 		String page = "";
-		if(list != null && line != null) {
-			request.setAttribute("list", list);
+		if(line != null) {
 			request.setAttribute("line", line);
 			page = "views/approval/trashBox/trash.jsp";
 		}else {
-			request.setAttribute("msg", "휴지통 조회실패");
+			request.setAttribute("msg", "휴지통 결재자 조회실패");
 			page = "views/approval/common/errorPage.jsp";
 		}
-		
-		
-		
-		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
-		
-		
 	}
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
