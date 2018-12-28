@@ -1,6 +1,8 @@
 package com.semi.admin.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,6 +36,7 @@ public class LoginServlet extends HttpServlet {
 	  Employee emp = new Employee();
 	  emp.setEmpid(userId);
 	  emp.setEmpPwd(userPwd);
+	  
 	  
 	  Employee loginUser = new EmployeeService().loginCheck(emp);
 	  
