@@ -13,7 +13,7 @@
 	}
 %>
 
-<jsp:include page="/views/main/mainPage.jsp" />
+<jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
 
 <style>
 .btn{
@@ -65,84 +65,100 @@
 }
 </style>
 
-<div align="center">
-	<table id="myPageMainTable" align="center">
-		<tr>
-			<td>
-				<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'"></div>
-			</td>
-			<td>
-				<div class="alignBox"><input class="btn" id="btn2" type="button" value="주소록"></div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<table id="messageList" class="line" align="center">
-					<% if(exist) { %>
-					<tr>
-						<th class="line"></th>
-						<th class="line">보낸 날짜</th>
-						<th class="line">보낸 사람</th>
-						<th class="line">받는 사람</th>
-						<th class="line" style="width: 300px;">내용</th>
-					</tr>
-					<% 		for(Msg m : list) { %>
-					<tr>
-						<td class="line"><%= m.getMsgNo() %></td>
-						<td class="line"><%= m.getMsgSendD() %></td>
-						<td class="line"><%= m.getMsgSender() %></td>
-						<td class="line"><%= m.getMsgReceiver() %></td>
-						<td class="line"><%= m.getMsgContents() %></td>
-					</tr>
-					<% 		count++; %>
-					<% 		} %>
-					<% } else { %>
-					<tr>
-						<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
-					</tr>
-					<% } %>
-				</table>
-			</td>
-			<td>
-				<div class="diary" style="margin-left: 50px;">
-				<table align="center">
-					<tr>
-						<td>즐겨찾기</td>
-					</tr>
-						<tr>
-							<td class="sub">관리자</td>
-						</tr>
-						<tr>
-							<td class="sub">가나다(팀장)</td>
-						</tr>
-					<tr>
-						<td>인사회계팀</td>
-					</tr>
-					<tr>
-						<td>마케팅팀</td>
-					</tr>
-					<tr>
-						<td>개발팀</td>
-					</tr>
-						<tr>
-							<td class="sub">가나다</td>
-						</tr>
-						<tr>
-							<td class="sub">카카오(팀장)</td>
-						</tr>
-						<tr>
-							<td class="sub">관리자</td>
-						</tr>
-						<tr>
-							<td class="sub">가나다(팀장)</td>
-						</tr>
-					<tr>
-						<td>디자인팀</td>
-					</tr>
-				</table>
-				</div>
-			</td>
-		</tr>
-	</table>
-</div>
+<script>
+	var jsonData = treeviewJson.myPageJson;
+	var nodeName = "마이페이지";
+</script>
 
+<section class="content">
+
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+
+	<div class="content-right container">
+
+		<div align="center">
+			<table id="myPageMainTable" align="center">
+				<tr>
+					<td>
+						<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'"></div>
+					</td>
+					<td>
+						<div class="alignBox"><input class="btn" id="btn2" type="button" value="주소록"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table id="messageList" class="line" align="center">
+							<% if(exist) { %>
+							<tr>
+								<th class="line"></th>
+								<th class="line">보낸 날짜</th>
+								<th class="line">보낸 사람</th>
+								<th class="line">받는 사람</th>
+								<th class="line" style="width: 300px;">내용</th>
+							</tr>
+							<% 		for(Msg m : list) { %>
+							<tr>
+								<td class="line"><%= m.getMsgNo() %></td>
+								<td class="line"><%= m.getMsgSendD() %></td>
+								<td class="line"><%= m.getMsgSender() %></td>
+								<td class="line"><%= m.getMsgReceiver() %></td>
+								<td class="line"><%= m.getMsgContents() %></td>
+							</tr>
+							<% 		count++; %>
+							<% 		} %>
+							<% } else { %>
+							<tr>
+								<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
+							</tr>
+							<% } %>
+						</table>
+					</td>
+					<td>
+						<div class="diary" style="margin-left: 50px;">
+						<table align="center">
+							<tr>
+								<td>즐겨찾기</td>
+							</tr>
+								<tr>
+									<td class="sub">관리자</td>
+								</tr>
+								<tr>
+									<td class="sub">가나다(팀장)</td>
+								</tr>
+							<tr>
+								<td>인사회계팀</td>
+							</tr>
+							<tr>
+								<td>마케팅팀</td>
+							</tr>
+							<tr>
+								<td>개발팀</td>
+							</tr>
+								<tr>
+									<td class="sub">가나다</td>
+								</tr>
+								<tr>
+									<td class="sub">카카오(팀장)</td>
+								</tr>
+								<tr>
+									<td class="sub">관리자</td>
+								</tr>
+								<tr>
+									<td class="sub">가나다(팀장)</td>
+								</tr>
+							<tr>
+								<td>디자인팀</td>
+							</tr>
+						</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</section>
+
+<jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />
