@@ -1,12 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" 
+	import="java.util.*, com.semi.admin.base.model.vo.*"%>
 <%
-	request.setAttribute("title", "부서 관리");
+// 	request.setAttribute("title", "부서 관리");
+	ArrayList<Department> list = (ArrayList<Department>) request.getAttribute("list");
 %>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
-	var nodeName = "<%= request.getAttribute("title")%>";
+	var nodeName = "부서 관리";
 </script>
 
 <section class="content">
@@ -17,7 +19,7 @@
 	<div class="content-right container">
 		<div>
 			<div>
-				<h1><%= request.getAttribute("title")%></h1>
+				<h1>부서 관리</h1>
 			</div>
 			
 			<div class="form-group">
@@ -29,15 +31,25 @@
 		
 		<div>
 			<table class="table">
-				<thead>
 					<tr>
-						<th>번호</th>
 						<th>부서코드</th>
 						<th>부서명</th>
 						<th>활성화 여부</th>
 						<th>비고</th>
 					</tr>
-				</thead>
+					
+					<%
+						for (Department dep : list)	{
+					%>
+					<tr>
+						<td><%=dep.getDeptId()%></td>
+						<td><%=dep.getDeptName()%></td>
+						<td><%=dep.getDeptAct()%></td>
+						<td><%=dep.getDeptNote()%></td>
+					</tr>
+					<%
+						}
+					%>
 			</table>
 		</div>
 		

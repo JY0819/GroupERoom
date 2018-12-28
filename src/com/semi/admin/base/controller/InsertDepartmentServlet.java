@@ -14,40 +14,48 @@ import com.semi.admin.base.model.vo.Department;
 @WebServlet("/insertDept.dp")
 public class InsertDepartmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public InsertDepartmentServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public InsertDepartmentServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String deptId = request.getParameter("deptId");
 		String deptName = request.getParameter("deptName");
-		String deptActive = request.getParameter("deptActive");
+		String[] arr = request.getParameterValues("deptActive");
 		String deptNote = request.getParameter("deptNote");
-		Integer deptHeadId = Integer.parseInt(request.getParameter("deptHead"));
-	
+
+		String deptActive = "";
+		if (arr != null) {
+			for (int i = 0; i < arr.length; i++)
+				if (i == 0) {
+					deptActive = arr[i];
+				}
+		}
+
 		Department dept = new Department();
 		dept.setDeptId(deptId);
 		dept.setDeptName(deptName);
 		dept.setDeptAct(deptActive);
 		dept.setDeptNote(deptNote);
-		dept.setDeptHeadId(deptHeadId);
-		
+
 		int result = new DepartmentService().insertDepart(dept);
-		
+
 		String page = "";
-	      
-	      if(result > 0) {
-	    	  page = "views/common/successPage.jsp";
-//	    	  page = "/semi/deptList.dp";
-	    	  response.sendRedirect(page);
-	      } else {
-	    	  request.setAttribute("msg", "부서 등록 실패");
-	          request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-	      }
+
+		if (result > 0) {
+			page = "views/admin/base/depManagement.jsp";
+			// page = "/semi/deptList.dp";
+			response.sendRedirect(page);
+		} else {
+			request.setAttribute("msg", "부서 등록 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
