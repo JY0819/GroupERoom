@@ -19,7 +19,7 @@
 <body>
 
 <jsp:include page="/views/main/mainPage.jsp"/>
-<form action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
+<form class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
 <h1>휴가신청서</h1>
 	<table>
 		<tr>
@@ -40,18 +40,18 @@
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1">&nbsp;<a href="#open"><button type="button">결재자선택</button></a></td>
+			<td class="content"><input type="text" id="person1" name="person1">&nbsp;<a class="aTag" href="#open"><button type="button" class="appr">결재자1선택</button></a></td>
 		</tr>
     	<div class="white_content" id="open">
         	<div>
         		<dl><h4>주소록</h4> 
-        			<dt id="dt"><i class="fas fa-bookmark"></i>즐겨찾기</dt>
-        				<dd id="d1"><i class="fas fa-star"></i>홍길동(팀장)</dd>
-        				<dd id="d2"><i class="fas fa-star"></i>고길동(사원)</dd>
+        			<dt><i class="fas fa-bookmark"></i>즐겨찾기</dt>
+        				<dd class="empNo"><i class="fas fa-star"></i>홍길동</dd>
+        				<dd class="empNo"><i class="fas fa-star"></i>고길동</dd>
         			<% for(int i=0; i<hmap.size(); i++) { %>
         			<dt><i class="fab fa-bandcamp"><%= hmap.get(i).get(0).getDeptName() %>팀</i></dt>
         				<% for(int j=0; j<hmap.get(i).size(); j++) { %>
-        				<dd id="d3"><i class="far fa-star"></i><%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %></dd>
+        				<dd class="empNo" onclick="choiceEmpNo();"><i class="far fa-star"></i><%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %></dd>
         					<% } %>
         				<% } %>
         			<!--이부분은 양식으로 만들어놓은 주소록 <dt><i class="fab fa-bandcamp"></i>마케팅팀</dt>
@@ -62,16 +62,16 @@
         				<dd id="d8"><i class="far fa-star"></i>고길동(사원)</dd>
         			<dt><i class="fab fa-bandcamp"></i>디자인팀</dt>	 -->
         		</dl>
-            	<a class="close" href="#"><button type="button" class="saveBtn2">저장</button></a><a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
+            	<a class="close" href="#"><button type="button" class="saveBtn2">저장</button></a><a class="close" href="#"><button type="button" class="closeBtn2" onclick="closePopUp();">닫기</button></a>
         	</div>
     	</div>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2">&nbsp;<button type="button">결재자선택</button></td>
+			<td class="content"><input type="text" id="person2" name="person2">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자2선택</button></a></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3">&nbsp;<button type="button">결재자선택</button></td>
+			<td class="content"><input type="text" id="person3" name="person3">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자3선택</button></a></td>
 		</tr>
 		<tr>
 			<td class="gap2" colspan="2"></td>
@@ -83,7 +83,7 @@
 			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%>></td>
 			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="empNo" value=<%= document.getManageEmpId() %>></td>
+			<td class="content" colspan="3"><input type="text" name="empNum" value=<%= document.getManageEmpId() %>></td>
 			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>
@@ -107,18 +107,25 @@
 		<tr>
 			<td class="td">사유</td>
 			<td class="content" colspan="7"><input type="text" name="reason"></td>
+		</tr>
+		<tr>
+			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
 			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
 		</tr>
 		<tr>
-			<td class="lastContentDown" colspan="7"><textarea></textarea></td>
+			<td class="td" colspan="7">의견</td>
+		</tr>
+		<tr>
+			<td class="lastContentDown" colspan="7"><textarea class="contentArea" name="opinion" readonly="readonly"></textarea></td>
 		</tr>
 	</table>
-	<button class="saveBtn" type="submit" style="top: 900px">저장</button> 
-	<button class="closeBtn" type="reset" style="top: 900px" onclick="back();">닫기</button>
+	<button class="saveBtn" type="submit">저장</button> 
+	<button class="closeBtn" type="reset" onclick="back();">닫기</button>
 </form>
 	<script>
+	var choice;
 	function popupOpen(){
 		var popUrl = "test.html";	//팝업창에 출력될 페이지 URL
 		var popOption = "width=370, height=360, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
@@ -127,14 +134,37 @@
 		function back() {
 			location.href="views/approval/taskBox/choiceDocument.jsp";
 		}
-		function click() {
-			console.log("클릭함수 실행");
-			$("#test1").bind('mouseenter', function() {
+		$(function() {
+			$(".appr").click(function() {
+				choice = $(this).text();			
+			});
+		});
+		function choiceEmpNo() {
+			$(".empNo").bind('mouseenter', function() {
 				$(this).css({"background":"black", "color":"white"});
 			}).bind('mouseleave', function() {
 				$(this).css({"background":"white", "color":"black"});
 			});
+			$(".empNo").click(function() {
+				var name = $(this).text();
+				if(choice == '결재자1선택'){
+					$("#person1").val(name.substring(name.length-3, name.length));
+				}else if(choice == '결재자2선택'){
+					$("#person2").val(name.substring(name.length-3, name.length));
+				}else {
+					$("#person3").val(name.substring(name.length-3, name.length));
+				}
+			});
 		}
+		function closePopUp() {
+			if(choice == '결재자1선택'){
+				$("#person1").val("");
+			}else if(choice == '결재자2선택'){
+				$("#person2").val("");
+			}else {
+				$("#person3").val("");
+			}
+		} 
 	</script>
 </body>
 </html>

@@ -2,7 +2,8 @@
 
 <style>
 	body {
-		margin-bottom: 150px;
+		margin-top: 50px;
+		margin-bottom: 50px;
 	}
 	/*표상단 제목*/
 	h1{
@@ -13,9 +14,14 @@
 		border: 1px solid black;
 		border-collapse: collapse;
 		width: 85%;
-		height: 100%;
+		height: 90%;
 		margin-left: auto;
 		margin-right: auto;
+	}
+	/*폼태그*/
+	.documentForm {
+		margin-top: 80px;
+		margin-bottom: 200px;
 	}
 
 	/*입력상자 앞에 항목부분*/
@@ -54,7 +60,7 @@
 	}
 	/*내용부분  */
 	.lastContent {
-		height: 30em;
+		height: 15em;
 		border: 1px solid black;
 	}
 	/*저장버튼  */
@@ -66,7 +72,7 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 500px;
+		top: 950px;
 		left: 490px;
 	    font-size: 16px;
 	    border: 0;
@@ -81,7 +87,7 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 900px;
+		top: 950px;
 		left: 650px;
 	    font-size: 16px;
 	    border: 0;
@@ -91,10 +97,19 @@
 		position: absolute;
 		border: 1px solid black;
 		size: 20;
-		width: 99.6%;
+		width: 100%;
 		left: 0px;
-		top: 400px;
-		height: 478px;
+		top: 560px;
+		height: 211px;
+	}
+	.lastContentDown .contentArea {
+		position: absolute;
+		border: 1px solid black;
+		size: 20;
+		width: 100%;
+		left: 0px;
+		top: 820px;
+		height: 211px;
 	}
 	.white_content {
 	z-index: 1;
@@ -153,5 +168,9 @@
 		left: 400px;
 	    border: 0;
 	    outline: 0;
+	}
+	.aTag:link, .aTag:visited, .aTag:active, .aTag:hover {
+		text-decoration: none;
+		color: #646464;
 	}
 </style>

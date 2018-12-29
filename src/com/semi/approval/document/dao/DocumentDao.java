@@ -14,8 +14,10 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.document.vo.Document;
 import com.semi.approval.document.vo.SumEmpInfo;
+import com.semi.common.vo.Attachments;
 public class DocumentDao {
 	private Properties prop = new Properties();
 
@@ -109,5 +111,67 @@ public class DocumentDao {
 			close(pstmt);
 		}
 		return hmap;
+	}
+
+	public int insertAttachments(Connection con, int attachNo, ArrayList<Attachments> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertAttachments");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			for(int i=0; i<fileList.size(); i++) {
+				pstmt.setInt(1, fileList.get(i).getAttachNo());
+				pstmt.setString(2, fileList.get(i).getAttachPreName());
+				pstmt.setString(3, fileList.get(i).getAttachName());
+				pstmt.setString(4, fileList.get(i).getAttachPath());
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertDocument(Connection con, int attachNo, ArrayList<Object> list) {
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		int result = 0;
+		
+		Document document = (Document)list.get(0);
+		
+		String query = prop.getProperty("insertDocument");
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, document.getManageEmpId());
+			pstmt.setInt(2, document.getManageDocNo());
+			pstmt.setInt(3, attachNo);
+			pstmt.setString(4, document.getManageTitle());
+			pstmt.setString(5, document.getManageContents());
+			pstmt.setDate(6, document.getManageDay());
+			pstmt.setString(7, document.getManageClass());
+			pstmt.setDate(8, document.getVacApprStart());
+			pstmt.setString(9, document.getVacApprReason());
+			pstmt.setInt(10, document.getManageNo());
+			pstmt.setDate(11, document.getVacApprEnd());
+			
+			query = prop.getProperty("insertApprLine");
+			pstmt2 = con.prepareStatement(query);
+			ApprLine apprLine = (ApprLine)list.get(1);
+			pstmt2.setString(1, apprLine.getApprEmpId());
+			pstmt2.setInt(2, apprLine.getApprOrder());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 }

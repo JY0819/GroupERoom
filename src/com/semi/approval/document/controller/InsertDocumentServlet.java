@@ -1,8 +1,11 @@
 package com.semi.approval.document.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
+import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.document.service.DocumentService;
 import com.semi.approval.document.vo.Document;
 import com.semi.common.MyFileRenamePolicy;
+import com.semi.common.vo.Attachments;
 
 
 @WebServlet("/insertDocument.id")
@@ -26,7 +31,7 @@ public class InsertDocumentServlet extends HttpServlet {
         super();
     }
 
-	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(ServletFileUpload.isMultipartContent(request)) {
 			//파일이 담겨있으면 true 반환
 			
@@ -77,32 +82,121 @@ public class InsertDocumentServlet extends HttpServlet {
 				System.out.println("originFile name : " + multipartRequest.getOriginalFileName(name));
 			}
 			
-			String name = multipartRequest.getParameter("num");
-			String multiContent = multipartRequest.getParameter("content");
-			System.out.println(multiTitle);
-			System.out.println(multiContent);
-		
+			int num = Integer.parseInt(multipartRequest.getParameter("num"));
+			String appr1 = multipartRequest.getParameter("person1");
+			String appr2 = multipartRequest.getParameter("person2");
+			String appr3 = multipartRequest.getParameter("person3");
+			int docNum = Integer.parseInt(multipartRequest.getParameter("docNum"));
+			int empNum = Integer.parseInt(multipartRequest.getParameter("empNum"));
+			String sDate = multipartRequest.getParameter("startDate");
+			String eDate = multipartRequest.getParameter("endDate");
+			String documentKind = multipartRequest.getParameter("documentKind");
+			String title = multipartRequest.getParameter("title");
+			String wDate = multipartRequest.getParameter("date");
+			String reason = multipartRequest.getParameter("reason");
+			String content = multipartRequest.getParameter("content");
 			
+			Date startDay = null;
+			Date endDay = null;
+			Date writeDay = null;
+			
+			if(sDate != "" && eDate != "" && wDate != "") {
+				//휴가시작 날짜
+				String[] dateArr = sDate.split("-");
+				int[] drr = new int[dateArr.length];
+				
+				for(int i=0; i<dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+				
+				//==============================================================
+				//휴가끝 날짜
+				dateArr = eDate.split("-");
+				drr = new  int[dateArr.length];
+				
+				for(int i=0; i<dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				endDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+				
+				//==============================================================
+				//작성일 날짜
+				dateArr = wDate.split("-");
+				drr = new  int[dateArr.length];
+				
+				for(int i=0; i<dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+				
+				//==============================================================
+				//아닐경우
+			}else {
+				startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+			}
+			
+			System.out.println(num);
+			System.out.println(appr1);
+			System.out.println(appr2);
+			System.out.println(appr3);
+			System.out.println(docNum);
+			System.out.println(empNum);
+			System.out.println(documentKind);
+			System.out.println(title);
+			System.out.println(reason);
+			System.out.println(content);
+			System.out.println(startDay);
+			System.out.println(endDay);
+			System.out.println(writeDay);
+				
 			//문서객체생성
 			Document document = new Document();
-			document.set
-			b.setbTitle(multiTitle);
-			b.setbContent(multiContent);
-			b.setbWriter(String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getUno()));
+			ApprLine[] apprLine = new ApprLine[3];
+
+			document.setManageEmpId(empNum);
+			document.setManageDocNo(docNum);
+			document.setManageTitle(title);
+			document.setManageContents(content);
+			document.setManageDay(startDay);
+			document.setManageClass(documentKind);
+			document.setVacApprStart(startDay);
+			document.setVacApprReason(reason);
+			document.setManageNo(num);
+			document.setVacApprEnd(endDay);
+			
+			if(!appr1.equals("")) {
+				apprLine[0].setApprEmpId(appr1);
+				apprLine[0].setApprOrder(1);
+			}
+			if(!appr2.equals("")) {
+				apprLine[1].setApprEmpId(appr2);
+				apprLine[1].setApprOrder(2);
+			}
+			if(!appr3.equals("")) {
+				apprLine[2].setApprEmpId(appr3);
+				apprLine[2].setApprOrder(3);
+			}			
 			
 			//Attachment 객체 생성하여 arrayList 객체 생성
-			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
+			ArrayList<Attachments> fileList = new ArrayList<Attachments>();
 			for(int i=originFiles.size() - 1; i>=0; i--) {
-				Attachment at = new Attachment();
-				at.setFilePath(filePath);
-				at.setOriginName(originFiles.get(i));
-				at.setChangeName(saveFiles.get(i));
+				Attachments at = new Attachments();
+				at.setAttachPath(filePath);
+				at.setAttachPreName(originFiles.get(i));
+				at.setAttachName(saveFiles.get(i));
 				fileList.add(at);
 			}
-			int result = new BoardService().insertThumbnail(b, fileList);
+			
+			ArrayList<Object> list = new ArrayList<Object>();
+			list.add(document);
+			list.add(apprLine);
+			int result = new DocumentService().insertDocument(list, fileList);
 			
 			if(result > 0) {
-				response.sendRedirect(request.getContextPath() + "/selectList.tn");
+				response.sendRedirect(request.getContextPath() + "/selectDocument.sd");
 			}else {
 				//실패시 저장된 사진 삭제
 				for(int i=0; i<saveFiles.size(); i++) {
@@ -113,11 +207,11 @@ public class InsertDocumentServlet extends HttpServlet {
 					failedFile.delete();
 				}
 				
-				request.setAttribute("msg", "사진게시판 등록 실패");
+				request.setAttribute("msg", "문서 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 		}	
-	}*/
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
