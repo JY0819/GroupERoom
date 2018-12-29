@@ -6,6 +6,13 @@
 	Employee loginUser=(Employee)request.getSession().getAttribute("loginUser");
 	ArrayList<HashMap<String, Object>> list=(ArrayList<HashMap<String, Object>>)request.getAttribute("list");
 %>
+<%--수정해야할 것들
+상세보기 클릭 시 - 다른 날짜 클릭할 수 없게 처리하기 <<< 꼭!!!
+상세보기 클릭 시 회사일정일 경우 관리자에게만 삭제/수정 버튼 활성화(혹은 보이게 하기) <<< 꼭!!!
+css 좀 더 보기좋게 수정
+팝업되는 각종 div들 function (show/hide) 효율적으로 수정 
+
+ --%>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/schedule/calendar.css">
@@ -487,19 +494,21 @@
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
-	</div>
-	<div class="content-right container">
-	<%if(loginUser!=null){ %>
-	<div class="scheduleLeft">
+		<%if(loginUser!=null){ %>
+		<div class="scheduleLeft">
 		<div class="list">
 			<input type="checkbox" id="Myschedule" name="myschedule" value="1" checked>
 			<label for="Myschedule">내 일정</label><br><br>
 			<input type="checkbox" id="Teamschedule" name="teamschedule" value="2" checked>
-			<label for="Teamschedule">부서 일정</label><br><br>
+			<label for="Teamschedule"><%=loginUser.getDeptName() %>팀 일정</label><br><br>
 			<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
 			<label for="Companyschedule">회사 일정</label><br>
 		</div>
+		<%} %>
 	</div>
+	</div>
+	<div class="content-right container">
+	<%if(loginUser!=null){ %>
 	<div class="schedule">
 		<table id="calendar" align="center">
 			<thead>
@@ -521,6 +530,7 @@
 			<tbody id="calendarMain"> <%-- 날짜 들어가는 부분 --%>
 			</tbody>
 		</table>
+	</div>
 		<div class="popUpSchedule" id="viewSchedule" align="center"> <%-- 일정 보기 div --%>
 			<div class="scheduleDay" id="viewScheduleDay"></div> <%--날짜 --%>
 			<div id="daySchedule" vertical-align="center" text-align="center"></div> <%--그날의 일정보기 --%>
@@ -534,7 +544,7 @@
 			<div class="message" id="addMessage">
 				<select name="scheduleClass">
 					<option value="1" selected>내 일정</option>
-					<option value="2">팀 일정</option>
+					<option value="2"><%=loginUser.getDeptName() %>팀  일정</option>
 <%-- 					<%if(loginUser!=null && loginUser.getAdminAuthority().equals("Y")){ %>
  --%>					<option value="3">회사 일정</option>
 					<%-- <%} %> --%>
@@ -578,7 +588,7 @@
 			<div class="message" id="modMessage">
 				<select id="modscheduleClass">
 					<option value="1">내 일정</option>
-					<option value="2"><%=loginUser.getEmpGender() %>팀 일정</option>
+					<option value="2"><%=loginUser.getDeptName() %>팀  일정</option>
 <%-- 					<%if(loginUser!=null && loginUser.getAdminAuthority().equals("Y")){ %>
  --%>					<option value="3">회사 일정</option>
 <%-- 					<%} %>
@@ -608,20 +618,13 @@
 				<div class="scheduleBtn" id="closeModConfirm">닫기</div>
 			</div>
 		</div>
-		<div class="confirm" id="delConfirm">
-			<div class="scheduleMsg" id="delConScheduleMsg">일정을<br>정말 삭제할까요?</div>
-			<div class="btnDiv2">
-				<div class="scheduleBtn" id="delDelBtn">삭제</div>
-				<div class="scheduleBtn" id="cancleDelBtn">취소</div>
-			</div>
-		</div>
 		<div class="confirm" id="delDelConfirm">
 			<div class="scheduleMsg" id="delScheduleMsg">일정 삭제<br> 완료되었습니다.</div>
 			<div class="btnDiv">
 				<div class="scheduleBtn" id="closeDelConfirm">닫기</div>
 			</div>
 		</div>
-	</div>
+	
 	
 	<div class="bottom">
 		<h1> 　</h1>
@@ -639,7 +642,6 @@
 		$("#delSchedule").hide();
 		$("#addConfirm").hide();
 		$("#modConfirm").hide();
-		$("#delConfirm").hide();
 		$("#delDelConfirm").hide();
 		
 		/*팝업창 불러오기*/
@@ -728,6 +730,7 @@
 					modscheduleTime:modscheduleTime,modschedule:modschedule,modcalendarNo:modcalendarNo},
 				success:function(data){
 					console.log(data);
+					//이 데이터를 완료 div 페이지 메시지에 띄우기!
 				},
 				error:function(data){
 					console.log("실패");
@@ -757,22 +760,33 @@
 		$("#closeDelBtn").click(function(){
 			$("#delSchedule").hide();
 		});
+		//일정 삭제버튼 클릭 > 삭제
 		$("#deleteDelBtn").click(function(){
 			$("#delSchedule").hide(); 
-			$("#delConfirm").show(); //일정 삭제 확인 팝업 켜기
+			console.log("삭제 input[hidden] : "+$("#delMessage").children().eq(0).val());
+			var delScheduleNo=$("#delMessage").children().eq(0).val();
+			$.ajax({ 
+				url:"delDay.sche",
+				type:"post",
+				data:{delScheduleNo:delScheduleNo},
+				success:function(data){
+					console.log(data+"넘어옴");
+					//이 데이터를 완료 div 페이지 메시지에 띄우기!
+					$("#delDelConfirm").show();
+				},
+				error:function(data){
+					console.log("삭제 ajax 전송 실패");
+				},
+				complete:function(data){
+					console.log("삭제 ajax 루트 끝");
+				}
+			});
 		});
-		$("#delDelBtn").click(function(){ //일정 삭제 확인 팝업 > O
-			$("#delConfirm").hide();
-			$("#delDelConfirm").show();
-		})
-		$("#cancleDelBtn").click(function(){ //일정 삭제 확인 팝업 > X
-			$("#delConfirm").hide();
-		})
 		$("#closeDelConfirm").click(function(){ //일정 삭제 완료 팝업
 			$("#delDelConfirm").hide();
 		});
 		
-		/*일정 추가 삭제 관련*/
+		/*일정 체크박스list 추가 삭제 관련*/
 		$("#Myschedule").change(function(){
 			var name=(Number)($("#Myschedule").val());
 			console.log(name);
@@ -895,24 +909,28 @@
 					data:{scheduleDateId:scheduleDateId,calendarNo:calendarNo},
 					type:"post",
 					success:function(data){
+						//선택한 일정 정보 받아옴 
 						console.log("성공");
-						var $scheduleLabel=$("#daySchedule");
-						$scheduleLabel.html('');
+						var $scheduleLabel=$("#daySchedule"); 
+						$scheduleLabel.html(''); //기존 라벨 클리어
 						console.log(data);
 						console.log(data.calendarContents);
-						console.log(data.scheduleDate);
-						/* $("#daySchedule").html(data.scheduleTime+" "+data.calendarContents); */
+						console.log(data.scheduleDate); //받아온 데이터 확인
 					
-						var $labelHidden=$("<input type='hidden'>").val(data.calendarNo);
+						//상세보기 div 세팅
+						var $labelHidden=$("<input type='hidden' name='viewCalNo'>").val(data.calendarNo);
+						var $labelHidden2=$("<input type='hidden' name='viewCalClass'>").val(data.calendarClass);
 						var $br=$("<br>");
 						
-						var $labelTime=$("<label>").html(data.scheduleTime);
+						var $labelTime=$("<label>").html(data.scheduleTime+'&nbsp');
 						var $labelContents=$("<label>").html(data.calendarContents);
 						
 						$scheduleLabel.append($labelHidden);
+						$scheduleLabel.append($labelHidden2);
 						$scheduleLabel.append($labelTime);
-						$scheduleLabel.append($br);
 						$scheduleLabel.append($labelContents);
+						
+						//수정 div 세팅
 						if(data.calendarClass==1){
 							$('#modscheduleClass option:eq(0)').prop("selected", true);
 						}
@@ -926,6 +944,18 @@
 						$('input[name=modSchedule]').val(data.calendarContents);
 						$('input[name=modScheduleNo]').val(data.calendarNo);
 						
+						//삭제 div 세팅
+						var $DelLabel=$("#delMessage"); //삭제 div
+						$DelLabel.html('');
+						var $DelHidden=$("<input type='hidden'>").val(data.calendarNo);
+						var $DelTime=$("<label>").html(data.scheduleTime+'&nbsp');
+						var $DelContents=$("<label>").html(data.calendarContents);
+						
+						$DelLabel.append($DelHidden);
+						$DelLabel.append($DelTime);
+						$DelLabel.append($DelContents);
+						$DelLabel.append($br);
+						$DelLabel.append("일정을 삭제하시겠습니까?");
 					},
 					error:function(data){
 						console.log("실패");

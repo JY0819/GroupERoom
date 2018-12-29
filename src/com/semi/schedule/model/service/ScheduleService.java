@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.dao.ScheduleDao;
 import com.semi.schedule.model.vo.Schedule;
 
@@ -83,22 +84,28 @@ public class ScheduleService {
 	}
 
 
-	public int updateMyDaySchedule(Schedule reqSche) {
+	public int updateMyDaySchedule(Schedule reqSche, Employee loginUser) {
 		Connection con=getConnection();
-		int result=new ScheduleDao().updateMyDaySchedule(con, reqSche);
+		int result=new ScheduleDao().updateMyDaySchedule(con, reqSche, loginUser);
+		
+		close(con);
 		return result;
 	}
 
-	public int updatTeamDaySchedule(Schedule reqSche) {
+	public int updatTeamDaySchedule(Schedule reqSche, Employee loginUser) {
 		Connection con=getConnection();
-		int result=new ScheduleDao().updatTeamDaySchedule(con, reqSche);
+		int result=new ScheduleDao().updatTeamDaySchedule(con, reqSche, loginUser);
+		
+		close(con);
 		return result;
 	}
 	
 
-	public int updateCompanyDaySchedule(Schedule reqSche) {
+	public int updateCompanyDaySchedule(Schedule reqSche, Employee loginUser) {
 		Connection con=getConnection();
-		int result=new ScheduleDao().updateCompanyDaySchedule(con, reqSche);
+		int result=new ScheduleDao().updateCompanyDaySchedule(con, reqSche, loginUser);
+		
+		close(con);
 		return result;
 	}
 
