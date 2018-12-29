@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.approve.model.vo.Approval;
+import com.semi.approval.approve.model.vo.TrashTable;
 import com.semi.approval.model.service.trashService.TrashService;
 
 /**
@@ -35,19 +36,15 @@ public class TrashServletSelect extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("서블릿");
-		ArrayList<Approval> list = new TrashService().selectList();
-		//System.out.println(list.get(0).getApprNo());
-		
-		
-		
-		ArrayList<ApprLine> line = new TrashService().selectLineList();
+		ArrayList<TrashTable> list = new TrashService().selectList();
+		//ArrayList<ApprLine> line = new TrashService().selectLineList();
 		
 		
 		
 		String page = "";
-		if(list != null && line != null) {
+		if(list != null) {
 			request.setAttribute("list", list);
-			request.setAttribute("line", line);
+			//request.setAttribute("line", line);
 			page = "views/approval/trashBox/trash.jsp";
 		}else {
 			request.setAttribute("msg", "휴지통 조회실패");
