@@ -2,6 +2,7 @@ package com.semi.admin.base.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,11 +45,13 @@ public class InsertPositionServlet extends HttpServlet {
 			}
 		}
 
+		/*
 		System.out.println(posId);
 		System.out.println(posName);
 		System.out.println(posNo);
 		System.out.println(posActive);
 		System.out.println(posNote);
+		*/
 
 		Position pos = new Position();
 		pos.setPositionId(posId);
@@ -61,9 +64,11 @@ public class InsertPositionServlet extends HttpServlet {
 
 		String page = "";
 		if (result > 0) {
-			page = "views/admin/base/posManagement.jsp";
-			// page = "/semi/posList.po";
-			response.sendRedirect(page);
+			//page = "posList.po";
+			page = "/posList.po";
+			//response.sendRedirect(page);
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		} else {
 			request.setAttribute("msg", "직급 등록에 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

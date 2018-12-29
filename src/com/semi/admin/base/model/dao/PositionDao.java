@@ -54,7 +54,7 @@ public class PositionDao {
 		return result;
 	}
 
-	// 직급 조회
+	// 직급 리스트 조회
 	public ArrayList<Position> selectList(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -89,4 +89,96 @@ public class PositionDao {
 		return list;
 	}
 
+	// 직급 상세보기
+	public Position selectOne(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Position p = null;
+		
+		String query = prop.getProperty("selectPositionOne");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				p = new Position();
+				
+				p.setPositionId(rset.getString("POSITIONID"));
+				p.setPositionName(rset.getString("POSITIONNAME"));
+				p.setPositionNo(rset.getInt("POSITIONNO"));
+				p.setPositionAct(rset.getString("POSITIONACT"));
+				p.setPositionNote(rset.getString("POSITIONNOTE"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return p;
+	}
+
+	// 직급 수정
+	public int updatePosition(Connection con, Position p) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePosition");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, p.getPositionNo());
+			pstmt.setString(2, p.getPositionAct());
+			pstmt.setString(3, p.getPositionNote());
+			pstmt.setString(4, p.getPositionId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 직급 삭제
+	public int deletePosition(Connection con, String posId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deletePosition");
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, posId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	import="java.util.*, com.semi.admin.base.model.vo.*"%>
 <%-- <%
 	request.setAttribute("title", "직책 관리");
@@ -81,6 +80,15 @@
 				
 			});
 		});
+		
+/* 		$(function(){
+			$("#listArea td").click(function(){
+				$('div.modal').modal({
+					remote : 'posDetail.jsp';
+				});
+			});
+		});
+ */
 	</script>
 </section>
 

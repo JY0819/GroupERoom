@@ -26,7 +26,7 @@ public class SelectDepartmentListServlet extends HttpServlet {
 
 		String page = "";
 		if (list != null) {
-			System.out.println(list);
+//			System.out.println(list);
 			page = "views/admin/base/depManagement.jsp";
 			request.setAttribute("list", list);
 		} else {

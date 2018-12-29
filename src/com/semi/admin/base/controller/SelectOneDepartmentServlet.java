@@ -9,31 +9,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.admin.base.model.service.PositionService;
-import com.semi.admin.base.model.vo.Position;
+import com.semi.admin.base.model.service.DepartmentService;
+import com.semi.admin.base.model.vo.Department;
 
-@WebServlet("/selectOne.po")
-public class SelectOnePositionServlet extends HttpServlet {
+@WebServlet("/selectOne.dp")
+public class SelectOneDepartmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectOnePositionServlet() {
+    public SelectOneDepartmentServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		
-//		System.out.println(num);
+		System.out.println(num);
 		
-		Position p = new PositionService().selectOne(num);
+		Department dept = new DepartmentService().selectOne(num);
 		
 		String page = "";
-		if (p != null) {
-			page = "views/admin/base/posDetail.jsp";
-			request.setAttribute("p", p);
+		if (dept != null) {
+			page = "views/admin/base/depDetail.jsp";
+			request.setAttribute("dept", dept);
 		} else {
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "직책 상세보기에 실패했습니다.");
+			request.setAttribute("msg", "부서 상세보기에 실패했습니다.");
 		}
 	
 		RequestDispatcher view = request.getRequestDispatcher(page);

@@ -27,7 +27,7 @@ public class DepartmentService {
 		return result;
 	}
 
-	// 부서 조회
+	// 부서 리스트 조회
 	public ArrayList<Department> selectList() {
 		Connection con = getConnection();
 		
@@ -36,6 +36,17 @@ public class DepartmentService {
 		close(con);
 		
 		return list;
+	}
+
+	// 부서 상세보기
+	public Department selectOne(String num) {
+		Connection con = getConnection();
+		
+		Department dept = new DepartmentDao().selectOne(con, num);
+		
+		close(con);
+		
+		return dept;
 	}
 
 	
