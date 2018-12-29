@@ -2,7 +2,6 @@ package com.semi.admin.base.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,34 +9,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.admin.base.model.service.PositionService;
-import com.semi.admin.base.model.vo.Position;
 
-@WebServlet("/selectOne.po")
-public class SelectOnePositionServlet extends HttpServlet {
+@WebServlet("/deletePos.po")
+public class DeletePositionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectOnePositionServlet() {
+    public DeletePositionServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String num = request.getParameter("num");
+		String posId = request.getParameter("posId");
 		
-//		System.out.println(num);
+		int result = new PositionService().deletePosition(posId);
 		
-		Position p = new PositionService().selectOne(num);
-		
-		String page = "";
-		if (p != null) {
-			page = "views/admin/base/posDetail.jsp";
-			request.setAttribute("p", p);
+		if (result > 0) {
+			response.sendRedirect("/semi/posList.po");
 		} else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "직책 상세보기에 실패했습니다.");
+			request.setAttribute("msg", "직급 삭제에 실패했습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-	
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

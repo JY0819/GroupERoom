@@ -54,7 +54,7 @@ public class DepartmentDao {
 		return result;
 	}
 
-	// 부서 조회
+	// 부서 리스트 조회
 	public ArrayList<Department> selectList(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -87,6 +87,39 @@ public class DepartmentDao {
 		}
 
 		return list;
+	}
+
+	// 부서 상세보기
+	public Department selectOne(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Department dept = null;
+		
+		String query = prop.getProperty("selectDepartmentOne");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				dept = new Department();
+				
+				dept.setDeptId(rset.getString("DEPTID"));
+				dept.setDeptName(rset.getString("DEPTNAME"));
+				dept.setDeptAct(rset.getString("DEPTACT"));
+				dept.setDeptNote(rset.getString("DEPTNOTE"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return dept;
 	}
 
 }

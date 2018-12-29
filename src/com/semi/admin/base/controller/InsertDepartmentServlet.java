@@ -2,6 +2,7 @@ package com.semi.admin.base.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,9 +46,10 @@ public class InsertDepartmentServlet extends HttpServlet {
 		String page = "";
 
 		if (result > 0) {
-			page = "views/admin/base/depManagement.jsp";
-			// page = "/semi/deptList.dp";
-			response.sendRedirect(page);
+			page = "/depList.dp";
+			//response.sendRedirect(page);
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		} else {
 			request.setAttribute("msg", "부서 등록 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
