@@ -25,7 +25,7 @@ public class SelectPositionListServlet extends HttpServlet {
 		ArrayList<Position> list = new PositionService().selectList();
 		
 		String page = "";
-		if(list != null) {
+		if (list != null) {
 //			System.out.println(list);
 			page = "views/admin/base/posManagement.jsp";
 			request.setAttribute("list", list);

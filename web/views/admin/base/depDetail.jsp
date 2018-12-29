@@ -9,6 +9,18 @@
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "부서 관리";
+	
+	function updateDept(){
+		$("#updateForm").attr("action", "<%=request.getContextPath()%>/updateDept.dp");
+	}
+	function deleteDept(){
+		$("#updateForm").attr("action", "<%=request.getContextPath()%>/deleteDept.dp");
+	}
+	
+	$(document).ready(function(){
+		var deptActive = "<%=dept.getDeptAct()%>";
+		$("#deptActive").val(deptActive);
+	});
 </script>
 
 <section class="content">
@@ -18,45 +30,45 @@
 
 	<div class="content-right container">
 		<div class="custom_deptForm">
-			<form id="updateForm" method="post">
-				<table>
-					<tr>
-						<td><label for="inputDeptId">부서코드</label></td>
-						<td><input type="text" class="form-control" id="deptId" name="deptId" value="<%=dept.getDeptId()%>" readonly></td>
-					</tr>
-	
-					<tr>
-						<td><label for="inputDeptName">부서명</label></td>
-						<td><input type="text" class="form-control" id="deptName" name="deptName" value="<%=dept.getDeptName()%>" readonly></td>
-					</tr>
-	
-					<tr>
-						<td><label for="inputDeptActive">활성화 여부</label></td>
-						<td>
-							<select class="form-control" id="deptActive" name="deptActive" >
-								<option value="<%=dept.getDeptAct()%>"></option>
-								<!-- <option value="Y" selected="selected">활성화</option>
-								<option value="N">비활성화</option> -->
-							</select>
-						</td>
-					</tr>
-					
-					<tr>
-						<td><label for="inputDeptNote">비고</label></td>
-						<td><textarea id="deptNote" name="deptNote" rows="5" cols="20" class="form-control" ><%=dept.getDeptNote()%></textarea></td>
-					</tr>
-				</table>
-	
-	
-				<div class="deptSaveBtn">
-					<input type="submit" class="btn btn-default" id="saveBtn" value="저장" onclick="insertDept();">
-				</div> 
-			</form>
+		<form id="updateForm" method="post">
+			<table>
+				<tr>
+					<td><label for="inputDeptId">부서코드</label></td>
+					<td><input type="text" class="form-control" id="deptId" name="deptId" value="<%=dept.getDeptId()%>" readonly></td>
+				</tr>
+
+				<tr>
+					<td><label for="inputDeptName">부서명</label></td>
+					<td><input type="text" class="form-control" id="deptName" name="deptName" value="<%=dept.getDeptName()%>" readonly></td>
+				</tr>
+
+				<tr>
+					<td><label for="inputDeptActive">활성화</label></td>
+					<td>
+						<select class="form-control" id="deptActive" name="deptActive" >
+							<option value="Y">활성화</option>
+							<option value="N">비활성화</option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td><label for="inputDeptNote">비고</label></td>
+					<td><textarea id="deptNote" name="deptNote" rows="5" cols="20" class="form-control" ><%=dept.getDeptNote()%></textarea></td>
+				</tr>
+			</table>
+
+			<div>
+				<button class="btn btn-default" onclick="updateDept();">수정</button>
+				<button class="btn btn-default" onclick="deleteDept();">삭제</button>
+			</div>
+			
+		</form>
+		
+			<div>
+				<button class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/depList.dp'">목록으로</button>
+			</div> 
 		</div>
 	</div>
-	
-	<script>
-	console.log(<%=dept.getDeptAct()%>);
-	</script>
 </section>
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
