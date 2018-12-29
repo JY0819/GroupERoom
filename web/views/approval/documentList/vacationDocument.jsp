@@ -19,7 +19,7 @@
 <body>
 
 <jsp:include page="/views/main/mainPage.jsp"/>
-<form action="<%= request.getContextPath() %>/insertDocument.id" method="post" encType="multipart/form-data">
+<form action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
 <h1>휴가신청서</h1>
 	<table>
 		<tr>
@@ -48,19 +48,19 @@
         			<dt id="dt"><i class="fas fa-bookmark"></i>즐겨찾기</dt>
         				<dd id="d1"><i class="fas fa-star"></i>홍길동(팀장)</dd>
         				<dd id="d2"><i class="fas fa-star"></i>고길동(사원)</dd>
-        			<%-- <% for(int i=0; i<hmap.size(); i++) { %>
-        			<dt><i class="fas fa-user-edit"><%= hmap.get(i).get(i).getDeptName() %></i></dt>
+        			<% for(int i=0; i<hmap.size(); i++) { %>
+        			<dt><i class="fab fa-bandcamp"><%= hmap.get(i).get(0).getDeptName() %>팀</i></dt>
         				<% for(int j=0; j<hmap.get(i).size(); j++) { %>
-        				<dd id="d3"><i class="far fa-star"></i><%= hmap.get(i).get(j).getEmpNo() %><br><%= hmap.get(i).get(j).getEmpName() %></dd>
+        				<dd id="d3"><i class="far fa-star"></i><%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %></dd>
         					<% } %>
-        				<% } %> --%>
-        			<!-- <dt><i class="fab fa-bandcamp"></i>마케팅팀</dt>
+        				<% } %>
+        			<!--이부분은 양식으로 만들어놓은 주소록 <dt><i class="fab fa-bandcamp"></i>마케팅팀</dt>
         				<dd id="d5"><i class="far fa-star"></i>고길동(사원)</dd>
         				<dd id="d6"><i class="far fa-star"></i>고길동(사원)</dd>
         			<dt><i class="fab fa-bandcamp"></i>개발팀</dt>
         				<dd id="d7"><i class="far fa-star"></i>고길동(사원)</dd>
         				<dd id="d8"><i class="far fa-star"></i>고길동(사원)</dd>
-        			<dt><i class="fab fa-bandcamp"></i>디자인팀</dt> -->        			
+        			<dt><i class="fab fa-bandcamp"></i>디자인팀</dt>	 -->
         		</dl>
             	<a class="close" href="#"><button type="button" class="saveBtn2">저장</button></a><a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
         	</div>
@@ -102,7 +102,7 @@
 			<td class="td">제목</td>
 			<td class="content" colspan="2"><input type="text" name="title"></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="date"></td>
+			<td class="content" colspan="3"><input type="date" name="date"></td>
 		</tr>
 		<tr>
 			<td class="td">사유</td>
@@ -110,6 +110,9 @@
 		</tr> 
 		<tr>
 			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
+		</tr>
+		<tr>
+			<td class="lastContentDown" colspan="7"><textarea></textarea></td>
 		</tr>
 	</table>
 	<button class="saveBtn" type="submit" style="top: 900px">저장</button> 
@@ -130,9 +133,6 @@
 				$(this).css({"background":"black", "color":"white"});
 			}).bind('mouseleave', function() {
 				$(this).css({"background":"white", "color":"black"});
-			});
-			$("#dt dd").each(function(index, item) {
-				console.log($("this").val());
 			});
 		}
 	</script>

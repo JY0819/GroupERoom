@@ -37,22 +37,27 @@ public class SelectDocumentServlet extends HttpServlet {
 		
 		//완료 후 페이지로 보내기
 		String page = "";
-		
-		if(document != null && hmap != null) {
+		if(document != null) {
 			if(pageName.equals("va")) {
 			page = "views/approval/documentList/vacationDocument.jsp";
 			request.setAttribute("doc", document);
-			request.setAttribute("map", hmap);
+			if(hmap != null) {
+				request.setAttribute("map", hmap);
+			}
 			request.getRequestDispatcher(page).forward(request, response);
 			}else if(pageName.equals("wo")) {
 				page = "views/approval/documentList/workDocument.jsp";
 				request.setAttribute("doc", document);
-				request.setAttribute("map", hmap);
+				if(hmap != null) {
+					request.setAttribute("map", hmap);
+				}
 				request.getRequestDispatcher(page).forward(request, response);
 			}else {
 				page = "views/approval/documentList/employmentDocument.jsp";
 				request.setAttribute("doc", document);
-				request.setAttribute("map", hmap);
+				if(hmap != null) {
+					request.setAttribute("map", hmap);
+				}
 				request.getRequestDispatcher(page).forward(request, response);
 			}
 		}else {
