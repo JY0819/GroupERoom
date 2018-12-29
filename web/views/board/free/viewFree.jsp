@@ -96,6 +96,7 @@ body {
 				<br>
 				
 			<div class="repleArea">
+			<div class="replyWriterArea">
 			<table class="table table-striped" style="text-align: center; border: 1px;">
 			<tr>
 				<td td style="width: 20%;">댓글</td>
@@ -105,15 +106,20 @@ body {
 						 <td style="width: 20%;">댓글작성
 						</td> 
 						<td width="800px">
-						<input type="text" class="form-control" placeholder="댓글을 작성해주세요">
+						<input type="text" class="form-control" id="replyContent" placeholder="댓글을 작성해주세요">
 						</td>
 						<td>
-						<button id="enroll" class="btn btn-primary" >댓글등록</button>
+						<button id="addReply" class="btn btn-primary" >댓글등록</button>
 						
 						</td>
 						
 					</tr>
 			</table>
+			
+			<div id="replySelectArea">
+			<table id="replySelectTable" border="1" align="center"></table>
+		</div>
+		
 				</div>	
 			</div>
 			
@@ -124,7 +130,7 @@ body {
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
 			</div>
 			
-		</div>
+		
 	</div>
 	
 	</div>
@@ -150,10 +156,44 @@ body {
 	});
 	
 	$(function(){
-		$("#enroll").click(function(){
-			var writer	
-			var bno = <%=f.getBno()%>;
-			var content 
+		$("#addReply").click(function(){
+			
+			var writer = <%= loginUser.getEmpid() %>; 
+			var bno = <%= f.getBno() %>;
+			var content = $("#replyContent").val(); 
+			
+		 	console.log(writer) 
+			console.log(bno)
+			console.log(content)
+			
+			$.ajax({
+				url:"/semi/insertReply.fr",
+				data:{ writer:writer, content:content, bno:bno},
+				type:"post",
+				success:function(data){
+					console.log(data);
+					
+					var $replySelectTable = $("#replySelectTable");
+					$replySelectTable.html('');
+					
+					for(var key in data){
+						var $tr = $("<tr>");
+						var $writerTd = $("<td>").text(data[key].writerId).css("width","100px");
+						var $contentTd = $("<td>").text(data[key].bContent).css("width","400px");
+						var $dateTd = $("<td>").text(data[key].bDate).css("width", "200px");
+						
+						$tr.append($writerTd);
+						$tr.append($contentTd);
+						$tr.append($dateTd);
+						$replySelectTable.append($tr);
+					}
+					
+					
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
 		});
 	});
 </script>
