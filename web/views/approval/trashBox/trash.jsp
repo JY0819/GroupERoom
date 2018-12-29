@@ -19,10 +19,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/semi/assets/css/approval/taskBox.css">
 
-<script>
-	var jsonData = treeviewJson.approvalJson;
-	var nodeName = "휴지통";
-</script>
+
 <section class="content">
 
 	<div class="content-left">
@@ -30,23 +27,23 @@
 	</div>
 
 	<div class="content-right container">
-		
+		<form id="deletefrom" method="get">
 
 		<button class="move">이동</button>
-		<button class="delete">삭제</button>
+		<button class="delete" onclick="deleteTrash()">삭제</button>
 		<div class="tableArea">
-		<%-- <form action="<%=request.getContextPath() %>/selecttrash.tr" method="get"> --%>
+		
 		<table>
 			<thead>
 				<tr>
-					<th><input type="checkbox" name="checkAll" id="checkAll"
+					<th><input type="checkbox" name="All" id="checkAlltr"
 						onclick="checkAll();" style="height: 17px; width: 17px;"></th>
 					<th>작 성 자</th>
 					<th>처 리 자</th>
 					<th>문 서 번 호</th>
 					<th>결 과</th>
 					
-				</tr>
+				</tr>	
 			</thead>
 			
 			<tbody>
@@ -75,9 +72,10 @@
 					<%} %>
 
 			</tbody>
-
+			
 		</table>
-		<!-- </form> -->
+		
+		
 		</div>
 		<div class="btnArea">
 			<div class="paging" align="center">
@@ -90,23 +88,41 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+		<script>
+	var jsonData = treeviewJson.approvalJson;
+	var nodeName = "휴지통";
 
-	<script>
-		
-		function checkAll() {
-			if ($("#checkAll").is(':checked')) {
-				$("input[name=checkTd]").prop("checked", true);
-			} else {
-				$("input[name=checkTd]").prop("checked", false);
-			}
+	function checkAll() {
+		if ($("#checkAlltr").is(':checked')) {
+			$("input[name=checkTd]").prop("checked", true);
+			$("input[name=checkTd]").parent().parent().addClass("selected");
+			
+		} else {
+			$("input[name=checkTd]").prop("checked", false);
+			$("input[name=checkTd]").parent().parent().removeClass("selected");
 		}
-		
+	}
+	
+	
+	 $("input:checkbox").on('click', function() { 
+		if ( $(this).prop('checked') ) { 
+		$(this).parent().parent().addClass("selected"); 
+		} 
+		else { 
+		$(this).parent().parent().removeClass("selected"); 
+		} 
+	 }); 
+	
+	
+	 function deleteTrash(){
+			$(".selected").attr("action","<%=request.getContextPath()%>/deletetrash.tr");
+			
+		}
+
+</script>
+</form>
+	</div>
 	
 
-		
-
-		
-	</script>
 </section>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />

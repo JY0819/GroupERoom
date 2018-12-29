@@ -235,6 +235,9 @@ td {
 	position: absolute;
 }
 
+.selected{
+	background-color: gray;
+	}
 /* defaultsetting */
 /*이문서 전체영역 div  */
 .titleArea {
