@@ -75,7 +75,14 @@ public class PositionDao {
 				p.setPositionName(rset.getString("POSITIONNAME"));
 				p.setPositionNo(rset.getInt("POSITIONNO"));
 				p.setPositionAct(rset.getString("POSITIONACT"));
-				p.setPositionNote(rset.getString("POSITIONNOTE"));
+				
+				String note = "";
+				
+				if (rset.getString("POSITIONNOTE") != null) {
+					note = rset.getString("POSITIONNOTE");
+				}
+				
+				p.setPositionNote(note);
 				
 				list.add(p);
 			}
@@ -155,7 +162,6 @@ public class PositionDao {
 		int result = 0;
 
 		String query = prop.getProperty("deletePosition");
-		
 		
 		try {
 			pstmt = con.prepareStatement(query);

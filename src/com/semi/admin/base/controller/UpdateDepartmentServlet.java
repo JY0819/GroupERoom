@@ -12,16 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.semi.admin.base.model.service.DepartmentService;
 import com.semi.admin.base.model.vo.Department;
 
-@WebServlet("/insertDept.dp")
-public class InsertDepartmentServlet extends HttpServlet {
+@WebServlet("/updateDept.dp")
+public class UpdateDepartmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    public UpdateDepartmentServlet() {
+        super();
+    }
 
-	public InsertDepartmentServlet() {
-		super();
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String deptId = request.getParameter("deptId");
 		String deptName = request.getParameter("deptName");
 		String[] arr = request.getParameterValues("deptActive");
@@ -34,30 +33,28 @@ public class InsertDepartmentServlet extends HttpServlet {
 					deptActive = arr[i];
 				}
 		}
-
+		
 		Department dept = new Department();
 		dept.setDeptId(deptId);
 		dept.setDeptName(deptName);
 		dept.setDeptAct(deptActive);
 		dept.setDeptNote(deptNote);
 
-		int result = new DepartmentService().insertDept(dept);
-
+		int result = new DepartmentService().updateDept(dept);
+		
 		String page = "";
-
 		if (result > 0) {
 			page = "/depList.dp";
-			//response.sendRedirect(page);
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);
 		} else {
-			request.setAttribute("msg", "부서 등록 실패");
+			request.setAttribute("msg", "부서 수정에 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
+		
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 

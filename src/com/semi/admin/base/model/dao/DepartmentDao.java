@@ -29,7 +29,7 @@ public class DepartmentDao {
 	}
 
 	// 부서 추가
-	public int insertDepart(Connection con, Department dept) {
+	public int insertDept(Connection con, Department dept) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 
@@ -74,8 +74,14 @@ public class DepartmentDao {
 				dep.setDeptId(rset.getString("DEPTID"));
 				dep.setDeptName(rset.getString("DEPTNAME"));
 				dep.setDeptAct(rset.getString("DEPTACT"));
-				dep.setDeptNote(rset.getString("DEPTNOTE"));
 
+				String note = "";
+				if (rset.getString("DEPTNOTE") != null) {
+					note = rset.getString("DEPTNOTE");
+				}
+				
+				dep.setDeptNote(note);
+				
 				list.add(dep);
 			}
 
@@ -94,32 +100,77 @@ public class DepartmentDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Department dept = null;
-		
+
 		String query = prop.getProperty("selectDepartmentOne");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, num);
-			
+
 			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
+
+			if (rset.next()) {
 				dept = new Department();
-				
+
 				dept.setDeptId(rset.getString("DEPTID"));
 				dept.setDeptName(rset.getString("DEPTNAME"));
 				dept.setDeptAct(rset.getString("DEPTACT"));
 				dept.setDeptNote(rset.getString("DEPTNOTE"));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
+
 		return dept;
+	}
+
+	// 부서 수정
+	public int updateDept(Connection con, Department dept) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateDepartment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, dept.getDeptAct());
+			pstmt.setString(2, dept.getDeptNote());
+			pstmt.setString(3, dept.getDeptId());
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	// 부서 삭제
+	public int deleteDept(Connection con, String deptId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteDepartment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, deptId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

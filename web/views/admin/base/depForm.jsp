@@ -13,7 +13,7 @@
 		<div id="treeview"></div>
 	</div>
 
-	<div class="content-right container">
+	<div class="content-right container">"web/views/admin/base/depDetail.jsp"
 		<div class="custom_deptForm">
 			<form class="form-inline" id="addDeptForm" method="post" action="<%=request.getContextPath()%>/insertDept.dp">
 				<table>

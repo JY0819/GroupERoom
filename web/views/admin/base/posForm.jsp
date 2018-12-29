@@ -38,8 +38,8 @@
 						<td><label for="inputPosActive">활성화</label></td>
 						<td>
 							<select class="form-control" id="posActive" name="posActive">
-								<option value="Y" selected="selected">Y</option>
-								<option value="N">N</option>
+								<option value="Y" selected="selected">활성화</option>
+								<option value="N">비활성화</option>
 							</select>
 						</td>
 					</tr>

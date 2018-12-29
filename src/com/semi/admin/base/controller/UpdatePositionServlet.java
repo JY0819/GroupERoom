@@ -43,7 +43,7 @@ public class UpdatePositionServlet extends HttpServlet {
 		p.setPositionNote(posNote);
 		
 		int result = new PositionService().updatePosition(p);
-		
+	
 		String page = "";
 		if (result > 0) {
 			page = "/posList.po";
@@ -59,6 +59,7 @@ public class UpdatePositionServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }
