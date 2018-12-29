@@ -3,6 +3,7 @@ package com.semi.approval.model.dao.trashDao;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,8 @@ import java.util.Properties;
 
 import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.approve.model.vo.Approval;
+import com.semi.approval.approve.model.vo.TrashTable;
+
 import static com.semi.common.JDBCTemplate.*;
 
 public class TrashDao {
@@ -24,31 +27,39 @@ public class TrashDao {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<Approval> selectList(Connection con) {
+	public ArrayList<TrashTable> selectList(Connection con) {
 		System.out.println("dao들어옴");
 		Statement stmt = null;
+		Statement stmt2 = null;
 		ResultSet rset = null;
-		ArrayList<Approval> list = null;
+		ResultSet rset2 = null;
+		ArrayList<TrashTable> list = null;
 		
 		String query = prop.getProperty("selecttrashList");
+		String query2 = prop.getProperty("selectLineManager");
 		
 		try {
 			
 			stmt = con.createStatement();
+			stmt2 = con.createStatement();
 			rset = stmt.executeQuery(query);
-			list = new ArrayList<Approval>();
+			rset2 = stmt2.executeQuery(query2);
+			list = new ArrayList<TrashTable>();
 			while(rset.next()) {
-				Approval a = new Approval();
+				TrashTable trashTable = new TrashTable();
+				trashTable.setWirter(rset.getString("EMPNAME"));
+				System.out.println(trashTable.getWirter());
+				if(rset2.next()) {
+					trashTable.setManager(rset2.getString("EMPNAME"));
+					System.out.println(trashTable.getManager());
+				}
+				trashTable.setDocnum(rset.getInt("DOCNO"));
+				System.out.println(trashTable.getDocnum());
+				trashTable.setResult(rset.getString("APPRYN"));
+				System.out.println(trashTable.getResult());
 				
-				a.setApprNo(rset.getInt("APPRNO"));
-				a.setApprWriter(rset.getString("EMPNAME"));
-				a.setDeptId(rset.getString("DEPTID"));
-				a.setApprDay(rset.getDate("APPRDAY"));
-				a.setApprYn(rset.getString("APPRYN"));
-				a.setApprKeep(rset.getString("APPRKEEP"));
-				a.setApprCan(rset.getString("APPRCAN"));
-				a.setWhetherOfDelete(rset.getString("WHETHEROFDELETE"));
-				list.add(a);
+				
+				list.add(trashTable);
 				
 			}
 		} catch (SQLException e) {
@@ -57,7 +68,7 @@ public class TrashDao {
 		}finally {
 			System.out.println(list.size());
 			close(rset);
-			close(stmt);
+			close(stmt);	
 		}
 		
 		return list;
@@ -92,6 +103,25 @@ public class TrashDao {
 		
 		
 		return line;
+	}
+	public int deleteTrash(Connection con, int[] doc) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteTrash");
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 	
 }
