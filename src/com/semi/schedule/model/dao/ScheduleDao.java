@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleDao {
@@ -299,7 +300,7 @@ public class ScheduleDao {
 	}
 
 	//일정 수정하기
-	public int updateMyDaySchedule(Connection con, Schedule reqSche) {
+	public int updateMyDaySchedule(Connection con, Schedule reqSche, Employee loginUser) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		
@@ -310,14 +311,17 @@ public class ScheduleDao {
 			pstmt.setInt(1, reqSche.getCalendarClass());
 			pstmt.setString(2, reqSche.getCalendarContents());
 			pstmt.setString(3, reqSche.getScheduleDate());
-			pstmt.setInt(4, reqSche.getEmpId());
+			pstmt.setInt(4, loginUser.getEmpid());
+			pstmt.setInt(5, reqSche.getCalendarNo());
 			
 			result=pstmt.executeUpdate();
 			
 			if(result>0) {
 				commit(con);
+				System.out.println("No."+reqSche.getCalendarNo()+" 스케줄 수정 완료");
 			}else {
 				rollback(con);
+				System.out.println("수정 실패");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -327,15 +331,12 @@ public class ScheduleDao {
 		return result;
 	}
 
-	//일정 수정하기
-	public int updatTeamDaySchedule(Connection con, Schedule reqSche) {
+	//팀 일정 수정하기
+	public int updatTeamDaySchedule(Connection con, Schedule reqSche, Employee loginUser) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		
 		String query=prop.getProperty("updateTeamSchedule");
-		
-		
-		
 		
 		try {
 			pstmt=con.prepareStatement(query);
@@ -343,6 +344,8 @@ public class ScheduleDao {
 			pstmt.setString(2, reqSche.getCalendarContents());
 			pstmt.setString(3, reqSche.getScheduleDate());
 			pstmt.setInt(4, reqSche.getEmpId());
+			pstmt.setString(5, loginUser.getDeptId());
+			pstmt.setInt(6, reqSche.getCalendarNo());
 			
 			result=pstmt.executeUpdate();
 			
@@ -359,8 +362,8 @@ public class ScheduleDao {
 		return result;
 	}
 
-	//일정 수정하기
-	public int updateCompanyDaySchedule(Connection con, Schedule reqSche) {
+	//회사일정 수정하기
+	public int updateCompanyDaySchedule(Connection con, Schedule reqSche, Employee loginUser) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		
@@ -371,7 +374,8 @@ public class ScheduleDao {
 			pstmt.setInt(1, reqSche.getCalendarClass());
 			pstmt.setString(2, reqSche.getCalendarContents());
 			pstmt.setString(3, reqSche.getScheduleDate());
-			pstmt.setInt(4, reqSche.getEmpId());
+			pstmt.setInt(4, loginUser.getEmpid());
+			pstmt.setInt(5, reqSche.getCalendarNo());
 			
 			result=pstmt.executeUpdate();
 			
