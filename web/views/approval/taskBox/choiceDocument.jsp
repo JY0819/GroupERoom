@@ -77,19 +77,19 @@
 	    $(function() {
 			$("#contentImgArea1").click(function() {
 				var id = <%=emp.getEmpid() %> + "va";
-				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
+				location.href="<%= request.getContextPath()%>/selectDocumentNum.sdn?id=" + id;
 			});
 		}); 
 	    $(function() {
 			$("#contentImgArea2").click(function() {
 				var id = <%=emp.getEmpid() %> + "wo";
-				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
+				location.href="<%= request.getContextPath()%>/selectDocumentNum.sdn?id=" + id;
 			});
 		}); 
 	    $(function() {
 			$("#contentImgArea3").click(function() {
 				var id = <%=emp.getEmpid() %> + "em";
-				location.href="<%= request.getContextPath()%>/selectDocument.sd?id=" + id;
+				location.href="<%= request.getContextPath()%>/selectDocumentNum.sdn?id=" + id;
 			}); 
 		});  
 		</script>
