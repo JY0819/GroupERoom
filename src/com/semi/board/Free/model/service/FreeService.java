@@ -122,6 +122,28 @@ public class FreeService {
 			
 			return f;
 		}
+		//댓글작성
+		public ArrayList<Free> insertReply(Free f) {
+			Connection con = getConnection();
+			ArrayList<Free> replyList = null;
+			
+			int result= new FreeDao().insertReply(con, f);
+			
+			System.out.println("service: "+replyList);
+			
+			if(result > 0) {
+				
+				commit(con);
+				replyList = new FreeDao().selectReplyList(con, f.getBno());
+				//=>20번글을 보고 있으면 20번글에 대한 댓글만 조회할 수 있도록
+			}else {
+				rollback(con);
+			}
+			
+			close(con);
+			
+			return replyList;
+		}
 	
 	
 

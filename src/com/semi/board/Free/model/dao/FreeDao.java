@@ -450,4 +450,71 @@ System.out.println(query);
 	
 			return f;
 		}
+		//댓글 작성
+		public int insertReply(Connection con, Free f) {
+			PreparedStatement pstmt = null;
+			
+			int result = 0;
+			String query = prop.getProperty("insertReply");
+			System.out.println("dao댓글작성: "+query);
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, f.getbContent());
+				pstmt.setInt(2, f.getBno());
+				pstmt.setString(3, f.getWriterId());
+				
+				result=pstmt.executeUpdate();
+				
+				System.out.println("dao 작성");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			
+			
+			return result;
+		}
+		//댓글 보이기
+		public ArrayList<Free> selectReplyList(Connection con, int bno) {
+			PreparedStatement pstmt= null;
+			ResultSet rset = null;
+			ArrayList<Free> list=null;
+			
+			String query = prop.getProperty("selectReplyList");
+			System.out.println("dao 목록 쿼리 : "+query);
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setInt(1, bno);
+				
+				rset=pstmt.executeQuery();
+				
+				list=new ArrayList<Free>();
+				
+				while(rset.next()) {
+					Free f = new Free();
+					
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					
+					list.add(f);
+	
+				}
+				System.out.println("dao 목록부르기: "+list);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+			 
+			
+			return list;
+		}
 }
