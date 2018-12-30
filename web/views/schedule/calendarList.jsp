@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.semi.schedule.model.vo.*,
+    com.semi.admin.user.model.vo.*, java.sql.*"%>
+<%
+	Employee loginUser=(Employee)request.getSession().getAttribute("loginUser");
+	ArrayList<HashMap<String, Object>> list=(ArrayList<HashMap<String, Object>>)request.getAttribute("list");
+%>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <jsp:include page="/views/layout/treeview/schedule/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/schedule/calendarList.css">
@@ -91,7 +96,7 @@
 					holis=year+''+month+''+day;
 				}
 			}
-			//console.log("진짜 holis : "+holis);
+			
 			lunaMonthCal(holis);
 			
 			switch(weekday%7){
@@ -110,6 +115,26 @@
 			
 			
 			cell = row.insertCell();
+			var deleterow=0;
+		
+			<%
+			for(int k=0;k<list.size();k++){
+				HashMap<String, Object> hmap1=list.get(k);%>
+				if(Number(holis)==<%=hmap1.get("calendarId")%>){
+					deleterow++;
+				}else{
+					
+				}
+			<%
+			}%>
+			console.log("deleterow:"+deleterow);
+			if(deleterow==0){ //그날 일정 없으면 셀 지우기
+				console.log("parent: "+cell);
+				cell.remove();
+			}
+			if(deleterow>0){ //그날 스케줄이 있으면 그 날 요일/일정/일 표시~
+				
+			
 			cell.innerHTML ='<span style="font-weight:bold;">'+weekday+'</span>'+'<p></p>';
 			
 			if((cnt+1)%7 ==1) {
@@ -124,7 +149,7 @@
 			cell.id='calSchedule'+holis+'0';
 			
 			cell = row.insertCell();
-			cell.innerHTML ='<span style="font-weight:bold;">'+'일정^^'+'</span>';
+			cell.innerHTML ='<span style="font-weight:bold;"></span>';
 			cell.id='calSchedule'+holis;
 			$("#calSchedule"+holis).attr("colspan","5");
 			$("#calSchedule"+holis).attr("class","scheduleList");
@@ -135,7 +160,7 @@
 
 			cell.id='calSchedule'+holis+'1';
 			$("#calSchedule"+holis+"1").attr("colspan","2");
-			
+			}
 			line=line+3;
 			cnt = cnt + 1;
 			
@@ -187,6 +212,7 @@
 				replaceLunHolis2=holis+'1';
 				replaceLunHolis4=holis+'0';
 			}
+			
 
 		}
 		
@@ -212,7 +238,29 @@
 					$("#calSchedule"+replaceLunHolis4).html('<span class="sunday">월</span>');break;
 		default:break;
 		}
-		//$('#calSchecdule'+holis.toString().substring(0,4)+"1231 > span").html('6<br>대체휴일');
+		
+		<%for(int i=0;i<list.size();i++){
+			HashMap<String, Object> hmap=list.get(i);
+			if((int)hmap.get("calendarClass")==1){
+		%>
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+		<%
+			}
+			if((int)hmap.get("calendarClass")==2){
+		%>	
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+		<%
+			}
+			if((int)hmap.get("calendarClass")==3){
+		%>
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+		<%
+			}
+			
+		}%>
 	}
 		
 	//음력 월 data
@@ -517,19 +565,21 @@
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
+		<%if(loginUser!=null){ %>
+		<div class="scheduleLeft">
+			<div class="list">
+				<input type="checkbox" id="Myschedule" name="myschedule" value="1" checked>
+				<label for="Myschedule">내 일정</label><br><br>
+				<input type="checkbox" id="Teamschedule" name="teamschedule" value="2" checked>
+				<label for="Teamschedule"><%=loginUser.getDeptName() %>팀 일정</label><br><br>
+				<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
+				<label for="Companyschedule">회사 일정</label><br>
+			</div>
+		</div>
+		<%} %>
 	</div>
 	<div class="content-right container">
-	
-	<div class="scheduleLeft">
-		<div class="list">
-			<input type="checkbox" id="Myschedule" name="myschedule" value="myschedule" checked>
-			<label for="Myschedule">내 일정</label><br><br>
-			<input type="checkbox" id="Teamschedule" name="teamschedule" value="teamschedule" checked>
-			<label for="Teamschedule">부서 일정</label><br><br>
-			<input type="checkbox" id="Companyschedule" name="companyschedule" value="companyschedule" checked>
-			<label for="Companyschedule">회사 일정</label><br>
-		</div>
-	</div>
+	<%if(loginUser!=null){ %>
 	<div class="schedule">
 		<table id="calendar" align="center">
 			<thead>
@@ -621,8 +671,7 @@
 		</div>
 	</div>
 	 -->
-	<div class="scheduleRight">
-	</div>
+	
 	<div class="bottom">
 		<h1> 　</h1>
 	</div>
@@ -762,6 +811,12 @@
 		});
 	*/
 	</script> 
-</div>
+	</div>
+	<%}else{%>
+<%
+		request.setAttribute("msg", "잘못된 경로로 접근했습니다.");
+		request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+	} %>
+
 </section>
 <jsp:include page="/views/layout/treeview/schedule/layout-down.jsp" />

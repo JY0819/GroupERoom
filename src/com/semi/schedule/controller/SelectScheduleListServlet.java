@@ -10,23 +10,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.service.ScheduleService;
-import com.semi.schedule.model.vo.Schedule;
 
 /**
- * Servlet implementation class SelectAllScheduleServlet
+ * Servlet implementation class SelectScheduleListServlet
  */
-@WebServlet("/schedule.sche")
-public class SelectAllScheduleServlet extends HttpServlet {
+@WebServlet("/scheList.sche")
+public class SelectScheduleListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectAllScheduleServlet() {
+    public SelectScheduleListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,16 +33,14 @@ public class SelectAllScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//세션이 없으면 >> 세션만료 메시지 띄우기
 		String page="";
 		if(request.getSession().getAttribute("loginUser")!=null) {
 			int empId=((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid();
 			ArrayList<HashMap<String, Object>> list=new ScheduleService().selectAllSchedule(empId);
 			System.out.println("list : "+list);
 		
-		
 			if(list!=null) {
-				page="views/schedule/calendar.jsp";
+				page="views/schedule/calendarList.jsp";
 				request.setAttribute("list", list);
 			}else {
 				page="views/common/errorPage.jsp";
@@ -52,11 +48,12 @@ public class SelectAllScheduleServlet extends HttpServlet {
 			}
 			RequestDispatcher view=request.getRequestDispatcher(page);
 			view.forward(request, response);
+			
 		}else {
 			request.setAttribute("msg", "세션이 없거나 만료되었습니다.");
+			page="views/common/errorPage.jsp";
 			request.getRequestDispatcher(page).forward(request, response);
 		}
-		
 	}
 
 	/**

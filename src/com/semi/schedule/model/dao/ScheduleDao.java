@@ -343,7 +343,7 @@ public class ScheduleDao {
 			pstmt.setInt(1, reqSche.getCalendarClass());
 			pstmt.setString(2, reqSche.getCalendarContents());
 			pstmt.setString(3, reqSche.getScheduleDate());
-			pstmt.setInt(4, reqSche.getEmpId());
+			pstmt.setInt(4, loginUser.getEmpid());
 			pstmt.setString(5, loginUser.getDeptId());
 			pstmt.setInt(6, reqSche.getCalendarNo());
 			
@@ -389,6 +389,35 @@ public class ScheduleDao {
 		} finally {
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public int deleteDaySchedule(Connection con, int calendarNo, int empId) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query=prop.getProperty("deleteDaySchedule");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, empId);
+			pstmt.setInt(2, calendarNo);
+			
+			result=pstmt.executeUpdate();
+			
+			if(result>0) {
+				commit(con);
+				System.out.println("delete 완료");
+			}else {
+				rollback(con);
+				System.out.println("delete 실패");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
 		return result;
 	}
 
