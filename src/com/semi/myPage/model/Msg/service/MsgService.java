@@ -70,4 +70,24 @@ public class MsgService {
 		return msg;
 	}
 
+	public int saveMsgOne(int msgNo) {
+		Connection con = getConnection();
+		
+		int result = new MsgDao().saveMsgOne(con, msgNo);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteMsgOne(int msgNo) {
+		Connection con = getConnection();
+		
+		int result = new MsgDao().deleteMsgOne(con, msgNo);
+		
+		close(con);
+		
+		return result;
+	}
+
 }
