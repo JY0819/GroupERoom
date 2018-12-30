@@ -88,25 +88,69 @@ public class InsertDocumentServlet extends HttpServlet {
 			String appr3 = multipartRequest.getParameter("person3");
 			int docNum = Integer.parseInt(multipartRequest.getParameter("docNum"));
 			int empNum = Integer.parseInt(multipartRequest.getParameter("empNum"));
-			String sDate = multipartRequest.getParameter("startDate");
-			String eDate = multipartRequest.getParameter("endDate");
+			String sTemp = multipartRequest.getParameter("startDate");
+			String eTemp = multipartRequest.getParameter("endDate");
 			String documentKind = multipartRequest.getParameter("documentKind");
 			String title = multipartRequest.getParameter("title");
 			String wDate = multipartRequest.getParameter("date");
 			String reason = multipartRequest.getParameter("reason");
 			String content = multipartRequest.getParameter("content");
 			
+			//결재번호 받기
+			int count = 0;
+			System.out.println("결재할 사원번호: "  + multipartRequest.getParameter("empNo1"));
+			System.out.println("결재할 사원번호: "  + multipartRequest.getParameter("empNo2"));
+			System.out.println("결재할 사원번호: "  + multipartRequest.getParameter("empNo3"));
+			if(!multipartRequest.getParameter("empNo1").equals("")) {
+				count++;
+				if(!multipartRequest.getParameter("empNo2").equals("")) {
+					count++;
+					if(!multipartRequest.getParameter("empNo3").equals("")) {
+						count++;
+					}
+				}
+			}
+			System.out.println("카운트" + count);
+			int[] apprNo = new int[count];
+			if(count > 0) {
+				for(int i=0; i<apprNo.length; i++) {
+					apprNo[i] = Integer.parseInt(multipartRequest.getParameter("empNo1"));
+					if(i > 0 && count > 1) {
+						apprNo[i] = Integer.parseInt(multipartRequest.getParameter("empNo2"));
+						if(i > 1 && count > 2) {
+							apprNo[i] = Integer.parseInt(multipartRequest.getParameter("empNo3"));
+						}
+					}
+				}
+			}else {
+				apprNo = null;
+			}
+			
+			//분류 이름에 따라 숫자로 넣음
+			if(documentKind.equals("휴가신청서")) {
+				documentKind = "1";
+			}else if(documentKind.equals("재직증명서")) {
+				documentKind = "2";
+			}else {
+				documentKind = "3";
+			}
+			
 			Date startDay = null;
 			Date endDay = null;
 			Date writeDay = null;
 			
+			String sDate = sTemp.substring(0, sTemp.length()-6);
+			String sTime = sTemp.substring(sTemp.length()-6, sTemp.length());
+			String eDate = eTemp.substring(0, eTemp.length()-6);
+			String eTime = eTemp.substring(eTemp.length()-6, eTemp.length());
 			if(sDate != "" && eDate != "" && wDate != "") {
 				//휴가시작 날짜
 				String[] dateArr = sDate.split("-");
+
 				int[] drr = new int[dateArr.length];
 				
 				for(int i=0; i<dateArr.length; i++) {
-					drr[i] = Integer.parseInt(dateArr[i]);
+						drr[i] = Integer.parseInt(dateArr[i]);
 				}
 				startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
 				
@@ -138,24 +182,23 @@ public class InsertDocumentServlet extends HttpServlet {
 				writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 			}
 			
-			System.out.println(num);
-			System.out.println(appr1);
-			System.out.println(appr2);
-			System.out.println(appr3);
-			System.out.println(docNum);
-			System.out.println(empNum);
-			System.out.println(documentKind);
-			System.out.println(title);
-			System.out.println(reason);
-			System.out.println(content);
-			System.out.println(startDay);
-			System.out.println(endDay);
-			System.out.println(writeDay);
+			System.out.println("번호: " + num);
+			System.out.println("결재자1: " + appr1);
+			System.out.println("결재자2: " + appr2);
+			System.out.println("결재자3: " + appr3);
+			System.out.println("문서번호: " + docNum);
+			System.out.println("사원번호: " + empNum);
+			System.out.println("분류: " + documentKind);
+			System.out.println("제목: " + title);
+			System.out.println("사유: " + reason);
+			System.out.println("내용: " + content);
+			System.out.println("휴가시작: " + startDay);
+			System.out.println("휴가끝: " + endDay);
+			System.out.println("작성일: " + writeDay);
 				
 			//문서객체생성
 			Document document = new Document();
-			ApprLine[] apprLine = new ApprLine[3];
-
+			
 			document.setManageEmpId(empNum);
 			document.setManageDocNo(docNum);
 			document.setManageTitle(title);
@@ -167,18 +210,41 @@ public class InsertDocumentServlet extends HttpServlet {
 			document.setManageNo(num);
 			document.setVacApprEnd(endDay);
 			
+			//결재선 객체 생성
+			int apprLineCount = 0;
+			String apprName = "";
 			if(!appr1.equals("")) {
+				apprLineCount++;
+				apprName = appr1;
+				if(!appr2.equals("")) {
+					apprLineCount++;
+					apprName = appr2;
+					if(!appr3.equals("")) {
+						apprLineCount++;
+						apprName = appr3;
+					}
+				}
+			}
+			ApprLine[] apprLine = new ApprLine[apprLineCount];
+			apprLine[0] = new ApprLine();
+			apprLine[0].setApprEmpId(apprNo[apprNo.length-1]);
+			apprLine[0].setApprOrder(apprLineCount);
+			
+		/*	if(!appr1.equals("")) {
+				apprLine[0] = new ApprLine();
 				apprLine[0].setApprEmpId(appr1);
 				apprLine[0].setApprOrder(1);
 			}
 			if(!appr2.equals("")) {
+				apprLine[1] = new ApprLine();
 				apprLine[1].setApprEmpId(appr2);
 				apprLine[1].setApprOrder(2);
 			}
 			if(!appr3.equals("")) {
+				apprLine[2] = new ApprLine();
 				apprLine[2].setApprEmpId(appr3);
 				apprLine[2].setApprOrder(3);
-			}			
+			}	*/		
 			
 			//Attachment 객체 생성하여 arrayList 객체 생성
 			ArrayList<Attachments> fileList = new ArrayList<Attachments>();
@@ -193,8 +259,9 @@ public class InsertDocumentServlet extends HttpServlet {
 			ArrayList<Object> list = new ArrayList<Object>();
 			list.add(document);
 			list.add(apprLine);
-			int result = new DocumentService().insertDocument(list, fileList);
 			
+			int result = new DocumentService().insertDocument(list, apprNo, fileList);
+
 			if(result > 0) {
 				response.sendRedirect(request.getContextPath() + "/selectDocument.sd");
 			}else {
@@ -206,11 +273,10 @@ public class InsertDocumentServlet extends HttpServlet {
 					//파일을 지우고 true, false 하나 리턴함
 					failedFile.delete();
 				}
-				
+			}
 				request.setAttribute("msg", "문서 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
-		}	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,14 +1,14 @@
 package com.semi.approval.approve.model.vo;
 
 public class ApprLine implements java.io.Serializable{
-	private String apprEmpId;
+	private int apprEmpId;
 	private int apprOrder;
 	private int apprNo;
 	
 	public ApprLine() {}
 	
 
-	public ApprLine(String apprEmpId, int apprOrder, int apprNo) {
+	public ApprLine(int apprEmpId, int apprOrder, int apprNo) {
 		super();
 		this.apprEmpId = apprEmpId;
 		this.apprOrder = apprOrder;
@@ -16,11 +16,11 @@ public class ApprLine implements java.io.Serializable{
 	}
 
 
-	public String getApprEmpId() {
+	public int getApprEmpId() {
 		return apprEmpId;
 	}
 
-	public void setApprEmpId(String apprEmpId) {
+	public void setApprEmpId(int apprEmpId) {
 		this.apprEmpId = apprEmpId;
 	}
 

@@ -3,6 +3,7 @@ package com.semi.approval.document.vo;
 import java.sql.Date;
 
 public class Document implements java.io.Serializable{
+	//문서 객체
 	private int manageEmpId;
 	private int manageDocNo;
 	private int attachNo;
