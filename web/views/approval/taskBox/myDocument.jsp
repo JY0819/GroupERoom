@@ -1,5 +1,11 @@
+<%@page import="com.semi.approval.document.vo.MyDocument"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+	ArrayList<MyDocument> list = (ArrayList<MyDocument>)request.getAttribute("list");
+%>
 
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
 <link rel="stylesheet" type="text/css"

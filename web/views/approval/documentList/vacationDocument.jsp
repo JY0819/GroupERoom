@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1">&nbsp;<a class="aTag" href="#open"><button type="button" class="appr">결재자1선택</button></a></td>
+			<td class="content"><input type="text" id="person1" name="person1"><input type="hidden" id="appr1" name="empNo1" value="">&nbsp;<a class="aTag" href="#open"><button type="button" class="appr">결재자1선택</button></a></td>
 		</tr>
     	<div class="white_content" id="open">
         	<div>
@@ -67,11 +67,11 @@
     	</div>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자2선택</button></a></td>
+			<td class="content"><input type="text" id="person2" name="person2"><input type="hidden" id="appr2"  name="empNo2" value="">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자2선택</button></a></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자3선택</button></a></td>
+			<td class="content"><input type="text" id="person3" name="person3"><input type="hidden" id="appr3"  name="empNo3" value="">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자3선택</button></a></td>
 		</tr>
 		<tr>
 			<td class="gap2" colspan="2"></td>
@@ -149,10 +149,13 @@
 				var name = $(this).text();
 				if(choice == '결재자1선택'){
 					$("#person1").val(name.substring(name.length-3, name.length));
+					$("#appr1").val(name.substring(0, name.length-4));
 				}else if(choice == '결재자2선택'){
 					$("#person2").val(name.substring(name.length-3, name.length));
+					$("#appr2").val(name.substring(0, name.length-4));
 				}else {
 					$("#person3").val(name.substring(name.length-3, name.length));
+					$("#appr3").val(name.substring(0, name.length-4));
 				}
 			});
 		}

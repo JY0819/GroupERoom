@@ -1,6 +1,7 @@
 package com.semi.approval.document.vo;
 
 public class SumEmpInfo implements java.io.Serializable{
+	//주소록 객체
 	private String deptName;
 	private int empNo;
 	private String empName;

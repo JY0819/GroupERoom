@@ -12,6 +12,7 @@ import java.util.HashMap;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.approval.document.dao.DocumentDao;
 import com.semi.approval.document.vo.Document;
+import com.semi.approval.document.vo.MyDocument;
 import com.semi.approval.document.vo.SumEmpInfo;
 import com.semi.common.service.CommonSeqService;
 import com.semi.common.vo.Attachments;
@@ -41,14 +42,16 @@ public class DocumentService {
 		return hmap;
 	}
 
-	public int insertDocument(ArrayList<Object> list, ArrayList<Attachments> fileList) {
+	public int insertDocument(ArrayList<Object> list, int[] apprNo, ArrayList<Attachments> fileList) {
 		Connection con = getConnection();
 		int result = 0;
 		int attachNo = new CommonSeqService(con).getFileSeq();
 		int result1 = new DocumentDao().insertAttachments(con, attachNo, fileList);
-		int result2 = new DocumentDao().insertDocument(con, attachNo, list);
+		int resutl2 = new DocumentDao().insertAppr(con, apprNo, list);
+		int result3 = new DocumentDao().insertDoc(con, list);
+		int result4 = new DocumentDao().insertDocument(con, attachNo, list);
 		
-		if(result1 > 0 && result2 > 0) {
+		if(result1 > 0 && resutl2 > 0 && result3 > 0 && result4 > 1) {
 			commit(con);
 			result = 1;
 		}else {
@@ -58,6 +61,21 @@ public class DocumentService {
 		close(con);
 		
 		return result;
+	}
+
+	public ArrayList<MyDocument> selectList() {
+		Connection con = getConnection();
+		ArrayList<MyDocument> list = new DocumentDao().selectList(con);
+		
+		if(list != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return list;
 	}
 	
 }

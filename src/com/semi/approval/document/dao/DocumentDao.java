@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.document.vo.Document;
+import com.semi.approval.document.vo.MyDocument;
 import com.semi.approval.document.vo.SumEmpInfo;
 import com.semi.common.vo.Attachments;
 public class DocumentDao {
@@ -121,14 +122,14 @@ public class DocumentDao {
 		
 		try {
 			
-			pstmt = con.prepareStatement(query);
 			for(int i=0; i<fileList.size(); i++) {
-				pstmt.setInt(1, fileList.get(i).getAttachNo());
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, attachNo);
 				pstmt.setString(2, fileList.get(i).getAttachPreName());
 				pstmt.setString(3, fileList.get(i).getAttachName());
 				pstmt.setString(4, fileList.get(i).getAttachPath());
-				result = pstmt.executeUpdate();
 			}
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -137,11 +138,55 @@ public class DocumentDao {
 		return result;
 	}
 
+	public int insertDoc(Connection con, ArrayList<Object> list) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		Document document = (Document)list.get(0);
+		String query = prop.getProperty("insertDoc");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, document.getManageEmpId());
+			pstmt.setInt(2, (document.getManageDocNo()-1));
+			pstmt.setInt(3, document.getManageEmpId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+	
+		return result;
+	}
+	
+	public int insertAppr(Connection con, int[] apprNo, ArrayList<Object> list) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		Document document = (Document)list.get(0);
+		
+		String query = prop.getProperty("insertAppr");
+		
+		try {
+			
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo[apprNo.length-1]);
+				pstmt.setInt(2, document.getManageEmpId());
+				pstmt.setDate(3, document.getManageDay());
+				result = pstmt.executeUpdate();
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return result;
+	}
+	
 	public int insertDocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		int result = 0;
-		
+		int result2 = 0;
 		Document document = (Document)list.get(0);
 		
 		String query = prop.getProperty("insertDocument");
@@ -160,18 +205,57 @@ public class DocumentDao {
 			pstmt.setInt(10, document.getManageNo());
 			pstmt.setDate(11, document.getVacApprEnd());
 			
+			result = pstmt.executeUpdate();
+
 			query = prop.getProperty("insertApprLine");
 			pstmt2 = con.prepareStatement(query);
-			ApprLine apprLine = (ApprLine)list.get(1);
-			pstmt2.setString(1, apprLine.getApprEmpId());
-			pstmt2.setInt(2, apprLine.getApprOrder());
+			ApprLine[] apprLine = (ApprLine[])list.get(1);
+			pstmt2.setInt(1, apprLine[0].getApprEmpId());
+			pstmt2.setInt(2, apprLine[0].getApprOrder());
 			
+			result += pstmt2.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
 		}
+			return result;
+	}
+
+	public ArrayList<MyDocument> selectList(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		MyDocument myDocument = null;
+		ArrayList<MyDocument> list = null;
 		
-		return result;
+		String query = prop.getProperty("selectList");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			int count = 1;
+			
+			rset = pstmt.executeQuery();
+			list = new ArrayList<MyDocument>();
+			while(rset.next()) {
+				myDocument = new MyDocument();
+				myDocument.setNum(count);
+				myDocument.setWriter(rset.getString("EMPNAME"));
+				myDocument.setDeptName(rset.getString("DEPTNAME"));
+				myDocument.setDocNum(rset.getInt("MANAGEDOCNO"));
+				myDocument.setOpinion(rset.getString("OPINION"));
+				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
+				myDocument.setResult(rset.getString("APPRSTATUS"));
+				
+				list.add(myDocument);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 }
