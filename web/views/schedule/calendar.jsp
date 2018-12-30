@@ -764,11 +764,12 @@ css 좀 더 보기좋게 수정
 		$("#deleteDelBtn").click(function(){
 			$("#delSchedule").hide(); 
 			console.log("삭제 input[hidden] : "+$("#delMessage").children().eq(0).val());
-			var delScheduleNo=$("#delMessage").children().eq(0).val();
+			var delCalendarNo=$("input[name=delCalNo]").val();
+			var delCalendarClass=$("input[name=delCalClass]").val();
 			$.ajax({ 
 				url:"delDay.sche",
 				type:"post",
-				data:{delScheduleNo:delScheduleNo},
+				data:{delCalendarNo:delCalendarNo, delCalendarClass:delCalendarClass},
 				success:function(data){
 					console.log(data+"넘어옴");
 					//이 데이터를 완료 div 페이지 메시지에 띄우기!
@@ -947,11 +948,13 @@ css 좀 더 보기좋게 수정
 						//삭제 div 세팅
 						var $DelLabel=$("#delMessage"); //삭제 div
 						$DelLabel.html('');
-						var $DelHidden=$("<input type='hidden'>").val(data.calendarNo);
+						var $DelHidden=$("<input type='hidden' name='delCalNo'>").val(data.calendarNo);
+						var $DelHidden2=$("<input type='hidden' name='delCalClass'>").val(data.calendarClass);
 						var $DelTime=$("<label>").html(data.scheduleTime+'&nbsp');
 						var $DelContents=$("<label>").html(data.calendarContents);
 						
 						$DelLabel.append($DelHidden);
+						$DelLabel.append($DelHidden2);
 						$DelLabel.append($DelTime);
 						$DelLabel.append($DelContents);
 						$DelLabel.append($br);

@@ -40,7 +40,7 @@ var treeviewJson = {
 						text:"일정",
 						nodes:[
 							{text:"일정 관리", href:"/semi/schedule.sche"},
-							{text:"일정 목록", href:"/semi/views/schedule/calendarList.jsp"}
+							{text:"일정 목록", href:"/semi/scheList.sche"}
 						]
 					}
 		

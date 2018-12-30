@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.semi.admin.user.model.vo.Employee;
+import com.semi.schedule.model.service.ScheduleService;
 
 /**
  * Servlet implementation class DeleteDayScheduleServlet
@@ -28,12 +30,21 @@ public class DeleteDayScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int delScheduleNo=Integer.parseInt(request.getParameter("delScheduleNo"));
-		System.out.println(delScheduleNo+"넘어옴");
+		int calendarNo=Integer.parseInt(request.getParameter("delCalendarNo"));
+		System.out.println(calendarNo+"넘어옴");
+		int calendarClass=Integer.parseInt(request.getParameter("delCalendarClass"));
+		int empId=((Employee)request.getSession().getAttribute("loginUser")).getEmpid();
 		
+		int result=new ScheduleService().deleteDaySchedule(calendarNo, empId);
+
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		new Gson().toJson(delScheduleNo, response.getWriter());
+		
+		if(result>0) {
+			new Gson().toJson(calendarNo, response.getWriter());
+		}else {
+			new Gson().toJson(calendarNo, response.getWriter());
+		}
 	}
 
 	/**

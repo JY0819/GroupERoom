@@ -109,4 +109,12 @@ public class ScheduleService {
 		return result;
 	}
 
+	public int deleteDaySchedule(int calendarNo, int empId) {
+		Connection con=getConnection();
+		int result=new ScheduleDao().deleteDaySchedule(con, calendarNo, empId);
+		
+		close(con);
+		return result;
+	}
+
 }
