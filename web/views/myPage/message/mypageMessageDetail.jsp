@@ -62,13 +62,13 @@
 			<table>
 				<tr>
 					<td colspan="4">
-						<input id="btn1" type="button" value="답장">
-						<input id="btn1" type="button" value="보관">
+						<input id="btn1" type="button" value="답장" onclick="location.href='<%=request.getContextPath()%>/replyMessage?replymsgNo=<%=msg.getMsgNo()%>'">
+						<input id="btn1" type="button" value="보관" onclick="location.href='<%=request.getContextPath()%>/saveMsgOne?msgNo=<%=msg.getMsgNo()%>'">
 						<input id="btn1" type="button" value="전달">
-						<input id="btn1" type="button" value="삭제">
+						<input id="btn1" type="button" value="삭제" onclick="location.href='<%=request.getContextPath()%>/deleteMsgOne?msgNo=<%=msg.getMsgNo()%>'">
 					</td>
 					<td>
-						<input id="btn2" type="button" value="돌아가기">
+						<input id="btn2" type="button" value="돌아가기" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'">
 					</td>
 				</tr>
 				<tr>

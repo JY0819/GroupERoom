@@ -202,7 +202,6 @@ public class MsgDao {
 		ResultSet rset = null;
 		ResultSet rset2 = null;
 		int result = 0;
-		
 		query = prop.getProperty("msgDetail");
 			
 		try {
@@ -211,18 +210,16 @@ public class MsgDao {
 			pstmt.setInt(1, msg.getMsgNo());
 			
 			rset = pstmt.executeQuery();
-			
-			msg.setMsgContents(rset.getString("msgContents"));
-			msg.setMsgSender(rset.getString("sender"));
-			msg.setMsgReceiver(rset.getString("receiver"));
-			msg.setMsgSendD(rset.getDate("msgSendD"));
-			msg.setMsgReceiveD(rset.getDate("msgReceiveD"));
+			while (rset.next()) {
+				msg.setMsgContents(rset.getString("msgContents"));
+				msg.setMsgSender(rset.getString("sender"));
+				msg.setMsgReceiver(rset.getString("receiver"));
+				msg.setMsgSendD(rset.getDate("msgSendD"));
+				msg.setMsgReceiveD(rset.getDate("msgReceiveD"));
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
 		}
 		
 		if (msg.getMsgReceiveD() == null) {
@@ -245,12 +242,16 @@ public class MsgDao {
 				
 				rset2 = pstmt3.executeQuery();
 				
-				msg.setMsgReceiveD(rset.getDate("msgReceiveD"));
-				
+				while (rset2.next()) {
+					msg.setMsgReceiveD(rset2.getDate("msgReceiveD"));
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		
+		close(rset);
+		close(pstmt);
 		
 		close(pstmt2);
 		close(pstmt3);
@@ -258,6 +259,56 @@ public class MsgDao {
 		
 		
 		return msg;
+	}
+
+
+	public int saveMsgOne(Connection con, int msgNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		pstmt = null;
+		query = prop.getProperty("saveMsg");
+			
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, msgNo);
+			
+			result += pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		System.out.println(result + "행이 수정되었습니다.");
+		return result;
+	}
+
+
+	public int deleteMsgOne(Connection con, int msgNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+
+		pstmt = null;
+		query = prop.getProperty("deleteMsg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, msgNo);
+			
+			result += pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		System.out.println(result + "행이 수정되었습니다.");
+		return result;
 	}
 
 

@@ -1,10 +1,11 @@
+<%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<jsp:include page="/views/main/mainPage.jsp" />
+<%
+	Msg msg = (Msg)request.getAttribute("msg");
+%>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
 
 <style>
 #alignDiv{
@@ -46,26 +47,52 @@
 }
 </style>
 
-<div align="center" id="alignDiv">
-	<table>
-		<tr>
-			<td colspan="4">
-				<input id="btn1" type="button" value="발송">
-			</td>
 
-			<td colspan="4">
-				<input id="btn2" type="button" value="돌아가기">
-			</td>
-		</tr>
-		<tr>
-			<td>받는 사람</td>
-			<td>홍길동(마케팅팀 대리)&nbsp;&nbsp;&nbsp;<a href="diary.html" onclick="window.open(this.href, '주소록','width=300, height=400, menubar=no, status=no, toolbar=no, location=no, scrollbars=no, resizable=no, fullscreen=no');return false;" target="_blank" style="color: blue;"><i class="far fa-plus-square"></i></a></td>
-		</tr>
-		<tr>
-			<td colspan="8">
-<textarea id="txtArea" readonly>답장 페이지
-내용을 입력해주세요.</textarea>
-			</td>
-		</tr>
-	</table>
-</div>
+
+<script>
+	var jsonData = treeviewJson.myPageJson;
+	var nodeName = "받은 쪽지함";
+</script>
+<section class="content">
+
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+	<form id="formId" action="<%=request.getContextPath()%>/sendMsg" method="post">
+		<div class="content-right container">
+			<div align="center" id="alignDiv">
+				<table>
+					<tr>
+						<td colspan="4">
+							<input id="btn1" type="button" value="발송" onclick="sendMsg();">
+						</td>
+			
+						<td colspan="4">
+							<input id="btn2" type="button" value="돌아가기" onclick="location.href='<%=request.getContextPath()%>/myPageMessageDetail?msgno=<%= msg.getMsgNo()%>'">
+						</td>
+					</tr>
+					<tr>
+						<td>받는 사람</td>
+						<td><%= msg.getMsgSender() %>&nbsp;&nbsp;&nbsp;<a href="diary.html" onclick="window.open(this.href, '주소록','width=300, height=400, menubar=no, status=no, toolbar=no, location=no, scrollbars=no, resizable=no, fullscreen=no');return false;" target="_blank" style="color: blue;"><i class="far fa-plus-square"></i></a></td>
+					</tr>
+					<tr>
+						<td colspan="8">
+							<textarea id="txtArea" name="contents"><%= msg.getMsgContents() %></textarea>
+						</td>
+					</tr>
+				</table>
+				<input id="empNo" type="hidden" name="empNo">
+				<script type="text/javascript">
+					function sendMsg() {
+						$("#empNo").attr("value", "1");
+						// 나중에 empNo 주소록으로 설정 따로 할 것
+						$("#formId").submit();
+					}
+				</script>
+			</div>
+		</div>
+	</form>
+</section>
+
+
+<jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />
