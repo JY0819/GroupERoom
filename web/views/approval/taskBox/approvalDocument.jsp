@@ -1,6 +1,13 @@
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
+<%@page import="com.semi.approval.document.vo.MyDocument"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+	Employee employee = (Employee)session.getAttribute("loginUser");
+	String[] docNumList = (String[])session.getAttribute("docNum");
+	ArrayList<MyDocument> list = (ArrayList<MyDocument>)request.getAttribute("list");
+%>
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/approval/taskBox.css">
 
@@ -29,43 +36,31 @@
 					<th>부 서</th>
 					<th>문 서 번 호</th>
 					<th>제 목</th>
-					<th>의 견</th>
 					<th>작 성 날 짜</th>
 				</tr>
 			</thead>
 			<tbody>
+			<% for(int i=0; i<list.size(); i++) { 
+				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
+				   		for(int j=0; j<docNumList.length; j++) {
+				   			int listNum = list.get(i).getDocNum();
+				   			int num = Integer.parseInt(docNumList[j]);
+				   			if(listNum == num){
+				%>
 				<tr>
-					<td><input type="checkbox" name="checkRow"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><input type="checkbox" name="checkTd"
+						style="height: 17px; width: 17px;"></td>
+					<td><%= list.get(i).getNum() %></td>
+					<td><%= list.get(i).getWriter() %></td>
+					<td><%= list.get(i).getDeptName() %></td>
+					<td><%= list.get(i).getDocNum() %></td>
+					<td><%= list.get(i).getTitle() %></td>
+					<td><%= list.get(i).getWriteDay() %></td>
 				</tr>
-				<tr>
-					<td><input type="checkbox" name="checkRow"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="checkRow"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-
-				</tr>
-
+				<% } %>
+				<% } %>
+				<% } %>
+				<%} %>
 			</tbody>
 
 		</table>

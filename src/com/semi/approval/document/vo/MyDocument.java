@@ -4,27 +4,26 @@ import java.sql.Date;
 
 public class MyDocument implements java.io.Serializable{
 	private int num;
+	private int writerNum;
 	private String writer;
 	private String deptName;
 	private int docNum;
-	private String opinion;
+	private String title;
 	private Date writeDay;
-	private String result;
 	
 	public MyDocument() {
 		
 	}
 
-	public MyDocument(int num, String writer, String deptName, int docNum, String opinion, Date writeDay,
-			String result) {
+	public MyDocument(int num, int writerNum, String writer, String deptName, int docNum, String title, Date writeDay) {
 		super();
 		this.num = num;
+		this.writerNum = writerNum;
 		this.writer = writer;
 		this.deptName = deptName;
 		this.docNum = docNum;
-		this.opinion = opinion;
+		this.title = title;
 		this.writeDay = writeDay;
-		this.result = result;
 	}
 
 	public int getNum() {
@@ -33,6 +32,14 @@ public class MyDocument implements java.io.Serializable{
 
 	public void setNum(int num) {
 		this.num = num;
+	}
+
+	public int getWriterNum() {
+		return writerNum;
+	}
+
+	public void setWriterNum(int writerNum) {
+		this.writerNum = writerNum;
 	}
 
 	public String getWriter() {
@@ -59,12 +66,12 @@ public class MyDocument implements java.io.Serializable{
 		this.docNum = docNum;
 	}
 
-	public String getOpinion() {
-		return opinion;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setOpinion(String opinion) {
-		this.opinion = opinion;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Date getWriteDay() {
@@ -75,19 +82,10 @@ public class MyDocument implements java.io.Serializable{
 		this.writeDay = writeDay;
 	}
 
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-
 	@Override
 	public String toString() {
-		return "MyDocument [num=" + num + ", writer=" + writer + ", deptName=" + deptName + ", docNum=" + docNum
-				+ ", opinion=" + opinion + ", writeDay=" + writeDay + ", result=" + result + "]";
+		return "MyDocument [num=" + num + ", writerNum=" + writerNum + ", writer=" + writer + ", deptName=" + deptName
+				+ ", docNum=" + docNum + ", title=" + title + ", writeDay=" + writeDay + "]";
 	}
-	
 	
 }
