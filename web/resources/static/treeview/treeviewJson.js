@@ -82,7 +82,7 @@ var treeviewJson = {
 					  text: "완료 문서함"
 					 ,nodes: [
 						 		{text: "부서별 문서함", href: "/semi/views/approval/completeBox/departmentDocument.jsp"}
-						 	   ,{text: "결재한 문서", href: "/semi/views/approval/completeBox/finishapproval.jsp"}
+						 	   ,{text: "결재한 문서", href: "/semi/finishappr.fi"}
 					 		]
 					}
 				  ,{

@@ -15,7 +15,7 @@
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+	int endPage = pi.getEndPage(); 
 	
 	
 	
@@ -37,7 +37,7 @@
 
 	<div class="content-right container">
 		<!-- <form id="deleteform" method="get"> -->
-
+		<div class="outer">
 		<button class="move">이동</button>
 		<button class="delete" onclick="deleteTrash()">삭제</button>
 		
@@ -87,7 +87,7 @@
 			
 		</table>
 		</div>
-		<div class="pagingArea" align="center">
+		 <%-- <div class="pagingArea" align="center">
 			<button onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=1'"><<</button> 
 			<% if(currentPage <=1){ %>
 				<button disabled><</button> <!-- 비활성화 -->
@@ -118,19 +118,43 @@
 			<button onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=<%=maxPage%>'">>></button>
 			
 			
-		</div>
+		</div>  --%>
 		</div>
 		
 		<div class="btnArea">
 			<div class="paging" align="center">
+			
 				<ul class="pagination">
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=1'"><<</a></li> 
+					<% if(currentPage <=1){ %>D
+					<li><a><</a></li> <!-- 비활성화 -->
+					<%}else{%>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
+					<%} %>
+					<% for(int p = startPage; p <= endPage; p++){
+					if(p == currentPage){
+					
+			
+				
+					%>
+					<li ><a style="background-color: rgb(128, 181, 240) " ><%= p %></a></li>
+					<%  }else{ %>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=<%= p %>'"><%= p %></a></li>
+			 
+			
+					<%         } %>
+					<%} %>
+					
+					<%if(currentPage >= maxPage){ %>
+					<li><a >></a></li> <!-- 비활성화 -->
+					<%}else{%>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
+					<%} %>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=<%=maxPage%>'">>></a></li>
 				</ul>
+				
 			</div>
+		</div>
 		</div>
 		<script>
 	var jsonData = treeviewJson.approvalJson;
@@ -180,6 +204,12 @@
 	        /*   $("#ex3_Result2").html(tdArr);    */
 	        
 			}
+	
+
+	 
+
+	
+
 	 
 	 <%-- function deleteTrash(){
 		 	var rowData = new Array();
