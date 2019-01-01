@@ -682,26 +682,78 @@
 		$("#Myschedule").change(function(){
 			if($("#Myschedule").is(":checked")){
 				//여기에 servlet ajax
-				
+				<%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==1){
+				%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+				<%
+					}
+				}%>
 	            alert($("#Myschedule + label").text()+' 체크');
 	        }else{
 	            alert($("#Myschedule + label").text()+' 체크해제');
+	            <%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==1){
+			%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+						console.log(<%=hmap.get("calendarId")%>+" 삭제");
+			<%
+					}							
+				}%>	
 	        }
 		});
 		
 		$("#Teamschedule").change(function(){
 			if($("#Teamschedule").is(":checked")){
 	            alert($("#Teamschedule + label").text()+' 체크');
+	            <%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==2){
+				%>	
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+				<%
+					}
+				}%>
 	        }else{
 	            alert($("#Teamschedule + label").text()+' 체크해제');
+	            <%for(int i=0;i<list.size();i++){
+	    			HashMap<String, Object> hmap=list.get(i);
+	    			if((int)hmap.get("calendarClass")==2){
+	    		%>	
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    		<%
+	    			}
+	    		}%>
 	        }
 		});
 		
 		$("#Companyschedule").change(function(){
 			if($("#Companyschedule").is(":checked")){
 	            alert($("#Companyschedule + label").text()+' 체크');
+	            <%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==3){
+				%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+						
+				<%
+					}
+				}%>
 	        }else{
 	            alert($("#Companyschedule + label").text()+' 체크해제');
+	            <%for(int i=0;i<list.size();i++){
+	    			HashMap<String, Object> hmap=list.get(i);
+	    			if((int)hmap.get("calendarClass")==3){
+	    		%>
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    		<%
+	    			}
+	    		}%>
 	        }
 		});
 		/*
