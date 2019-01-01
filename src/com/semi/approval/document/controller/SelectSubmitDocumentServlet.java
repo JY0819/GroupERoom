@@ -13,30 +13,27 @@ import javax.servlet.http.HttpServletResponse;
 import com.semi.approval.document.service.DocumentService;
 import com.semi.approval.document.vo.MyDocument;
 
-@WebServlet("/apprSendDocument.asd")
-public class ApprSendDocumentServlet extends HttpServlet {
+@WebServlet("/selectSubmitDocumentServlet.sds")
+public class SelectSubmitDocumentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ApprSendDocumentServlet() {
+    public SelectSubmitDocumentServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] docNumList = request.getParameter("docNum").split(",");
-		
-		int result = new DocumentService().updateDocumentList(docNumList);
+		ArrayList<MyDocument> list = new DocumentService().selectSubmitList();
 		
 		String page = "";
-		if(result > 0) {
-			page = "/semi/";
-			response.sendRedirect(page);
-
+		if(list != null) {
+			page = "views/approval/taskBox/approvalDocument.jsp";
+			request.setAttribute("list", list);
 		}else {
-			page = "views/common.errorPage";
-			request.setAttribute("msg", "문서조회실패");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "문서 조회 실패");
 		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

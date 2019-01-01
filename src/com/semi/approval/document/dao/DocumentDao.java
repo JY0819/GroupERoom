@@ -61,6 +61,7 @@ public class DocumentDao {
 		return document;
 	}
 
+	//주소록 가져오기
 	public HashMap<Integer, ArrayList<SumEmpInfo>> selectDept(Connection con) {
 		//기본은 부서가져오고 2가 붙은건 사원이름 가져옴
 		PreparedStatement pstmt = null;
@@ -114,6 +115,7 @@ public class DocumentDao {
 		return hmap;
 	}
 
+	//appr 삽입
 	public int insertAppr(Connection con, int[] apprNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -135,6 +137,7 @@ public class DocumentDao {
 		return result;
 	}
 	
+	//파일삽입
 	public int insertAttachments(Connection con, int attachNo, ArrayList<Attachments> fileList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -158,7 +161,8 @@ public class DocumentDao {
 		}
 		return result;
 	}
-
+	
+	//doc 삽입
 	public int insertDoc(Connection con, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -182,6 +186,7 @@ public class DocumentDao {
 		return result;
 	}
 	
+	//문서 삽입
 	public int insertDocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -221,7 +226,8 @@ public class DocumentDao {
 		}
 			return result;
 	}
-
+	
+	//문서 조회
 	public ArrayList<MyDocument> selectList(Connection con) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -244,12 +250,155 @@ public class DocumentDao {
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
 				myDocument.setDocNum(rset.getInt("MANAGEDOCNO"));
-				myDocument.setTitle(rset.getString("TITLE"));
+				myDocument.setTitle(rset.getString("MANAGETITLE"));
 				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
 				
 				list.add(myDocument);
 				count++;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	//문서 상신시 상신컬럼 변경
+	public int updateDocumentList(Connection con, String[] docNumList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateDocument");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			
+			for(int i=0; i<docNumList.length; i++) {
+				pstmt.setInt(1, Integer.parseInt((docNumList[i])));
+			}
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+	
+		return result;
+	}
+
+	public ArrayList<MyDocument> selectSubmitList(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		MyDocument myDocument = null;
+		ArrayList<MyDocument> list = null;
+		
+		String query = prop.getProperty("selectSubmitDocument");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			int count = 1;
+			list = new ArrayList<MyDocument>();
+			
+			while(rset.next()) {
+				myDocument = new MyDocument();
+				myDocument.setNum(count);
+				myDocument.setWriterNum(rset.getInt("EMPID"));
+				myDocument.setWriter(rset.getString("EMPNAME"));
+				myDocument.setDeptName(rset.getString("DEPTNAME"));
+				myDocument.setDocNum(rset.getInt("MANAGEDOCNO"));
+				myDocument.setTitle(rset.getString("MANAGETITLE"));
+				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
+				
+				list.add(myDocument);
+				count++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int sendTrashList(Connection con, String[] docNumList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("sendTrash");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			for(int i=0; i<docNumList.length; i++) {
+				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int sendReturn(Connection con, String[] docNumList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("sendReturn");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			for(int i=0; i<docNumList.length; i++) {
+				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<MyDocument> selectReturnDocumentList(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		MyDocument myDocument = null;
+		ArrayList<MyDocument> list = null;
+		
+		String query = prop.getProperty("selectReturnDocument");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			int count = 1;
+			list = new ArrayList<MyDocument>();
+			
+			while(rset.next()) {
+				myDocument = new MyDocument();
+				myDocument.setNum(count);
+				myDocument.setWriterNum(rset.getInt("EMPID"));
+				myDocument.setWriter(rset.getString("EMPNAME"));
+				myDocument.setDeptName(rset.getString("DEPTNAME"));
+				myDocument.setDocNum(rset.getInt("DOCNO"));
+				myDocument.setOpinion(rset.getString("OPINION"));
+				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
+				myDocument.setResult(rset.getString("APPRSTATUS"));
+				
+				list.add(myDocument);
+				count++;
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

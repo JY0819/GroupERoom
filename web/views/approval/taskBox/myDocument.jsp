@@ -27,7 +27,7 @@
 
 		<a href="/semi/views/approval/taskBox/choiceDocument.jsp"><button class="writeBtn">작성</button></a>
 		<button class="sendBtn" onclick="send()">상신</button>
-		<button class="deleteBtn">삭제</button>
+		<button class="deleteBtn" onclick="trash()">삭제</button>
 		<table>
 			<thead>
 				<tr>
@@ -125,9 +125,20 @@
 	 		
             var docNum = td.eq(4).text();
             sendArr.push(docNum);
-            <%request.getSession().setAttribute("docNum", sendArr);%>
             location.href="<%= request.getContextPath()%>/apprSendDocument.asd?docNum=" + sendArr + ",";
 		});
+	}
+	function trash() {
+		var trashArr = new Array();
+		var checkbox = $("input[name=checkTd]:checked");
+	 	checkbox.each(function(i){
+	 		var tr = checkbox.parent().parent().eq(i);
+	 		var td = tr.children();
+	 		
+            var docNum = td.eq(4).text();
+            trashArr.push(docNum);
+            location.href="<%= request.getContextPath()%>/sendTrash.st?docNum=" + trashArr + ",";
+	 	});
 	}
 </script>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />
