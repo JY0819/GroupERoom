@@ -1,4 +1,4 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Msg.sendList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,30 +10,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.myPage.model.Msg.service.MsgService;
+import com.semi.myPage.model.Msg.vo.Msg;
 
-@WebServlet("/saveMsg")
-public class SaveMessage extends HttpServlet {
+@WebServlet("/myPageSendMessageDetail")
+public class ShowMyPageSendMessageDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SaveMessage() {
+    public ShowMyPageSendMessageDetail() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] chkList = request.getParameterValues("chkList");
-		ArrayList<Integer> savelist = new ArrayList<Integer>();
+		Msg msg = new Msg();
 		
-		for (int i = 0; i < chkList.length; i++) {
-			savelist.add(Integer.parseInt(chkList[i]));
-			
-		}
+		msg.setMsgNo(Integer.parseInt(request.getParameter("msgno")));
 		
-		int result = new MsgService().saveMsg(savelist);
+		String whetherOfSendList = request.getParameter("sendList");
+		
+		msg = new MsgService().messageDetail(msg, whetherOfSendList);
 		
 		String page = "";
-		if (result > 0) {
-			page = "myPageLockerMessage";
+		if (msg != null) {
+			request.setAttribute("msg", msg);
+			
+			page = "views/myPage/message/sendList/mypageSendMessageDetail.jsp";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);

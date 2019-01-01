@@ -101,7 +101,7 @@
 				<% 	} %>
 				<% } else { %>
 				<tr>
-					<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
+					<th class="line" colspan="5"><p>휴가를 사용한 내역이 없습니다.</p></th>
 				</tr>
 				<% } %>
 			</table>

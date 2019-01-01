@@ -49,7 +49,7 @@
 
 <script>
 	var jsonData = treeviewJson.myPageJson;
-	var nodeName = "받은 쪽지함";
+	var nodeName = "보낸 쪽지함";
 </script>
 <section class="content">
 
@@ -62,13 +62,10 @@
 			<table>
 				<tr>
 					<td colspan="4">
-						<input id="btn1" type="button" value="답장" onclick="location.href='<%=request.getContextPath()%>/replyMessage?replymsgNo=<%=msg.getMsgNo()%>'">
-						<input id="btn1" type="button" value="보관" onclick="location.href='<%=request.getContextPath()%>/saveMsgOne?msgNo=<%=msg.getMsgNo()%>'">
-						<input id="btn1" type="button" value="전달">
-						<input id="btn1" type="button" value="삭제" onclick="location.href='<%=request.getContextPath()%>/deleteMsgOne?msgNo=<%=msg.getMsgNo()%>'">
+						<input id="btn1" type="button" value="전달" onclick="location.href='<%=request.getContextPath()%>/relayMsgBySendList?msgNo=<%=msg.getMsgNo()%>'">
 					</td>
 					<td>
-						<input id="btn2" type="button" value="돌아가기" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'">
+						<input id="btn2" type="button" value="돌아가기" onclick="location.href='<%=request.getContextPath()%>/myPageSendMessage'">
 					</td>
 				</tr>
 				<tr>
@@ -81,7 +78,13 @@
 					<td>받는 사람</td>
 					<td><%= msg.getMsgReceiver() %></td>
 					<td>읽은 날짜</td>
-					<td><%= msg.getMsgReceiveD()%></td>
+					<td>
+						<% if(msg.getMsgReceiveD() != null) { %>
+						<%= msg.getMsgReceiveD() %>
+						<% } else { %>
+						아직 읽지 않음!
+						<% } %>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="5">

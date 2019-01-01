@@ -1,8 +1,10 @@
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 	Msg msg = (Msg)request.getAttribute("msg");
+	Employee user = (Employee)session.getAttribute("loginUser");
 %>
 
 <jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
@@ -82,9 +84,11 @@
 					</tr>
 				</table>
 				<input id="empNo" type="hidden" name="empNo">
+				<input id="receiver" type="hidden" name="receiver">
 				<script type="text/javascript">
 					function sendMsg() {
-						$("#empNo").attr("value", "1");
+						$("#empNo").attr("value", "<%=user.getEmpid()%>");
+						$("#receiver").attr("value", "1001");
 						// 나중에 empNo 주소록으로 설정 따로 할 것
 						$("#formId").submit();
 					}
