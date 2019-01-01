@@ -194,7 +194,7 @@ public class MsgDao {
 		return list;
 	}
 
-
+	
 	public Msg messageDetail(Connection con, Msg msg) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -223,6 +223,73 @@ public class MsgDao {
 		}
 		
 		if (msg.getMsgReceiveD() == null) {
+			query = prop.getProperty("updateMsgD");
+			
+			try {
+				pstmt2 = con.prepareStatement(query);
+				
+				pstmt2.setInt(1, msg.getMsgNo());
+				
+				result = pstmt2.executeUpdate();
+				
+				System.out.println("메세지를 읽었습니다.");
+				
+				query = prop.getProperty("readMsgD");
+				
+				pstmt3 = con.prepareStatement(query);
+				
+				pstmt3.setInt(1, msg.getMsgNo());
+				
+				rset2 = pstmt3.executeQuery();
+				
+				while (rset2.next()) {
+					msg.setMsgReceiveD(rset2.getDate("msgReceiveD"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		close(rset);
+		close(pstmt);
+		
+		close(pstmt2);
+		close(pstmt3);
+		close(rset2);
+		
+		
+		return msg;
+	}
+	
+
+	public Msg messageDetail(Connection con, Msg msg, String whetherOfSendList) {
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		ResultSet rset = null;
+		ResultSet rset2 = null;
+		int result = 0;
+		query = prop.getProperty("msgDetail");
+			
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, msg.getMsgNo());
+			
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				msg.setMsgContents(rset.getString("msgContents"));
+				msg.setMsgSender(rset.getString("sender"));
+				msg.setMsgReceiver(rset.getString("receiver"));
+				msg.setMsgSendD(rset.getDate("msgSendD"));
+				msg.setMsgReceiveD(rset.getDate("msgReceiveD"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (msg.getMsgReceiveD() == null && whetherOfSendList.equals("false")) {
 			query = prop.getProperty("updateMsgD");
 			
 			try {
@@ -308,6 +375,33 @@ public class MsgDao {
 		}
 
 		System.out.println(result + "행이 수정되었습니다.");
+		return result;
+	}
+
+
+	public int sendMsg(Connection con, int empNo, String contents, int receiver) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		query = prop.getProperty("sendMsg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, contents);
+			pstmt.setInt(2, empNo);
+			pstmt.setInt(3, receiver);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		
+		
 		return result;
 	}
 

@@ -69,6 +69,16 @@ public class MsgService {
 		
 		return msg;
 	}
+	
+	public Msg messageDetail(Msg msg, String whetherOfSendList) {
+		Connection con = getConnection();
+		
+		msg = new MsgDao().messageDetail(con, msg, whetherOfSendList);
+		
+		close(con);
+		
+		return msg;
+	}
 
 	public int saveMsgOne(int msgNo) {
 		Connection con = getConnection();
@@ -84,6 +94,16 @@ public class MsgService {
 		Connection con = getConnection();
 		
 		int result = new MsgDao().deleteMsgOne(con, msgNo);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int sendMsg(int empNo, String contents, int receiver) {
+		Connection con = getConnection();
+		
+		int result = new MsgDao().sendMsg(con, empNo, contents, receiver);
 		
 		close(con);
 		

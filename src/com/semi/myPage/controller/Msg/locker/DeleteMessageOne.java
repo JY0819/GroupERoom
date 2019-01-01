@@ -1,4 +1,4 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Msg.locker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,28 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.myPage.model.Msg.service.MsgService;
 
-@WebServlet("/saveMsg")
-public class SaveMessage extends HttpServlet {
+@WebServlet("/deleteLockerMsgOne")
+public class DeleteMessageOne extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SaveMessage() {
+    public DeleteMessageOne() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] chkList = request.getParameterValues("chkList");
-		ArrayList<Integer> savelist = new ArrayList<Integer>();
+		int msgNo = Integer.parseInt(request.getParameter("msgNo"));
 		
-		for (int i = 0; i < chkList.length; i++) {
-			savelist.add(Integer.parseInt(chkList[i]));
-			
-		}
-		
-		int result = new MsgService().saveMsg(savelist);
+		int result = new MsgService().deleteMsgOne(msgNo);
 		
 		String page = "";
 		if (result > 0) {
 			page = "myPageLockerMessage";
+		} else {
+			page = "error";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);

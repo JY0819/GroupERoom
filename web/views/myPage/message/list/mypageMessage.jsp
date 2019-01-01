@@ -101,7 +101,7 @@
 								<td class="line"><%= m.getMsgSendD() %></td>
 								<td class="line"><%= m.getMsgSender() %></td>
 								<td class="line"><%= m.getMsgReceiver() %></td>
-								<td class="line"><a href="<%=request.getContextPath()%>/myPageMessageDetail?msgno=<%= m.getMsgNo() %>" style="color: black;"><%= m.getMsgContents() %></a></td>
+								<td class="line"><a href="<%=request.getContextPath()%>/myPageMessageDetail?msgno=<%= m.getMsgNo() %>&sendList=false" style="color: black;"><%= m.getMsgContents() %></a></td>
 							</tr>
 							<% 		count++; %>
 							<% 		} %>

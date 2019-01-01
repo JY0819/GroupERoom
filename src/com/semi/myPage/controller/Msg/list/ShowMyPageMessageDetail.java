@@ -1,4 +1,4 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Msg.list;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,25 +14,27 @@ import com.semi.admin.user.model.vo.Employee;
 import com.semi.myPage.model.Msg.service.MsgService;
 import com.semi.myPage.model.Msg.vo.Msg;
 
-@WebServlet("/myPageSendMessage")
-public class ShowMyPageSendMessage extends HttpServlet {
+@WebServlet("/myPageMessageDetail")
+public class ShowMyPageMessageDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ShowMyPageSendMessage() {
+    public ShowMyPageMessageDetail() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
+		Msg msg = new Msg();
 		
-		int userId = loginUser.getEmpid();
+		msg.setMsgNo(Integer.parseInt(request.getParameter("msgno")));
 		
-		ArrayList<Msg> list = new MsgService().showMyPageSendMessage(userId);
+		msg = new MsgService().messageDetail(msg);
 		
 		String page = "";
-		request.setAttribute("list", list);
+		if (msg != null) {
+			request.setAttribute("msg", msg);
 			
-		page = "views/myPage/message/mypageSendMessageList.jsp";
+			page = "views/myPage/message/list/mypageMessageDetail.jsp";
+		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

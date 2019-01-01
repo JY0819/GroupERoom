@@ -1,4 +1,4 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Msg.locker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ import com.semi.admin.user.model.vo.Employee;
 import com.semi.myPage.model.Msg.service.MsgService;
 import com.semi.myPage.model.Msg.vo.Msg;
 
-@WebServlet("/myPageMessageDetail")
-public class ShowMyPageMessageDetail extends HttpServlet {
+@WebServlet("/relayLockerMsg")
+public class RelayMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ShowMyPageMessageDetail() {
+    public RelayMessage() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Msg msg = new Msg();
 		
-		msg.setMsgNo(Integer.parseInt(request.getParameter("msgno")));
+		msg.setMsgNo(Integer.parseInt(request.getParameter("msgNo")));
 		
 		msg = new MsgService().messageDetail(msg);
 		
@@ -33,7 +33,7 @@ public class ShowMyPageMessageDetail extends HttpServlet {
 		if (msg != null) {
 			request.setAttribute("msg", msg);
 			
-			page = "views/myPage/message/mypageMessageDetail.jsp";
+			page = "views/myPage/message/locker/mypageRelayLockerMessage.jsp";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);

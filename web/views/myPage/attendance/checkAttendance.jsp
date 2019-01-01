@@ -1,10 +1,10 @@
-<%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
+<%@page import="com.semi.myPage.model.Etc.vo.Attend"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <% 
-	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
+	ArrayList<Attend> list = (ArrayList<Attend>)request.getAttribute("list");
 	int count = 1;
 	boolean exist = false;
 	if(list.size() == 0){
@@ -49,7 +49,7 @@
 
 <script>
 	var jsonData = treeviewJson.myPageJson;
-	var nodeName = "보낸 쪽지함";
+	var nodeName = "근태관리";
 </script>
 
 <section class="content">
@@ -65,24 +65,31 @@
 				<% if(exist) { %>
 				<tr>
 					<th class="line"></th>
-					<th class="line">보낸 날짜</th>
-					<th class="line">보낸 사람</th>
-					<th class="line">받는 사람</th>
-					<th class="line" style="width: 300px;">내용</th>
+					<th class="line">이름</th>
+					<th class="line" style="width: 250px;">출근 시간</th>
+					<th class="line" style="width: 250px;">퇴근 시간</th>
 				</tr>
-				<% 		for(Msg m : list) { %>
+				<% 	for(Attend at : list) { %>
+					<% if(at.getGetOff() != null) { %>
 				<tr>
-					<td class="line"><%= m.getMsgNo() %></td>
-					<td class="line"><%= m.getMsgSendD() %></td>
-					<td class="line"><%= m.getMsgSender() %></td>
-					<td class="line"><%= m.getMsgReceiver() %></td>
-					<td class="line"><%= m.getMsgContents() %></td>
+					<td class="line"><%= at.getRnum() %></td>
+					<td class="line"><%= at.getEmpName() %></td>
+					<td class="line"><%= at.getAttendance() %></td>
+					<td class="line"><%= at.getGetOff() %></td>
+				</tr>
+					<% } else { %>
+				<tr>
+					<td class="line"><%= at.getRnum() %></td>
+					<td class="line"><%= at.getEmpName() %></td>
+					<td class="line"><%= at.getAttendance() %></td>
+					<td class="line"></td>
 				</tr>
 				<% 		count++; %>
-				<% 		} %>
+				<% 	   } %>
+				<% } %>
 				<% } else { %>
 				<tr>
-					<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
+					<th class="line" colspan="4"><p>휴가를 사용한 내역이 없습니다.</p></th>
 				</tr>
 				<% } %>
 			</table>

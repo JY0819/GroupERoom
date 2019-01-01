@@ -1,4 +1,4 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Msg.list;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,30 +10,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.myPage.model.Msg.service.MsgService;
+import com.semi.myPage.model.Msg.vo.Msg;
 
-@WebServlet("/saveMsg")
-public class SaveMessage extends HttpServlet {
+@WebServlet("/replyMessage")
+public class ReplyMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SaveMessage() {
+    public ReplyMessage() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] chkList = request.getParameterValues("chkList");
-		ArrayList<Integer> savelist = new ArrayList<Integer>();
+		Msg msg = new Msg();
 		
-		for (int i = 0; i < chkList.length; i++) {
-			savelist.add(Integer.parseInt(chkList[i]));
-			
-		}
+		msg.setMsgNo(Integer.parseInt(request.getParameter("replymsgNo")));
 		
-		int result = new MsgService().saveMsg(savelist);
+		msg = new MsgService().messageDetail(msg);
+		
+		msg.setMsgContents("RE) " + msg.getMsgContents() + "\r\n");
 		
 		String page = "";
-		if (result > 0) {
-			page = "myPageLockerMessage";
+		if (msg != null) {
+			request.setAttribute("msg", msg);
+			
+			page = "views/myPage/message/list/mypageMessageReply.jsp";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);

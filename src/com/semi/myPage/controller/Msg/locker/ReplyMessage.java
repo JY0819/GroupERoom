@@ -1,4 +1,4 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Msg.locker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,11 +14,11 @@ import com.semi.admin.user.model.vo.Employee;
 import com.semi.myPage.model.Msg.service.MsgService;
 import com.semi.myPage.model.Msg.vo.Msg;
 
-@WebServlet("/replyMessage")
-public class replyMessage extends HttpServlet {
+@WebServlet("/replyLockerMessage")
+public class ReplyMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public replyMessage() {
+    public ReplyMessage() {
         super();
     }
 
@@ -35,7 +35,7 @@ public class replyMessage extends HttpServlet {
 		if (msg != null) {
 			request.setAttribute("msg", msg);
 			
-			page = "views/myPage/message/mypageMessageReply.jsp";
+			page = "views/myPage/message/locker/mypageMessageLockerReply.jsp";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);

@@ -1,4 +1,4 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Msg.locker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.myPage.model.Msg.service.MsgService;
 
-@WebServlet("/deleteMsg")
+@WebServlet("/deleteLockerMsg")
 public class DeleteMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,7 +36,7 @@ public class DeleteMessage extends HttpServlet {
 			if (request.getParameterValues("chkList").equals("Locker")) {
 				page = "myPageLockerMessage";
 			} else {
-				page = "myPageMessage";
+				page = "myPageLockerMessage";
 			}
 		} else {
 			page = "error";

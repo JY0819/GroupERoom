@@ -124,7 +124,7 @@ var treeviewJson = {
 					  text: "정보 수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
 				   }
 				  ,{
-					  text: "근태관리", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
+					  text: "근태관리", href: "/semi/chkAttend"
 				   }
 			 ]
 			   
