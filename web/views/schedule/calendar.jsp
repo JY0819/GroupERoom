@@ -602,7 +602,7 @@ css 좀 더 보기좋게 수정
 		</div>
 		<div class="deleteSchedule" id="delSchedule" align="center"> <%-- 일정 삭제 div --%>
 			<div class="scheduleDay" id="delScheduleDay"></div>
-			<div class="message" id="delMessage"> 삭 제 ?  ? ? </div>
+			<div class="message" id="delMessage"></div>
 			<div class="scheduleBtn" id="closeDelBtn">닫기</div>
 			<div class="scheduleBtn" id="deleteDelBtn">삭제</div>
 		</div>
@@ -619,7 +619,7 @@ css 좀 더 보기좋게 수정
 			</div>
 		</div>
 		<div class="confirm" id="delDelConfirm">
-			<div class="scheduleMsg" id="delScheduleMsg">일정 삭제<br> 완료되었습니다.</div>
+			<div class="scheduleMsg" id="delScheduleMsg">일정 삭제가<br> 완료되었습니다.</div>
 			<div class="btnDiv">
 				<div class="scheduleBtn" id="closeDelConfirm">닫기</div>
 			</div>
@@ -630,11 +630,6 @@ css 좀 더 보기좋게 수정
 		<h1> 　</h1>
 	</div>
 	<script language="javascript" type="text/javascript">
-	
-		/*달력 생성*/
-		buildCalendar();
-		
-		
 		/*팝업창 우선 숨기기*/
 		$("#viewSchedule").hide();
 		$("#addSchedule").hide();
@@ -643,6 +638,11 @@ css 좀 더 보기좋게 수정
 		$("#addConfirm").hide();
 		$("#modConfirm").hide();
 		$("#delDelConfirm").hide();
+	
+		/*달력 생성*/
+		buildCalendar();
+		
+		
 		
 		/*팝업창 불러오기*/
 		var scheduleDate="";
@@ -654,7 +654,11 @@ css 좀 더 보기좋게 수정
 				if($(this).text().length==1){
 					scheduleDate=(today.getYear()+1900)+"년 "
 					+(today.getMonth()+1)+"월 "+$(this).children("span").html()+"일";
-					scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+''+$(this).children("span").html();
+					if((today.getMonth()+1)<10){
+						scheduleDateId=(today.getYear()+1900)+'0'+(today.getMonth()+1)+''+$(this).children("span").html();
+					}else{
+						scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+''+$(this).children("span").html();
+					}
 					$("#viewScheduleDay").text(scheduleDate);
 					
 					$("#viewSchedule").show();
@@ -663,11 +667,19 @@ css 좀 더 보기좋게 수정
 					if(isNaN(Number($(this).text().charAt(1)))){
 						scheduleDate=(today.getYear()+1900)+"년 "
 						+(today.getMonth()+1)+"월 "+$(this).children("span").html().substring(0,1)+"일";
-						scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+$(this).children("span").html().substring(0,1);
+						if((today.getMonth()+1)<10){
+							scheduleDateId=(today.getYear()+1900)+'0'+(today.getMonth()+1)+''+$(this).children("span").html().substring(0,1);
+						}else{
+							scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+''+$(this).children("span").html().substring(0,1);
+						}
 					}else{
 						scheduleDate=(today.getYear()+1900)+"년 "
 						+(today.getMonth()+1)+"월 "+$(this).children("span").html().substring(0,2)+"일";
-						scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+$(this).children("span").html().substring(0,2);
+						if((today.getMonth()+1)<10){
+							scheduleDateId=(today.getYear()+1900)+'0'+(today.getMonth()+1)+''+$(this).children("span").html().substring(0,2);
+						}else{
+							scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+''+$(this).children("span").html().substring(0,2);
+						}
 					}
 					$("#viewScheduleDay").text(scheduleDate);
 					$("#viewSchedule").show();
@@ -699,15 +711,19 @@ css 좀 더 보기좋게 수정
 		$("#closeAddBtn").click(function(){
 			$("#addSchedule").hide();
 		});
-		$("#closeAddConfirm").click(function(){
+		$("#closeAddConfirm").click(function(){ //일정 추가 완료 팝업 닫기
 			$("#addConfirm").hide();
+			window.location.reload();			
 		});
 		
 		//일정 수정 팝업 열기
 		$("#modifyBtn").click(function(){
 			$("#modScheduleDay").text(scheduleDate);
-			$("#modSchedule").show();
-
+			if(Number($("input[name='viewCalNo']").val())>0){
+				$("#modSchedule").show();
+			}else{
+				var $scheduleLabelDelMsg=$("#daySchedule").html('선택된 일정이 없습니다'); 
+			}
 		});
 		
 		//일정 수정 팝업 닫기
@@ -731,6 +747,8 @@ css 좀 더 보기좋게 수정
 				success:function(data){
 					console.log(data);
 					//이 데이터를 완료 div 페이지 메시지에 띄우기!
+					$("#viewSchedule").hide();
+					$("#modConfirm").show();
 				},
 				error:function(data){
 					console.log("실패");
@@ -741,19 +759,24 @@ css 좀 더 보기좋게 수정
 				}
 				
 			});
-			//$("#modConfirm").show();
 		});
 		$("#closeModBtn").click(function(){
 			$("#modSchedule").hide();
 		});
 		$("#closeModConfirm").click(function(){
+			//새로고침 ajax 추가하기
 			$("#modConfirm").hide();
+			window.location.reload();
 		});
 		
 		//일정 삭제 팝업 열기
 		$("#delBtn").click(function(){
 			$("#delScheduleDay").text(scheduleDate);
-			$("#delSchedule").show();
+			if(Number($("input[name='viewCalNo']").val())>0){
+				$("#delSchedule").show();
+			}else{
+				var $scheduleLabelDelMsg=$("#daySchedule").html('선택된 일정이 없습니다'); 
+			}
 		});
 		
 		//일정 삭제 팝업 닫기
@@ -762,6 +785,7 @@ css 좀 더 보기좋게 수정
 		});
 		//일정 삭제버튼 클릭 > 삭제
 		$("#deleteDelBtn").click(function(){
+			
 			$("#delSchedule").hide(); 
 			console.log("삭제 input[hidden] : "+$("#delMessage").children().eq(0).val());
 			var delCalendarNo=$("input[name=delCalNo]").val();
@@ -773,6 +797,7 @@ css 좀 더 보기좋게 수정
 				success:function(data){
 					console.log(data+"넘어옴");
 					//이 데이터를 완료 div 페이지 메시지에 띄우기!
+					$("#viewSchedule").hide();
 					$("#delDelConfirm").show();
 				},
 				error:function(data){
@@ -785,6 +810,7 @@ css 좀 더 보기좋게 수정
 		});
 		$("#closeDelConfirm").click(function(){ //일정 삭제 완료 팝업
 			$("#delDelConfirm").hide();
+			window.location.reload();
 		});
 		
 		/*일정 체크박스list 추가 삭제 관련*/
@@ -793,115 +819,83 @@ css 좀 더 보기좋게 수정
 			console.log(name);
 			console.log(typeof(name));
 			if($("#Myschedule").is(":checked")){
-	            $.ajax({
-					url:"checkMy.sche",
-					data:{name:name}, //name은 키값, 뒤의 name은 value값
-					type:"get",
-					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
-						console.log("서버 전송 성공");
-						
-					},
-					error:function(data){ //실패시 받은 값을 함수로~
-						console.log("서버 전송 실패"); 
-					},
-					complete:function(data){
-						console.log("내 일정 체크");
-						console.log(name);
+				<%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==1){
+				%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+				<%
 					}
-				});
+				}%>
 	        }else{
-	        	$.ajax({
-					url:"clearMy.sche",
-					data:{name:name}, //name은 키값, 뒤의 name은 value값
-					type:"get",
-					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
-						console.log("서버 전송 성공");
-					},
-					error:function(data){ //실패시 받은 값을 함수로~
-						console.log("서버 전송 실패"); 
-					},
-					complete:function(data){
-						console.log("내 일정 체크해제");
-						console.log(name);
-					}
-				});
+			<%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==1){
+			%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+						console.log(<%=hmap.get("calendarId")%>+" 삭제");
+			<%
+					}							
+				}%>	
 	        }
 		});
 		
 		$("#Teamschedule").change(function(){
 			var name=$("#Teamschedule").val();
 			if($("#Teamschedule").is(":checked")){
-				$.ajax({
-					url:"checkMy.sche",
-					data:{name:name}, //name은 키값, 뒤의 name은 value값
-					type:"get",
-					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
-						console.log("서버 전송 성공");
-					},
-					error:function(data){ //실패시 받은 값을 함수로~
-						console.log("서버 전송 실패"); 
-					},
-					complete:function(data){
-						console.log("팀 일정 체크");
-						console.log(name);
+				<%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==2){
+				%>	
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+				<%
 					}
-				});
+				}%>
 	        }else{
-	        	$.ajax({
-					url:"clearTeam.sche",
-					data:{name:name}, //name은 키값, 뒤의 name은 value값
-					type:"get",
-					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
-						console.log("서버 전송 성공");
-					},
-					error:function(data){ //실패시 받은 값을 함수로~
-						console.log("서버 전송 실패"); 
-					},
-					complete:function(data){
-						console.log("팀 일정 체크해제");
-						console.log(name);
-					}
-				});
+	    		<%for(int i=0;i<list.size();i++){
+	    			HashMap<String, Object> hmap=list.get(i);
+	    			if((int)hmap.get("calendarClass")==2){
+	    		%>	
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    		<%
+	    			}
+	    		}%>
 	        }
 		});
 		
 		$("#Companyschedule").change(function(){
 			var name=$("#Companyschedule").val();
+			console.log(name);
 			if($("#Companyschedule").is(":checked")){
-				$.ajax({
-					url:"checkCompany.sche",
-					data:{name:name}, //name은 키값, 뒤의 name은 value값
-					type:"get",
-					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
-						console.log("서버 전송 성공");
-					},
-					error:function(data){ //실패시 받은 값을 함수로~
-						console.log("서버 전송 실패"); 
-					},
-					complete:function(data){
-						console.log("회사 일정 체크");
-						console.log(name);
+				<%for(int i=0;i<list.size();i++){
+					HashMap<String, Object> hmap=list.get(i);
+					if((int)hmap.get("calendarClass")==3){
+				%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+						
+				<%
 					}
-				});
+				}%>
 	        }else{
-	        	$.ajax({
-					url:"clearCompany.sche",
-					data:{name:name}, //name은 키값, 뒤의 name은 value값
-					type:"get",
-					success:function(data){//()에 아무 변수? 넣어주면 성공시 서버로부터 받은값을 넣는다.
-						console.log("서버 전송 성공");
-					},
-					error:function(data){ //실패시 받은 값을 함수로~
-						console.log("서버 전송 실패"); 
-					},
-					complete:function(data){
-						console.log("회사 일정 체크 해제");
-						console.log(name);
-					}
-				});
+	    		<%for(int i=0;i<list.size();i++){
+	    			HashMap<String, Object> hmap=list.get(i);
+	    			if((int)hmap.get("calendarClass")==3){
+	    		%>
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    		<%
+	    			}
+	    		}%>
 	        }
 		});
 		$(function(){
+			$("#calendarMain").children().children("td").click(function(){
+				$("#calendar").append("<div id='disableCalendar'>");
+				var $scheduleLabelOne=$("#daySchedule"); 
+				$scheduleLabelOne.html(""); 
+			});
 			$("#calendarMain").children().children().children("p").click(function(){
 				var calendarNo=$(this).children("input[type='hidden']").val();
 				console.log($(this).children("input[type='hidden']").val());
@@ -913,7 +907,7 @@ css 좀 더 보기좋게 수정
 						//선택한 일정 정보 받아옴 
 						console.log("성공");
 						var $scheduleLabel=$("#daySchedule"); 
-						$scheduleLabel.html(''); //기존 라벨 클리어
+						$scheduleLabel.html(""); //기존 라벨 클리어
 						console.log(data);
 						console.log(data.calendarContents);
 						console.log(data.scheduleDate); //받아온 데이터 확인

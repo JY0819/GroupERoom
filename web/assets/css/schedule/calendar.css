@@ -34,7 +34,19 @@
 		font-weight:bold;
 	}
 	td:hover{
-		background:#f0f0f0;
+		background:#F8F8F8;
+	}
+	td > p:hover{
+		cursor:pointer;
+	}
+	td > p[value='1']:hover{
+		background:#D2EFE5;
+	}
+	td > p[value='2']:hover{
+		background:#D3D1EF;
+	}
+	td > p[value='3']:hover{
+		background:#F4C2C2;
 	}
 	div.sideMenu{
 		width:15%;
@@ -72,7 +84,7 @@
 	}
 	div.list{
 		position:relative;
-		top:150px;
+		top:50px;
 		left:120px;
 		width:150px;
 		height:170px;
