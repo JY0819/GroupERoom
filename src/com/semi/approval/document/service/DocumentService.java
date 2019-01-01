@@ -77,5 +77,78 @@ public class DocumentService {
 		
 		return list;
 	}
+
+	public int updateDocumentList(String[] docNumList) {
+		Connection con = getConnection();
+		int result = new DocumentDao().updateDocumentList(con, docNumList);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<MyDocument> selectSubmitList() {
+		Connection con = getConnection();
+		ArrayList<MyDocument> list = new DocumentDao().selectSubmitList(con);
+		
+		if(list != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return list;
+	}
+
+	public int sendTrashList(String[] docNumList) {
+		Connection con = getConnection();
+		int result = new DocumentDao().sendTrashList(con, docNumList);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int sendReturn(String[] docNumList) {
+		Connection con = getConnection();
+		int result = new DocumentDao().sendReturn(con, docNumList);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<MyDocument> selectReturnDocumentList() {
+		Connection con = getConnection();
+		ArrayList<MyDocument> list = new DocumentDao().selectReturnDocumentList(con);
+		
+		if(list != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return list;
+	}
 	
 }

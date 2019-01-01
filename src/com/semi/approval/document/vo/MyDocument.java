@@ -9,13 +9,16 @@ public class MyDocument implements java.io.Serializable{
 	private String deptName;
 	private int docNum;
 	private String title;
+	private String opinion;
 	private Date writeDay;
+	private String result;
 	
 	public MyDocument() {
 		
 	}
 
-	public MyDocument(int num, int writerNum, String writer, String deptName, int docNum, String title, Date writeDay) {
+	public MyDocument(int num, int writerNum, String writer, String deptName, int docNum, String title, String opinion,
+			Date writeDay, String result) {
 		super();
 		this.num = num;
 		this.writerNum = writerNum;
@@ -23,7 +26,9 @@ public class MyDocument implements java.io.Serializable{
 		this.deptName = deptName;
 		this.docNum = docNum;
 		this.title = title;
+		this.opinion = opinion;
 		this.writeDay = writeDay;
+		this.result = result;
 	}
 
 	public int getNum() {
@@ -74,6 +79,14 @@ public class MyDocument implements java.io.Serializable{
 		this.title = title;
 	}
 
+	public String getOpinion() {
+		return opinion;
+	}
+
+	public void setOpinion(String opinion) {
+		this.opinion = opinion;
+	}
+
 	public Date getWriteDay() {
 		return writeDay;
 	}
@@ -82,10 +95,19 @@ public class MyDocument implements java.io.Serializable{
 		this.writeDay = writeDay;
 	}
 
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
 	@Override
 	public String toString() {
 		return "MyDocument [num=" + num + ", writerNum=" + writerNum + ", writer=" + writer + ", deptName=" + deptName
-				+ ", docNum=" + docNum + ", title=" + title + ", writeDay=" + writeDay + "]";
+				+ ", docNum=" + docNum + ", title=" + title + ", opinion=" + opinion + ", writeDay=" + writeDay
+				+ ", result=" + result + "]";
 	}
 	
 }

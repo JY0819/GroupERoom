@@ -1,6 +1,12 @@
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
+<%@page import="com.semi.approval.document.vo.MyDocument"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+	Employee employee = (Employee)session.getAttribute("loginUser");
+	ArrayList<MyDocument> list = (ArrayList<MyDocument>)request.getAttribute("list");
+%>
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
 <link rel="stylesheet" type="text/css"
 	href="/semi/assets/css/approval/taskBox.css">
@@ -22,7 +28,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th><input type="checkbox" name="checkAll" id="checkAll"
+					<th><input type="checkbox" name="checkAll" id="checkAlltr"
 						onclick="checkAll();" style="height: 17px; width: 17px;"></th>
 					<th>번 호</th>
 					<th>작 성 자</th>
@@ -34,39 +40,25 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+				<% for(int i=0; i<list.size(); i++) { 
+					   	if(list.get(i).getWriterNum() == employee.getEmpid()) {		
+					%>
+					<tr>
+						<td><input type="checkbox" name="checkTd"
+							style="height: 17px; width: 17px;"></td>
+						<td><%= list.get(i).getNum() %></td>
+						<td><%= list.get(i).getWriter() %></td>
+						<td><%= list.get(i).getDeptName() %></td>
+						<td><%= list.get(i).getDocNum() %></td>
+						<td><%= list.get(i).getOpinion() %></td>
+						<td><%= list.get(i).getWriteDay() %></td>
+						<% if(list.get(i).getResult().equals("N")) { %>
+						<% String result = "반려"; %>
+						<td><%= result %></td>
+						<% } %>
+					</tr>
+					<% } %>
+					<%} %>
 			</tbody>
 		</table>
 		<div class="btnArea">

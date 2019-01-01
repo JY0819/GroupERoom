@@ -1,7 +1,6 @@
 package com.semi.approval.document.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,25 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.approval.document.service.DocumentService;
-import com.semi.approval.document.vo.MyDocument;
 
-@WebServlet("/apprSendDocument.asd")
-public class ApprSendDocumentServlet extends HttpServlet {
+@WebServlet("/sendReturn.sr")
+public class SendReturnServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ApprSendDocumentServlet() {
+    public SendReturnServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] docNumList = request.getParameter("docNum").split(",");
 		
-		int result = new DocumentService().updateDocumentList(docNumList);
+		int result = new DocumentService().sendReturn(docNumList);
 		
 		String page = "";
 		if(result > 0) {
-			page = "/semi/";
-			response.sendRedirect(page);
+			response.sendRedirect("/semi/returnBox.rb");
 
 		}else {
 			page = "views/common.errorPage";
