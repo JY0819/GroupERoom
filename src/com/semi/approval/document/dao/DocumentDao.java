@@ -114,6 +114,27 @@ public class DocumentDao {
 		return hmap;
 	}
 
+	public int insertAppr(Connection con, int[] apprNo, ArrayList<Object> list) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		Document document = (Document)list.get(0);
+		
+		String query = prop.getProperty("insertAppr");
+		
+		try {
+			
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageEmpId());
+				pstmt.setDate(3, document.getManageDay());
+				result = pstmt.executeUpdate();
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return result;
+	}
+	
 	public int insertAttachments(Connection con, int attachNo, ArrayList<Attachments> fileList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -161,32 +182,10 @@ public class DocumentDao {
 		return result;
 	}
 	
-	public int insertAppr(Connection con, int[] apprNo, ArrayList<Object> list) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		Document document = (Document)list.get(0);
-		
-		String query = prop.getProperty("insertAppr");
-		
-		try {
-			
-				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, apprNo[apprNo.length-1]);
-				pstmt.setInt(2, document.getManageEmpId());
-				pstmt.setDate(3, document.getManageDay());
-				result = pstmt.executeUpdate();
-
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		return result;
-	}
-	
 	public int insertDocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		int result = 0;
-		int result2 = 0;
 		Document document = (Document)list.get(0);
 		
 		String query = prop.getProperty("insertDocument");
@@ -241,14 +240,15 @@ public class DocumentDao {
 			while(rset.next()) {
 				myDocument = new MyDocument();
 				myDocument.setNum(count);
+				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
 				myDocument.setDocNum(rset.getInt("MANAGEDOCNO"));
-				myDocument.setOpinion(rset.getString("OPINION"));
+				myDocument.setTitle(rset.getString("TITLE"));
 				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
-				myDocument.setResult(rset.getString("APPRSTATUS"));
 				
 				list.add(myDocument);
+				count++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
