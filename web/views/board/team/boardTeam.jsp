@@ -1,4 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+ import="java.util.*, com.semi.board.team.model.vo.*, com.semi.admin.user.model.vo.*"%>
+<%
+	ArrayList<Team> list = (ArrayList<Team>)request.getAttribute("list");
+	Employee loginUser = (Employee)session.getAttribute("loginUser");
+
+%>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
@@ -24,8 +30,9 @@
 			<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
 			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
 		</div>
+		<br>
 		<table class="table table-striped">
-			<thead>
+			
 				<tr>
 					<th>부서</th>
 					<th>번호</th>
@@ -34,38 +41,19 @@
 					<th>작성일</th>
 					<th>조회수</th>
 				</tr>
-			</thead>
-	
-			<tbody>
-				<tr>
-					<td>기획</td>
-					<td>3</td>
-					<td>부서게시글 3</td>
-					<td>김길동</td>
-					<td>2018.12.22</td>
-					<td>0</td>
+			<% for(Team t : list){ %>
+				 <tr>
+					<td><%=t.getDeptId() %></td>
+					 <td><%=t.getBno() %></td> 
+					<td><%=t.getbTitle() %></td>
+					<td><%=t.getWriterId() %></td>
+					<td><%=t.getbDate() %></td>
+					<td><%=t.getbClicks() %></td>
 				</tr>
+					<%} %>
 	
-				<tr>
-					<td>마케팅</td>
-					
-					<td>2</td>
-					<td>부서게시글 2</td>
-					<td>강길동</td>
-					<td>2018.12.22</td>
-					<td>0</td>
-				</tr>
-	
-				<tr>
-					<td>회계</td>
-					
-					<td>1</td>
-					<td>부서게시글 1</td>
-					<td>민길동</td>
-					<td>2018.12.22</td>
-					<td>0</td>
-				</tr>
-			</tbody>
+			
+				
 		</table>
 		
 		<div id="searchBtn" align="center">

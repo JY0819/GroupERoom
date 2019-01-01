@@ -66,11 +66,17 @@
 			
 		</table>
 		
+		<form action="<%=request.getContextPath() %>/search.fr" method="get" >
 		<div id="searchBtn" align="center">
-    	<input type="search">
-    	<button type="submit" class="btn btn-primary"><a href="searchViewFree.jsp" id="textBtn" >검색</a></button>
+    	<select name="searchBox" >
+			<option name="searchCondition" value="findName" selected>작성자</option>  
+			<option name="searchCondition" value="findTitle" >글제목</option>  	
+    	</select>
+    	<input type="search" name="searchValue">
+    	<button type="submit" class="btn btn-primary">검색</button>
     	
 	</div>	
+	</form>
 	<br>
 <div class="pagingArea" align="center">
 <ul class="pagination">

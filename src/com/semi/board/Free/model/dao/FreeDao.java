@@ -11,7 +11,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+
 import com.semi.board.Free.model.vo.Free;
+import com.semi.board.team.model.vo.Team;
+
 import static com.semi.common.JDBCTemplate.*;
 
 public class FreeDao {
@@ -517,4 +520,105 @@ System.out.println(query);
 			
 			return list;
 		}
+		//작성자로 검색
+		public ArrayList<Free> searchName(Connection con, String userName) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<Free> list = null;
+			
+			String query = prop.getProperty("searchName");
+			
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setString(1, userName);
+				
+				rset=pstmt.executeQuery();
+				
+				list = new ArrayList<Free>();
+				
+				while(rset.next()) {
+					Free f = new Free();
+					
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbClass(rset.getString("BOARDCLASS"));
+					f.setbTitle(rset.getString("BOARDTITLE"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					f.setbClicks(rset.getInt("BOARDCLICKS"));
+					f.setbAttach(rset.getString("BOARDATTACH"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setRecomId(rset.getString("RECOMMENTID"));
+					
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setStatus(rset.getString("WHETHEROFDELETE"));
+					f.setFile01(rset.getInt("FILE01"));
+					f.setFile02(rset.getInt("FILE02"));
+					f.setFile03(rset.getInt("FILE03"));
+					
+					list.add(f);
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return list;
+		}
+		//글제목으로 검색
+		public ArrayList<Free> searchTitle(Connection con, String title) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<Free> list = null;
+			
+			String query = prop.getProperty("searchTitle");
+			
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setString(1, title);
+				
+				rset=pstmt.executeQuery();
+				
+				list = new ArrayList<Free>();
+				
+				while(rset.next()) {
+					Free f = new Free();
+					
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbClass(rset.getString("BOARDCLASS"));
+					f.setbTitle(rset.getString("BOARDTITLE"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					f.setbClicks(rset.getInt("BOARDCLICKS"));
+					f.setbAttach(rset.getString("BOARDATTACH"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setRecomId(rset.getString("RECOMMENTID"));
+					
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setStatus(rset.getString("WHETHEROFDELETE"));
+					f.setFile01(rset.getInt("FILE01"));
+					f.setFile02(rset.getInt("FILE02"));
+					f.setFile03(rset.getInt("FILE03"));
+					
+					list.add(f);
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return list;
+		}
+		
 }
