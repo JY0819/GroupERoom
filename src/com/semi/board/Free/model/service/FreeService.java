@@ -3,8 +3,11 @@ package com.semi.board.Free.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+
 import com.semi.board.Free.model.dao.FreeDao;
 import com.semi.board.Free.model.vo.Free;
+
+
 import static com.semi.common.JDBCTemplate.*;
 
 public class FreeService {
@@ -143,6 +146,24 @@ public class FreeService {
 			close(con);
 			
 			return replyList;
+		}
+		//작성자로 검색
+		public ArrayList<Free> searchName(String userName) {
+			Connection con = getConnection();
+			ArrayList<Free> list = new FreeDao().searchName(con, userName);
+			
+			close(con);
+			
+			return list;
+		}
+		//글 제목으로 검색
+		public ArrayList<Free> searchtitle(String title) {
+			Connection con = getConnection();
+			ArrayList<Free> list = new FreeDao().searchTitle(con, title);
+			
+			close(con);
+			
+			return list;
 		}
 	
 	

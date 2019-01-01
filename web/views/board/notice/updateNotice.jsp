@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.semi.board.notice.model.vo.*, com.semi.admin.user.model.vo.*"%>
 <!-- admin 만 글 수정 가능 -->
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<jsp:include page="/views/main/mainPage.jsp" />
+<%
+	Notice n = (Notice)request.getAttribute("n");
+	Employee loginUser = (Employee)session.getAttribute("loginUser");
+%>
+
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
+<jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
+
+<script>
+	
+	var jsonData = treeviewJson.boardJson;
+	var nodeName = "공지사항";
+</script>
 
 <style>
 body {
@@ -18,29 +21,51 @@ body {
 }
 </style>
 
-<body>
+<section class="content">
+	<div class="content-left">
+		<div id="treeview"></div>
+	</div>
+	
+	<div class="content-right container">
+		<div id="title">
+			<h1 align="left"> | 공지사항 |</h1>
+		</div>
+		<hr>
+		
 	<div class="container">
 
 		<div class="row">
-			<form method="post" action="">
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
 							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">공지사항 수정</th>
 						</tr> 
 					</thead>
+			<form action="", method="post" id="editTable">
 
 					<tbody>
 						<tr>
 							<td>
-							<input type="text" class="form-control" placeholder="공지사항 제목을 입력해주세요." maxlength="50">
+						<input type="hidden" id="bno" value="<%=n.getBno() %>" name="bno" >
+						<input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly>
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<textarea class="form-control" placeholder="공지사항 내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
-							</td>
+							
+							<input type="text" name ="title"class="form-control" value="<%=n.getbTitle() %>" maxlength="50">
+							</td>						
 						</tr>
+						<tr>
+						<td>
+						<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=n.getbContent() %></textarea>							</td>						</tr>
+						</td>
+						</tr>					
+					
+					</tbody>
+					</form>
+				</table>
+				
 					</tbody>
 					
 				</table>
@@ -58,7 +83,7 @@ body {
 					</div>
 				</div>
 				<div class="updateNoticeBtn">
-					<button type="submit" id="updateBtn" class="btn btn-primary">수정</button>
+					<button type="submit" id="enrollBtn" class="btn btn-primary">수정</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
 			</form>
@@ -78,6 +103,24 @@ body {
 				$("#userfile").val(filename);
 			});
 		});
+		
+		$(function(){
+			$("#gotoList").click(function(){
+				location.href="/semi/selectList.no";
+			});
+		});
+		
+		$(function(){
+			$("#enrollBtn").click(function(){
+				
+				$("#editTable").attr("action", "<%=request.getContextPath()%>/updateNotice.no");
+				$("#editTable").submit();
+				
+			});
+			
+		});
+			
+		
 	</script>
 	
 	

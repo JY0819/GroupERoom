@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!-- admin 만 글 작성 가능 -->
+	pageEncoding="UTF-8" import="java.util.*, com.semi.board.team.model.vo.*, com.semi.admin.user.model.vo.*"%>
+<% 
+	Employee loginUser = (Employee)session.getAttribute("loginUser"); 
+	ArrayList<Team> list = (ArrayList<Team>)request.getAttribute("list");
+ %>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
@@ -33,8 +36,7 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form method="post" action="">
-				<table class="table table-striped" style="text-align: center; border: 1px;">
+			<form action="<%= request.getContextPath()%>/insert.tm" method="post">				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
 							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">부서게시판 글 작성</th>
@@ -42,12 +44,13 @@ body {
 					</thead>
 
 					<tbody>
+					
 					<tr>
-						<td><input type="text" class="form-control" placeholder="부서" maxlength="30"></td>
+						<td><input type="text" class="form-control" placeholder="부서코드" maxlength="30" ></td>
 						
 					</tr>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="작성자" maxlength="30"></td>
+						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 						<tr>

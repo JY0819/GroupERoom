@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.semi.board.Free.model.vo.*, com.semi.admin.user.model.vo.*"%>
-	
+	pageEncoding="UTF-8" import="com.semi.board.notice.model.vo.*, com.semi.admin.user.model.vo.*"%>
 <%
-	Free f = (Free)request.getAttribute("f"); 
+	Notice n = (Notice)request.getAttribute("n"); 
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 %>
 
@@ -14,7 +13,7 @@
 <script>
 	
 	var jsonData = treeviewJson.boardJson;
-	var nodeName = "자유게시판";
+	var nodeName = "공지사항";
 </script>
 
 
@@ -24,8 +23,6 @@ body {
 }
 </style>
 
-
-
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
@@ -34,7 +31,7 @@ body {
 	<div class="content-right container">
 	
 	<div id="title">
-			<h1 align="left"> | 자유게시판 |</h1>
+			<h1 align="left"> | 공지사항 |</h1>
 		</div>
 		<hr>
 	
@@ -44,7 +41,7 @@ body {
 			<table class="table table-striped"  border: 1px;">
 				<thead>
 					<tr>
-						<th colspan="3" style="background-color: #eeeeee; text-align: center;">자유게시판 상세보기</th>
+						<th colspan="3" style="background-color: #eeeeee; text-align: center;">공지사항 상세보기</th>
 					</tr> 
 				</thead>
 	<form action="", method="post" id="viewTable">
@@ -52,31 +49,31 @@ body {
 				<tr>
 				  
 						<td>글번호</td>
-						<td readonly><input type="hidden" id="bno" value="<%=f.getBno() %>" name="bno" ><%=f.getBno() %></td>
+						<td readonly><input type="hidden" id="bno" value="<%=n.getBno() %>" name="bno" ><%=n.getBno() %></td>
 					</tr>
 					<tr>
 						<td>조회수</td>
-						<td readonly><%=f.getbClicks() %></td>
+						<td readonly><%=n.getbClicks() %></td>
 					</tr>
 					
 					
 					<tr>
 						<td>작성자</td>
-						<td readonly><%=f.getWriterId() %></td>
+						<td readonly><%=n.getWriterId() %></td>
 					</tr>
 					
 					<tr>
 						<td>작성일자</td>
-						<td readonly><%=f.getbDate() %></td>
+						<td readonly><%=n.getbDate() %></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
 
-						<td readonly><%=f.getbTitle() %></td>
+						<td readonly><%=n.getbTitle() %></td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td style="min-height: 200px; text-align: left; readonly"><%=f.getbContent() %></td>
+						<td style="min-height: 200px; text-align: left; readonly"><%=n.getbContent() %></td>
 					</tr>
 				</tbody>
 			</table>
@@ -124,8 +121,10 @@ body {
 			<br>
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
-				<button id="editBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectFree.fr?num=<%=f.getBno()%>'">수정</button>
+				<% if(loginUser != null && loginUser.getEmpid()==2){ %>
+				<button id="editBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectNotice.no?num=<%=n.getBno()%>'">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
+				<%} %>
 			</div>
 			
 		
@@ -137,7 +136,7 @@ body {
 	<script>
 	$(function(){
 		$("#gotoList").click(function(){
-			location.href="/semi/selectList.fr";
+			location.href="/semi/selectList.no";
 		});
 	});
 	
@@ -147,7 +146,7 @@ body {
 			
 			alert("정말로 삭제하시겠습니까?");
 			
-		$("#viewTable").attr("action", "<%=request.getContextPath()%>/deleteFree.fr");
+		$("#viewTable").attr("action", "<%=request.getContextPath()%>/deleteNotice.no");
 		$("#viewTable").submit();	
 			
 		});
@@ -158,7 +157,7 @@ body {
 			
 			
 			var writer = <%= loginUser.getEmpid() %>; 
-			var bno = <%= f.getBno() %>;
+			var bno = <%= n.getBno() %>;
 			var content = $("#replyContent").val(); 
 			
 		 	console.log(writer) 
@@ -166,7 +165,7 @@ body {
 			console.log(content)
 			
 			$.ajax({
-				url:"/semi/insertReply.fr",
+				url:"/semi/insertReply.no",
 				data:{ writer:writer, content:content, bno:bno},
 				type:"post",
 				success:function(data){
