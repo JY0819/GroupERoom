@@ -74,9 +74,11 @@
 						<td><%= trashTable.getApprnum() %></td>
 						
 						<%-- <input type="hidden" class="apprno" value="<%= a.getApprNo() %>"> --%>
-						
+						<% if(trashTable.getResult().equals("N")) {%>
 						<td><%= trashTable.getResult().replaceAll("N", "승인대기중") %></td>
-						
+						<%} else{%>
+						<td><%= trashTable.getResult().replaceAll("Y", "승인")%></td>
+						<%} %>
 						</tr>
 						
 						
@@ -126,7 +128,7 @@
 			
 				<ul class="pagination">
 					<li><a onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=1'"><<</a></li> 
-					<% if(currentPage <=1){ %>D
+					<% if(currentPage <=1){ %>
 					<li><a><</a></li> <!-- 비활성화 -->
 					<%}else{%>
 					<li><a onclick="location.href='<%=request.getContextPath()%>/selecttrash.tr?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
