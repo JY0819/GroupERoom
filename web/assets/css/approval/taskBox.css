@@ -4,7 +4,7 @@
 table {
 	width: 75%;
         text-align: center;
-         left: 270px;
+         left: 350px;
          position: absolute;
           top:230px;
 }
@@ -203,7 +203,7 @@ td {
 	width: 100px;
 	height: 40px;
 	top: 180px;
-	left: 300px;
+	left: 330px;
 	border: 0;
 	outline: 0;
 	position: absolute;
@@ -217,7 +217,7 @@ td {
 	width: 100px;
 	height: 40px;
 	top: 180px;
-	left: 300px;
+	left: 330px;
 	border: 0;
 	outline: 0;
 	position: absolute;
@@ -231,7 +231,7 @@ td {
 	width: 100px;
 	height: 40px;
 	top: 180px;
-	left: 430px;
+	left: 450px;
 	position: absolute;
 }
 
