@@ -13,6 +13,7 @@ public class MemoService {
 		Connection con=getConnection();
 		Memo memo=new MemoDao().selectMemo(con, empId);
 		
+		System.out.println("service"+memo);
 		close(con);
 		return memo;
 	}
