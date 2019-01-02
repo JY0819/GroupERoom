@@ -35,7 +35,7 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form action="<%= request.getContextPath()%>/insert.fr" method="post">
+			<form action="<%= request.getContextPath()%>/insert.fr" method="post" encType="multipart/form-data">
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
@@ -59,7 +59,8 @@ body {
 					</tbody>
 					
 				</table>
-				
+			
+
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
 					<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
@@ -72,7 +73,7 @@ body {
 						</span>
 					</div>
 				</div>
-				
+				</form>
 				
 	
 				
@@ -80,7 +81,7 @@ body {
 					<button type="submit" id="enrollBtn" class="btn btn-primary">등록</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
-			</form>
+			
 		</div>
 	</div>
 </section>

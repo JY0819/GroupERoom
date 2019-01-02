@@ -99,6 +99,14 @@ body {
 			<div class="repleArea">
 			<div class="replySelectArea">
 			<table id="replySelectTable" class="table table-striped" style="text-align: center; border: 1px;">
+				
+				<tr>
+				
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				
 			</table>
 			</div>
 			<table align="center">
@@ -120,7 +128,7 @@ body {
 		
 				</div>	
 			</div>
-			
+			<br>
 			<br>
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
@@ -186,6 +194,7 @@ body {
 						$tr.append($dateTd);
 						$replySelectTable.append($tr);
 						
+						$("#replyContent").val("");
 					}
 					
 					

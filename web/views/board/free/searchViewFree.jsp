@@ -3,14 +3,16 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 <%
 	ArrayList<Free> list = (ArrayList<Free>)request.getAttribute("list");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
-
-/* 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String searchCondition = (String)request.getAttribute("searchCondition");
+	String searchValue = (String)request.getAttribute("userName");
+	System.out.println(searchCondition);
+ 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage(); */
+	int endPage = pi.getEndPage(); 
 %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -31,16 +33,20 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 	<div class="content-right container">
 		<div id="title">
 			<h1 align="left">| 자유게시판 |</h1>
+			<hr>
+			<h2 align="center"><%=searchValue %>로 검색한 결과</h2>
 		</div>
-		<hr>
-		<h2 align="center">"<%=request.getAttribute("userName") %>"에 해당하는 검색 결과</h2>
 		
+		
+		
+	
+	
 		<div class="noticeListBtn">
-			<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
-			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
+			<button type="button" id="writeBtn" class="btn btn-primary">작성하기</button>
+		
 		</div>
 		<br>
-		<table class="table table-striped">
+		<table class="table table-striped" id="listArea">
 		
 				<tr>
 					
@@ -67,9 +73,9 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 			
 		<form action="<%=request.getContextPath() %>/search.fr" method="get" >
 		<div id="searchBtn" align="center">
-    	<select name="searchBox" >
-			<option name="searchCondition" value="findName" selected>작성자</option>  
-			<option name="searchCondition" value="findTitle" >글제목</option>  	
+    	<select name="searchCondition" >
+			<option  value="findName" selected>작성자</option>  
+			<option  value="findTitle" >글제목</option>  	
     	</select>
     	<input type="search" name="searchValue">
     	<button type="submit" class="btn btn-primary">검색</button>
@@ -77,20 +83,20 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 	</div>	
 	</form>
 	<br>
-<%-- <div class="pagingArea" align="center">
+ <div class="pagingArea" align="center">
 <ul class="pagination">
-<button onclick="location.href='<%=request.getContextPath()%>/selectList.fr?currentPage=1'"><<</button>
-<li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=1"><<</a></li>
+<%-- <button onclick="location.href='<%=request.getContextPath()%>/selectList.fr?currentPage=1'"><<</button>
+ --%><li><a href="<%=request.getContextPath()%>/search.fr?currentPage=1"><<</a></li>
 ​
 
 <% if(currentPage <= 1){ %>
 <script>console.log(<%=currentPage%>);</script>
 
-<li><a><</a></li>
+ <li><a><</a></li> 
 <% }else{ %>
 
 
- <li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%=currentPage - 1%>"><</a></li>
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage - 1%>"><</a></li>
 <% } %>
 
 ​
@@ -106,7 +112,7 @@ if(p == currentPage){
 <% }else{ %>
 
 
-<li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%= p %>"><%= p %></a></li>
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%= p %>"><%= p %></a></li>
 <% } %>
 
 ​
@@ -124,18 +130,18 @@ if(p == currentPage){
 <% }else{ %>
 
 
- <li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%=currentPage + 1%>">></a></li>
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage + 1%>">></a></li>
 <% } %>
 
 ​
 
 
-<li><a href="<%=request.getContextPath()%>/selectList.fr?currentPage=<%=maxPage%>">>></a></li>
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=maxPage%>">>></a></li>
 </ul>
 ​
 
 
-	</div> --%>
+	</div>
 	<br>
 	<br>
 	<br>
