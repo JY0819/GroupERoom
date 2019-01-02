@@ -96,7 +96,7 @@ public class InsertMemberServlet extends HttpServlet {
 		
 			
 			Employee emp = new Employee();
-			emp.setEmpId(multiUserId);
+			emp.setEmpid(multiUserId);
 			emp.setEmpName(multiUserName);
 			emp.setEmpPwd(multiUserPwd);
 			emp.setEmpGender(multiGender);

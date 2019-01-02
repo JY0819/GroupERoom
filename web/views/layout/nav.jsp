@@ -44,15 +44,17 @@
 <script>
 	$(function() {
 		var empId = $("input[name=empId]").val();
+		console.log(empId);
 		$.ajax({
-			url:"chkToDayAttend",
+			url:"/semi/chkToDayAttend",
 			data:{empId:empId},
 			type:"get",
 			success: function(data) {
+				console.log("성공");
 				if (data == 1) {
 					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR'>퇴근</a></span>");
 				} else if (data == -1) {
-					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR'>출근</a></span>");
+					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR?empid=" + empId + "'>출근</a></span>");
 				} else {
 					console.log("오류");
 				}

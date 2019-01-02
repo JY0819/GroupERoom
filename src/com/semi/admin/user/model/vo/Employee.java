@@ -59,12 +59,12 @@ public class Employee implements java.io.Serializable {
 		this.positionName = positionName;
 	}
 
-	public int getEmpId() {
+	public int getEmpid() {
 		return empId;
 	}
 
 
-	public void setEmpId(int empId) {
+	public void setEmpid(int empId) {
 		this.empId = empId;
 	}
 
@@ -250,7 +250,5 @@ public class Employee implements java.io.Serializable {
 				+ positionId + ", positionName=" + positionName + "]";
 	}
 
-
-	s
-
+	
 }

@@ -29,7 +29,7 @@ public class CreateQR extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String root = request.getSession().getServletContext().getRealPath("/");
-		String page = "http://naver.com";
+		String page = "http://naver.com"; // java IP 따는 메소드 이용해서 링크 만들것
 		int chk = 1;
 		String fileName = "";
 		
