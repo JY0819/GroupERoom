@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 	  System.out.println("PWD : " + userPwd);
 	  
 	  Employee emp = new Employee();
-	  emp.setEmpid(userId);
+	  emp.setEmpId(userId);
 	  emp.setEmpPwd(userPwd);
 	  
 	  

@@ -1,11 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+	import="java.util.*, com.semi.admin.user.model.vo.*"	%>
+<%
+	ArrayList<Employee> list = (ArrayList<Employee>) request.getAttribute("list");
+%>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 
 <script type="text/javascript">
-	//참고 : https://jonmiles.github.io/bootstrap-treeview/
 	var jsonData = treeviewJson.adminJson;
-	var nodeName = "사원 조회 및 수정";
+	var nodeName = "사원 관리";
+	
+	$(function(){
+		$("#listArea td").mouseenter(function(){
+			$(this).parent().css({"background" : "#F2F2F2", "cursor" : "pointer"});
+		}).mouseout(function(){
+			$(this).parent().css({"background" : "white"})
+		}).click(function(){
+			var num = $(this).parent().children().eq(0).text();
+			
+			console.log(num);
+			
+			location.href="<%=request.getContextPath()%>/selectOne.me?num=" + num;
+			
+		});
+	});
 </script>
 
 <section class="content">
@@ -14,35 +31,39 @@
 	</div>
 	
 	<div class="content-right container">
-		<form>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>사원 번호</th>
-						<th>이름</th>
-						<th>부서</th>
-						<th>직책</th>
-						<th>성별</th>
-						<th>연락처</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-				<%-- 				
-				<%
-					for(Employee emp : list) 
-				%>
+		<div>
+			<div>
+				<h1>사원 관리</h1>
+			</div>
+			
+			<table class="table" id= "listArea">
 				<tr>
+					<th>사원 번호</th>
+					<th>이름</th>
+	<!-- 				<th>부서</th> -->
+	<!-- 				<th>직책</th> -->
+					<th>성별</th>
+					<th>연락처</th>
+				</tr>
 				
+				<%
+					for (Employee emp : list) {
+				%>
+				
+				<tr>
+					<td><%=emp.getEmpId()%></td>
+					<td><%=emp.getEmpName()%></td>
+	<%-- 				<td><%=emp.getDeptName()%></td> --%>
+	<%-- 				<td><%=emp.getPositionName()%></td> --%>
+					<td><%=emp.getEmpGender()%></td>
+					<td><%=emp.getEmpPhone()%></td>
 				</tr>
 				
 				<%
 					}
 				%>
-				 --%>
-				</tbody>
 			</table>
-		</form>
+		</div>
 	</div>
 	
 	<div class="text-center">

@@ -240,26 +240,22 @@
 		}
 		
 		<%for(int i=0;i<list.size();i++){
-			HashMap<String, Object> hmap=list.get(i);
-			if((int)hmap.get("calendarClass")==1){
-		%>
+			HashMap<String, Object> hmap=list.get(i);%>
+			if(Number(<%=hmap.get("calendarClass")%>)==1/*  && $("#Myschedule").is(":checked") */){
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
-		<%
-			}
-			if((int)hmap.get("calendarClass")==2){
-		%>	
-				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
-		<%
-			}
-			if((int)hmap.get("calendarClass")==3){
-		%>
-				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
-		<%
 			}
 			
+			if(Number(<%=hmap.get("calendarClass")%>)==2/*  && $("#Teamschedule").is(":checked")  */){
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+			}
+			
+			if(Number(<%=hmap.get("calendarClass")%>)==3 /* && $("#Companyschedule").is(":checked") */){
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+			}
+		<%
 		}%>
 	}
 		
@@ -568,11 +564,11 @@
 		<%if(loginUser!=null){ %>
 		<div class="scheduleLeft">
 			<div class="list">
-				<input type="checkbox" id="Myschedule" name="myschedule" value="1" checked>
+				<input type="checkbox" id="Myschedule" name="myschedule" value="1">
 				<label for="Myschedule">내 일정</label><br><br>
-				<input type="checkbox" id="Teamschedule" name="teamschedule" value="2" checked>
+				<input type="checkbox" id="Teamschedule" name="teamschedule" value="2">
 				<label for="Teamschedule"><%=loginUser.getDeptName() %>팀 일정</label><br><br>
-				<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
+				<input type="checkbox" id="Companyschedule" name="companyschedule" value="3">
 				<label for="Companyschedule">회사 일정</label><br>
 			</div>
 		</div>
@@ -686,20 +682,19 @@
 					HashMap<String, Object> hmap=list.get(i);
 					if((int)hmap.get("calendarClass")==1){
 				%>
-						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+						<%-- $("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+						 --%>$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("background","#D2EFE5");
 				<%
 					}
 				}%>
-	            alert($("#Myschedule + label").text()+' 체크');
 	        }else{
-	            alert($("#Myschedule + label").text()+' 체크해제');
 	            <%for(int i=0;i<list.size();i++){
 					HashMap<String, Object> hmap=list.get(i);
 					if((int)hmap.get("calendarClass")==1){
 			%>
-						$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
-						console.log(<%=hmap.get("calendarId")%>+" 삭제");
+						<%-- $("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+						console.log(<%=hmap.get("calendarId")%>+" 삭제"); --%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("background","#ffffff");
 			<%
 					}							
 				}%>	
@@ -708,23 +703,22 @@
 		
 		$("#Teamschedule").change(function(){
 			if($("#Teamschedule").is(":checked")){
-	            alert($("#Teamschedule + label").text()+' 체크');
 	            <%for(int i=0;i<list.size();i++){
 					HashMap<String, Object> hmap=list.get(i);
 					if((int)hmap.get("calendarClass")==2){
 				%>	
-						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+<%-- 						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+ --%>						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("background","#D3D1EF");
 				<%
 					}
 				}%>
 	        }else{
-	            alert($("#Teamschedule + label").text()+' 체크해제');
 	            <%for(int i=0;i<list.size();i++){
 	    			HashMap<String, Object> hmap=list.get(i);
 	    			if((int)hmap.get("calendarClass")==2){
 	    		%>	
-	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    				<%-- $("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove(); --%>
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("background","#ffffff");
 	    		<%
 	    			}
 	    		}%>
@@ -733,24 +727,23 @@
 		
 		$("#Companyschedule").change(function(){
 			if($("#Companyschedule").is(":checked")){
-	            alert($("#Companyschedule + label").text()+' 체크');
 	            <%for(int i=0;i<list.size();i++){
 					HashMap<String, Object> hmap=list.get(i);
 					if((int)hmap.get("calendarClass")==3){
 				%>
-						$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+					<%-- 	$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>"); --%>
+						$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("background","#F4C2C2");
 						
 				<%
 					}
 				}%>
 	        }else{
-	            alert($("#Companyschedule + label").text()+' 체크해제');
 	            <%for(int i=0;i<list.size();i++){
 	    			HashMap<String, Object> hmap=list.get(i);
 	    			if((int)hmap.get("calendarClass")==3){
 	    		%>
-	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    				<%-- $("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove(); --%>
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("background","#ffffff");
 	    		<%
 	    			}
 	    		}%>

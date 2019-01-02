@@ -38,6 +38,7 @@ public class FinishApprovalDao {
 			list = new ArrayList<FinishApproval>();
 			while(rset.next()) {
 				FinishApproval finishApproval = new FinishApproval();
+				finishApproval.setEmpid(rset.getInt("EMPID"));
 				finishApproval.setApprNo(rset.getInt("APPRNO"));
 				finishApproval.setApprWriter(rset.getString("EMPNAME"));
 				finishApproval.setDocNo(rset.getInt("DOCNO"));
@@ -64,6 +65,7 @@ public class FinishApprovalDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("deleteFinish");
+		
 		try {
 			
 
@@ -115,6 +117,7 @@ public class FinishApprovalDao {
 			
 			while(rset.next()) {
 				FinishApproval finishapproval = new FinishApproval();
+				finishapproval.setEmpid(rset.getInt("EMPID"));
 				finishapproval.setApprNo(rset.getInt("APPRNO"));
 				finishapproval.setApprWriter(rset.getString("EMPNAME"));
 				finishapproval.setDocNo(rset.getInt("DOCNO"));

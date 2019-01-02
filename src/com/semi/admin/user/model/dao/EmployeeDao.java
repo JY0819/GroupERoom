@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.semi.admin.base.model.vo.Department;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.common.vo.Attachments;
 
@@ -40,11 +41,11 @@ public class EmployeeDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			
-			pstmt.setInt(1, emp.getEmpid());
-			pstmt.setInt(2, emp.getEmpid());
-			pstmt.setInt(3, emp.getEmpid());
-			pstmt.setInt(4, emp.getEmpid());
-			pstmt.setInt(5, emp.getEmpid());
+			pstmt.setInt(1, emp.getEmpId());
+			pstmt.setInt(2, emp.getEmpId());
+			pstmt.setInt(3, emp.getEmpId());
+			pstmt.setInt(4, emp.getEmpId());
+			pstmt.setInt(5, emp.getEmpId());
 			pstmt.setString(6, emp.getEmpPwd());
 			
 			rset = pstmt.executeQuery();
@@ -52,7 +53,7 @@ public class EmployeeDao {
 			if(rset.next()) {
 				loginUser = new Employee();
 				
-				loginUser.setEmpid(rset.getInt("EMPID"));
+				loginUser.setEmpId(rset.getInt("EMPID"));
 				loginUser.setEmpName(rset.getString("EMPNAME"));
 				loginUser.setEmpPwd(rset.getString("EMPPWD"));
 				loginUser.setApprovePwd(rset.getString("APPROVEPWD"));
@@ -94,7 +95,7 @@ public class EmployeeDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, emp.getEmpid());
+			pstmt.setInt(1, emp.getEmpId());
 			pstmt.setString(2, emp.getEmpName());
 			pstmt.setString(3, emp.getEmpPwd());
 			pstmt.setString(4, emp.getApprovePwd());
@@ -171,6 +172,7 @@ public class EmployeeDao {
 		return result;
 	}
 
+
 	public String attendCheck(Connection con, Employee emp) {
 		String result = "";
 		PreparedStatement pstmt = null;
@@ -179,6 +181,97 @@ public class EmployeeDao {
 		
 		
 		return result;
+  }
+    
+	// 사원 리스트 조회
+	public ArrayList<Employee> selectList(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Employee> list = null;
+		
+		String query = prop.getProperty("selectMemberList");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<Employee>();
+			
+			while (rset.next()) {
+				Employee emp = new Employee();
+				
+				emp.setEmpId(rset.getInt("EMPID"));
+				emp.setEmpName(rset.getString("EMPNAME"));
+				emp.setEmpPwd(rset.getString("EMPPWD"));
+				emp.setApprovePwd(rset.getString("APPROVEPWD"));
+				emp.setEmpGender(rset.getString("EMPGENDER"));
+				emp.setEmpBirth(rset.getDate("EMPBIRTH"));
+				emp.setEmpAddr(rset.getString("EMPADDR"));
+				emp.setEmpPhone(rset.getString("EMPPHONE"));
+				emp.setEmpVacCount(rset.getInt("EMPVACCOUNT"));
+				emp.setAdminAuthority(rset.getString("ADMINAUTHORITY"));
+				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
+				emp.setPhotoId(rset.getInt("PHOTOID"));
+				emp.setEntryDay(rset.getDate("ENTRYDAY"));
+				emp.setLeaveDay(rset.getDate("LEAVEDAY"));
+//				emp.setDeptId(rset.getString("DEPTID"));
+//				emp.setDeptName(rset.getString("DEPTNAME"));
+//				emp.setPositionId(rset.getString("POSITIONID"));
+//				emp.setPositionName(rset.getString("POSITIONNAME"));
+				
+				list.add(emp);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return list;
+	}
+
+	// 사원 상세보기
+	public Employee selectOne(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Employee emp = null;
+		
+		String query = prop.getProperty("selectMemberOne");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			
+			if (rset.next()) {
+				emp = new Employee();
+				
+				emp.setEmpId(rset.getInt("EMPID"));
+				emp.setEmpName(rset.getString("EMPNAME"));
+				emp.setEmpPwd(rset.getString("EMPPWD"));
+				emp.setApprovePwd(rset.getString("APPROVEPWD"));
+				emp.setEmpGender(rset.getString("EMPGENDER"));
+				emp.setEmpBirth(rset.getDate("EMPBIRTH"));
+				emp.setEmpAddr(rset.getString("EMPADDR"));
+				emp.setEmpPhone(rset.getString("EMPPHONE"));
+				emp.setEmpVacCount(rset.getInt("EMPVACCOUNT"));
+				emp.setAdminAuthority(rset.getString("ADMINAUTHORITY"));
+				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
+				emp.setPhotoId(rset.getInt("PHOTOID"));
+				emp.setEntryDay(rset.getDate("ENTRYDAY"));
+				emp.setLeaveDay(rset.getDate("LEAVEDAY"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return emp;
+
 	}
 
 	

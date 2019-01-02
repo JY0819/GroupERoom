@@ -3,7 +3,7 @@ package com.semi.approval.approve.model.vo;
 import java.sql.Date;
 
 public class FinishApproval implements java.io.Serializable{
-	
+	private int empid; //사원번호
 	private int apprNo; //문서번호
 	private String apprWriter; //작성자
 	private int docNo; //문서번호
@@ -12,9 +12,11 @@ public class FinishApproval implements java.io.Serializable{
 	private Date apprDay; //작성날짜
 	private Date apprDate; //승인날짜
 	public FinishApproval() {}
-	public FinishApproval(int apprNo, String apprWriter, int docNo, String result, String opinion, Date apprDay,
+	
+	public FinishApproval(int empid, int apprNo, String apprWriter, int docNo, String result, String opinion, Date apprDay,
 			Date apprDate) {
 		super();
+		this.empid = empid;
 		this.apprNo = apprNo;
 		this.apprWriter = apprWriter;
 		this.docNo = docNo;
@@ -22,6 +24,13 @@ public class FinishApproval implements java.io.Serializable{
 		this.opinion = opinion;
 		this.apprDay = apprDay;
 		this.apprDate = apprDate;
+	}
+	
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
 	}
 	public int getApprNo() {
 		return apprNo;
@@ -67,9 +76,11 @@ public class FinishApproval implements java.io.Serializable{
 	}
 	@Override
 	public String toString() {
-		return "FinishApproval [apprNo=" + apprNo + ", apprWriter=" + apprWriter + ", docNo=" + docNo + ", result="
-				+ result + ", opinion=" + opinion + ", apprDay=" + apprDay + ", apprDate=" + apprDate + "]";
+		return "FinishApproval [empid=" + empid + ", apprNo=" + apprNo + ", apprWriter=" + apprWriter + ", docNo="
+				+ docNo + ", result=" + result + ", opinion=" + opinion + ", apprDay=" + apprDay + ", apprDate="
+				+ apprDate + "]";
 	}
+	
 	
 	
 }

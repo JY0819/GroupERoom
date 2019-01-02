@@ -25,13 +25,13 @@ public class TrashService {
 	}
 	
 	//보류 메소드(현재사용안함)
-	public ArrayList<ApprLine> selectLineList() {
+	/*public ArrayList<ApprLine> selectLineList() {
 		Connection con = getConnection();
 		ArrayList<ApprLine> line = new TrashDao().selectLineList(con);
 		close(con);
 		
 		return line;
-	}
+	}*/
 	
 	//휴지통 삭제
 	public int deleteTrash(int[] apprno) {

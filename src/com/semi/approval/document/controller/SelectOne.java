@@ -1,4 +1,4 @@
-package com.semi.admin.base.controller;
+package com.semi.approval.document.controller;
 
 import java.io.IOException;
 
@@ -9,33 +9,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.admin.base.model.service.DepartmentService;
-import com.semi.admin.base.model.vo.Department;
+import com.semi.approval.document.service.DocumentService;
+import com.semi.approval.document.vo.Document;
+import com.semi.common.vo.Attachments;
 
-@WebServlet("/selectOne.dp")
-public class SelectOneDepartmentServlet extends HttpServlet {
+@WebServlet("/selectOne.so")
+public class SelectOne extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectOneDepartmentServlet() {
+    public SelectOne() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String num = request.getParameter("num");
-		
-//		System.out.println(num);
-		
-		Department dept = new DepartmentService().selectOne(num);
+		int num = Integer.parseInt(request.getParameter("num"));
+		Document document = new DocumentService().selectOne(num);
+		Attachments attachments = new DocumentService().selectFile(num);
 		
 		String page = "";
-		if (dept != null) {
-			page = "views/admin/base/depDetail.jsp";
-			request.setAttribute("dept", dept);
-		} else {
+		if(document != null && attachments != null) {
+			page = "views/approval/documentList/documentDetail.jsp";
+			request.setAttribute("document", document);
+			request.setAttribute("attachments", attachments);
+		}else {
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "부서 상세보기에 실패했습니다.");
+			request.setAttribute("msg", "문서조회 실패");
 		}
-	
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	}

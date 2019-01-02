@@ -21,14 +21,18 @@ public class SendTrashServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] docNumList = request.getParameter("docNum").split(",");
+		String pageName = docNumList[docNumList.length-1];
 		
 		int result = new DocumentService().sendTrashList(docNumList);
 		
 		String page = "";
 		if(result > 0) {
-			page = "/semi/selecttrash.tr";
-			response.sendRedirect(page);
-
+			if(pageName.equals("my")) {
+				page = "/semi/selectDocument.sd";
+			}else if(pageName.equals("re")) {
+				page ="/semi/returnBox.rb";
+			}
+			response.sendRedirect(page);	
 		}else {
 			page = "views/common.errorPage";
 			request.setAttribute("msg", "문서조회실패");

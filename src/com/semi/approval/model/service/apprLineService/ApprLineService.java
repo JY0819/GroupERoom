@@ -9,12 +9,12 @@ import static com.semi.common.JDBCTemplate.*;
 
 public class ApprLineService {
 
-	public ArrayList<ApprLine> selectList() {
+	/*public ArrayList<ApprLine> selectList() {
 		Connection con = getConnection();
 		ArrayList<ApprLine> line = new ApprLineDao().selectList(con);
 		close(con);
 		
 		return line;
 	}
-
+*/
 }

@@ -234,7 +234,11 @@ td {
 	left: 450px;
 	position: absolute;
 }
-
+/*a태그 속성*/
+.detailA:link, .detailA:visited, .detailA:active, .detailA:hover {
+	text-decoration: none;
+	color: #000000;
+}
 .selected{
 	background-color: gray;
 	}

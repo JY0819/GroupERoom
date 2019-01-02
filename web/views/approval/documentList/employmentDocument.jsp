@@ -27,7 +27,7 @@
 			<td class="td">3차</td>
 		</tr>
 		<tr>
-			<td class="td">첨부파일</td>
+			<td class="td">이미지첨부</td>
 			<td class="content"><input type="file" name="fileNoContent"></td>
 			<td class="approvalTd" rowspan="2"><input type="image"></td>
 			<td class="approvalTd" rowspan="2"><input type="image"></td>

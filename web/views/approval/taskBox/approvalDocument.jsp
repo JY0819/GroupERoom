@@ -39,6 +39,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
 				%>
@@ -49,11 +50,23 @@
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getDeptName() %></td>
 					<td><%= list.get(i).getDocNum() %></td>
-					<td><%= list.get(i).getTitle() %></td>
+					<a href="/semi/selectOne.so"><td><%= list.get(i).getTitle() %></td></a>
 					<td><%= list.get(i).getWriteDay() %></td>
 				</tr>
 				<% } %>
-				<%} %>
+				<% } %>
+				<% }else { %>
+					<tr>
+					<td><input type="checkbox" name="checkTd"
+						style="height: 17px; width: 17px;"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<% } %>
 			</tbody>
 
 		</table>
@@ -103,8 +116,8 @@
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
             sendArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ",";
 		});
+            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+re;
 	}
 </script>
 
