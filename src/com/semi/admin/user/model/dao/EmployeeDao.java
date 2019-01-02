@@ -41,11 +41,11 @@ public class EmployeeDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			
-			pstmt.setInt(1, emp.getEmpId());
-			pstmt.setInt(2, emp.getEmpId());
-			pstmt.setInt(3, emp.getEmpId());
-			pstmt.setInt(4, emp.getEmpId());
-			pstmt.setInt(5, emp.getEmpId());
+			pstmt.setInt(1, emp.getEmpid());
+			pstmt.setInt(2, emp.getEmpid());
+			pstmt.setInt(3, emp.getEmpid());
+			pstmt.setInt(4, emp.getEmpid());
+			pstmt.setInt(5, emp.getEmpid());
 			pstmt.setString(6, emp.getEmpPwd());
 			
 			rset = pstmt.executeQuery();
@@ -53,7 +53,7 @@ public class EmployeeDao {
 			if(rset.next()) {
 				loginUser = new Employee();
 				
-				loginUser.setEmpId(rset.getInt("EMPID"));
+				loginUser.setEmpid(rset.getInt("EMPID"));
 				loginUser.setEmpName(rset.getString("EMPNAME"));
 				loginUser.setEmpPwd(rset.getString("EMPPWD"));
 				loginUser.setApprovePwd(rset.getString("APPROVEPWD"));
@@ -95,7 +95,7 @@ public class EmployeeDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, emp.getEmpId());
+			pstmt.setInt(1, emp.getEmpid());
 			pstmt.setString(2, emp.getEmpName());
 			pstmt.setString(3, emp.getEmpPwd());
 			pstmt.setString(4, emp.getApprovePwd());
@@ -200,7 +200,7 @@ public class EmployeeDao {
 			while (rset.next()) {
 				Employee emp = new Employee();
 				
-				emp.setEmpId(rset.getInt("EMPID"));
+				emp.setEmpid(rset.getInt("EMPID"));
 				emp.setEmpName(rset.getString("EMPNAME"));
 				emp.setEmpPwd(rset.getString("EMPPWD"));
 				emp.setApprovePwd(rset.getString("APPROVEPWD"));
@@ -246,7 +246,7 @@ public class EmployeeDao {
 			if (rset.next()) {
 				emp = new Employee();
 				
-				emp.setEmpId(rset.getInt("EMPID"));
+				emp.setEmpid(rset.getInt("EMPID"));
 				emp.setEmpName(rset.getString("EMPNAME"));
 				emp.setEmpPwd(rset.getString("EMPPWD"));
 				emp.setApprovePwd(rset.getString("APPROVEPWD"));

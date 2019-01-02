@@ -44,6 +44,7 @@
 			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
+				   		if(list.get(i).getSubmission() == "N") {
 				%>
 				<tr>
 					<td><input type="checkbox" name="checkTd"
@@ -54,6 +55,7 @@
 					<td><a class="detailA" href="/semi/selectOne.so?num=<%=list.get(i).getDocNum() %>"><%= list.get(i).getDocNum() %></a></td>
 					<td><%= list.get(i).getWriteDay() %></td>
 				</tr>
+				<% } %>
 				<% } %>
 				<% } %>
 				<% }else { %>

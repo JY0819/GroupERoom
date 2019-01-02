@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Employee implements java.io.Serializable {
 	// emp
-	private int empId;
+	private int empid;
 	private String empName;
 	private String empPwd;
 	private String approvePwd;
@@ -34,12 +34,12 @@ public class Employee implements java.io.Serializable {
 
 
 
-	public Employee(int empId, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
+	public Employee(int empid, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
 			String empAddr, String empPhone, int empVacCount, String adminAuthority, String whetherOfRetire,
 			int photoId, Date entryDay, Date leaveDay, String deptId, String deptName, String positionId,
 			String positionName) {
 		super();
-		this.empId = empId;
+		this.empid = empid;
 		this.empName = empName;
 		this.empPwd = empPwd;
 		this.approvePwd = approvePwd;
@@ -59,13 +59,13 @@ public class Employee implements java.io.Serializable {
 		this.positionName = positionName;
 	}
 
-	public int getEmpId() {
-		return empId;
+	public int getEmpid() {
+		return empid;
 	}
 
 
-	public void setEmpId(int empId) {
-		this.empId = empId;
+	public void setEmpid(int empid) {
+		this.empid = empid;
 	}
 
 
@@ -242,15 +242,12 @@ public class Employee implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", empName=" + empName + ", empPwd=" + empPwd + ", approvePwd=" + approvePwd
+		return "Employee [empid=" + empid + ", empName=" + empName + ", empPwd=" + empPwd + ", approvePwd=" + approvePwd
 				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", empPhone="
 				+ empPhone + ", empVacCount=" + empVacCount + ", adminAuthority=" + adminAuthority
 				+ ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay=" + entryDay
 				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId + ", deptName=" + deptName + ", positionId="
 				+ positionId + ", positionName=" + positionName + "]";
 	}
-
-
-	s
 
 }

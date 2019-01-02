@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
-	int empId = loginUser.getEmpid();
+	int empid = loginUser.getEmpid();
 %>
 
 <style type="text/css">
@@ -40,7 +40,7 @@
 		<i class="far fa-user fa-2x"></i> <i class="fas fa-chevron-down"></i>
 	</div>
 </nav>
-<input type="hidden" value="<%= empId %>" name="empId">
+<input type="hidden" value="<%= empid %>" name="empId">
 <script>
 	$(function() {
 		var empId = $("input[name=empId]").val();

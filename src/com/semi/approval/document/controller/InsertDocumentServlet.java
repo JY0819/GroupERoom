@@ -113,6 +113,7 @@ public class InsertDocumentServlet extends HttpServlet {
 					}
 				}
 			}
+			System.out.println("count값: " +  count);
 			int[] apprNo = new int[count];
 			if(count > 0) {
 				for(int i=0; i<apprNo.length; i++) {
@@ -232,8 +233,9 @@ public class InsertDocumentServlet extends HttpServlet {
 					}
 				}
 			}
-			ApprLine[] apprLine = new ApprLine[apprLineCount.length];
-			for(int i=0; i<apprLine.length; i++) {
+			ApprLine[] apprLine = new ApprLine[apprNo.length];
+			for(int i=0; i<apprNo.length; i++) {
+				apprLine[i] = new ApprLine();
 				apprLine[i].setApprEmpId(apprNo[i]);
 				apprLine[i].setApprOrder(apprLineCount[i]);
 			}

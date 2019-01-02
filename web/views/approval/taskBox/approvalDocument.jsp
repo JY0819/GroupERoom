@@ -115,9 +115,10 @@
 	 		var tr = checkbox.parent().parent().eq(i);
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
+            var re = "re";
             sendArr.push(docNum);
-		});
             location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+re;
+		});
 	}
 </script>
 
