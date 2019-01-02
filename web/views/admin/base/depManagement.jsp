@@ -9,6 +9,25 @@
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "부서 관리";
+	
+	function addDept(){
+		location.href="/semi/views/admin/base/depForm.jsp";
+	}
+	
+	$(function(){
+		$("#listArea td").mouseenter(function(){
+			$(this).parent().css({"background" : "#F2F2F2", "cursor" : "pointer"});
+		}).mouseout(function(){
+			$(this).parent().css({"background" : "white"})
+		}).click(function(){
+			var num = $(this).parent().children().eq(0).text();
+			
+			console.log(num);
+			
+			location.href="<%=request.getContextPath()%>/selectOne.dp?num=" + num;
+			
+		});
+	});
 </script>
 
 <section class="content">
@@ -54,27 +73,6 @@
 		</div>
 		
 	</div>
-	
-	<script>
-		function addDept(){
-			location.href="/semi/views/admin/base/depForm.jsp";
-		}
-		
-		$(function(){
-			$("#listArea td").mouseenter(function(){
-				$(this).parent().css({"background" : "#F2F2F2", "cursor" : "pointer"});
-			}).mouseout(function(){
-				$(this).parent().css({"background" : "white"})
-			}).click(function(){
-				var num = $(this).parent().children().eq(0).text();
-				
-				console.log(num);
-				
-				location.href="<%=request.getContextPath()%>/selectOne.dp?num=" + num;
-				
-			});
-		});
-	</script>
 </section>
 
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
