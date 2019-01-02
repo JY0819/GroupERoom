@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 
 import com.semi.board.Free.model.dao.FreeDao;
+import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
-
+import com.semi.board.notice.model.dao.NoticeDao;
+import com.semi.board.notice.model.vo.Notice;
 
 import static com.semi.common.JDBCTemplate.*;
 
@@ -148,22 +150,92 @@ public class FreeService {
 			return replyList;
 		}
 		//작성자로 검색
-		public ArrayList<Free> searchName(String userName) {
+		/*public ArrayList<Free> searchName(String userName) {
 			Connection con = getConnection();
 			ArrayList<Free> list = new FreeDao().searchName(con, userName);
+			System.out.println("service listsize:"+list.size());
+			close(con);
 			
+			return list;
+		}*/
+		//글 제목으로 검색
+		/*public ArrayList<Free> searchtitle(String title) {
+			Connection con = getConnection();
+			ArrayList<Free> list = new FreeDao().searchTitle(con, title);
+			System.out.println("service listsize:"+list.size());
+			close(con);
+			
+			return list;
+		}*/
+		//이름으로 검색 결과 페이징
+		public ArrayList<Free> searchName(String userName, int currentPage, int limit) {
+			Connection con = getConnection();
+			ArrayList<Free> list = new FreeDao().searchName(userName, con, currentPage, limit);
+			
+			System.out.println("service: "+list.size());
 			close(con);
 			
 			return list;
 		}
-		//글 제목으로 검색
-		public ArrayList<Free> searchtitle(String title) {
+		
+		//글제목으로 검색 결과 페이징
+		public ArrayList<Free> searchTitle(String title, int currentPage, int limit) {
 			Connection con = getConnection();
-			ArrayList<Free> list = new FreeDao().searchTitle(con, title);
+			ArrayList<Free> list = new FreeDao().searchTitle(title, con, currentPage, limit);
 			
+			System.out.println("service: "+list.size());
 			close(con);
 			
 			return list;
+		}
+		//검색 결과 전체 게시글 수
+		public int getSearchTitleListCount(String title) {
+			Connection con = getConnection();
+			
+			int listCount = new FreeDao().getSearchTitleListCount(con, title);
+			
+			close(con);
+			
+			return listCount;
+		}
+		//이름 검색 결과 전체 게시물 수
+		public int getSearchNameListCount(String userName) {
+			Connection con = getConnection();
+			
+			int listCount = new FreeDao().getSearchNameListCount(con, userName);
+			
+			System.out.println("service listCount:"+listCount);
+			close(con);
+			
+			return listCount;
+		}
+		//첨부파일까지 추가해서 글 작성
+		public int insertAttachment(Free f, ArrayList<Attachment> fileList) {
+			Connection con = getConnection();
+			int result = 0;
+			int result1 = new FreeDao().insertFree(con, f);
+			
+			if(result1 > 0) {
+				int ano = new FreeDao().selectCurrval(con); //지금 가지고 있는 시퀀스값을 조회하기 위함
+				
+				for(int i=0;i<fileList.size();i++) {
+					fileList.get(i).setAno(ano);
+				}				
+			}
+			
+			int result2 = new FreeDao().insertAttachment(con, fileList);
+			
+			//트랜잭션 처리
+			if(result1 > 0 && result2 > 0) {
+				commit(con);
+				result = 1; //0보다만 크면 되니까 1 처리 해주기
+			}else {
+				rollback(con);
+			}
+			close(con);
+			
+			return result;
+			
 		}
 	
 	
