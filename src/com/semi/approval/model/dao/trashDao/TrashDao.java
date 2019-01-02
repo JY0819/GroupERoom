@@ -77,7 +77,7 @@ public class TrashDao {
 		return list;
 		
 	}
-	public ArrayList<ApprLine> selectLineList(Connection con) {
+	/*public ArrayList<ApprLine> selectLineList(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<ApprLine> line = null;
@@ -106,7 +106,7 @@ public class TrashDao {
 		
 		
 		return line;
-	}
+	}*/
 	public int deleteTrash(Connection con, int[] apprno) {
 		
 		PreparedStatement pstmt = null;

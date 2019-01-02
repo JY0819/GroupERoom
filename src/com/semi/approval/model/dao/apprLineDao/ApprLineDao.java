@@ -27,7 +27,7 @@ public class ApprLineDao {
 	}
 	
 	
-	public ArrayList<ApprLine> selectList(Connection con) {
+	/*public ArrayList<ApprLine> selectList(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<ApprLine> line = null;
@@ -56,7 +56,7 @@ public class ApprLineDao {
 		
 		
 		return line;
-	}
+	}*/
 
 
 	

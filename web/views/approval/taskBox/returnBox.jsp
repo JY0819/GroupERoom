@@ -24,7 +24,7 @@
 	<div class="content-right container">
 
 		<button class="moveBtn">이동</button>
-		<button class="garbageBtn">삭제</button>
+		<button class="garbageBtn" onclick="sendTrash">삭제</button>
 		<table>
 			<thead>
 				<tr>
@@ -40,6 +40,7 @@
 				</tr>
 			</thead>
 			<tbody>
+				<% if(list != null) { %>
 				<% for(int i=0; i<list.size(); i++) { 
 					   	if(list.get(i).getWriterNum() == employee.getEmpid()) {		
 					%>
@@ -58,7 +59,19 @@
 						<% } %>
 					</tr>
 					<% } %>
-					<%} %>
+					<% } %>
+					<% }else { %>
+					<tr>
+						<td><input type="checkbox" name="checkTd"
+							style="height: 17px; width: 17px;"></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					<% } %>
 			</tbody>
 		</table>
 		<div class="btnArea">
@@ -77,12 +90,37 @@
 </section>
 
 <script>
-	function checkAll() {
-		if ($("#checkAll").is(':checked')) {
-			$("input[name=checkTd]").prop("checked", true);
-		} else {
-			$("input[name=checkTd]").prop("checked", false);
-		}
+/*체크박스 조절*/
+function checkAll() {
+	if ($("#checkAlltr").is(':checked')) {
+		$("input[name=checkTd]").prop("checked", true);
+		$("input[name=checkTd]").parent().parent().addClass("selected");
+		
+	} else {
+		$("input[name=checkTd]").prop("checked", false);
+		$("input[name=checkTd]").parent().parent().removeClass("selected");
 	}
+}
+
+//체크시 색 바뀜
+ $("input:checkbox").on('click', function() { 
+	if ( $(this).prop('checked') ) { 
+	$(this).parent().parent().addClass("selected"); 
+	} 
+	else { 
+	$(this).parent().parent().removeClass("selected"); 
+	} 
+ }); 
+function sendTrash() {
+	var sendArr = new Array();
+	var checkbox = $("input[name=checkTd]:checked");
+ 	checkbox.each(function(i){
+ 		var tr = checkbox.parent().parent().eq(i);
+ 		var td = tr.children();
+        var docNum = td.eq(4).text();
+        sendArr.push(docNum);
+        location.href="<%= request.getContextPath()%>/sendTrash.st?docNum=" + sendArr + ",";
+	});
+}
 </script>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />

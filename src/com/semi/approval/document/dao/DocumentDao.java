@@ -39,15 +39,13 @@ public class DocumentDao {
 		ResultSet rset = null;
 		Document document = null;
 		String query = prop.getProperty("selectForm");
-		
 		try {
 			
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, id);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				document = new Document();
-				document.setManageEmpId(rset.getInt("MANAGEEMPID"));
+				document.setManageEmpId(id);
 				document.setManageDocNo(rset.getInt("MANAGEDOCNO"));
 				document.setManageNo(rset.getInt("MANAGENO"));
 			}
@@ -116,7 +114,7 @@ public class DocumentDao {
 	}
 
 	//appr 삽입
-	public int insertAppr(Connection con, int[] apprNo, ArrayList<Object> list) {
+	public int insertAppr(Connection con, ApprLine[] apprLine, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		Document document = (Document)list.get(0);
@@ -208,6 +206,7 @@ public class DocumentDao {
 			pstmt.setString(9, document.getVacApprReason());
 			pstmt.setInt(10, document.getManageNo());
 			pstmt.setDate(11, document.getVacApprEnd());
+			pstmt.setString(12, document.getSubmission());
 			
 			result = pstmt.executeUpdate();
 
@@ -230,29 +229,37 @@ public class DocumentDao {
 	//문서 조회
 	public ArrayList<MyDocument> selectList(Connection con) {
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rset = null;
+		ResultSet rset2= null;
 		MyDocument myDocument = null;
 		ArrayList<MyDocument> list = null;
 		
-		String query = prop.getProperty("selectList");
+		String query = prop.getProperty("selectList1");
 		
 		try {
 			
 			pstmt = con.prepareStatement(query);
+
 			int count = 1;
-			
 			rset = pstmt.executeQuery();
 			list = new ArrayList<MyDocument>();
+
 			while(rset.next()) {
 				myDocument = new MyDocument();
 				myDocument.setNum(count);
-				myDocument.setWriterNum(rset.getInt("EMPID"));
+				myDocument.setWriterNum(rset.getInt("APPRWRITER"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
-				myDocument.setDocNum(rset.getInt("MANAGEDOCNO"));
-				myDocument.setTitle(rset.getString("MANAGETITLE"));
-				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
-				
+				myDocument.setDocNum(rset.getInt("DOCNO"));
+				String query2 = prop.getProperty("selectList2");
+				pstmt2 = con.prepareStatement(query2);
+				pstmt2.setInt(1, myDocument.getDocNum());
+				rset2 = pstmt2.executeQuery();
+				if(rset2.next()) {
+					myDocument.setTitle(rset2.getString("MANAGETITLE"));
+					myDocument.setWriteDay(rset2.getDate("MANAGEDAY"));
+				}
 				list.add(myDocument);
 				count++;
 			}
@@ -336,7 +343,7 @@ public class DocumentDao {
 		try {
 			
 			pstmt = con.prepareStatement(query);
-			for(int i=0; i<docNumList.length; i++) {
+			for(int i=0; i<docNumList.length-1; i++) {
 				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
 			}
 			result = pstmt.executeUpdate();
@@ -406,5 +413,71 @@ public class DocumentDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public Document selectOne(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Document document = null;
+		
+		String query = prop.getProperty("selectOne");
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				document = new Document();
+				document.setManageEmpId(rset.getInt("MANAGEEMPIE"));
+				document.setManageDocNo(rset.getInt("MANAGEDOCNO"));
+				document.setManageTitle(rset.getString("MANAGETITLE"));
+				document.setManageContents(rset.getString("MANAGECONTENTS"));
+				document.setManageDay(rset.getDate("MANAGEDAY"));
+				document.setManageClass(rset.getString("MANAGECLASS"));
+				document.setVacApprStart(rset.getDate("VACAPPRSTART"));
+				document.setVacApprReason(rset.getString("VACAPPRREASON"));
+				document.setManageNo(rset.getInt("MANAGENO"));
+				document.setVacApprEnd(rset.getDate("VACAPPREND"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return document;
+	}
+
+	public Attachments selectFile(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Attachments attachments = null;
+		
+		String query = prop.getProperty("selectFile");
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				attachments = new Attachments();
+				attachments.setAttachNo(rset.getInt("ATTACHNO"));
+				attachments.setAttachPreName(rset.getString("ATTACHPRENAME"));
+				attachments.setAttachName(rset.getString("ATTACHNAME"));
+				attachments.setAttachPath(rset.getString("ATTACHPATH"));
+				attachments.setAttachDay(rset.getDate("ATTACHDAY"));
+				attachments.setWhetherOfDelete(rset.getString("WHETHEROFDELETE"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attachments;
 	}
 }

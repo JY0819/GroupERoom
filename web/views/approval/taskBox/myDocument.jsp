@@ -41,6 +41,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
 				%>
@@ -50,22 +51,12 @@
 					<td><%= list.get(i).getNum() %></td>
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getDeptName() %></td>
-					<td><%= list.get(i).getDocNum() %></td>
+					<td><a class="detailA" href="/semi/selectOne.so?num=<%=list.get(i).getDocNum() %>"><%= list.get(i).getDocNum() %></a></td>
 					<td><%= list.get(i).getWriteDay() %></td>
 				</tr>
 				<% } %>
-				<%} %>
-				<!-- <tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+				<% } %>
+				<% }else { %>
 				<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
@@ -74,9 +65,8 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td></td>
-					<td></td>
-				</tr> -->
+				</tr>
+				<% } %>
 			</tbody>
 		</table>
 		<div class="btnArea">
@@ -136,8 +126,9 @@
 	 		var td = tr.children();
 	 		
             var docNum = td.eq(4).text();
+            var my = "my";
             trashArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/sendTrash.st?docNum=" + trashArr + ",";
+            location.href="<%= request.getContextPath()%>/sendTrash.st?docNum=" + trashArr + "," + my;
 	 	});
 	}
 </script>
