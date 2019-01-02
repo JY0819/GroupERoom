@@ -1,37 +1,37 @@
-package com.semi.myPage.controller.Msg;
+package com.semi.myPage.controller.Etc;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.myPage.model.Msg.service.MsgService;
+import com.google.gson.Gson;
+import com.semi.myPage.model.Etc.service.AttendService;
 
-@WebServlet("/saveMsgOne")
-public class SaveMessageOne extends HttpServlet {
+@WebServlet("/chkToDayAttend")
+public class CheckToDayAttend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SaveMessageOne() {
+    public CheckToDayAttend() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int msgNo = Integer.parseInt(request.getParameter("msgNo"));
+		int empId = Integer.parseInt(request.getParameter("empId"));
 		
-		int result = new MsgService().saveMsgOne(msgNo);
+		int result = 0;
 		
-		String page = "";
-		if (result > 0) {
-			page = "myPageLockerMessage";
-		}
+		result = new AttendService().chkToDay(empId);
+		// 1 = 오늘 출근함
+		// -1 = 출근 버튼을 누르지 않음
+		// 0 = 오류
 		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
-		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		new Gson().toJson(result, response.getWriter());
 		
 	}
 

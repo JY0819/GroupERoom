@@ -23,4 +23,36 @@ public class AttendService {
 		return list;
 	}
 
+	public ArrayList<Attend> chkAttend(int userId, int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Attend> list = new ArrayList<Attend>();
+		
+		list = new AttendDao().chkAttend(con, userId, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public int getCount(int userId) {
+		Connection con = getConnection();
+		
+		int listCount = new AttendDao().getCount(con, userId);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	public int chkToDay(int empId) {
+		Connection con = getConnection();
+		
+		int result = new AttendDao().chkToDay(con, empId);
+		
+		close(con);
+		
+		return result;
+	}
+
 }

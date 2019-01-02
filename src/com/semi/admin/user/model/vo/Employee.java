@@ -32,14 +32,35 @@ public class Employee implements java.io.Serializable {
 	public Employee() {
 	}
 
-
-	public int getEmpId() {
-		return empId;
+	
+	public Employee(int empid, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
+			String empAddr, String empPhone, int empVacCount, String adminAuthority, String whetherOfRetire,
+			int photoId, Date entryDay, Date leaveDay, String deptId, String deptName,
+			String positionId, String positionName) {
+		super();
+		this.empid = empid;
+		this.empName = empName;
+		this.empPwd = empPwd;
+		this.approvePwd = approvePwd;
+		this.empGender = empGender;
+		this.empBirth = empBirth;
+		this.empAddr = empAddr;
+		this.empPhone = empPhone;
+		this.empVacCount = empVacCount;
+		this.adminAuthority = adminAuthority;
+		this.whetherOfRetire = whetherOfRetire;
+		this.photoId = photoId;
+		this.entryDay = entryDay;
+		this.leaveDay = leaveDay;
+		this.deptId = deptId;
+		this.deptName = deptName;
+		this.positionId = positionId;
+		this.positionName = positionName;
 	}
 
 
-	public void setEmpId(int empId) {
-		this.empId = empId;
+	public int getEmpId() {
+		return empId;
 	}
 
 
@@ -219,9 +240,8 @@ public class Employee implements java.io.Serializable {
 				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", empPhone="
 				+ empPhone + ", empVacCount=" + empVacCount + ", adminAuthority=" + adminAuthority
 				+ ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay=" + entryDay
-				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId + ", deptName=" + deptName + ", positionId="
-				+ positionId + ", positionName=" + positionName + "]";
+				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId
+				+ ", deptName=" + deptName + ", positionId=" + positionId + ", positionName=" + positionName + "]";
 	}
-
 
 }

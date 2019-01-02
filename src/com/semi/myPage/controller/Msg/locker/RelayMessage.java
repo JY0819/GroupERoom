@@ -1,7 +1,6 @@
 package com.semi.myPage.controller.Msg.locker;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.admin.user.model.vo.Employee;
 import com.semi.myPage.model.Msg.service.MsgService;
 import com.semi.myPage.model.Msg.vo.Msg;
 

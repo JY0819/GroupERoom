@@ -115,17 +115,18 @@ var treeviewJson = {
 					  		  ]
 					}
 				   ,{ 
-					  text: "휴가", href: "/semi/myPageLogOfVac"
-					}
-				  ,{
 					  text: "주소록", href: "/semi/views/myPage/addressBook/AddressBook.jsp"
-				   }
-				  ,{
-					  text: "정보 수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
-				   }
-				  ,{
+					}
+				   ,{
+					  text: "휴가", href: "/semi/myPageLogOfVac"
+				   	}
+				   ,{
 					  text: "근태관리", href: "/semi/chkAttend"
-				   }
+				   	}
+				   ,{
+					  text: "정보 수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"
+					  
+				   	}
 			 ]
 			   
 		}

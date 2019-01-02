@@ -3,6 +3,7 @@ package com.semi.myPage.model.Msg.vo;
 import java.sql.Date;
 
 public class Msg implements java.io.Serializable {
+	private int rnum;
 	private int msgNo;
 	private String msgContents;
 	private Date msgSendD;
@@ -14,8 +15,10 @@ public class Msg implements java.io.Serializable {
 		
 	}
 
-	public Msg(int msgNo, String msgContents, Date msgSendD, Date msgReceiveD, String msgSender, String msgReceiver) {
+	public Msg(int rnum, int msgNo, String msgContents, Date msgSendD, Date msgReceiveD, String msgSender,
+			String msgReceiver) {
 		super();
+		this.rnum = rnum;
 		this.msgNo = msgNo;
 		this.msgContents = msgContents;
 		this.msgSendD = msgSendD;
@@ -71,11 +74,19 @@ public class Msg implements java.io.Serializable {
 	public void setMsgReceiver(String msgReceiver) {
 		this.msgReceiver = msgReceiver;
 	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
 
 	@Override
 	public String toString() {
-		return "Msg [msgNo=" + msgNo + ", msgContents=" + msgContents + ", msgSendD=" + msgSendD + ", msgReceiveD="
-				+ msgReceiveD + ", msgSender=" + msgSender + ", msgReceiver=" + msgReceiver + "]";
+		return "Msg [rnum=" + rnum + ", msgNo=" + msgNo + ", msgContents=" + msgContents + ", msgSendD=" + msgSendD
+				+ ", msgReceiveD=" + msgReceiveD + ", msgSender=" + msgSender + ", msgReceiver=" + msgReceiver + "]";
 	}
 
 	

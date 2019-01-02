@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import com.semi.myPage.model.Etc.dao.LogOfVacationDao;
 import com.semi.myPage.model.Etc.vo.LogOfVacation;
-import com.semi.myPage.model.Msg.dao.MsgDao;
 
 public class LogOfVacationService{
 
@@ -21,5 +20,26 @@ public class LogOfVacationService{
 		
 		return list;
 	}
+	
+	public ArrayList<LogOfVacation> ShowMyPageLogOfVac(int userId, int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<LogOfVacation> list = new LogOfVacationDao().ShowMyPageLogOfVac(con, userId, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public int getCount(int userId) {
+		Connection con = getConnection();
+		
+		int listCount = new LogOfVacationDao().getCount(con, userId);
+		
+		close(con);
+		
+		return listCount;
+	}
+
 
 }

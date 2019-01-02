@@ -172,6 +172,17 @@ public class EmployeeDao {
 		return result;
 	}
 
+
+	public String attendCheck(Connection con, Employee emp) {
+		String result = "";
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("attendCheck");
+		
+		
+		return result;
+  }
+    
 	// 사원 리스트 조회
 	public ArrayList<Employee> selectList(Connection con) {
 		Statement stmt = null;
@@ -260,6 +271,7 @@ public class EmployeeDao {
 		}
 		
 		return emp;
+
 	}
 
 	
