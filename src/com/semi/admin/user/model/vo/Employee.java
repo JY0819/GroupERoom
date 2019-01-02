@@ -32,13 +32,14 @@ public class Employee implements java.io.Serializable {
 	public Employee() {
 	}
 
-	
-	public Employee(int empid, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
+
+
+	public Employee(int empId, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
 			String empAddr, String empPhone, int empVacCount, String adminAuthority, String whetherOfRetire,
-			int photoId, Date entryDay, Date leaveDay, String deptId, String deptName,
-			String positionId, String positionName) {
+			int photoId, Date entryDay, Date leaveDay, String deptId, String deptName, String positionId,
+			String positionName) {
 		super();
-		this.empid = empid;
+		this.empId = empId;
 		this.empName = empName;
 		this.empPwd = empPwd;
 		this.approvePwd = approvePwd;
@@ -58,9 +59,13 @@ public class Employee implements java.io.Serializable {
 		this.positionName = positionName;
 	}
 
-
 	public int getEmpId() {
 		return empId;
+	}
+
+
+	public void setEmpId(int empId) {
+		this.empId = empId;
 	}
 
 
@@ -234,14 +239,18 @@ public class Employee implements java.io.Serializable {
 	}
 
 
+
 	@Override
 	public String toString() {
 		return "Employee [empId=" + empId + ", empName=" + empName + ", empPwd=" + empPwd + ", approvePwd=" + approvePwd
 				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", empPhone="
 				+ empPhone + ", empVacCount=" + empVacCount + ", adminAuthority=" + adminAuthority
 				+ ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay=" + entryDay
-				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId
-				+ ", deptName=" + deptName + ", positionId=" + positionId + ", positionName=" + positionName + "]";
+				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId + ", deptName=" + deptName + ", positionId="
+				+ positionId + ", positionName=" + positionName + "]";
 	}
+
+
+	s
 
 }
