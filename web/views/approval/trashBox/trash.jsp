@@ -60,7 +60,7 @@
 			<tbody>
 					
 					<% for(TrashTable trashTable : list) {%>
-						<%if(employee.getEmpName().equals(trashTable.getWriter()) ){ %>
+						<%if(employee.getEmpid() == trashTable.getEmpid()){ %>
 						<tr>
 						<td><input type="checkbox" name="checkTd"
 							style="height: 17px; width: 17px;" ></td>

@@ -48,6 +48,7 @@ public class TrashDao {
 			list = new ArrayList<TrashTable>();
 			while(rset.next()) {
 				TrashTable trashTable = new TrashTable();
+				trashTable.setEmpid(rset.getInt("EMPID"));
 				trashTable.setWriter(rset.getString("EMPNAME"));
 				
 				if(rset2.next()) {
@@ -77,7 +78,7 @@ public class TrashDao {
 		return list;
 		
 	}
-	public ArrayList<ApprLine> selectLineList(Connection con) {
+	/*public ArrayList<ApprLine> selectLineList(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<ApprLine> line = null;
@@ -106,7 +107,7 @@ public class TrashDao {
 		
 		
 		return line;
-	}
+	}*/
 	public int deleteTrash(Connection con, int[] apprno) {
 		
 		PreparedStatement pstmt = null;
@@ -184,6 +185,7 @@ public class TrashDao {
 			
 			while(rset.next()) {
 				TrashTable trashTable = new TrashTable();
+				trashTable.setEmpid(rset.getInt("EMPID"));
 				trashTable.setWriter(rset.getString("EMPNAME"));
 				
 				if(rset2.next()) {
