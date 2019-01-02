@@ -28,7 +28,7 @@
 		<span><a href="<%=request.getContextPath()%>/selectList.no">Board</a></span>
 		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
 		<span><a href="<%=request.getContextPath()%>/myPageMain">MyPage</a></span>
-		<span><a href="/semi/views/admin/user/userList.jsp">Admin</a></span>
+		<span><a href="<%=request.getContextPath()%>/memberList.me">Admin</a></span>
 		
 		
 	</div>

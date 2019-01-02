@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.semi.admin.base.model.dao.DepartmentDao;
+import com.semi.admin.base.model.vo.Department;
 import com.semi.admin.user.model.dao.EmployeeDao;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.common.service.CommonSeqService;
@@ -73,6 +75,28 @@ public class EmployeeService {
 		close(con);
 		
 		return result;
+	}
+
+	// 사원 리스트 조회
+	public ArrayList<Employee> selectList() {
+		Connection con = getConnection();
+
+		ArrayList<Employee> list = new EmployeeDao().selectList(con);
+
+		close(con);
+
+		return list;
+	}
+
+	// 사원 상세보기
+	public Employee selectOne(String num) {
+		Connection con = getConnection();
+
+		Employee emp = new EmployeeDao().selectOne(con, num);
+
+		close(con);
+
+		return emp;
 	}
 
 	
