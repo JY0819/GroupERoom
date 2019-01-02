@@ -97,6 +97,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			String wDate = multipartRequest.getParameter("date");
 			String reason = multipartRequest.getParameter("reason");
 			String content = multipartRequest.getParameter("content");
+			String submission = "N";
 			//===================================================
 			//결재번호 받기
 			int count = 0;
@@ -214,28 +215,28 @@ public class InsertDocumentServlet extends HttpServlet {
 			document.setVacApprReason(reason);
 			document.setManageNo(num);
 			document.setVacApprEnd(endDay);
+			document.setSubmission(submission);
 			
 			//결재선 객체 생성
-			int apprLineCount = 0;
-			String apprName = "";
+			int[] apprLineCount = new int[3];
+			String[] apprName = new String[3];
 			if(!appr1.equals("")) {
-				apprLineCount++;
-				apprName = appr1;
+				apprLineCount[0] = 1;
+				apprName[0] = appr1;
 				if(!appr2.equals("")) {
-					apprLineCount++;
-					apprName = appr2;
+					apprLineCount[1] = 2;
+					apprName[1] = appr2;
 					if(!appr3.equals("")) {
-						apprLineCount++;
-						apprName = appr3;
+						apprLineCount[2] = 3;
+						apprName[2] = appr3;
 					}
 				}
 			}
-			ApprLine[] apprLine = new ApprLine[apprLineCount];
-			apprLine[0] = new ApprLine();
-			apprLine[0].setApprEmpId(apprNo[apprNo.length-1]);
-			apprLine[0].setApprOrder(apprLineCount);
-			System.out.println("결재차수: " + apprLineCount);
-			
+			ApprLine[] apprLine = new ApprLine[apprLineCount.length];
+			for(int i=0; i<apprLine.length; i++) {
+				apprLine[i].setApprEmpId(apprNo[i]);
+				apprLine[i].setApprOrder(apprLineCount[i]);
+			}
 		/*	if(!appr1.equals("")) {
 				apprLine[0] = new ApprLine();
 				apprLine[0].setApprEmpId(appr1);
@@ -266,7 +267,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			list.add(document);
 			list.add(apprLine);
 			
-			int result = new DocumentService().insertDocument(list, apprNo, fileList);
+			int result = new DocumentService().insertDocument(list, apprLine, fileList);
 
 			if(result > 0) {
 				System.out.println("내문서함으로 서블릿 이동!");

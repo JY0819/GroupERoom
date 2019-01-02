@@ -10,35 +10,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.approval.document.service.DocumentService;
+import com.semi.approval.document.vo.Document;
+import com.semi.common.vo.Attachments;
 
-@WebServlet("/sendTrash.st")
-public class SendTrashServlet extends HttpServlet {
+@WebServlet("/selectOne.so")
+public class SelectOne extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SendTrashServlet() {
+    public SelectOne() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] docNumList = request.getParameter("docNum").split(",");
-		String pageName = docNumList[docNumList.length-1];
-		
-		int result = new DocumentService().sendTrashList(docNumList);
+		int num = Integer.parseInt(request.getParameter("num"));
+		Document document = new DocumentService().selectOne(num);
+		Attachments attachments = new DocumentService().selectFile(num);
 		
 		String page = "";
-		if(result > 0) {
-			if(pageName.equals("my")) {
-				page = "/semi/selectDocument.sd";
-			}else if(pageName.equals("re")) {
-				page ="/semi/returnBox.rb";
-			}
-			response.sendRedirect(page);	
+		if(document != null && attachments != null) {
+			page = "views/approval/documentList/documentDetail.jsp";
+			request.setAttribute("document", document);
+			request.setAttribute("attachments", attachments);
 		}else {
-			page = "views/common.errorPage";
-			request.setAttribute("msg", "문서조회실패");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "문서조회 실패");
 		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

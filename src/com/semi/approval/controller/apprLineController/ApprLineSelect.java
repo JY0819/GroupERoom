@@ -32,7 +32,7 @@ public class ApprLineSelect extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<ApprLine> line = new ApprLineService().selectList();
+		/*ArrayList<ApprLine> line = new ApprLineService().selectList();
 		String page = "";
 		if(line != null) {
 			request.setAttribute("line", line);
@@ -42,7 +42,7 @@ public class ApprLineSelect extends HttpServlet {
 			page = "views/approval/common/errorPage.jsp";
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		view.forward(request, response);*/
 	}
 
 	/**
