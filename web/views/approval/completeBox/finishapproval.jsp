@@ -47,14 +47,15 @@
 			</thead>
 			<tbody>
 				<%for(FinishApproval finish : list) {%>
-				<%if(employee.getEmpName().equals(finish.getApprWriter())){ %>
+				<%if(employee.getEmpid() == finish.getEmpid()){ %>
 				<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
 					<td><%= finish.getApprNo() %></td>
 					<td><%= finish.getApprWriter() %></td>
 					<td><%= finish.getDocNo() %></td>
-					<td><%= finish.getResult() %></td>
+					<% if(finish.getResult().equals("Y")) %>
+					<td><%= finish.getResult().replaceAll("Y", "승인") %></td>
 					<td><%= finish.getOpinion() %></td>
 					<td><%= finish.getApprDay() %></td>
 					<td><%= finish.getApprDate() %></td>

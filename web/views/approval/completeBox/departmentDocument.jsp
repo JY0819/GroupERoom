@@ -23,8 +23,8 @@
 				<tr>
 					<th><input type="checkbox" name="checkAll" id="checkAll"
 						onclick="checkAll();" style="height: 17px; width: 17px;"></th>
-					<th>번 호</th>
-					<th>부 서 명</th>
+					<th>결 재 번 호</th>
+					<th>작 성 자</th>
 					<th>문 서 번 호</th>
 					<th>결 과</th>
 					<th>의 견</th>
