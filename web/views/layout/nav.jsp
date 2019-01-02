@@ -18,8 +18,7 @@
 	}
 	function openHome() {
 		location.href="/semi/views/main/home.jsp";
-	}
-	
+	}	
 </script>
 
 <nav class="navigation">
@@ -62,5 +61,52 @@
 				console.log("출근 데이터 서버 통신 실패");	
 			}
 		});
-	})
+	});
+	</script>
+	
+	<script> //메모 불러오기
+	function openMemo(){
+		var memoEmpId=<%=loginUser.getEmpid()%>;
+		console.log("empid:"+memoEmpId)
+		console.log("메모");
+		$.ajax({
+			url:"select.memo",
+			type:"post",
+			data:{empId:memoEmpId},
+			success:function(data){
+				console.log("메모 ajax 전송 성공 실패");
+				console.log("result:"+data);
+				var $memoDiv=$("#memoDiv");
+				var $memoArea=$("#memoArea");
+				$memoArea.val(data);
+				
+			},
+			error:function(data){
+				console.log("메모 ajax 전송 실패");
+			},
+			complete:function(data){
+				console.log("메모 ajax");
+			}
+		});
+	}
+	
+	$("#memoArea").focusout(function(){
+		var memoContents=("#memoArea").val();
+		$.ajax({
+			url:"insert.memo",
+			type:"post",
+			data:{memoContents:memoContents, empId:empId},
+			success:function(data){
+				
+			},
+			error:function(data){
+				console.log("메모 저장 ajax 통신 실패");
+			},
+			complete:function(data){
+				console.log("메모 저장 ajax");
+			}
+		});
+	});
+	
+	
 </script>

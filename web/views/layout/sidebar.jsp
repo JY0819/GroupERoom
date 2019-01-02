@@ -3,5 +3,8 @@
 <div id="sidemenu" class="sidebar">
 	<a href="#" class="closebtn" onclick='closeNav()'> <i
 		class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>
-	</a> <a href="#" style="width:300px;">회원정보</a> <a href="#" style="width:300px;">메모</a>
+	</a> <a href="#" style="width:300px;">회원정보</a> <a href="#" onclick='openMemo()' style="width:300px;">메모</a>
+	<div id="memoDiv">
+		<textarea id="memoArea" rows="25" cols="40"></textarea>
+	</div>
 </div>

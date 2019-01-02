@@ -287,8 +287,8 @@ public class ScheduleDao {
 				sche.setEmpId(rset.getInt("EMPID"));
 				sche.setDeptId(rset.getString("DEPTID"));
 				
-				
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
