@@ -81,8 +81,8 @@ var treeviewJson = {
 				   ,{ 
 					  text: "완료 문서함"
 					 ,nodes: [
-						 		{text: "부서 문서함", href: "/semi/documentAppr.do"}
-						 	   ,{text: "결재한 문서", href: "/semi/finishappr.fi"}
+						 		/*{text: "부서 문서함", href: "/semi/documentAppr.do"},*/
+						 	   {text: "결재한 문서", href: "/semi/finishappr.fi"}
 					 		]
 					}
 				  ,{
