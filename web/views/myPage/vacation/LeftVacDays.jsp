@@ -1,4 +1,4 @@
-<%@page import="oracle.net.aso.b"%>
+<%@page import="com.semi.myPage.model.Etc.vo.PageInfo"%>
 <%@page import="com.semi.myPage.model.Etc.vo.LogOfVacation"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,6 +6,14 @@
 
 <% 
 	ArrayList<LogOfVacation> list = (ArrayList<LogOfVacation>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
 	int count = 1;
 	boolean exist = false;
 	if(list.size() == 0){
@@ -74,7 +82,7 @@
 				<% 	for(LogOfVacation lv : list) { %>
 					<% if(lv.getType().equals("반차")) { %>
 				<tr>
-					<td class="line"><%= lv.getNo() %></td>
+					<td class="line"><%= listCount - lv.getRnum() + 1 %></td>
 					<td class="line"><%= lv.getType() %></td>
 					<td class="line"><%= lv.getUseStart() %></td>
 					<td class="line"><%= lv.getUseReason() %></td>
@@ -82,7 +90,7 @@
 				</tr>
 					<% } else if(lv.getDays() > 1){ %>
 				<tr>
-					<td class="line"><%= lv.getNo() %></td>
+					<td class="line"><%= listCount - lv.getRnum() + 1 %></td>
 					<td class="line"><%= lv.getType() %></td>
 					<td class="line"><%= lv.getUseStart() %> ~ <%= lv.getUseEnd() %></td>
 					<td class="line"><%= lv.getUseReason() %></td>
@@ -90,7 +98,7 @@
 				</tr>
 					<% } else { %>
 				<tr>
-					<td class="line"><%= lv.getNo() %></td>
+					<td class="line"><%= listCount - lv.getRnum() + 1 %></td>
 					<td class="line"><%= lv.getType() %></td>
 					<td class="line"><%= lv.getUseStart() %></td>
 					<td class="line"><%= lv.getUseReason() %></td>
@@ -107,11 +115,17 @@
 			</table>
 			<div class="paging" align="center">
 				<ul class="pagination">
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
+				
+					<% for(int p = startPage; p <= endPage; p++) {
+							if(p == currentPage) {
+					%>
+							<li><a href="#"><%= p %></a></li>
+					<%		} else { %>
+							<li><a href="<%=request.getContextPath()%>/myPageLogOfVac?currentPage=<%= p %>"><%= p %></a></li>
+					<%		} %>
+					
+					<% } %>
+					
 				</ul>
 			</div>
 		</div>

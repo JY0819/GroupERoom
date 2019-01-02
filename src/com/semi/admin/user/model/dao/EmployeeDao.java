@@ -171,6 +171,16 @@ public class EmployeeDao {
 		return result;
 	}
 
+	public String attendCheck(Connection con, Employee emp) {
+		String result = "";
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("attendCheck");
+		
+		
+		return result;
+	}
+
 	
 
 }

@@ -1,3 +1,4 @@
+<%@page import="com.semi.myPage.model.Etc.vo.PageInfo"%>
 <%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,15 @@
 
 <% 
 	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
+
 	int count = 1;
 	int listSize = list.size();
 	boolean exist = false;
@@ -85,7 +95,7 @@
 							<% 		for(Msg m : list) { %>
 							<tr>
 								<td class="line">
-									<input type="checkbox" name="chkList" value="<%= m.getMsgNo() %>">&nbsp; &nbsp;<%= listSize %>
+									<input type="checkbox" name="chkList" value="<%= m.getMsgNo() %>">&nbsp; &nbsp;<%= listCount - m.getRnum() + 1 %>
 								</td>
 								<td class="line"><%= m.getMsgSendD() %></td>
 								<td class="line"><%= m.getMsgSender() %></td>
@@ -106,11 +116,17 @@
 			</table>
 			<div class="paging" align="center">
 				<ul class="pagination">
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
+					
+					<% for(int p = startPage; p <= endPage; p++) {
+							if(p == currentPage) {
+					%>
+							<li><a href="#"><%= p %></a></li>
+					<%		} else { %>
+							<li><a href="<%=request.getContextPath()%>/myPageLockerMessage?currentPage=<%= p %>"><%= p %></a></li>
+					<%		} %>
+					
+					<% } %>
+
 				</ul>
 			</div>
 		</div>

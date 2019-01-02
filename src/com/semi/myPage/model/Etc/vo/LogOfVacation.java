@@ -3,6 +3,7 @@ package com.semi.myPage.model.Etc.vo;
 import java.sql.Date;
 
 public class LogOfVacation {
+	private int rnum;
 	private int no;
 	private String useReason;
 	private Date useStart;
@@ -15,9 +16,10 @@ public class LogOfVacation {
 	
 	public LogOfVacation() {}
 	
-	public LogOfVacation(int no, String useReason, Date useStart, Date useEnd, Date useVacAppDay, String empId,
-			String apprEmpId, String type, int days) {
+	public LogOfVacation(int rnum, int no, String useReason, Date useStart, Date useEnd, Date useVacAppDay,
+			String empId, String apprEmpId, String type, int days) {
 		super();
+		this.rnum = rnum;
 		this.no = no;
 		this.useReason = useReason;
 		this.useStart = useStart;
@@ -28,7 +30,7 @@ public class LogOfVacation {
 		this.type = type;
 		this.days = days;
 	}
-	
+
 	public String getUseReason() {
 		return useReason;
 	}
@@ -102,11 +104,19 @@ public class LogOfVacation {
 		this.no = no;
 	}
 
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
 	@Override
 	public String toString() {
-		return "LogOfVacation [no=" + no + ", useReason=" + useReason + ", useStart=" + useStart + ", useEnd=" + useEnd
-				+ ", useVacAppDay=" + useVacAppDay + ", empId=" + empId + ", apprEmpId=" + apprEmpId + ", type=" + type
-				+ ", days=" + days + "]";
+		return "LogOfVacation [rnum=" + rnum + ", no=" + no + ", useReason=" + useReason + ", useStart=" + useStart
+				+ ", useEnd=" + useEnd + ", useVacAppDay=" + useVacAppDay + ", empId=" + empId + ", apprEmpId="
+				+ apprEmpId + ", type=" + type + ", days=" + days + "]";
 	}
 	
 	

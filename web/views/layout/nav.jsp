@@ -1,4 +1,9 @@
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
+	int empId = loginUser.getEmpid();
+%>
 
 <style type="text/css">
 	.custom_icon_size_2_5{font-size: 2.5rem;}
@@ -29,11 +34,32 @@
 		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
 		<span><a href="<%=request.getContextPath()%>/myPageMain">MyPage</a></span>
 		<span><a href="/semi/views/admin/user/userList.jsp">Admin</a></span>
-		
-		
 	</div>
 	
 	<div class="nav-right">
 		<i class="far fa-user fa-2x"></i> <i class="fas fa-chevron-down"></i>
 	</div>
 </nav>
+<input type="hidden" value="<%= empId %>" name="empId">
+<script>
+	$(function() {
+		var empId = $("input[name=empId]").val();
+		$.ajax({
+			url:"chkToDayAttend",
+			data:{empId:empId},
+			type:"get",
+			success: function(data) {
+				if (data == 1) {
+					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR'>퇴근</a></span>");
+				} else if (data == -1) {
+					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR'>출근</a></span>");
+				} else {
+					console.log("오류");
+				}
+				
+			},error:function(data){ // 데이터 통신에 실패한 것
+				console.log("출근 데이터 서버 통신 실패");	
+			}
+		});
+	})
+</script>

@@ -19,6 +19,16 @@ public class MsgService {
 		
 		return list;
 	}
+	
+	public ArrayList<Msg> showMyPageMain(int userId, int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Msg> list = new MsgDao().selectList(con, userId, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
 
 	public int deleteMsg(ArrayList<Integer> deletelist) {
 		Connection con = getConnection();
@@ -49,6 +59,16 @@ public class MsgService {
 		
 		return list;
 	}
+	
+	public ArrayList<Msg> showMyPageSendMessage(int userId, int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Msg> list = new MsgDao().showMyPageSendMessage(con, userId, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
 
 	public ArrayList<Msg> ShowMyPageLockerMessage(int userId) {
 		Connection con = getConnection();
@@ -59,6 +79,18 @@ public class MsgService {
 		
 		return list;
 	}
+	
+
+	public ArrayList<Msg> ShowMyPageLockerMessage(int userId, int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Msg> list = new MsgDao().ShowMyPageLockerMessage(con, userId, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+	
 
 	public Msg messageDetail(Msg msg) {
 		Connection con = getConnection();
@@ -109,5 +141,36 @@ public class MsgService {
 		
 		return result;
 	}
+
+	public int getListCount(int userId) {
+		Connection con = getConnection();
+		
+		int listCount = new MsgDao().getListCount(con, userId);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	public int getSendListCount(int userId) {
+		Connection con = getConnection();
+		
+		int listCount = new MsgDao().getSendListCount(con, userId);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	public int getLockerCount(int userId) {
+		Connection con = getConnection();
+		
+		int listCount = new MsgDao().getLockerCount(con, userId);
+		
+		close(con);
+		
+		return listCount;
+	}
+
 
 }

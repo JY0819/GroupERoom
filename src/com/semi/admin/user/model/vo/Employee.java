@@ -31,12 +31,11 @@ public class Employee implements java.io.Serializable {
 	
 	public Employee() {
 	}
-
-
+	
 	public Employee(int empid, String empName, String empPwd, String approvePwd, String empGender, Date empBirth,
 			String empAddr, String empPhone, int empVacCount, String adminAuthority, String whetherOfRetire,
-			int photoId, Date entryDay, Date leaveDay, String deptId, String deptName, String positionId,
-			String positionName) {
+			int photoId, Date entryDay, Date leaveDay, String deptId, String deptName,
+			String positionId, String positionName) {
 		super();
 		this.empid = empid;
 		this.empName = empName;
@@ -58,7 +57,6 @@ public class Employee implements java.io.Serializable {
 		this.positionName = positionName;
 	}
 
-	
 	public int getEmpid() {
 		return empid;
 	}
@@ -203,17 +201,15 @@ public class Employee implements java.io.Serializable {
 		this.positionName = positionName;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Employee [empid=" + empid + ", empName=" + empName + ", empPwd=" + empPwd + ", approvePwd=" + approvePwd
 				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", empPhone="
 				+ empPhone + ", empVacCount=" + empVacCount + ", adminAuthority=" + adminAuthority
 				+ ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay=" + entryDay
-				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId + ", deptName=" + deptName + ", positionId="
-				+ positionId + ", positionName=" + positionName + "]";
+				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId
+				+ ", deptName=" + deptName + ", positionId=" + positionId + ", positionName=" + positionName + "]";
 	}
-
 	
 	
 }

@@ -65,6 +65,51 @@ public class MsgDao {
 		
 		return list;
 	}
+	
+	
+	public ArrayList<Msg> selectList(Connection con, int userId, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Msg> list = null;
+		
+		String query = prop.getProperty("selectMsgList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			pstmt.setInt(1, userId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Msg>();
+			
+			while(rset.next()) {
+				Msg m = new Msg();
+				
+				m.setRnum(rset.getInt("rnum"));
+				m.setMsgNo(rset.getInt("msgNo"));
+				m.setMsgContents(rset.getString("msgContents"));
+				m.setMsgSendD(rset.getDate("msgSendD"));
+				m.setMsgSender(rset.getString("sender"));
+				m.setMsgReceiver(rset.getString("receiver"));
+				
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
 
 
 	public int deleteMsg(Connection con, ArrayList<Integer> deletelist) {
@@ -155,6 +200,49 @@ public class MsgDao {
 		
 		return list;
 	}
+	
+	public ArrayList<Msg> showMyPageSendMessage(Connection con, int userId, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Msg> list = new ArrayList<Msg>();
+		
+		query = prop.getProperty("showMyPageSendMessagePaging");
+		
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, userId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Msg m = new Msg();
+				
+				m.setRnum(rset.getInt("rnum"));
+				m.setMsgNo(rset.getInt("msgNo"));
+				m.setMsgContents(rset.getString("msgContents"));
+				m.setMsgSendD(rset.getDate("msgSendD"));
+				m.setMsgSender(rset.getString("sender"));
+				m.setMsgReceiver(rset.getString("receiver"));
+				
+				list.add(m);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 
 
 	public ArrayList<Msg> ShowMyPageLockerMessage(Connection con, int userId) {
@@ -174,6 +262,50 @@ public class MsgDao {
 			while(rset.next()) {
 				Msg m = new Msg();
 				
+				m.setMsgNo(rset.getInt("msgNo"));
+				m.setMsgContents(rset.getString("msgContents"));
+				m.setMsgSendD(rset.getDate("msgSendD"));
+				m.setMsgSender(rset.getString("sender"));
+				m.setMsgReceiver(rset.getString("receiver"));
+				
+				list.add(m);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+
+	public ArrayList<Msg> ShowMyPageLockerMessage(Connection con, int userId, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Msg> list = new ArrayList<Msg>();
+		
+		query = prop.getProperty("ShowMyPageLockerMessagePaging");
+		
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, userId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Msg m = new Msg();
+				
+				m.setRnum(rset.getInt("rnum"));
 				m.setMsgNo(rset.getInt("msgNo"));
 				m.setMsgContents(rset.getString("msgContents"));
 				m.setMsgSendD(rset.getDate("msgSendD"));
@@ -403,6 +535,87 @@ public class MsgDao {
 		
 		
 		return result;
+	}
+	
+
+	public int getListCount(Connection con, int userId) {
+		PreparedStatement pstmt = null;
+		int listCount = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+
+	public int getSendListCount(Connection con, int userId) {
+		PreparedStatement pstmt = null;
+		int listCount = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listSendCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+
+	public int getLockerCount(Connection con, int userId) {
+		PreparedStatement pstmt = null;
+		int listCount = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listLockerCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return listCount;
 	}
 
 

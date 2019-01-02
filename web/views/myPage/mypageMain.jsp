@@ -1,9 +1,18 @@
+<%@page import="com.semi.myPage.model.Etc.vo.PageInfo"%>
 <%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <% 
 	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+
 	int count = 1;
 	boolean exist = false;
 	if(list.size() == 0){
@@ -101,7 +110,7 @@
 							</tr>
 							<% 		for(Msg m : list) { %>
 							<tr>
-								<td class="line"><%= m.getMsgNo() %></td>
+								<td class="line"><%= listCount - m.getRnum() + 1 %></td>
 								<td class="line"><%= m.getMsgSendD() %></td>
 								<td class="line"><%= m.getMsgSender() %></td>
 								<td class="line"><%= m.getMsgReceiver() %></td>
@@ -157,6 +166,21 @@
 					</td>
 				</tr>
 			</table>
+			<div class="paging" align="center">
+				<ul class="pagination">
+					
+					<% for(int p = startPage; p <= endPage; p++) {
+							if(p == currentPage) {
+					%>
+							<li><a href="#"><%= p %></a></li>
+					<%		} else { %>
+							<li><a href="<%=request.getContextPath()%>/myPageMain?currentPage=<%= p %>"><%= p %></a></li>
+					<%		} %>
+					
+					<% } %>
+
+				</ul>
+			</div>
 		</div>
 	</div>
 </section>
