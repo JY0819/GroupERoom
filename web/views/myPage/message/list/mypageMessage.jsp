@@ -47,6 +47,13 @@
 	border-collapse: collapse;
 	padding: 8px;
 	text-align: center;
+	height: 40px;
+}
+#msgContents{
+	width: 300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap; 
 }
 #messageList{
 	width: 700px;
@@ -100,7 +107,7 @@
 								<th class="line">보낸 날짜</th>
 								<th class="line">보낸 사람</th>
 								<th class="line">받는 사람</th>
-								<th class="line" style="width: 300px;">내용</th>
+								<th class="line" id="msgContents" style="width: 300px;">내용</th>
 							</tr>
 							<% 		for(Msg m : list) { %>
 							<tr>
@@ -110,7 +117,7 @@
 								<td class="line"><%= m.getMsgSendD() %></td>
 								<td class="line"><%= m.getMsgSender() %></td>
 								<td class="line"><%= m.getMsgReceiver() %></td>
-								<td class="line"><a href="<%=request.getContextPath()%>/myPageMessageDetail?msgno=<%= m.getMsgNo() %>&sendList=false" style="color: black;"><%= m.getMsgContents() %></a></td>
+								<td class="line" id="msgContents"><a href="<%=request.getContextPath()%>/myPageMessageDetail?msgno=<%= m.getMsgNo() %>&sendList=false" style="color: black;"><%= m.getMsgContents() %></a></td>
 							</tr>
 							<% 		count++; %>
 							<% 		} %>
