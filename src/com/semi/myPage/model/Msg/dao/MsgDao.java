@@ -295,7 +295,8 @@ public class MsgDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			
+			System.out.println(startRow);
+			System.out.println(endRow);
 			pstmt.setInt(1, userId);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
