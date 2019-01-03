@@ -445,12 +445,14 @@ public class ScheduleDao {
 			close(rset);
 			close(pstmt);
 		}
+		
 		return empIdList;
 	}
 
 	public HashMap<Integer, ArrayList<DeptEmp>> selectDeptEmp(Connection con, Integer integer) {
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
+		
 		
 		HashMap<Integer, ArrayList<DeptEmp>> hmap=null;
 		ArrayList<DeptEmp> list=null;
