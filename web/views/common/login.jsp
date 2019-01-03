@@ -1,10 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.semi.admin.user.model.vo.Employee"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="com.semi.admin.user.model.vo.Employee"%>
 <%
 	Employee loginUser = (Employee) session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="bootstrap-msg-0.4.0.min.css">
+<script src="bootstrap-msg-0.4.0.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -68,16 +71,21 @@ body {
 
 	<div class="login-page">
 		<div class="form">
-			<form class="loginForm" action="<%=request.getContextPath()%>/login.me" method="post">
+			<form class="loginForm"
+				action="<%=request.getContextPath()%>/login.me" method="post">
 				<input type="text" name="userId" placeholder="userId">
-				<input type="password" name="userPwd" placeholder="password">
+				<input type="password" class="form-control" name="userPwd" placeholder="password" onkeypress="caps_lock(event)">
 				<input type="submit" id="login" value="LOGIN" onclick="login();">
 			</form>
 		</div>
 	</div>
-	
+
+
+
+
+
 	<script>
-		function login(){
+		function login() {
 			$("#loginForm").submit();
 		}
 	</script>
