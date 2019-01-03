@@ -68,6 +68,7 @@ public class Employee implements java.io.Serializable {
   
 	public void setEmpid(int empid) {
 		this.empid = empid;
+
 	}
 
 
@@ -254,7 +255,6 @@ public class Employee implements java.io.Serializable {
 				+ ", leaveDay=" + leaveDay + ", deptId=" + deptId + ", deptName=" + deptName + ", positionId="
 				+ positionId + ", positionName=" + positionName + "]";
 	}
-
 
 
 }

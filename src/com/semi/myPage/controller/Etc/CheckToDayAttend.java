@@ -21,7 +21,6 @@ public class CheckToDayAttend extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int empId = Integer.parseInt(request.getParameter("empId"));
-		
 		int result = 0;
 		
 		result = new AttendService().chkToDay(empId);
@@ -30,7 +29,7 @@ public class CheckToDayAttend extends HttpServlet {
 		// 0 = 오류
 		
 		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+
 		new Gson().toJson(result, response.getWriter());
 		
 	}
