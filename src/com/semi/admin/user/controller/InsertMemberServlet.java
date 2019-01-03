@@ -18,6 +18,8 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 import com.semi.admin.user.model.service.EmployeeService;
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.admin.user.model.vo.LogDepartment;
+import com.semi.admin.user.model.vo.LogPosition;
 import com.semi.common.MyFileRenamePolicy;
 import com.semi.common.vo.Attachments;
 
@@ -63,6 +65,27 @@ public class InsertMemberServlet extends HttpServlet {
 			String miltiEntryDay = multiRequest.getParameter("entryDay");
 			String multiAdminYN = multiRequest.getParameter("adminYN");
 			String multiApprovePwd = multiRequest.getParameter("approvePwd");
+			String multiDept = multiRequest.getParameter("dept");
+			String multiPosition = multiRequest.getParameter("position");
+			
+			
+			/*String[] err = multiRequest.getParameterValues("dept");
+			String[] prr = multiRequest.getParameterValues("position");
+			String dept = "";
+			if (err != null) {
+				for (int i = 0; i < err.length; i++)
+					if (i == 0) {
+						dept = err[i];
+					}
+			}
+			String position = "";
+			if (prr != null) {
+				for (int i = 0; i < prr.length; i++)
+					if (i == 0) {
+						position = prr[i];
+					}
+			}*/
+			
 
 			// 사원 생일
 			java.sql.Date birth = null;
@@ -107,6 +130,13 @@ public class InsertMemberServlet extends HttpServlet {
 			emp.setAdminAuthority(multiAdminYN);
 			emp.setApprovePwd(multiApprovePwd);
 			
+			LogDepartment ld = new LogDepartment();
+			ld.setDeptId(multiDept);
+			
+			LogPosition lp = new LogPosition();
+			lp.setPositionId(multiPosition);
+			
+			
 			ArrayList<Attachments> fileList = new ArrayList<Attachments>();
 			for(int i = originFiles.size() - 1; i >= 0; i--) {
 				Attachments at = new Attachments();
@@ -118,13 +148,12 @@ public class InsertMemberServlet extends HttpServlet {
 			}
 																		
 			
-			int result = new EmployeeService().insertEmployee(emp, fileList);
+			int result = new EmployeeService().insertEmployee(emp, fileList, ld, lp);
 			
 			if(result > 0) {
 				request.getSession().setAttribute("msg", "사원 등록에 성공했습니다.");
-				response.sendRedirect("views/common/successPage.jsp");
+				response.sendRedirect("/semi/memberList.me");
 			} else {
-				
 				for(int i = 0; i < saveFiles.size(); i++) {
 					File failedFile = new File(filePath + saveFiles.get(i));
 					// true / false 리턴

@@ -64,13 +64,11 @@ public class Employee implements java.io.Serializable {
 		return empid;
 	}
 
-
   
 	public void setEmpid(int empid) {
 		this.empid = empid;
 
 	}
-
 
 
 	public String getEmpName() {
@@ -241,7 +239,6 @@ public class Employee implements java.io.Serializable {
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
-
 
 
 	@Override

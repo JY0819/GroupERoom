@@ -51,7 +51,7 @@
 				%>
 				
 				<tr>
-					<td><%=emp.getEmpId()%></td>
+					<td><%=emp.getEmpid()%></td>
 					<td><%=emp.getEmpName()%></td>
 	<%-- 				<td><%=emp.getDeptName()%></td> --%>
 	<%-- 				<td><%=emp.getPositionName()%></td> --%>
