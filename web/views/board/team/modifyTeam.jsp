@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!-- admin 만 글 작성 가능 -->
+	pageEncoding="UTF-8" import="com.semi.board.team.model.vo.*, com.semi.admin.user.model.vo.*"%>
+<%
+	
+	Team t = (Team)request.getAttribute("t"); 
+	Employee loginUser = (Employee)session.getAttribute("loginUser");
+%>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
@@ -37,27 +41,32 @@ body {
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
-							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">부서게시판 글 작성</th>
+							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">부서게시판 글 수정</th>
 						</tr> 
 					</thead>
-
+<form action="", method="post" id="editTable">
 					<tbody>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="부서" maxlength="30"></td>
+						<td><input type="text" name="deptId" class="form-control" value="<%=t.getDeptId() %>" maxlength="30" readOnly></td>
+					</tr>
+					<tr>
+						<td><input type="hidden" id="bno" value="<%=t.getBno() %>" name="bno" >
+						
+						</td>
 						
 					</tr>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="작성자" maxlength="30"></td>
+						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 						<tr>
 							<td>
-							<input type="text" class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
+							<input type="text" name ="title"class="form-control" value="<%=t.getbTitle() %>" maxlength="50">
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<textarea class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
+							<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=t.getbContent() %></textarea>	
 							</td>
 						</tr>
 					</tbody>
@@ -105,8 +114,18 @@ body {
 		
 		$(function(){
 			$("#gotoList").click(function(){
-				location.href="/semi/views/board/team/boardTeam.jsp";
+				location.href="/semi/selectList.tm";
 			});
+		});
+		
+		$(function(){
+			$("#enrollBtn").click(function(){
+				
+				$("#editTable").attr("action", "<%=request.getContextPath()%>/updateTeam.tm");
+				$("#editTable").submit();
+				
+			});
+			
 		});
 	</script>
 	

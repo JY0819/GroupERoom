@@ -1,28 +1,29 @@
-package com.semi.board.Free.controller;
+package com.semi.board.team.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.board.Free.model.service.FreeService;
-import com.semi.board.Free.model.vo.Free;
+import com.google.gson.Gson;
+import com.semi.board.team.model.service.TeamService;
+import com.semi.board.team.model.vo.Team;
 
 /**
- * Servlet implementation class UpdateFreeServlet
+ * Servlet implementation class InsertTeamReplyServlet
  */
-@WebServlet("/updateFree.fr")
-public class UpdateFreeServlet extends HttpServlet {
+@WebServlet("/insertReply.tm")
+public class InsertTeamReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateFreeServlet() {
+    public InsertTeamReplyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,32 +32,31 @@ public class UpdateFreeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
+		String writer = request.getParameter("writer");
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		String content = request.getParameter("content");
-
-	System.out.println(title);
-	System.out.println(content);
-	System.out.println(bno);
-
-	Free f = new Free();
-	f.setbTitle(title);
-	f.setBno(bno);
-	f.setbContent(content);
-	
-	int result = new FreeService().updateFree(f);
-	
-	String page="";
-	
-	if(result > 0) {
-		response.sendRedirect("/semi/selectOne.fr?num="+bno);
-	}else {
-		request.setAttribute("msg", "자유게시판 글 수정 실패");
-		page="views/common/errorPage.jsp";
 		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
-	}
+		System.out.println("servlet 댓글작성자:"+writer);
+		System.out.println("bno: "+bno);
+		System.out.println("댓글내용: "+content);
+		System.out.println("왜 값이 널이냐고..1");
+
+		Team t = new Team();
+		t.setBno(bno);
+		t.setWriterId(writer);
+		t.setbContent(content);
+		
+	System.out.println("왜 값이 널이냐고..2");
+	
+		ArrayList<Team> replyList = new TeamService().insertReply(t);
+	
+		System.out.println("list길ㅇㅣ: "+replyList.size());
+		
+		response.setContentType("application/json");
+		new Gson().toJson(replyList, response.getWriter());
+	
+	
+	
 	
 	
 	

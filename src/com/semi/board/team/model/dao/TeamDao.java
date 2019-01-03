@@ -192,7 +192,7 @@ System.out.println("selectOne dao query: "+query);
 	public int deleteTeam(Connection con, int bno) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = prop.getProperty("deleteFree");
+		String query = prop.getProperty("deleteTeam");
 		
 		System.out.println("dao query: "+query);
 		System.out.println("dao bno:"+bno);
@@ -211,6 +211,229 @@ System.out.println("selectOne dao query: "+query);
 		}
 			
 		return result;
+	}
+	//글 수정
+	public Team selectOne(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Team t = null;
+		
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(num));
+			
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				t = new Team();
+
+				t.setBno(rset.getInt("BOARDNO"));
+				t.setbClass(rset.getString("BOARDCLASS"));
+				t.setbTitle(rset.getString("BOARDTITLE"));
+				t.setbContent(rset.getString("BOARDCONTENTS"));
+				
+				t.setbDate(rset.getDate("BOARDDATE"));
+				t.setbClicks(rset.getInt("BOARDCLICKS"));
+				t.setbAttach(rset.getString("BOARDATTACH"));
+				t.setComNo(rset.getInt("COMMENTNO"));
+				t.setComLevel(rset.getInt("COMMENTLEVEL"));
+				t.setRecomId(rset.getString("RECOMMENTID"));
+			
+
+				t.setDeptId(rset.getString("DEPTID"));
+				t.setReplebno(rset.getInt("REPLEBOARDNO"));
+				t.setWriterId(rset.getString("EMPNAME"));
+				t.setStatus(rset.getString("WHETHEROFDELETE"));
+				t.setFile01(rset.getInt("FILE01"));
+				t.setFile02(rset.getInt("FILE02"));
+				t.setFile03(rset.getInt("FILE03"));
+				
+				
+			}
+			
+			
+		} catch (SQLException e) {				
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return t;
+	}
+	//글 수정용
+	public int updateTeam(Connection con, Team t) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("updateTeam");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, t.getbTitle());
+			pstmt.setString(2, t.getbContent());
+			pstmt.setInt(3, t.getBno());
+			
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+	//댓글작성
+	public int insertReply(Connection con, Team t) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		String query = prop.getProperty("insertReply");
+		System.out.println("dao댓글작성: "+query);
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, t.getbContent());
+			pstmt.setInt(2, t.getBno());
+			pstmt.setString(3, t.getWriterId());
+			
+			result=pstmt.executeUpdate();
+			
+			System.out.println("dao 작성");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+	//댓글 보이기
+	public ArrayList<Team> selectReplyList(Connection con, int bno) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		ArrayList<Team> list=null;
+		
+		String query = prop.getProperty("selectReplyList");
+		System.out.println("dao 목록 쿼리 : "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, bno);
+			
+			rset=pstmt.executeQuery();
+			
+			list=new ArrayList<Team>();
+			
+			while(rset.next()) {
+				Team t = new Team();
+				
+				t.setBno(rset.getInt("BOARDNO"));
+				t.setbContent(rset.getString("BOARDCONTENTS"));
+				t.setWriterId(rset.getString("EMPNAME"));
+				t.setComNo(rset.getInt("COMMENTNO"));
+				t.setComLevel(rset.getInt("COMMENTLEVEL"));
+				t.setbDate(rset.getDate("BOARDDATE"));
+				
+				list.add(t);
+
+			}
+			System.out.println("dao 목록부르기: "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		 
+		
+		return list;
+	}
+	//전체 게시글 수 조회
+	public int getlistCount(Connection con) {
+		Statement stmt = null;
+		int listCount = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rset);
+		}
+			
+		return listCount;
+	}
+	//페이징 처리 후 글목록 조회
+	public ArrayList<Team> selectList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Team> list = null;
+		
+		String query = prop.getProperty("selectList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset=pstmt.executeQuery();
+			
+			list= new ArrayList<Team>();
+			
+			while(rset.next()) {
+				
+			
+			Team t = new Team();
+			
+			t.setBno(rset.getInt("BOARDNO"));
+			t.setbClass(rset.getString("BOARDCLASS"));
+			t.setbTitle(rset.getString("BOARDTITLE"));
+			t.setbContent(rset.getString("BOARDCONTENTS"));
+			t.setbDate(rset.getDate("BOARDDATE"));
+			t.setbClicks(rset.getInt("BOARDCLICKS"));
+			t.setbAttach(rset.getString("BOARDATTACH"));
+			t.setComNo(rset.getInt("COMMENTNO"));
+			t.setComLevel(rset.getInt("COMMENTLEVEL"));
+			t.setRecomId(rset.getString("RECOMMENTID"));
+			
+			t.setReplebno(rset.getInt("REPLEBOARDNO"));
+			t.setWriterId(rset.getString("EMPNAME"));
+			t.setStatus(rset.getString("WHETHEROFDELETE"));
+			t.setFile01(rset.getInt("FILE01"));
+			t.setFile02(rset.getInt("FILE02"));
+			t.setFile03(rset.getInt("FILE03"));
+			
+			list.add(t);
+			}
+			System.out.println("dao list: "+list.size());
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
 	}
 	
 	

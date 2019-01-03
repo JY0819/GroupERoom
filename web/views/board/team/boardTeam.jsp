@@ -3,8 +3,16 @@
 <%
 	ArrayList<Team> list = (ArrayList<Team>)request.getAttribute("list");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/board/layout-up.jsp" />
@@ -68,17 +76,71 @@
 	</div>	
 	</form>
 	<br>
-		
-		<div class="paging" align="center">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
+	<div class="pagingArea" align="center">
+<ul class="pagination">
+<%-- <button onclick="location.href='<%=request.getContextPath()%>/selectList.fr?currentPage=1'"><<</button> --%>
+<li><a href="<%=request.getContextPath()%>/selectList.tm?currentPage=1"><<</a></li>
+​
+
+<% if(currentPage <= 1){ %>
+<script>console.log(<%=currentPage%>);</script>
+
+<li><a><</a></li>
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/selectList.tm?currentPage=<%=currentPage - 1%>"><</a></li>
+<% } %>
+
+​
+
+<% for(int p = startPage; p <= endPage; p++){ 
+
+if(p == currentPage){
+
+%>
+
+
+<li><a><%= p %></a></li>
+<% }else{ %>
+
+
+<li><a href="<%=request.getContextPath()%>/selectList.tm?currentPage=<%= p %>"><%= p %></a></li>
+<% } %>
+
+​
+
+<% } %>
+
+​
+
+​
+
+<% if(currentPage >= maxPage){ %>
+
+
+<li><a>></a></li>
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/selectList.tm?currentPage=<%=currentPage + 1%>">></a></li>
+<% } %>
+
+​
+
+
+<li><a href="<%=request.getContextPath()%>/selectList.tm?currentPage=<%=maxPage%>">>></a></li>
+</ul>
+​
+
+
 	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
 </section>
 <script>
 	$(function(){
