@@ -127,6 +127,7 @@ public class DocumentDao {
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, document.getManageEmpId());
 				pstmt.setInt(2, document.getManageEmpId());
+				System.out.println("날짜: " + document.getManageDay());
 				pstmt.setDate(3, document.getManageDay());
 				result = pstmt.executeUpdate();
 
@@ -172,9 +173,8 @@ public class DocumentDao {
 		try {
 			
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, document.getManageEmpId());
-			pstmt.setInt(2, (document.getManageDocNo()-1));
-			pstmt.setInt(3, document.getManageEmpId());
+			pstmt.setInt(1, (document.getManageDocNo()));
+			pstmt.setInt(2, document.getManageEmpId());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -191,26 +191,47 @@ public class DocumentDao {
 		PreparedStatement pstmt2 = null;
 		int result = 0;
 		Document document = (Document)list.get(0);
-		
-		String query = prop.getProperty("insertDocument");
+		String query = "";
+		if(attachNo != 0) {
+			query = prop.getProperty("insertDocumentFO");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setInt(3, attachNo);
+				pstmt.setString(4, document.getManageTitle());
+				pstmt.setString(5, document.getManageContents());
+				pstmt.setDate(6, document.getManageDay());
+				pstmt.setString(7, document.getManageClass());
+				pstmt.setDate(8, document.getVacApprStart());
+				pstmt.setString(9, document.getVacApprReason());
+				pstmt.setInt(10, document.getManageNo());
+				pstmt.setDate(11, document.getVacApprEnd());
+				pstmt.setString(12, document.getSubmission());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else {
+			query = prop.getProperty("insertDocumentFX");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setString(3, document.getManageTitle());
+				pstmt.setString(4, document.getManageContents());
+				pstmt.setDate(5, document.getManageDay());
+				pstmt.setString(6, document.getManageClass());
+				pstmt.setDate(7, document.getVacApprStart());
+				pstmt.setString(8, document.getVacApprReason());
+				pstmt.setInt(9, document.getManageNo());
+				pstmt.setDate(10, document.getVacApprEnd());
+				pstmt.setString(11, document.getSubmission());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		try {
-			
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, document.getManageEmpId());
-			pstmt.setInt(2, document.getManageDocNo());
-			pstmt.setInt(3, attachNo);
-			pstmt.setString(4, document.getManageTitle());
-			pstmt.setString(5, document.getManageContents());
-			pstmt.setDate(6, document.getManageDay());
-			pstmt.setString(7, document.getManageClass());
-			pstmt.setDate(8, document.getVacApprStart());
-			pstmt.setString(9, document.getVacApprReason());
-			pstmt.setInt(10, document.getManageNo());
-			pstmt.setDate(11, document.getVacApprEnd());
-			pstmt.setString(12, document.getSubmission());
-			
 			result = pstmt.executeUpdate();
-
 			query = prop.getProperty("insertApprLine");
 			ApprLine[] apprLine = (ApprLine[])list.get(1);
 			for(int i=0; i<apprLine.length; i++) {
@@ -308,12 +329,10 @@ public class DocumentDao {
 		ArrayList<MyDocument> list = null;
 		
 		String query = prop.getProperty("selectSubmitDocument");
-		
+		int count = 1;
 		try {
-			
 			pstmt = con.prepareStatement(query);
 			rset = pstmt.executeQuery();
-			int count = 1;
 			list = new ArrayList<MyDocument>();
 			
 			while(rset.next()) {
@@ -326,8 +345,8 @@ public class DocumentDao {
 				myDocument.setTitle(rset.getString("MANAGETITLE"));
 				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
 				
-				list.add(myDocument);
 				count++;
+				list.add(myDocument);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -522,6 +541,18 @@ public class DocumentDao {
 			close(pstmt);
 		}
 		return attachments;
+	}
+
+	public ArrayList<MyDocument> selectStatus(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		MyDocument myDocument = new MyDocument();
+		ArrayList<MyDocument> list = null;
+		
+		String query = prop.getProperty("selectStatus");
+		
+		
+		return list;
 	}
 
 }

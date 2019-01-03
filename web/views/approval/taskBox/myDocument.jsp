@@ -38,13 +38,14 @@
 					<th>부 서</th>
 					<th>문 서 번 호</th>
 					<th>작 성 날 짜</th>
+
 				</tr>
 			</thead>
 			<tbody>
 			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
-				   		if(list.get(i).getSubmission() == "N") {
+				   		if(list.get(i).getSubmission().equals("N")) {
 				%>
 				<tr>
 					<td><input type="checkbox" name="checkTd"

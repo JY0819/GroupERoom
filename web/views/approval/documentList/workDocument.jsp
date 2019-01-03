@@ -1,7 +1,12 @@
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.semi.approval.document.vo.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="com.semi.approval.document.vo.Document"%>
 <%
 	Document document = (Document)request.getAttribute("doc");
+	HashMap<Integer, ArrayList<SumEmpInfo>> hmap = (HashMap<Integer, ArrayList<SumEmpInfo>>)request.getAttribute("map");
 %>       
 <!DOCTYPE html>
 <html>
@@ -14,7 +19,7 @@
 <body>
 
 	<jsp:include page ="/views/main/mainPage.jsp"/>
-
+	<form class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
 	<h1>업무계획서</h1>
 	<table>
 		<tr>
@@ -35,15 +40,38 @@
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1">&nbsp;<button>결재자선택</button></td>
+			<td class="content"><input type="text" id="person1" name="person1"><input type="hidden" id="appr1" name="empNo1" value="">&nbsp;<a class="aTag" href="#open"><button type="button" class="appr">결재자1선택</button></a></td>
+		</tr>
+		<div class="white_content" id="open">
+        	<div>
+        		<dl><h4>주소록</h4> 
+        			<dt><i class="fas fa-bookmark"></i>즐겨찾기</dt>
+        				<dd class="empNo"><i class="fas fa-star"></i>홍길동</dd>
+        				<dd class="empNo"><i class="fas fa-star"></i>고길동</dd>
+        			<% for(int i=0; i<hmap.size(); i++) { %>
+        			<dt><i class="fab fa-bandcamp"><%= hmap.get(i).get(0).getDeptName() %>팀</i></dt>
+        				<% for(int j=0; j<hmap.get(i).size(); j++) { %>
+        				<dd class="empNo" onclick="choiceEmpNo();"><i class="far fa-star"></i><%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %></dd>
+        					<% } %>
+        				<% } %>
+        			<!--이부분은 양식으로 만들어놓은 주소록 <dt><i class="fab fa-bandcamp"></i>마케팅팀</dt>
+        				<dd id="d5"><i class="far fa-star"></i>고길동(사원)</dd>
+        				<dd id="d6"><i class="far fa-star"></i>고길동(사원)</dd>
+        			<dt><i class="fab fa-bandcamp"></i>개발팀</dt>
+        				<dd id="d7"><i class="far fa-star"></i>고길동(사원)</dd>
+        				<dd id="d8"><i class="far fa-star"></i>고길동(사원)</dd>
+        			<dt><i class="fab fa-bandcamp"></i>디자인팀</dt>	 -->
+        		</dl>
+            	<a class="close" href="#"><button type="button" class="saveBtn2">저장</button></a><a class="close" href="#"><button type="button" class="closeBtn2" onclick="closePopUp();">닫기</button></a>
+        	</div>
+    	</div>
+		<tr>
+			<td class="td">결재자</td>
+			<td class="content"><input type="text" id="person2" name="person2"><input type="hidden" id="appr2"  name="empNo2" value="">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자2선택</button></a></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2">&nbsp;<button>결재자선택</button></td>
-		</tr>
-		<tr>
-			<td class="td">결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3">&nbsp;<button>결재자선택</button></td>
+			<td class="content"><input type="text" id="person3" name="person3"><input type="hidden" id="appr3"  name="empNo3" value="">&nbsp;<a href="#open" class="aTag"><button type="button" class="appr">결재자3선택</button></a></td>
 		</tr>
 		<tr>
 			<td class="gap2" colspan="2"></td>
@@ -73,10 +101,65 @@
 			<td class="content" colspan="2"><input type="text" name="noContent"></td>
 		</tr>
 		<tr>
-			<td class="lastContent" colspan="7"><textarea class="contentArea"></textarea></td>
+			<td colspan="7" class="td">내용</td>
+		</tr> 
+		<tr>
+			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
+		</tr>
+		<tr>
+			<td class="td" colspan="7">의견</td>
+		</tr>
+		<tr>
+			<td class="lastContentDown" colspan="7"><textarea class="contentArea" name="opinion" readonly="readonly"></textarea></td>
 		</tr>
 	</table>
-		<button class="saveBtn">저장</button>
-		<button class="closeBtn">닫기</button>
+		<button class="saveBtn" type="submit">저장</button> 
+	<button class="closeBtn" type="reset" onclick="back();">닫기</button>
+		</form>
+		<script>
+	var choice;
+	function popupOpen(){
+		var popUrl = "test.html";	//팝업창에 출력될 페이지 URL
+		var popOption = "width=370, height=360, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+		window.open(popUrl,"",popOption);
+		}
+		function back() {
+			location.href="views/approval/taskBox/choiceDocument.jsp";
+		}
+		$(function() {
+			$(".appr").click(function() {
+				choice = $(this).text();			
+			});
+		});
+		function choiceEmpNo() {
+			$(".empNo").bind('mouseenter', function() {
+				$(this).css({"background":"black", "color":"white"});
+			}).bind('mouseleave', function() {
+				$(this).css({"background":"white", "color":"black"});
+			});
+			$(".empNo").click(function() {
+				var name = $(this).text();
+				if(choice == '결재자1선택'){
+					$("#person1").val(name.substring(name.length-3, name.length));
+					$("#appr1").val(name.substring(0, name.length-4));
+				}else if(choice == '결재자2선택'){
+					$("#person2").val(name.substring(name.length-3, name.length));
+					$("#appr2").val(name.substring(0, name.length-4));
+				}else {
+					$("#person3").val(name.substring(name.length-3, name.length));
+					$("#appr3").val(name.substring(0, name.length-4));
+				}
+			});
+		}
+		function closePopUp() {
+			if(choice == '결재자1선택'){
+				$("#person1").val("");
+			}else if(choice == '결재자2선택'){
+				$("#person2").val("");
+			}else {
+				$("#person3").val("");
+			}
+		} 
+	</script>
 </body>
 </html>
