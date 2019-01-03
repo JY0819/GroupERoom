@@ -197,9 +197,9 @@ public class DocumentService {
 		return attachments;
 	}
 
-	public ArrayList<MyDocument> selectStatus() {
+	public ArrayList<MyDocument> selectStatus(int empId) {
 		Connection con = getConnection();
-		ArrayList<MyDocument> list = new DocumentDao().selectStatus(con);
+		ArrayList<MyDocument> list = new DocumentDao().selectStatus(con, empId);
 		
 		if(list != null) {
 			commit(con);

@@ -192,8 +192,8 @@ public class DocumentDao {
 		int result = 0;
 		Document document = (Document)list.get(0);
 		String query = "";
-		if(attachNo != 0) {
-			query = prop.getProperty("insertDocumentFO");
+		if(attachNo != 0 && document.getManageClass().equals("1")) {
+			query = prop.getProperty("insertDocumentFOVO");
 			try {
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, document.getManageEmpId());
@@ -211,8 +211,40 @@ public class DocumentDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}else {
-			query = prop.getProperty("insertDocumentFX");
+		}else if(attachNo != 0&& !document.getManageClass().equals("1")) {
+			query = prop.getProperty("insertDocumentFOVX");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setInt(3, attachNo);
+				pstmt.setString(4, document.getManageTitle());
+				pstmt.setString(5, document.getManageContents());
+				pstmt.setDate(6, document.getManageDay());
+				pstmt.setString(7, document.getManageClass());
+				pstmt.setInt(8, document.getManageNo());
+				pstmt.setString(9, document.getSubmission());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else if(attachNo == 0 && !document.equals("1")){
+			query = prop.getProperty("insertDocumentFXVX");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setInt(3, attachNo);
+				pstmt.setString(4, document.getManageTitle());
+				pstmt.setString(5, document.getManageContents());
+				pstmt.setDate(6, document.getManageDay());
+				pstmt.setString(7, document.getManageClass());
+				pstmt.setInt(8, document.getManageNo());
+				pstmt.setString(9, document.getSubmission());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else if(attachNo == 0 && document.equals("1")){
+			query = prop.getProperty("insertDocumentFXVO");
 			try {
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, document.getManageEmpId());
@@ -367,7 +399,7 @@ public class DocumentDao {
 		try {
 			
 			pstmt = con.prepareStatement(query);
-			for(int i=0; i<docNumList.length-1; i++) {
+			for(int i=0; i<docNumList.length; i++) {
 				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
 			}
 			result = pstmt.executeUpdate();
@@ -543,14 +575,38 @@ public class DocumentDao {
 		return attachments;
 	}
 
-	public ArrayList<MyDocument> selectStatus(Connection con) {
+	public ArrayList<MyDocument> selectStatus(Connection con, int empId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		MyDocument myDocument = new MyDocument();
 		ArrayList<MyDocument> list = null;
 		
 		String query = prop.getProperty("selectStatus");
-		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, empId);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<MyDocument>();
+			int count = 1;
+			
+			while(rset.next()) {
+				myDocument = new MyDocument();
+				myDocument.setNum(count);
+				myDocument.setWriterNum(rset.getInt("APPRWRITER"));
+				myDocument.setWriter(rset.getString("EMPNAME"));
+				myDocument.setDeptName(rset.getString("DEPTNAME"));
+				myDocument.setDocNum(rset.getInt("DOCNO"));
+				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
+				myDocument.setResult(rset.getString("APPRYN"));
+				list.add(myDocument);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
 		
 		return list;
 	}
