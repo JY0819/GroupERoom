@@ -186,7 +186,8 @@ public class FreeDao {
 
 				pstmt.setString(1, f.getbTitle());
 				pstmt.setString(2, f.getbContent());
-				pstmt.setString(3, f.getWriterId());
+				pstmt.setString(3, f.getDeptId());
+				pstmt.setString(4, f.getWriterId());
 
 				System.out.println(f.getbTitle());
 				System.out.println(f.getbContent());
@@ -215,6 +216,7 @@ public class FreeDao {
 				pstmt.setInt(2, num);
 
 				result = pstmt.executeUpdate();
+				System.out.println("dao result : "+result);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
@@ -230,7 +232,7 @@ public class FreeDao {
 			Free f = null;
 
 			String query = prop.getProperty("selectOne");
-System.out.println(query);
+System.out.println("상세보기 dao : "+query);
 			try {
 				pstmt=con.prepareStatement(query);
 				pstmt.setInt(1, num);
@@ -258,7 +260,6 @@ System.out.println(query);
 					f.setFile02(rset.getInt("FILE02"));
 					f.setFile03(rset.getInt("FILE03"));
 
-					rset=pstmt.executeQuery();
 
 
 
@@ -798,7 +799,7 @@ System.out.println(query);
 			return listCount;
 		}
 		//시퀀스값조회
-		public int selectCurrval(Connection con) {
+		/*public int selectCurrval(Connection con) {
 			Statement stmt = null;
 			ResultSet rset = null;
 			
@@ -823,9 +824,9 @@ System.out.println(query);
 			}
 			
 			return ano;
-		}
+		}*/
 		//첨부파일 포함하여 글 작성
-		public int insertAttachment(Connection con, ArrayList<Attachment> fileList) {
+		/*public int insertAttachment(Connection con, ArrayList<Attachment> fileList) {
 			PreparedStatement pstmt = null;
 			int result=0;
 			
@@ -851,6 +852,49 @@ System.out.println(query);
 			}
 			
 			return result;
+		}*/
+		//글 클릭하면서 댓글 목록 가져오기
+		public ArrayList<Free> selectReply(Connection con, int num) {
+			PreparedStatement pstmt = null;
+			ArrayList<Free> reply = null;
+			ResultSet rset = null;
+			Free f = null;
+
+			String query = prop.getProperty("selectReply");
+			System.out.println(num);
+			System.out.println(query);
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setInt(1, num);
+				
+				rset=pstmt.executeQuery();
+				
+			
+					reply= new ArrayList<Free>();
+					
+					while(rset.next()) {
+						f= new Free();
+					
+					
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+				
+					reply.add(f);
+					}
+								
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return reply;
 		}
 		
 }

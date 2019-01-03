@@ -31,11 +31,10 @@ body {
 		</div>
 		<hr>
 		
-<% if(loginUser != null) %>
 	<div class="container">
 
 		<div class="row">
-			<form action="<%= request.getContextPath()%>/insert.fr" method="post" encType="multipart/form-data">
+			<form action="<%= request.getContextPath()%>/insert.fr" method="post">
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
@@ -45,8 +44,8 @@ body {
 
 					<tbody>
 					<tr>
- 						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
-						
+  						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
+ 						
 					</tr>
 						<tr>
 							<td>
@@ -59,8 +58,7 @@ body {
 					</tbody>
 					
 				</table>
-			
-
+				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
 					<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
@@ -73,7 +71,7 @@ body {
 						</span>
 					</div>
 				</div>
-				</form>
+				
 				
 	
 				
@@ -81,14 +79,11 @@ body {
 					<button type="submit" id="enrollBtn" class="btn btn-primary">등록</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
-			
+			</form>
 		</div>
 	</div>
 </section>
- }else{ 
-	request.setAttribute("msg", "잘못된 경로로 접근하셨습니다.");
-	request.getRequestDispatcher("../common/errorPage.jsp").forward(request,response);
-	} 
+
 	
 	<script>
 		$(function(){
@@ -105,7 +100,7 @@ body {
 		
 		$(function(){
 			$("#gotoList").click(function(){
-				location.href="/semi/views/board/free/boardFree.jsp";
+				location.href="/semi/selectList.fr";
 			});
 		});
 	</script>

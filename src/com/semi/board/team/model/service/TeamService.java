@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.semi.board.Free.model.dao.FreeDao;
+import com.semi.board.Free.model.vo.Free;
+import com.semi.board.notice.model.dao.NoticeDao;
+import com.semi.board.notice.model.vo.Notice;
 import com.semi.board.team.model.dao.TeamDao;
 import com.semi.board.team.model.vo.Team;
 import static com.semi.common.JDBCTemplate.*;
@@ -33,5 +36,38 @@ public class TeamService {
 
 		return result;
 	}
+	//글 상세보기
+	public Team selectOne(int num) {
+		Connection con = getConnection();
+		Team t = null;
 
+		System.out.println("service num: "+num);
+		int result = new TeamDao().updateCount(con, num);
+
+		if(result > 0) {
+			commit(con);
+			t = new TeamDao().selectOne(con, num);
+		}else {
+			rollback(con);
+		}
+		close(con);
+
+		return t;
+	}
+	//글삭제
+	public int deleteteam(int bno) {
+		Connection con = getConnection();
+		
+		int result = new TeamDao().deleteTeam(con, bno);
+		
+		System.out.println("service bno: "+bno);
+		if(result>0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		return result;
+	}
+	
 }

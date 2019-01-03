@@ -52,7 +52,7 @@ var treeviewJson = {
 					text:"게시판",
 					nodes:[
 						{text:"공지사항", href:"/semi/selectList.no"},
-						{text:"부서게시판", href:"/semi/selectlist.tm"},
+						{text:"부서게시판", href:"/semi/selectList.tm"},
 						{text:"자유게시판", href:"/semi/selectList.fr"}
 					]
 				}

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+	pageEncoding="UTF-8" import="java.util.*, com.semi.board.team.model.vo.*, com.semi.admin.user.model.vo.*"%>
+<%
+	Team t = (Team)request.getAttribute("t"); 
+	Employee loginUser = (Employee)session.getAttribute("loginUser");
+	ArrayList<Team> reply = (ArrayList<Team>)request.getAttribute("reply");
+%>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 
 
@@ -42,39 +46,39 @@ body {
 						<th colspan="3" style="background-color: #eeeeee; text-align: center;">자유게시판 상세보기</th>
 					</tr> 
 				</thead>
-	
+	<form action="", method="post" id="viewTable">
 				<tbody>
 				<tr>
 						<td>부서</td>
-						<td colspan="2"></td>
+						<td colspan="2"><%=t.getDeptId() %></td>
 					</tr>
 				<tr>
 						<td>글번호</td>
-						<td colspan="2"></td>
+						<td colspan="2"><input type="hidden" id="bno" value="<%=t.getBno() %>" name="bno" ><%=t.getBno() %></td>
 					</tr>
 					<tr>
 						<td>조회수</td>
-						<td colspan="2"></td>
+						<td readonly><%=t.getbClicks() %></td>
 					</tr>
 					
 					
 					<tr>
 						<td>작성자</td>
-						<td colspan="2"></td>
+						<td readonly><%=t.getWriterId() %></td>
 					</tr>
 					
 					<tr>
 						<td>작성일자</td>
-						<td colspan="2"></td>
+						<td readonly><%=t.getbDate() %></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
 <%-- 						<td colspan="3"><%= %></td> --%>
-						<td colspan="3"></td>
+						<td readonly><%=t.getbTitle() %></td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="2" style="min-height: 200px; text-align: left;"></td>
+						<td style="min-height: 200px; text-align: left; readonly"><%=t.getbContent() %></td>
 					</tr>
 				</tbody>
 			</table>
@@ -116,7 +120,7 @@ body {
 			<br>
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
-				<button id="enrollBtn" class="btn btn-primary">수정</button>
+				<button id="enrollBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectTeam.tm?num=<%=t.getBno()%>'">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
 			</div>
 			
@@ -129,10 +133,20 @@ body {
 	<script>
 	$(function(){
 		$("#gotoList").click(function(){
-			location.href="/semi/views/board/team/boardTeam.jsp";
+			location.href="/semi/selectList.tm";
 		});
 	});
 	
+	$(function(){
+		$("#deleteBtn").click(function(){
+			
+			alert("정말로 삭제하시겠습니까?");
+			
+		$("#viewTable").attr("action", "<%=request.getContextPath()%>/deleteTeam.tm");
+		$("#viewTable").submit();	
+			
+		});
+	});
 	$(function(){
 		$("#enrollBtn").click(function(){
 			location.href="/semi/views/board/team/modifyTeam.jsp";

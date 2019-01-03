@@ -143,6 +143,8 @@ public class Free implements java.io.Serializable{
 		this.replebno = replebno;
 	}
 
+	
+
 	public String getWriterId() {
 		return writerId;
 	}

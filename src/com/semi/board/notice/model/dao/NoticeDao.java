@@ -45,7 +45,8 @@ public class NoticeDao {
 			
 			pstmt.setString(1, n.getbTitle());
 			pstmt.setString(2, n.getbContent());
-			pstmt.setString(3, n.getWriterId());
+			pstmt.setString(3, n.getDeptId());
+			pstmt.setString(4, n.getWriterId());
 			
 			System.out.println(n.getbTitle());
 			System.out.println(n.getbContent());
@@ -426,6 +427,49 @@ public class NoticeDao {
 		 
 		
 		return list;
+	}
+	//글 클릭하면서 댓글 목록 가져오기
+	public ArrayList<Notice> selectReply(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ArrayList<Notice> reply = null;
+		ResultSet rset = null;
+		Notice n = null;
+
+		String query = prop.getProperty("selectReply");
+		System.out.println(num);
+		System.out.println(query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset=pstmt.executeQuery();
+			
+		
+				reply= new ArrayList<Notice>();
+				
+				while(rset.next()) {
+					n= new Notice();
+				
+				
+				n.setBno(rset.getInt("BOARDNO"));
+				n.setbContent(rset.getString("BOARDCONTENTS"));
+				n.setbDate(rset.getDate("BOARDDATE"));
+				
+				n.setReplebno(rset.getInt("REPLEBOARDNO"));
+				n.setWriterId(rset.getString("EMPNAME"));
+		
+				reply.add(n);
+				}
+							
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return reply;
 	}
 
 }

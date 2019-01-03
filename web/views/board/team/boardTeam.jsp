@@ -31,7 +31,7 @@
 			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
 		</div>
 		<br>
-		<table class="table table-striped">
+		<table class="table table-striped" id="listArea">
 			
 				<tr>
 					<th>부서</th>
@@ -56,11 +56,18 @@
 				
 		</table>
 		
+	<form action="<%=request.getContextPath() %>/search.tm" method="get" >
 		<div id="searchBtn" align="center">
-    	<input type="search">
-    	<button type="submit" class="btn btn-primary"><a href="searchViewTeam.jsp" id="textBtn" >검색</a></button>
+    	<select name="searchCondition" >
+			<option value="findName" selected>작성자</option>  
+			<option value="findTitle" >글제목</option>  	
+    	</select>
+    	<input type="search" name="searchValue">
+    	<button type="submit" class="btn btn-primary">검색</button>
     	
 	</div>	
+	</form>
+	<br>
 		
 		<div class="paging" align="center">
 			<ul class="pagination">
@@ -77,6 +84,22 @@
 	$(function(){
 		$("#writeBtn").click(function(){
 			location.href="/semi/views/board/team/writeTeam.jsp";
+		});
+	});
+	
+	$(function(){
+		$("#listArea td").mouseenter(function(){
+			$(this).parent().css({"color":"darkgrey", "cursor":"pointer"});
+		
+		
+		}).mouseout(function(){
+			$(this).parent().css({"color":"black"})
+		
+		}).click(function(){
+			var num = $(this).parent().children().eq(1).text();//->글번호 가져오기
+			console.log(num);
+			
+			location.href="<%=request.getContextPath()%>/selectOne.tm?num="+num;
 		});
 	});
 </script>

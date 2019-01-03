@@ -154,5 +154,17 @@ public class NoticeService {
 		
 		return replyList;
 	}
+	//글 클릭하면 댓글 목록 조회
+	public ArrayList<Notice> selectReply(int num) {
+		Connection con = getConnection();
+		
+		ArrayList<Notice> reply = new NoticeDao().selectReply(con, num);
+		
+		System.out.println("service 댓글: "+reply.size());
+		close(con);
+		
+		return reply;
+	}
+	
 
 }

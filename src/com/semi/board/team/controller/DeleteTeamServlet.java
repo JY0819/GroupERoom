@@ -1,7 +1,6 @@
 package com.semi.board.team.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.board.team.model.service.TeamService;
-import com.semi.board.team.model.vo.Team;
 
 /**
- * Servlet implementation class SelectTeamListServlet
+ * Servlet implementation class DeleteTeamServlet
  */
-@WebServlet("/selectList.tm")
-public class SelectTeamListServlet extends HttpServlet {
+@WebServlet("/deleteTeam.tm")
+public class DeleteTeamServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectTeamListServlet() {
+    public DeleteTeamServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +30,28 @@ public class SelectTeamListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Team> list = new TeamService().selectList();
+	
+		int bno = Integer.parseInt(request.getParameter("bno"));
+		
+		
+		System.out.println("bno값: "+bno);
+		
+		
+		
+		int result = new TeamService().deleteteam(bno);
 		
 		String page="";
 		
-		if(list != null) {
-			request.setAttribute("list", list);
-			
-			page="views/board/team/boardTeam.jsp";
+		if(result > 0) {
+			response.sendRedirect("/semi/selectList.tm");
 		}else {
-			request.setAttribute("msg", "부서게시판 글 불러오기 실패!");
+			request.setAttribute("msg", "부서게시판 글 삭제 실패");
 			page="views/common/errorPage.jsp";
+		
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
+			
 		}
-	
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 	
 	
 	

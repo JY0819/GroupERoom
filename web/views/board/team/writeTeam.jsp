@@ -3,6 +3,7 @@
 <% 
 	Employee loginUser = (Employee)session.getAttribute("loginUser"); 
 	ArrayList<Team> list = (ArrayList<Team>)request.getAttribute("list");
+	Team t = (Team)request.getAttribute("t");
  %>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
@@ -46,21 +47,21 @@ body {
 					<tbody>
 					
 					<tr>
-						<td><input type="text" class="form-control" placeholder="부서코드" maxlength="30" ></td>
+						<td><input type="text" name="deptId" class="form-control" value="<%=loginUser.getDeptName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 					<tr>
-						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
+						<td><input type="text" name="writer" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 						<tr>
 							<td>
-							<input type="text" class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
+							<input type="text" name="title" class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<textarea class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
+							<textarea class="form-control" name="content" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
 							</td>
 						</tr>
 					</tbody>
