@@ -215,5 +215,29 @@ public class TrashDao {
 		
 		return list;
 	}
+	public int moveTrash(Connection con, int[] apprno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("moveTrash");
+		try {
+			
+
+			for(int i =0;i<apprno.length;i++) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprno[i]);
+				result = pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
 	
 }

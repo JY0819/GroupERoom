@@ -38,7 +38,7 @@
 	<div class="content-right container">
 		<!-- <form id="deleteform" method="get"> -->
 		<div class="outer">
-		<button class="move">이동</button>
+		<button class="move" onclick="moveTrash()">이동</button>
 		<button class="delete" onclick="deleteTrash()">삭제</button>
 		
 		<div class="tableArea">
@@ -208,7 +208,23 @@
 			}
 	
 
-	 
+	 function moveTrash(){
+		 var rowData = new Array();
+		 var checkbox = $("input[name=checkTd]:checked");
+		 	checkbox.each(function(i){
+		 		var tr = checkbox.parent().parent().eq(i);
+		 		var td = tr.children();
+		 		
+             apprno = td.eq(4).text();
+             tdArr.push(apprno);
+             console.log(apprno);
+            
+           
+		 	});
+			
+		 	 location.href="<%=request.getContextPath()%>/trashmove.tm?apprno=" + tdArr+",";
+	        /*   $("#ex3_Result2").html(tdArr);    */
+	 }
 
 	
 

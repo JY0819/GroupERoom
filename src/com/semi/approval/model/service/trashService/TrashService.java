@@ -59,4 +59,13 @@ public class TrashService {
 		return list;
 	}
 
+	public int moveTrash(int[] apprno) {
+		Connection con = getConnection();
+		int result = new TrashDao().moveTrash(con,apprno);
+		if(result>0) commit(con);
+		else rollback(con);
+		close(con);
+		return result;
+	}
+
 }
