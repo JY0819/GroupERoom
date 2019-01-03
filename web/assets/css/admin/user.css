@@ -1,12 +1,16 @@
 @charset "UTF-8";
 
 body {
-	height: 900px;
+	height: 950px;
 }
 
 /* .form-control {
 	width: 500px;
 } */
+#contentImgArea {
+	margin-right: 100px;
+}
+
 #enrollBtn, #goList {
 	float: right;
 	width: 80px;

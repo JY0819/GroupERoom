@@ -26,7 +26,7 @@
 			
 			<!-- 첨부파일 ** 이미지 미리보기 -->
 			<div class="form-group" id="contentImgArea" align="center">
-				<img id="contentImg" width="160" height="160">
+				<img id="contentImg" width="200" height="160">
 			</div>
 			
 			<div class="form-group" id="inputFileArea" align="center">
@@ -35,30 +35,30 @@
 			
 			
 			<!-- 회원 가입 사항 -->
-			<div class="form-group" id="divId">
+			<div class="form-group" id="div_id">
 				<label for="inputId" class="col-lg-2 control-label">사원번호</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<input type="text" class="form-control onlyNumber" id="id" name="userId" data-rule-required="true" placeholder="숫자만 입력 가능합니다." maxlength="30">
 				</div>
 			</div>
 			
-			<div class="form-group" id="divName">
+			<div class="form-group" id="div_name">
 				<label for="inputName" class="col-lg-2 control-label">이름</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<input type="text" class="form-control onlyHangul" id="name" name="userName" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15">
 				</div>
 			</div>
 			
-			<div class="form-group" id="divPassword">
+			<div class="form-group" id="div_password">
 				<label for="inputPassword" class="col-lg-2 control-label">비밀번호</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<input type="password" class="form-control" id="password" name="userPwd" data-rule-required="true" placeholder="패스워드" maxlength="30">
 				</div>
 			</div>
 			
-			<div class="form-group" id="divPasswordCheck">
+			<div class="form-group" id="div_passwordCheck">
 				<label for="inputPasswordCheck" class="col-lg-2 control-label">비밀번호 확인</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<input type="password" class="form-control" id="passwordCheck" name="userPwd2" data-rule-required="true" placeholder="패스워드 확인" maxlength="30">
 				</div>
 			</div>
@@ -66,7 +66,7 @@
 			
 			<div class="form-group">
 				<label for="inputGender" class="col-lg-2 control-label">성별</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<select class="form-control" id="gender" name="gender">
 						<option value="M">남</option>
 						<option value="F">여</option>
@@ -74,37 +74,61 @@
 				</div>
 			</div>
 			
-			<div class="form-group" id="divPhoneNumber">
+			<div class="form-group" id="div_phoneNumber">
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<input type="tel" class="form-control onlyNumber" id="phoneNumber" name="phone" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
 				</div>
 			</div>
 			
-			<div class="form-group" id="divAddress">
+			<div class="form-group" id="div_address">
 				<label for="inputAddress" class="col-lg-2 control-label">주소</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<input type="text" class="form-control" id="address" name="address" data-rule-required="true" placeholder="주소를 입력하세요." maxlength="50">
 				</div>
 			</div>
 			
-			<div class="form-group" id="divBirth">
+			<div class="form-group">
 				<label for="inputBirth" class="col-lg-2 control-label">생년월일</label>
-				<div class="col-lg-8">
-					<input id="fromDate" type="date" class="form-control onlyNumber" id="birth" name="birth" data-rule-required="true" placeholder="YYYY-MM-DD" maxlength="50">
+				<div class="col-lg-3">
+					<input type="date" class="form-control onlyNumber" id="birth" name="birth" data-rule-required="true" placeholder="YYYY-MM-DD" maxlength="50">
+				</div>
+				
+				<label for="inputEntryDay" class="col-lg-1 control-label">입사일</label>
+				<div class="col-lg-3">
+					<input  type="date" class="form-control onlyNumber" id="entryDay" name="entryDay" data-rule-required="true" placeholder="YYYY-MM-DD" maxlength="50">
 				</div>
 			</div>
 			
-			<div class="form-group" id="divEntryDay">
-				<label for="inputEntryDay" class="col-lg-2 control-label">입사일</label>
-				<div class="col-lg-8">
-					<input id="fromDate" type="date" class="form-control onlyNumber" id="entryDay" name="entryDay" data-rule-required="true" placeholder="YYYY-MM-DD" maxlength="50">
+			<div class="form-group" id="divDept">
+				<label for="inputDept" class="col-lg-2 control-label">부서</label>
+				<div class="col-lg-3">
+					<select class="form-control" multiple="multiple" id="dept" name="dept">
+						<option value="1">대표</option>
+						<option value="2">경리</option>
+						<option value="3">회계</option>
+						<option value="4">마케팅</option>
+						<option value="5">개발</option>
+					</select>
+				</div>
+				
+				<label for="inputDept" class="col-lg-1 control-label">직책</label>
+				<div class="col-lg-3">
+					<select class="form-control" multiple="multiple" id="position" name="position">
+						<option value="1">대표이사</option>
+						<option value="10">이사</option>
+						<option value="11">부장</option>
+						<option value="12">차장</option>
+						<option value="13">과장</option>
+						<option value="14">대리</option>
+						<option value="15">사원</option>
+					</select>
 				</div>
 			</div>
-		 	
+			
 			<div class="form-group" id="divAdminYN">
 				<label for="inputAdminYN" class="col-lg-2 control-label">관리자 여부</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<select class="form-control" id="adminYN" name="adminYN">
 						<option value="Y">Y</option>
 						<option value="N" selected="selected">N</option>
@@ -114,24 +138,26 @@
 			
 			<div class="form-group" id="divApprovalPwd">
 				<label for="inputApprovePassword" class="col-lg-2 control-label">결재 비밀번호</label>
-				<div class="col-lg-8">
+				<div class="col-lg-7">
 					<input type="password" class="form-control" id="approvePwd" name="approvePwd" data-rule-required="true" placeholder="결재 시 사용할 비밀번호를 입력하세요." maxlength="30">
 				</div>
 			</div>
 
 
 
-			<div class="form-group">
-				<div class="col-lg-offset-2 col-lg-8">
-					<button type="button" class="btn btn-default" id="goList" onclick="goList();">목록으로</button>
-					<button type="submit" class="btn btn-default" id="enrollBtn" onclick="insertMember();">등록</button>
-				</div>
+			<div class="col-lg-offset-2 col-lg-7">
+				<button type="submit" class="btn btn-default" id="enrollBtn" onclick="insertMember();">등록</button>
+				<button type="button" class="btn btn-default" id="goList" onclick="goList();">목록으로</button>
 			</div>
 		</form>
+		
+		<div class="col-lg-offset-2 col-lg-7">
+			
+		</div>
 
 		<script>
-			function goMain() {
-<%-- 				location.href="<%=request.getContextPath()%>/index.jsp"; --%>
+			function goList() {
+				location.href="/semi/views/admin/user/userList.jsp";
 			}
 	
 			function insertMember() {
@@ -145,6 +171,22 @@
 			$(function() {
 
 				//------- 검사하여 상태를 class에 적용
+				
+				$('#addUserForm input, #addUserForm select').keyup(function(event) {
+					var cThis = $(this);
+					var cId	= cThis[0].id || "";
+					var divId = $("#div_" + cId);
+					if ($.trim(cThis.val()) == "") {
+						divId.removeClass("has-success");
+						divId.addClass("has-error");
+					} else {
+						divId.removeClass("has-error");
+						divId.addClass("has-success");
+					}
+				});
+				
+				
+				/*
 				$('#id').keyup(function(event) {
 
 					var divId = $('#divId');
@@ -278,7 +320,7 @@
 					}
 				});
 				
-
+				*/
 				//-------------- validation 검사 -------------------
 				$("form").submit(
 						function(event) {
