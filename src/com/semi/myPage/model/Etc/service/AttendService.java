@@ -54,5 +54,36 @@ public class AttendService {
 		
 		return result;
 	}
+	
+	public int chkGetOff(int empId) {
+		Connection con = getConnection();
+		
+		int result = new AttendDao().chkGetOff(con, empId);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int insertAttend(int empid) {
+		Connection con = getConnection();
+		
+		int result = new AttendDao().insertAttend(con, empid);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int updateAttend(int empid) {
+		Connection con = getConnection();
+		
+		int result = new AttendDao().updateAttend(con, empid);
+		
+		close(con);
+		
+		return result;
+	}
+	
 
 }

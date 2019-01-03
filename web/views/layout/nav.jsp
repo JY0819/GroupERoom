@@ -52,7 +52,20 @@
 			success: function(data) {
 				console.log("성공");
 				if (data == 1) {
-					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR'>퇴근</a></span>");
+					$.ajax({
+						url:"/semi/chkToGetOff",
+						data:{empId:empId},
+						type:"get",
+						success: function(data) {
+							if (data == 1) {
+								
+							}else {
+								$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/updateAttend?empid=" + empId + "'>퇴근</a></span>");
+							}
+						},error:function(data){ // 데이터 통신에 실패한 것
+							console.log("출근 데이터 서버 통신 실패");	
+						}
+					});
 				} else if (data == -1) {
 					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR?empid=" + empId + "'>출근</a></span>");
 				} else {
@@ -95,7 +108,7 @@
 	$(function(){
 	$("#memoArea").focusout(function(){
 		var memoContents=$("#memoArea").val();
-		var empId=<%=empId%>;
+		var empId=<%=empid%>;
 		console.log(memoContents);
 		$.ajax({
 			url:"/semi/insert.memo",

@@ -98,7 +98,7 @@
 				<% } %>
 				<% } else { %>
 				<tr>
-					<th class="line" colspan="4"><p>휴가를 사용한 내역이 없습니다.</p></th>
+					<th class="line" colspan="4"><p>출근 내역이 없습니다!</p></th>
 				</tr>
 				<% } %>
 			</table>

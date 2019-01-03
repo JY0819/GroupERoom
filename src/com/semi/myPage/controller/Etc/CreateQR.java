@@ -3,6 +3,7 @@ package com.semi.myPage.controller.Etc;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -29,7 +30,15 @@ public class CreateQR extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String root = request.getSession().getServletContext().getRealPath("/");
-		String page = "http://naver.com"; // java IP 따는 메소드 이용해서 링크 만들것
+		
+		// 주소 생성
+		InetAddress ip = InetAddress.getLocalHost();
+		String Port = "9999";
+		String mapping = "insertAttend";
+		String empid = request.getParameter("empid");
+		String page = "http://" + ip.getHostAddress() + ":" + Port + "/semi/" + mapping + "?empid=" + empid;
+		System.out.println(page);
+		
 		int chk = 1;
 		String fileName = "";
 		
