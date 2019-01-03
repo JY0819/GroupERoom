@@ -48,7 +48,7 @@
 			<tbody>
 				<%for(FinishApproval finish : list) {%>
 				<%if(employee.getEmpid() == finish.getEmpid()){ %>
-				<tr style="cursor: pointer;" onclick="">
+				<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
 					<td><%= finish.getApprNo() %></td>
@@ -148,7 +148,7 @@
 		        
 				}
 		 
-		 $("#listArea td").mouseenter(function() {
+		 <%-- $("#listArea td").mouseenter(function() {
 				$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
 			}).mouseout(function() {
 				$(this).parent().css({"background":"white"});
@@ -156,7 +156,7 @@
 				var docno = $(this).parent().children().eq(3).text();
 				
 				location.href="<%= request.getContextPath()%>/detailOne.one?docno=" + docno;
-			});
+			}); --%>
 	</script>
 </section>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />

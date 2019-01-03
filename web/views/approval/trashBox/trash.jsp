@@ -223,7 +223,7 @@
 		 	});
 			
 		 	 location.href="<%=request.getContextPath()%>/trashmove.tm?apprno=" + tdArr+",";
-	        /*   $("#ex3_Result2").html(tdArr);    */
+	        
 	 }
 
 	
