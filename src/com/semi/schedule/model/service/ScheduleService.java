@@ -1,15 +1,14 @@
 package com.semi.schedule.model.service;
 
-import static com.semi.common.JDBCTemplate.*;
+import static com.semi.common.JDBCTemplate.close;
+import static com.semi.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.dao.ScheduleDao;
-import com.semi.schedule.model.vo.DeptEmp;
 import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleService {
@@ -40,6 +39,7 @@ public class ScheduleService {
 			}
 			System.out.println("list3 : "+list3.size());
 		}
+		
 		//ArrayList<HashMap<String, Object>> list4=new ScheduleDao().selectUseVac(con, empId);
 		
 		//System.out.println("list1/list2/list3 : "+list1.size()+'/'+list2.size()+'/'+list3.size());
@@ -119,16 +119,41 @@ public class ScheduleService {
 		return result;
 	}
 
-	public HashMap<Integer, ArrayList<DeptEmp>> selectDeptEmp() {
+	public HashMap<String, ArrayList<Employee>> selectDeptEmp() {
 		Connection con=getConnection();
-		HashMap<Integer, ArrayList<DeptEmp>> hmap=new HashMap<Integer, ArrayList<DeptEmp>>();
+		HashMap<String, ArrayList<Employee>> hmap=new HashMap<String, ArrayList<Employee>>();
+		//부서ID를 키로 그 부서에 해당하는 직원들 모두 저장
+		ArrayList<Employee> empList=null;
+		//사원정보 저장
+
+		//ArrayList<HashMap<Integer, ArrayList<DeptEmp>>> listhmap=new ArrayList<HashMap<Integer, ArrayList<DeptEmp>>>();
 		
-		ArrayList<HashMap<Integer, ArrayList<DeptEmp>>> listhmap=new ArrayList<HashMap<Integer, ArrayList<DeptEmp>>>();
-		ArrayList<Integer> empIdList=new ScheduleDao().selectEmpList(con);
+		ArrayList<Integer> empIdList=new ScheduleDao().selectEmpIdList(con);
+		//모든 사원번호 선택 
+		
+		ArrayList<String> deptIdList=new ScheduleDao().selectDeptIdList(con);
+		//모든 부서 Id 저장 
 		
 		if(empIdList != null) {			
-			for(int i=0;i<empIdList.size();i++) {				
-				hmap.put(i, value)
+			for(int i=0;i<deptIdList.size();i++) {
+				empList=new ArrayList<Employee>();
+				for(int j=0;j<empIdList.size();j++) {
+					Employee emp=new ScheduleDao().selectEmp(con, empIdList.get(j));
+					if(deptIdList.get(i).equals(emp.getDeptId())) {
+						empList.add(emp);		
+						System.out.println(empList.size());
+					}
+				}
+				hmap.put(deptIdList.get(i), empList);
+				
+			}
+			System.out.println("사원수:"+empIdList.size()+"/ 사원객체 수:"+empList.size()+
+					"/부서 수 :"+deptIdList.size()+"/hmap 크기 : "+hmap.size());
+		}
+		for(int i=0;i<hmap.size();i++) {
+			for(int j=0;j<hmap.get(deptIdList.get(i)).size();j++) {
+				
+				System.out.println(deptIdList.get(i)+" : "+hmap.get(deptIdList.get(i)).get(j).getEmpid());
 			}
 		}
 		

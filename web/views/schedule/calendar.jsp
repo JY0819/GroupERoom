@@ -1,3 +1,4 @@
+<%@page import="com.semi.common.vo.DeptEmp"%>
 <%@page import="com.semi.admin.user.model.vo.*"%>
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,8 @@
 <%
 	Employee loginUser=(Employee)request.getSession().getAttribute("loginUser");
 	ArrayList<HashMap<String, Object>> list=(ArrayList<HashMap<String, Object>>)request.getAttribute("list");
+	HashMap<String, ArrayList<DeptEmp>> address=(HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("address");
+
 %>
 <%--수정해야할 것들
 상세보기 클릭 시 - 다른 날짜 클릭할 수 없게 처리하기 <<< 꼭!!!  O
@@ -63,15 +66,15 @@ css 좀 더 보기좋게 수정
 		var lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0); // 이번 달의 마지막 날
 
 		var tblCalendar = document.getElementById("calendarMain");     // 테이블 달력을 만들 테이블
-		var tblCalendarYM = document.getElementById("calendarTitle");    // yyyy년 m월 출력할 곳
-		tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // yyyy년 m월 출력
+		var tblCalendarYM = document.getElementById("calendarTitle");    // 몇년몇월인지 출력할 곳
+		tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // 연월 출력
 		
 		// 기존 테이블에 뿌려진 줄, 칸 삭제
 		while (tblCalendar.rows.length > 0) {
 			tblCalendar.deleteRow(tblCalendar.rows.length-1); //현재 있는 열 모두 삭제
 		}
 		
-		var row = null; //주차별로 추가될 열 
+		var row = null; //주차별 열추가
 		row = tblCalendar.insertRow();
 		
 		var cnt = 0; // 1일이 시작되는 칸을 맞추어 줌
@@ -81,11 +84,12 @@ css 좀 더 보기좋게 수정
 		}
  
 		for (var i=1; i<=lastDate.getDate(); i++) { //날마다 새로운 td 추가
-			var holiDate=new Date(today.getFullYear(), today.getMonth(), i);
+			var holiDate=new Date(today.getFullYear(), today.getMonth(), i); //공휴일 비교를 위한 일자 얻기
 	 		var year=today.getYear()+1900;
 			var month=(today.getMonth()+1);
 			var day=holiDate.getDate();
 			
+			/*공휴일 비교용 문자열*/
 			if(month<10){
 				if(i<10){
 					holis=year+'0'+month+'0'+day;
@@ -100,15 +104,15 @@ css 좀 더 보기좋게 수정
 				}
 			}
 			//console.log("진짜 holis : "+holis);
+			
+			//음력 날짜 구하는 함수 적용
 			lunaMonthCal(holis);
 			
-
 			cell = row.insertCell();
 			cell.innerHTML ='<span style="font-weight:bold;">'+i+'</span>';
-			cell.id='calSchedule'+holis;
+			cell.id='calSchedule'+holis; //일정 입력용 Id 부여
 			
-			
-			cnt = cnt + 1;
+			cnt=cnt+1;
 			
 			if (cnt%7 == 0) {
 				// 1주일이 7일 > 7일마다 새 열 추가
@@ -121,7 +125,6 @@ css 좀 더 보기좋게 수정
 			if(cnt%7 ==0) {
 				//토요일 날짜 색 blue
 				cell.innerHTML='<span class="saturday">'+i+'</span>';
-
 			}
 			
 			/*양력 공휴일 적용*/
@@ -129,6 +132,8 @@ css 좀 더 보기좋게 수정
 				if(holis.toString().substring(4)===holidaySol[j][0].toString()){
 					cell.innerHTML='<span class="sunday">'+i+'<br><span>'+
 					holidaySol[j][1]+'</span>';
+					
+					//어린이날 대체휴일일 경우 대체휴일
 					if(holis.toString().substring(4)==holidaySol[2][0]){
 						if(cnt%7==1){replaceHolis=1;}
 						if(cnt%7==0){replaceHolis=2;}
@@ -139,8 +144,11 @@ css 좀 더 보기좋게 수정
 			/*음력 공휴일 적용*/
 			for(var j=0;j<holidayLun.length;j++){
 				if(lunar_date.lunHolis.toString().substring(4,8)===holidayLun[j][0].toString()){
+					//음력 공휴일 적용
 					cell.innerHTML='<span class="sunday">'+i+'<br>'+
 					holidayLun[j][1]+'</span>';
+					
+					//대체 휴일이 적용 될 경우 대체휴일
 					if(j==0 && cnt%7==1){replaceHolis=3;}
 					if(j==1 && cnt%7==1){replaceHolis=4;}
 					if(j==2 && cnt%7==1){replaceHolis=5;}
@@ -171,8 +179,8 @@ css 좀 더 보기좋게 수정
 		default:break;
 		}
 		
-		//불러온 일정 삽입
 		
+		//불러온 일정 삽입
 		<%for(int i=0;i<list.size();i++){
 			HashMap<String, Object> hmap=list.get(i);%>
 			if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
@@ -192,10 +200,11 @@ css 좀 더 보기좋게 수정
 		<%
 		}
 		%>
+		<%-- <%ArrayList<DeptEmp> empList=address.get(loginUser.getDeptId());%> --%>
 		
 		// 휴가 불러오기 >
-		
-		view();
+
+		view(); //일정 입력 기본정보 불러오는 함수
 	}
 		
 	//음력 월 data
@@ -307,6 +316,9 @@ css 좀 더 보기좋게 수정
 	var solDate,solYear,solMonth,solDay;
 	var interval;
 	var MonthTable;
+	
+	
+	//음력 몇월 며칠/윤달여부 등 저장하는 함수
 	function lunaDate(solDate){
 		
 		//비교일 Date화
@@ -319,8 +331,8 @@ css 좀 더 보기좋게 수정
 			
 		MonthTable=[31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 		//2월 일수 넣어주기
-		if (((solDate.year%4==0) && (solDate.year%100!=0)) || (solDate.year%400 ==0)) MonthTable[1] = 29;
-		else MonthTable[1] = 28;
+		if (((solDate.year%4==0) && (solDate.year%100!=0)) || (solDate.year%400 ==0)) {MonthTable[1] = 29;}
+		else {MonthTable[1] = 28;}
 
 		//기준일로부터 일수 계산
 		if(solYear>=1951 && solYear<2051){
@@ -371,7 +383,7 @@ css 좀 더 보기좋게 수정
 		return sum;	
 	}
 			
-	//음력 월 날짜 수 구하기
+	//음력 각월의 날짜 수 구하기
 	function MonthtoDay(lunar_date) {
 		var monthDays=[[29, 0], [30, 0], [29, 29], [29, 30], [30, 29], [30, 30]];
 		var nDays;
@@ -384,7 +396,7 @@ css 좀 더 보기좋게 수정
 				case 5:nDays=30;	lunar_date.lunMonth=true; break;
 				case 6:nDays=30;	lunar_date.lunMonth=true; break;
 			}
-		}else{ //lunMonth가 true임.
+		}else{ //lunMonth가 true일때
 			console.log("윤달");
 			switch(lunaMonthArr[lunar_date.year-1951][lunar_date.month]){
 				case 3:nDays=29;	lunar_date.lunMonth=true; break;
@@ -396,7 +408,7 @@ css 좀 더 보기좋게 수정
 		return nDays;
 	}
 
-	// 양력날짜를 음력데이터형식의 날짜로 반환
+	// 양력날짜를 음력데이터형식의 날짜로 바꾸는 함수
 	function SolarToLunar(solar_date) {
 		var i, nDays, tmp, tDays;
 		tDays=0;
@@ -408,8 +420,8 @@ css 좀 더 보기좋게 수정
 		lunar_date.day = 1;
 		lunar_date.lunMonth = false;
 
-	// nDays가 0보다 작아질때 까지, 각년도의 총 날짜수를 빼는 걸 반복해 그 루프횟수로서 현재 년도를 계산.
-	// 이 루프가 종료됨과 동시에 음력데이터의 year속성은 현재 년도가 저장되게 된다.
+		// nDays가 0보다 작아질때 까지 각년도의 총 날짜수를 빼기반복>연도 계산.
+		// 현재 연도 계산 > lunaDate에 현재 연도 저장
 		do {
 			tmp = nDays;
 			nDays -= YeartoDay(lunar_date.year);
@@ -422,8 +434,9 @@ css 좀 더 보기좋게 수정
 			lunar_date.year++;
 		} while (true);
 
-		// 1년날수 이하 > nDays를 월 단위로 빼는걸 반복해 현재 월을 계산.
+		// nDays가 0보다 작아질 때까지 각 월의 총 날짜수 빼기 반복>월 계산
 		// 윤달이면 윤달 true
+		// 월 계산 > lunaDate에 현재 월 저장
 		do {
 			tmp = nDays;
 			nDays -= MonthtoDay(lunar_date);
@@ -455,7 +468,10 @@ css 좀 더 보기좋게 수정
 				//console.log("월계산윤달"+lunar_date.lunMonth);
 			}
 		} while (true);
-		// 마지막으로 월단위 날짜수 이하로 작아진 nDays를 이용해 날짜를 계산
+		
+		//nDays가 월단위 날짜수 이하로 작아지면 며칠인지 계산
+		// lunaDate에 일수 저장
+		//lunaDate에 저장된 날짜 불러와서 음력 공휴일 비교용 문자열 저장
 		lunar_date.date = nDays+1;
 		if(lunar_date.month<9){
 			if(lunar_date.date<10){
@@ -484,6 +500,7 @@ css 좀 더 보기좋게 수정
 		return lunar_date;
 	}
 
+	//위의 과정들을 하나로 연결되게 합치는 함수
 	function lunaMonthCal(holis){
 	
 		console.log("lunaMonthCal_holis : "+holis);
@@ -497,6 +514,8 @@ css 좀 더 보기좋게 수정
 		console.log("");
 	}
 </script>
+
+
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
@@ -508,7 +527,7 @@ css 좀 더 보기좋게 수정
 			<input type="checkbox" id="Teamschedule" name="teamschedule" value="2" checked>
 			<label for="Teamschedule"><%=loginUser.getDeptName() %>팀 일정</label><br><br>
 			<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
-			<label for="Companyschedule">회사 일정</label><br>
+			<label for="Companyschedule">회사 일정</label><br><br>
 			<input type="checkbox" id="useVacschedule" name="useVacschedule" value="4" checked>
 			<label for="useVacschedule">휴가</label><br>
 		</div>
@@ -936,6 +955,30 @@ css 좀 더 보기좋게 수정
 	    		}%>
 	        }
 		});
+		
+		 $("#useVacschedule").change(function(){
+			var name=$("#useVacschedule").val();
+			var empId=<%=loginUser.getEmpid()%>;
+			if($("#useVacschedule").is(":checked")){
+				$.ajax({
+					url:"/semi//address.common",
+					type:"post",
+					data:{empId:empId},
+					success:function(data){
+						console.log("휴가성공");
+					},
+					error:function(data){
+						console.log("휴가 실패");
+					},
+					complete:function(data){
+						console.log("휴가");
+					}
+				});
+	        }else{
+	    		
+	        }
+		});
+		
 		$(function(){
 			$("#calendarMain").children().children("td").click(function(){
 				var $scheduleLabelOne=$("#daySchedule"); 

@@ -1,4 +1,4 @@
-package com.semi.schedule.model.vo;
+package com.semi.common.vo;
 
 public class DeptEmp {
 	

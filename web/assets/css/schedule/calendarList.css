@@ -65,14 +65,14 @@
 	#goCalDate{
 		position:relative;
 		left:90%;
-		width:190px;
+		width:195px;
 	}
 	#goCalYear{
 		width:50px;
 		border-radius: 5px;
 	}
 	#goCalMonth{
-		width:30px;
+		width:35px;
 		border-radius: 5px;
 	}
 	#goCalBtn{

@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.semi.admin.user.model.vo.Employee;
-import com.semi.schedule.model.vo.DeptEmp;
 import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleDao {
@@ -422,7 +421,7 @@ public class ScheduleDao {
 		return result;
 	}
 
-	public ArrayList<Integer> selectEmpList(Connection con) {
+	public ArrayList<Integer> selectEmpIdList(Connection con) {
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		ArrayList<Integer> empIdList=null;
@@ -433,7 +432,7 @@ public class ScheduleDao {
 			pstmt=con.prepareStatement(query);
 			
 			empIdList=new ArrayList<Integer>();
-			
+			rset=pstmt.executeQuery();
 			while(rset.next()) {
 				empIdList.add(rset.getInt("EMPID"));
 			}
@@ -449,27 +448,78 @@ public class ScheduleDao {
 		return empIdList;
 	}
 
-	public HashMap<Integer, ArrayList<DeptEmp>> selectDeptEmp(Connection con, Integer integer) {
+
+	public ArrayList<String> selectDeptIdList(Connection con) {
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
-		
-		
-		HashMap<Integer, ArrayList<DeptEmp>> hmap=null;
-		ArrayList<DeptEmp> list=null;
+		ArrayList<String> deptIdList=null;
 		
 		String query=prop.getProperty("deptIdList");
 		
 		try {
 			pstmt=con.prepareStatement(query);
 			
-			for(int i=0;i<integer.size();i++) {
-				pstmt.setInt(1, integer.get(i);
+			rset=pstmt.executeQuery();
+			
+			deptIdList=new ArrayList<String>();
+			
+			while(rset.next()) {
+				deptIdList.add(rset.getString("DEPTID"));
+			}
+			
+			System.out.println("dao DEPTID : "+deptIdList);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return deptIdList;
+	}
+	
+	//ArrayList에 Emp 넣는
+	public Employee selectEmpList(Connection con, Integer empId) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		Employee emp=null;
+		
+		String query=prop.getProperty("selectEmp");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, empId);
+			pstmt.setInt(2, empId);
+			pstmt.setInt(3, empId);
+			pstmt.setInt(4, empId);
+			pstmt.setInt(5, empId);
+			
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				emp=new Employee();
 				
+				emp.setEmpid(rset.getInt("EMPID"));
+				emp.setEmpName(rset.getString("EMPNAME"));
+				emp.setDeptId(rset.getString("DEPTID"));
+				emp.setDeptName(rset.getString("DEPTNAME"));
+				emp.setPositionId(rset.getString("POSITIONID"));
+				emp.setPositionName(rset.getString("POSITIONNAME"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
-		return hmap;
+		
+		return emp;
 	}
+
+	public Employee selectEmp(Connection con, Integer integer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

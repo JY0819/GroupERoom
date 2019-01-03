@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.service.ScheduleService;
-import com.semi.schedule.model.vo.DeptEmp;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * Servlet implementation class SelectUseVacServlet
@@ -38,13 +36,16 @@ public class SelectUseVacServlet extends HttpServlet {
 		
 		String page="";
 		if(request.getSession().getAttribute("loginUser")!=null) {
+			
+			int empId=Integer.parseInt(request.getParameter("empId"));
 			String deptId=((Employee)request.getSession().getAttribute("loginUser")).getDeptId();
 			System.out.println("deptId:"+deptId);
 			
-			HashMap<Integer, ArrayList<DeptEmp>> hmap=new ScheduleService().selectDeptEmp();
+			HashMap<String, ArrayList<Employee>> hmap=new ScheduleService().selectDeptEmp();
 			
 			
 			if(hmap!=null) {
+				
 				page="views/schedule/calendar.jsp";
 				request.setAttribute("empHmap", hmap);
 				

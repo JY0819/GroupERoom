@@ -86,7 +86,7 @@
 		top:50px;
 		left:120px;
 		width:150px;
-		height:170px;
+		height:200px;
 		border:1px solid lightgray;
 		border-radius: 7px;
 		padding:25px 0px 10px 10px;
@@ -100,14 +100,14 @@
 	#goCalDate{
 		position:relative;
 		left:90%;
-		width:190px;
+		width:195px;
 	}
 	#goCalYear{
 		width:50px;
 		border-radius: 5px;
 	}
 	#goCalMonth{
-		width:30px;
+		width:35px;
 		border-radius: 5px;
 	}
 	#goCalBtn{
