@@ -98,9 +98,6 @@ public class InsertDocumentServlet extends HttpServlet {
 			//===================================================
 			//결재번호 받기
 			int count = 0;
-			System.out.println("결재할 사원번호: "  + multipartRequest.getParameter("empNo1"));
-			System.out.println("결재할 사원번호: "  + multipartRequest.getParameter("empNo2"));
-			System.out.println("결재할 사원번호: "  + multipartRequest.getParameter("empNo3"));
 			if(!multipartRequest.getParameter("empNo1").equals("")) {
 				count++;
 				if(!multipartRequest.getParameter("empNo2").equals("")) {
@@ -140,34 +137,31 @@ public class InsertDocumentServlet extends HttpServlet {
 			Date writeDay = null;
 			
 			String sDate = "";
-			String sTime = "";
 			String eDate = "";
-			String eTime = "";
 			if(!sTemp.equals("") && !eTemp.equals("") && !wDate.equals("")) {
 				sDate = sTemp.substring(0, sTemp.length()-6);
-				sTime = sTemp.substring(sTemp.length()-6, sTemp.length());
 				eDate = eTemp.substring(0, eTemp.length()-6);
-				eTime = eTemp.substring(eTemp.length()-6, eTemp.length());
 				//휴가시작 날짜
-				String[] dateArr = sDate.split("-");
-
-				int[] drr = new int[dateArr.length];
 				
-				for(int i=0; i<dateArr.length; i++) {
+					String[] dateArr = sDate.split("-");
+	
+					int[] drr = new int[dateArr.length];
+				if(documentKind.equals("1")) {	
+					for(int i=0; i<dateArr.length; i++) {
+							drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+					
+					//==============================================================
+					//휴가끝 날짜
+					dateArr = eDate.split("-");
+					drr = new  int[dateArr.length];
+					
+					for(int i=0; i<dateArr.length; i++) {
 						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					endDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
 				}
-				startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
-				
-				//==============================================================
-				//휴가끝 날짜
-				dateArr = eDate.split("-");
-				drr = new  int[dateArr.length];
-				
-				for(int i=0; i<dateArr.length; i++) {
-					drr[i] = Integer.parseInt(dateArr[i]);
-				}
-				endDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
-				
 				//==============================================================
 				//작성일 날짜
 				dateArr = wDate.split("-");
@@ -181,8 +175,10 @@ public class InsertDocumentServlet extends HttpServlet {
 				//==============================================================
 				//아닐경우
 			}else {
-				startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
-				endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				if(documentKind.equals("1")) {
+					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				}
 				writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 			}
 				
@@ -193,13 +189,15 @@ public class InsertDocumentServlet extends HttpServlet {
 			document.setManageDocNo(docNum);
 			document.setManageTitle(title);
 			document.setManageContents(content);
-			document.setManageDay(startDay);
+			document.setManageDay(writeDay);
 			document.setManageClass(documentKind);
-			document.setVacApprStart(startDay);
-			document.setVacApprReason(reason);
 			document.setManageNo(num);
-			document.setVacApprEnd(endDay);
 			document.setSubmission(submission);
+			if(documentKind.equals("1")) {
+				document.setVacApprReason(reason);
+				document.setVacApprStart(startDay);
+				document.setVacApprEnd(endDay);
+			}
 			
 			//결재선 객체 생성
 			int[] apprLineCount = new int[3];
@@ -222,21 +220,6 @@ public class InsertDocumentServlet extends HttpServlet {
 					apprLine[i].setApprEmpId(apprNo[i]);
 					apprLine[i].setApprOrder(apprLineCount[i]);
 				}
-		/*	if(!appr1.equals("")) {
-				apprLine[0] = new ApprLine();
-				apprLine[0].setApprEmpId(appr1);
-				apprLine[0].setApprOrder(1);
-			}
-			if(!appr2.equals("")) {
-				apprLine[1] = new ApprLine();
-				apprLine[1].setApprEmpId(appr2);
-				apprLine[1].setApprOrder(2);
-			}
-			if(!appr3.equals("")) {
-				apprLine[2] = new ApprLine();
-				apprLine[2].setApprEmpId(appr3);
-				apprLine[2].setApprOrder(3);
-			}	*/		
 			//Attachment 객체 생성하여 arrayList 객체 생성
 			ArrayList<Attachments> fileList = null;
 			

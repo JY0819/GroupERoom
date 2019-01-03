@@ -23,8 +23,8 @@
 
 	<div class="content-right container">
 
-		<button class="moveBtn">이동</button>
-		<button class="garbageBtn" onclick="sendTrash">삭제</button>
+		<!-- <button class="moveBtn" >이동</button> -->
+		<button class="garbageBtn" onclick="sendTrash()">삭제</button>
 		<table>
 			<thead>
 				<tr>
