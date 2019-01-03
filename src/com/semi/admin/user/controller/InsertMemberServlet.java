@@ -67,25 +67,7 @@ public class InsertMemberServlet extends HttpServlet {
 			String multiApprovePwd = multiRequest.getParameter("approvePwd");
 			String multiDept = multiRequest.getParameter("dept");
 			String multiPosition = multiRequest.getParameter("position");
-			
-			
-			/*String[] err = multiRequest.getParameterValues("dept");
-			String[] prr = multiRequest.getParameterValues("position");
-			String dept = "";
-			if (err != null) {
-				for (int i = 0; i < err.length; i++)
-					if (i == 0) {
-						dept = err[i];
-					}
-			}
-			String position = "";
-			if (prr != null) {
-				for (int i = 0; i < prr.length; i++)
-					if (i == 0) {
-						position = prr[i];
-					}
-			}*/
-			
+		
 
 			// 사원 생일
 			java.sql.Date birth = null;
