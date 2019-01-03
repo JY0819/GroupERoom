@@ -9,15 +9,23 @@
 			padding:10px 10px 10px 25px;
 		}
 		#memoArea{
+			scrollbar-face-color:#326FAA;
+			scrollbar-highlight-color: navy;
+			scrollbar-3dlight-color: #FFFFFF;
+			scrollbar-shadow-color: navy;
+			scrollbar-darkshadow-color: #FFFFFF;
+			scrollbar-track-color: #FFFFFF;
+			scrollbar-arrow-color: navy;
 			width:240px;
 			height:320px;
 			padding: 5px 5px 5px 5px;
+			border:1px solid #295F93;
 			background:#295F93;
 			color:white;
 		}
 	</style>
 	<div id="memoDiv">
-		<textarea id="memoArea" rows="25" cols="30"></textarea>
+		<textarea id="memoArea"></textarea>
 	</div>
 	
 </div>

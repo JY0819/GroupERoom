@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.schedule.model.vo.DeptEmp;
 import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleDao {
@@ -419,6 +420,56 @@ public class ScheduleDao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<Integer> selectEmpList(Connection con) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		ArrayList<Integer> empIdList=null;
+		
+		String query=prop.getProperty("empIdList");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			
+			empIdList=new ArrayList<Integer>();
+			
+			while(rset.next()) {
+				empIdList.add(rset.getInt("EMPID"));
+			}
+			System.out.println("dao empId : "+empIdList);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return empIdList;
+	}
+
+	public HashMap<Integer, ArrayList<DeptEmp>> selectDeptEmp(Connection con, Integer integer) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		
+		
+		HashMap<Integer, ArrayList<DeptEmp>> hmap=null;
+		ArrayList<DeptEmp> list=null;
+		
+		String query=prop.getProperty("deptIdList");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			
+			for(int i=0;i<integer.size();i++) {
+				pstmt.setInt(1, integer.get(i);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return hmap;
 	}
 
 }

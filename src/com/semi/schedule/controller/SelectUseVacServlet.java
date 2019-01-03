@@ -10,23 +10,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.service.ScheduleService;
-import com.semi.schedule.model.vo.Schedule;
+import com.semi.schedule.model.vo.DeptEmp;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
- * Servlet implementation class SelectAllScheduleServlet
+ * Servlet implementation class SelectUseVacServlet
  */
-@WebServlet("/schedule.sche")
-public class SelectAllScheduleServlet extends HttpServlet {
+@WebServlet("/usevac.sche")
+public class SelectUseVacServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectAllScheduleServlet() {
+    public SelectUseVacServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,29 +35,31 @@ public class SelectAllScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//세션이 없으면 >> 세션만료 메시지 띄우기
+		
 		String page="";
 		if(request.getSession().getAttribute("loginUser")!=null) {
-			int empId=((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid();
-			ArrayList<HashMap<String, Object>> list=new ScheduleService().selectAllSchedule(empId);
-			System.out.println("list : "+list);
-		
-		
-			if(list!=null) {
+			String deptId=((Employee)request.getSession().getAttribute("loginUser")).getDeptId();
+			System.out.println("deptId:"+deptId);
+			
+			HashMap<Integer, ArrayList<DeptEmp>> hmap=new ScheduleService().selectDeptEmp();
+			
+			
+			if(hmap!=null) {
 				page="views/schedule/calendar.jsp";
-				request.setAttribute("list", list);
+				request.setAttribute("empHmap", hmap);
+				
 			}else {
 				page="views/common/errorPage.jsp";
-				request.setAttribute("msg", "일정 조회 실패");
-			}
+				request.setAttribute("msg", "사원이 없습니다");
+			}	
 			RequestDispatcher view=request.getRequestDispatcher(page);
 			view.forward(request, response);
+			
 		}else {
 			request.setAttribute("msg", "세션이 없거나 만료되었습니다.");
 			page="views/common/errorPage.jsp";
 			request.getRequestDispatcher(page).forward(request, response);
 		}
-		
 	}
 
 	/**

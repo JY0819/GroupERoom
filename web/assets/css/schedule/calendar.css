@@ -92,6 +92,37 @@
 		padding:25px 0px 10px 10px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	}
+	#goCal{
+		width:75%;
+		height:50px;
+		margin:10px 0px 0px 80px;
+	}
+	#goCalDate{
+		position:relative;
+		left:90%;
+		width:190px;
+	}
+	#goCalYear{
+		width:50px;
+		border-radius: 5px;
+	}
+	#goCalMonth{
+		width:30px;
+		border-radius: 5px;
+	}
+	#goCalBtn{
+		position:relative;
+		background:#f0f0f0 !important;
+		margin: 2px 2px 2px 2px;
+		border-radius:5px;
+		width:50px;
+		height:30px;
+		text-align:center;
+		vertical-align:middle;
+		line-height:30px;
+		border:1px solid #f9f9f9;
+		display:inline-table;
+	}
 	div.schedule{
 		width:75%;
 		float:left;
@@ -243,7 +274,15 @@
 	    margin-right: 10px;  
 	    color:#C64A4A;
 	}
-
+	
+	#useVacschedule + label{
+	    display: inline-block;  
+	    cursor: pointer;  
+	    position: relative;  
+	    padding-left: 25px;  
+	    margin-right: 10px;  
+	    color:#736DCC;
+	}
 	input[type=checkbox]+ label:before {     
 
 	    content: "";  
@@ -281,6 +320,14 @@
 	    font-weight: 600;
 	    text-align: center;
 	    color:#C64A4A;
+	} 
+	
+	#useVacschedule:checked + label:before {
+	    content: "\2713";
+	    font-size: 22px; 
+	    font-weight: 600;
+	    text-align: center;
+	    color:#736DCC;
 	} 
 	
 	#nonClick{
