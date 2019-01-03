@@ -5,6 +5,7 @@ import static com.semi.common.JDBCTemplate.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -211,12 +212,13 @@ public class DocumentDao {
 			result = pstmt.executeUpdate();
 
 			query = prop.getProperty("insertApprLine");
-			pstmt2 = con.prepareStatement(query);
 			ApprLine[] apprLine = (ApprLine[])list.get(1);
-			pstmt2.setInt(1, apprLine[0].getApprEmpId());
-			pstmt2.setInt(2, apprLine[0].getApprOrder());
-			
-			result += pstmt2.executeUpdate();
+			for(int i=0; i<apprLine.length; i++) {
+				pstmt2 = con.prepareStatement(query);
+				pstmt2.setInt(1, apprLine[i].getApprEmpId());
+				pstmt2.setInt(2, apprLine[i].getApprOrder());
+				result += pstmt2.executeUpdate();
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -259,6 +261,7 @@ public class DocumentDao {
 				if(rset2.next()) {
 					myDocument.setTitle(rset2.getString("MANAGETITLE"));
 					myDocument.setWriteDay(rset2.getDate("MANAGEDAY"));
+					myDocument.setSubmission(rset2.getString("SUBMISSION"));
 				}
 				list.add(myDocument);
 				count++;
@@ -297,6 +300,7 @@ public class DocumentDao {
 		return result;
 	}
 
+	//결재할 문서로 상신 처리
 	public ArrayList<MyDocument> selectSubmitList(Connection con) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -334,6 +338,7 @@ public class DocumentDao {
 		return list;
 	}
 
+	//휴지통 처리
 	public int sendTrashList(Connection con, String[] docNumList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -355,19 +360,45 @@ public class DocumentDao {
 		return result;
 	}
 
+	//결재차수와 결재번호 가져와 logofapprove 삽입 후 반려처리 부분
 	public int sendReturn(Connection con, String[] docNumList) {
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rset = null;
 		int result = 0;
 		
-		String query = prop.getProperty("sendReturn");
-		
+		String query = prop.getProperty("selectApprOrder");
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		try {
 			
 			pstmt = con.prepareStatement(query);
-			for(int i=0; i<docNumList.length; i++) {
+			for(int i=0; i<docNumList.length-1; i++) {
 				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
+				rset = pstmt.executeQuery();
+				while(rset.next()) {
+					list.add(rset.getInt("APPRNO"));
+					list.add(rset.getInt("APPRORDER"));
+				}
+			}
+			query = prop.getProperty("insertLogOfApproveReturn");
+			for(int i=0; i<list.size()-1; i++) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, "반려");
+				pstmt.setInt(2, list.get(i));
+				if(list.get(i) == 0) {
+					break;
+				}
+				pstmt.setInt(3, list.get(i+1));
 			}
 			result = pstmt.executeUpdate();
+			
+			query = prop.getProperty("updateApprDate");
+			for(int i=0; i<list.size(); i+=2) {
+				pstmt2 = con.prepareStatement(query);
+				pstmt2.setInt(1, list.get(i));
+			}
+			result += pstmt2.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -376,13 +407,16 @@ public class DocumentDao {
 		return result;
 	}
 
+	//반려함 문서조회
 	public ArrayList<MyDocument> selectReturnDocumentList(Connection con) {
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rset = null;
+		ResultSet rset2 = null;
 		MyDocument myDocument = null;
 		ArrayList<MyDocument> list = null;
 		
-		String query = prop.getProperty("selectReturnDocument");
+		String query = prop.getProperty("selectReturnDocument1");
 		
 		try {
 			
@@ -397,10 +431,17 @@ public class DocumentDao {
 				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
-				myDocument.setDocNum(rset.getInt("DOCNO"));
 				myDocument.setOpinion(rset.getString("OPINION"));
-				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
 				myDocument.setResult(rset.getString("APPRSTATUS"));
+				int docNum = rset.getInt("DOCNO");
+				String query2 = prop.getProperty("selectReturnDocument2");
+				pstmt2 = con.prepareStatement(query2);
+				pstmt2.setInt(1, docNum);
+				rset2 = pstmt2.executeQuery();
+				if(rset2.next()) {
+					myDocument.setDocNum(rset2.getInt("MANAGEDOCNO"));
+					myDocument.setWriteDay(rset2.getDate("MANAGEDAY"));
+				}
 				
 				list.add(myDocument);
 				count++;
@@ -410,7 +451,9 @@ public class DocumentDao {
 			e.printStackTrace();
 		}finally {
 			close(rset);
+			close(rset2);
 			close(pstmt);
+			close(pstmt2);
 		}
 		return list;
 	}
@@ -480,4 +523,5 @@ public class DocumentDao {
 		}
 		return attachments;
 	}
+
 }

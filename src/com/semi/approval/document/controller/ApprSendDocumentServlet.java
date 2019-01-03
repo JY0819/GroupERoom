@@ -28,7 +28,7 @@ public class ApprSendDocumentServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0) {
-			page = "/semi/";
+			page = "/semi/selectDocument.sd";
 			response.sendRedirect(page);
 
 		}else {

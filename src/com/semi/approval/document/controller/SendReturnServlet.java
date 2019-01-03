@@ -21,15 +21,17 @@ public class SendReturnServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] docNumList = request.getParameter("docNum").split(",");
-		
+		String pageName = docNumList[docNumList.length-1];
 		int result = new DocumentService().sendReturn(docNumList);
 		
 		String page = "";
 		if(result > 0) {
-			response.sendRedirect("/semi/returnBox.rb");
-
+			if(pageName.equals("re")) {
+				page = "/semi/selectSubmitDocumentServlet.sds";
+			}
+			response.sendRedirect(page);
 		}else {
-			page = "views/common.errorPage";
+			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "문서조회실패");
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);
