@@ -1,27 +1,31 @@
-package com.semi.memo.controller;
+package com.semi.common.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.semi.memo.model.service.MemoService;
-import com.semi.memo.model.vo.Memo;
+import com.semi.admin.user.model.vo.Employee;
+import com.semi.common.service.AddressService;
+import com.semi.common.vo.DeptEmp;
+import com.semi.schedule.model.service.ScheduleService;
 
 /**
- * Servlet implementation class SelectMemoServlet
+ * Servlet implementation class SelectAddressServlet
  */
-@WebServlet("/select.memo")
-public class SelectMemoServlet extends HttpServlet {
+@WebServlet("/address.common")
+public class SelectAddressServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectMemoServlet() {
+    public SelectAddressServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,18 +34,12 @@ public class SelectMemoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int empId=Integer.parseInt(request.getParameter("empId"));
-		System.out.println(empId);
 		
-		Memo memo=new MemoService().selectMemo(empId);
+		//HashMap에 deptId가 키, 그 부서에 속한 사원리스트가 value
+		HashMap<String, ArrayList<DeptEmp>> address=new AddressService().selectDeptEmp();
 		
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-
-		if(memo!=null) {
-			new Gson().toJson(memo, response.getWriter());
-		}else {
-			new Gson().toJson("작성된 메모가 없습니다", response.getWriter());
+		if(address!=null) {
+			request.setAttribute("address", address);
 		}
 	}
 

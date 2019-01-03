@@ -44,13 +44,10 @@ public class MemoDao {
 			memo=new Memo();
 			
 			while(rset.next()) {
-			
-				System.out.println("들어가?");
 				memo.setMemoNo(rset.getInt("NOTENO"));
 				memo.setMemoContents(rset.getString("NOTECONTENTS"));
 				memo.setEmpId(rset.getInt("EMPID"));
 			}
-			
 			System.out.println("dao"+memo);
 		} catch (SQLException e) {
 			e.printStackTrace();
