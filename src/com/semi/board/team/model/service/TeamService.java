@@ -69,5 +69,81 @@ public class TeamService {
 		
 		return result;
 	}
+	//글 수정
+	public Team selectOne(String num) {
+		Connection con = getConnection();
+		
+		Team t = new TeamDao().selectOne(con, num);
+		
+		int result = 0;
+		
+		if(t != null) {
+			result = new TeamDao().updateCount(con, t.getBno());
+			if(result > 0) commit(con);
+			else rollback(con);	
+			
+		}
+		
+		close(con);
+		
+		return t;
+	}
+	//수정용
+	public int updateTeam(Team t) {
+		Connection con = getConnection();
+		
+		int result = new TeamDao().updateTeam(con, t);
+		
+		if(result>0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		
+		return result;
+	}
+	//댓글 작성
+	public ArrayList<Team> insertReply(Team t) {
+		Connection con = getConnection();
+		ArrayList<Team> replyList = null;
+		
+		int result= new TeamDao().insertReply(con, t);
+		
+		System.out.println("service: "+replyList);
+		
+		if(result > 0) {
+			
+			commit(con);
+			replyList = new TeamDao().selectReplyList(con, t.getBno());
+			//=>20번글을 보고 있으면 20번글에 대한 댓글만 조회할 수 있도록
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return replyList;
+	}
+	//전체 게시글 수 조회
+	public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new TeamDao().getlistCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+	//페이징 처리 후 글 목록 조회
+	public ArrayList<Team> selectList(int currentPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<Team> list = new TeamDao().selectList(con, currentPage, limit);
+		
+		System.out.println("service: "+list.size());
+		close(con);
+		
+		return list;
+	}
 	
 }

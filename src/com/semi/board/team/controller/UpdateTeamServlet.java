@@ -1,4 +1,4 @@
-package com.semi.board.Free.controller;
+package com.semi.board.team.controller;
 
 import java.io.IOException;
 
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.board.Free.model.service.FreeService;
-import com.semi.board.Free.model.vo.Free;
+import com.semi.board.team.model.service.TeamService;
+import com.semi.board.team.model.vo.Team;
 
 /**
- * Servlet implementation class UpdateFreeServlet
+ * Servlet implementation class UpdateTeamServlet
  */
-@WebServlet("/updateFree.fr")
-public class UpdateFreeServlet extends HttpServlet {
+@WebServlet("/updateTeam.tm")
+public class UpdateTeamServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateFreeServlet() {
+    public UpdateTeamServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,19 +39,19 @@ public class UpdateFreeServlet extends HttpServlet {
 	System.out.println(content);
 	System.out.println(bno);
 
-	Free f = new Free();
-	f.setbTitle(title);
-	f.setBno(bno);
-	f.setbContent(content);
+	Team t = new Team();
+	t.setbTitle(title);
+	t.setBno(bno);
+	t.setbContent(content);
 	
-	int result = new FreeService().updateFree(f);
+	int result = new TeamService().updateTeam(t);
 	
 	String page="";
 	
 	if(result > 0) {
-		response.sendRedirect("/semi/selectOne.fr?num="+bno);
+		response.sendRedirect("/semi/selectOne.tm?num="+bno);
 	}else {
-		request.setAttribute("msg", "자유게시판 글 수정 실패");
+		request.setAttribute("msg", "부서게시판 글 수정 실패");
 		page="views/common/errorPage.jsp";
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
