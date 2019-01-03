@@ -2,6 +2,7 @@ package com.semi.myPage.controller.Msg;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.approval.document.service.DocumentService;
+import com.semi.approval.document.vo.SumEmpInfo;
 import com.semi.myPage.model.Etc.vo.PageInfo;
 import com.semi.myPage.model.Msg.service.MsgService;
 import com.semi.myPage.model.Msg.vo.Msg;
@@ -69,17 +72,25 @@ public class ShowMyPageMain extends HttpServlet {
 		ArrayList<Msg> list = ms.showMyPageMain(userId, currentPage, limit);
 		
 		
+		
+		
+		// 주소록 불러오기
+		HashMap<Integer, ArrayList<SumEmpInfo>> hmap = new DocumentService().selectDept();
+		
+		
+		
+		
 		String page = "";
 		
-		if (list != null) {
+		if (list != null && hmap != null) {
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("map", hmap);
 			page = "views/myPage/mypageMain.jsp";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
 		
 	}
 

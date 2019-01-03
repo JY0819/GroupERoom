@@ -114,7 +114,7 @@ var treeviewJson = {
 					  		  ]
 					}
 				   ,{ 
-					  text: "주소록", href: "/semi/views/myPage/addressBook/AddressBook.jsp"
+					  text: "주소록", href: "/semi/showAddress"
 					}
 				   ,{
 					  text: "휴가", href: "/semi/myPageLogOfVac"

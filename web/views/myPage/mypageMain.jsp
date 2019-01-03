@@ -1,3 +1,5 @@
+<%@page import="com.semi.approval.document.vo.SumEmpInfo"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.semi.myPage.model.Etc.vo.PageInfo"%>
 <%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
 <%@page import="java.util.ArrayList"%>
@@ -6,6 +8,7 @@
 <% 
 	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	HashMap<Integer, ArrayList<SumEmpInfo>> hmap = (HashMap<Integer, ArrayList<SumEmpInfo>>)request.getAttribute("map");
 	
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -33,6 +36,7 @@
 	border-radius: 10px;
 	width: 100px;
 	height: 40px;
+	margin-bottom: 20px;
 }
 #btn1{
 	margin-right: 250px;
@@ -87,18 +91,37 @@
 
 	<div class="content-right container">
 
-		<div align="center">
-			<table id="myPageMainTable" align="center">
+		<div>
+			<table id="myPageMainTable">
 				<tr>
 					<td>
-						<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'"></div>
+						<div class="alignBox"><input class="btn" id="btn2" type="button" value="쪽지 보내기"></div>
 					</td>
 					<td>
-						<div class="alignBox"><input class="btn" id="btn2" type="button" value="주소록"></div>
+						<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'"></div>
 					</td>
 				</tr>
 				<tr>
 					<td>
+						<div class="white_content" id="open" style="padding-left: 50px; vertical-align: top;">
+				        	<div>
+				        		<dl>
+				        			<% for(int i=0; i<hmap.size(); i++) { %>
+				        			<dt style="padding: 3px;">
+				        				<i class="fab fa-bandcamp">&nbsp;<%= hmap.get(i).get(0).getDeptName() %>팀</i>
+				        			</dt>
+				        				<% for(int j=0; j < hmap.get(i).size(); j++) { %>
+				        				<dd class="empNo" style="padding: 3px;">
+				        					&nbsp;&nbsp;&nbsp;<i class="far fa-star"></i>&nbsp;<%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %>
+				        				</dd>
+				        				<% } %>
+				        			<% } %>
+				        		</dl>
+				     	  	</div>
+				    	</div>
+					</td>
+					<td>
+						<div style="height: 235px;">
 						<table id="messageList" class="line" align="center">
 							<% if(exist) { %>
 							<tr>
@@ -124,63 +147,25 @@
 							</tr>
 							<% } %>
 						</table>
-					</td>
-					<td>
-						<div class="diary" style="margin-left: 50px;">
-						<table align="center">
-							<tr>
-								<td>즐겨찾기</td>
-							</tr>
-								<tr>
-									<td class="sub">관리자</td>
-								</tr>
-								<tr>
-									<td class="sub">가나다(팀장)</td>
-								</tr>
-							<tr>
-								<td>인사회계팀</td>
-							</tr>
-							<tr>
-								<td>마케팅팀</td>
-							</tr>
-							<tr>
-								<td>개발팀</td>
-							</tr>
-								<tr>
-									<td class="sub">가나다</td>
-								</tr>
-								<tr>
-									<td class="sub">카카오(팀장)</td>
-								</tr>
-								<tr>
-									<td class="sub">관리자</td>
-								</tr>
-								<tr>
-									<td class="sub">가나다(팀장)</td>
-								</tr>
-							<tr>
-								<td>디자인팀</td>
-							</tr>
-						</table>
+						</div>
+						<div class="paging" align="center">
+							<ul class="pagination">
+								
+								<% for(int p = startPage; p <= endPage; p++) {
+										if(p == currentPage) {
+								%>
+										<li><a href="#"><%= p %></a></li>
+								<%		} else { %>
+										<li><a href="<%=request.getContextPath()%>/myPageMain?currentPage=<%= p %>"><%= p %></a></li>
+								<%		} %>
+								
+								<% } %>
+			
+							</ul>
 						</div>
 					</td>
 				</tr>
 			</table>
-			<div class="paging" align="center">
-				<ul class="pagination">
-					
-					<% for(int p = startPage; p <= endPage; p++) {
-							if(p == currentPage) {
-					%>
-							<li><a href="#"><%= p %></a></li>
-					<%		} else { %>
-							<li><a href="<%=request.getContextPath()%>/myPageMain?currentPage=<%= p %>"><%= p %></a></li>
-					<%		} %>
-					
-					<% } %>
-
-				</ul>
-			</div>
 		</div>
 	</div>
 </section>
