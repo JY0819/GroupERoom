@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.dao.ScheduleDao;
+import com.semi.schedule.model.vo.DeptEmp;
 import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleService {
@@ -116,6 +117,23 @@ public class ScheduleService {
 		
 		close(con);
 		return result;
+	}
+
+	public HashMap<Integer, ArrayList<DeptEmp>> selectDeptEmp() {
+		Connection con=getConnection();
+		HashMap<Integer, ArrayList<DeptEmp>> hmap=new HashMap<Integer, ArrayList<DeptEmp>>();
+		
+		ArrayList<HashMap<Integer, ArrayList<DeptEmp>>> listhmap=new ArrayList<HashMap<Integer, ArrayList<DeptEmp>>>();
+		ArrayList<Integer> empIdList=new ScheduleDao().selectEmpList(con);
+		
+		if(empIdList != null) {			
+			for(int i=0;i<empIdList.size();i++) {				
+				hmap.put(i, value)
+			}
+		}
+		
+		close(con);
+		return hmap;
 	}
 
 }

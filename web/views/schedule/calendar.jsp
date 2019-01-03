@@ -38,16 +38,22 @@ css 좀 더 보기좋게 수정
 		 ['0100', '연휴'], ['0101', '설날'], ['0102', '연휴'], ['0408', '석가탄신일'], ['0814', '연휴'], ['0815', '추석'], ['0816', '연휴']
 	];
 	
+	function goCalendar(){
+		var goYear=$("#goCalYear").val();
+		var goMonth=$("#goCalMonth").val();
+		today=new Date(goYear, goMonth-1, 1);
+
+		buildCalendar(); //
+	}
+	
 	function prevCalendar() {
 		today = new Date(today.getFullYear(), today.getMonth() - 1 /*이전달*/, today.getDate());
-		buildCalendar(); // 현재 달 
-		
+		buildCalendar(); 
 	}
  
 	function nextCalendar() {
 		today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
 		buildCalendar();
-		
 	}
  
 	function buildCalendar() {// 현재 달
@@ -503,6 +509,8 @@ css 좀 더 보기좋게 수정
 			<label for="Teamschedule"><%=loginUser.getDeptName() %>팀 일정</label><br><br>
 			<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
 			<label for="Companyschedule">회사 일정</label><br>
+			<input type="checkbox" id="useVacschedule" name="useVacschedule" value="4" checked>
+			<label for="useVacschedule">휴가</label><br>
 		</div>
 		<%} %>
 	</div>
@@ -511,6 +519,21 @@ css 좀 더 보기좋게 수정
 	<%if(loginUser!=null){ %>
 	<div class="schedule">
 		<div id="nonClick"></div>
+		<div id="goCal">
+			<!-- <input type="date" name="goCalDate" id="goCalDate" size="3"> 
+			<script>
+				document.getElementById("goCalDate").valueAsDate=new Date();
+			</script> -->
+			<div id="goCalDate">
+				<input type="number" id="goCalYear" min="1950" max="2050">&nbsp;<label for="goCalYear">년</label> 
+				<input type="number" id="goCalMonth" min="1" max="12">&nbsp;<label for="goCalMonth">월</label>
+				<div id="goCalBtn" onclick="goCalendar()">이동</div>
+			</div>
+ 			<script>
+ 				$("#goCalYear").val(new Date().getFullYear());
+ 				$("#goCalMonth").val((new Date().getMonth())+1);
+ 			</script>
+		</div>
 		<table id="calendar" align="center">
 			<thead>
 				<tr id="title">
