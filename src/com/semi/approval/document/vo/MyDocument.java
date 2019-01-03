@@ -12,13 +12,14 @@ public class MyDocument implements java.io.Serializable{
 	private String opinion;
 	private Date writeDay;
 	private String result;
+	private String submission;
 	
 	public MyDocument() {
 		
 	}
 
 	public MyDocument(int num, int writerNum, String writer, String deptName, int docNum, String title, String opinion,
-			Date writeDay, String result) {
+			Date writeDay, String result, String submission) {
 		super();
 		this.num = num;
 		this.writerNum = writerNum;
@@ -29,6 +30,7 @@ public class MyDocument implements java.io.Serializable{
 		this.opinion = opinion;
 		this.writeDay = writeDay;
 		this.result = result;
+		this.submission = submission;
 	}
 
 	public int getNum() {
@@ -103,11 +105,19 @@ public class MyDocument implements java.io.Serializable{
 		this.result = result;
 	}
 
+	public String getSubmission() {
+		return submission;
+	}
+
+	public void setSubmission(String submission) {
+		this.submission = submission;
+	}
+
 	@Override
 	public String toString() {
 		return "MyDocument [num=" + num + ", writerNum=" + writerNum + ", writer=" + writer + ", deptName=" + deptName
 				+ ", docNum=" + docNum + ", title=" + title + ", opinion=" + opinion + ", writeDay=" + writeDay
-				+ ", result=" + result + "]";
+				+ ", result=" + result + ", submission=" + submission + "]";
 	}
 	
 }

@@ -22,6 +22,7 @@ public class ReturnBox extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		ArrayList<MyDocument> list = new DocumentService().selectReturnDocumentList();
 		String page = "";
 		if(list != null) {

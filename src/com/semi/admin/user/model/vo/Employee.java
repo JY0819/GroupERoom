@@ -59,14 +59,13 @@ public class Employee implements java.io.Serializable {
 		this.positionName = positionName;
 	}
 
-	
 
 	public int getEmpid() {
 		return empid;
 	}
 
 
-
+  
 	public void setEmpid(int empid) {
 		this.empid = empid;
 	}
@@ -246,7 +245,9 @@ public class Employee implements java.io.Serializable {
 
 	@Override
 	public String toString() {
+
 		return "Employee [empId=" + empid + ", empName=" + empName + ", empPwd=" + empPwd + ", approvePwd=" + approvePwd
+
 				+ ", empGender=" + empGender + ", empBirth=" + empBirth + ", empAddr=" + empAddr + ", empPhone="
 				+ empPhone + ", empVacCount=" + empVacCount + ", adminAuthority=" + adminAuthority
 				+ ", whetherOfRetire=" + whetherOfRetire + ", photoId=" + photoId + ", entryDay=" + entryDay
@@ -255,6 +256,5 @@ public class Employee implements java.io.Serializable {
 	}
 
 
-	
 
 }
