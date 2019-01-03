@@ -79,9 +79,6 @@ public class InsertDocumentServlet extends HttpServlet {
 				
 				saveFiles.add(multipartRequest.getFilesystemName(name));
 				originFiles.add(multipartRequest.getOriginalFileName(name));
-				
-				System.out.println("fileSystem name : " + multipartRequest.getFilesystemName(name));
-				System.out.println("originFile name : " + multipartRequest.getOriginalFileName(name));
 			}
 			
 			int num = Integer.parseInt(multipartRequest.getParameter("num"));
@@ -188,20 +185,6 @@ public class InsertDocumentServlet extends HttpServlet {
 				endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 				writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 			}
-			
-			System.out.println("번호: " + num);
-			System.out.println("결재자1: " + appr1);
-			System.out.println("결재자2: " + appr2);
-			System.out.println("결재자3: " + appr3);
-			System.out.println("문서번호: " + docNum);
-			System.out.println("사원번호: " + empNum);
-			System.out.println("분류: " + documentKind);
-			System.out.println("제목: " + title);
-			System.out.println("사유: " + reason);
-			System.out.println("내용: " + content);
-			System.out.println("휴가시작: " + startDay);
-			System.out.println("휴가끝: " + endDay);
-			System.out.println("작성일: " + writeDay);
 				
 			//문서객체생성
 			Document document = new Document();
@@ -234,11 +217,11 @@ public class InsertDocumentServlet extends HttpServlet {
 				}
 			}
 			ApprLine[] apprLine = new ApprLine[apprNo.length];
-			for(int i=0; i<apprNo.length; i++) {
-				apprLine[i] = new ApprLine();
-				apprLine[i].setApprEmpId(apprNo[i]);
-				apprLine[i].setApprOrder(apprLineCount[i]);
-			}
+				for(int i=0; i<apprNo.length; i++) {
+					apprLine[i] = new ApprLine();
+					apprLine[i].setApprEmpId(apprNo[i]);
+					apprLine[i].setApprOrder(apprLineCount[i]);
+				}
 		/*	if(!appr1.equals("")) {
 				apprLine[0] = new ApprLine();
 				apprLine[0].setApprEmpId(appr1);
@@ -254,25 +237,31 @@ public class InsertDocumentServlet extends HttpServlet {
 				apprLine[2].setApprEmpId(appr3);
 				apprLine[2].setApprOrder(3);
 			}	*/		
-			
 			//Attachment 객체 생성하여 arrayList 객체 생성
-			ArrayList<Attachments> fileList = new ArrayList<Attachments>();
-			for(int i=originFiles.size() - 1; i>=0; i--) {
-				Attachments at = new Attachments();
-				at.setAttachPath(filePath);
-				at.setAttachPreName(originFiles.get(i));
-				at.setAttachName(saveFiles.get(i));
-				fileList.add(at);
+			ArrayList<Attachments> fileList = null;
+			
+			if(originFiles.get(0) != null) {
+			fileList = new ArrayList<Attachments>();
+				for(int i=originFiles.size() - 1; i>=0; i--) {
+					Attachments at = new Attachments();
+					at.setAttachPath(filePath);
+					at.setAttachPreName(originFiles.get(i));
+					at.setAttachName(saveFiles.get(i));
+					fileList.add(at);
+				}
 			}
 			
 			ArrayList<Object> list = new ArrayList<Object>();
 			list.add(document);
 			list.add(apprLine);
 			
-			int result = new DocumentService().insertDocument(list, apprLine, fileList);
-
+			int result = 0;
+			if(originFiles.get(0) != null) {
+				result = new DocumentService().insertDocument(list, apprLine, fileList);
+			}else{
+				result = new DocumentService().insertDocument(list, apprLine);
+			}
 			if(result > 0) {
-				System.out.println("내문서함으로 서블릿 이동!");
 				response.sendRedirect("/semi/selectDocument.sd");
 				
 			}else {

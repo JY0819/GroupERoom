@@ -48,11 +48,30 @@ public class DocumentService {
 		int result = 0;
 		int attachNo = new CommonSeqService(con).getFileSeq();
 		int result1 = new DocumentDao().insertAttachments(con, attachNo, fileList);
-		int resutl2 = new DocumentDao().insertAppr(con, apprLine, list);
+		int result2 = new DocumentDao().insertAppr(con, apprLine, list);
 		int result3 = new DocumentDao().insertDoc(con, list);
 		int result4 = new DocumentDao().insertDocument(con, attachNo, list);
 		
-		if(result1 > 0 && resutl2 > 0 && result3 > 0 && result4 > 1) {
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 1) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+	
+	public int insertDocument(ArrayList<Object> list, ApprLine[] apprLine) {
+		Connection con = getConnection();
+		int attachNo = 0;
+		int result = 0;
+		int result1 = new DocumentDao().insertAppr(con, apprLine, list);
+		int result2 = new DocumentDao().insertDoc(con, list);
+		int result3 = new DocumentDao().insertDocument(con, attachNo, list);
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(con);
 			result = 1;
 		}else {
@@ -176,6 +195,19 @@ public class DocumentService {
 		}
 		close(con);
 		return attachments;
+	}
+
+	public ArrayList<MyDocument> selectStatus() {
+		Connection con = getConnection();
+		ArrayList<MyDocument> list = new DocumentDao().selectStatus(con);
+		
+		if(list != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return list;
 	}
 	
 }
