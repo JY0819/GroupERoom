@@ -46,6 +46,7 @@ public class InsertNoticeServlet extends HttpServlet {
 		Notice n = new Notice();
 		n.setbTitle(title);
 		n.setbContent(content);
+		n.setDeptId(loginUser.getDeptId());
 		n.setWriterId(writer);
 		
 		int result = new NoticeService().insertNotice(n);

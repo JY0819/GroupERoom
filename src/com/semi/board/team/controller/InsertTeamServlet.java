@@ -43,8 +43,13 @@ public class InsertTeamServlet extends HttpServlet {
 		Team t = new Team();
 		t.setbTitle(title);
 		t.setbContent(content);
+		t.setDeptId(loginUser.getDeptId());
 		t.setWriterId(writer);
 		
+		System.out.println("servlet 작성자: "+writer);
+		System.out.println("servlet 제목: "+title);
+		System.out.println("servlet 내용: "+content);
+		System.out.println("servlet 부서코드: "+loginUser.getDeptId());
 		int result = new TeamService().insertTeam(t);
 		
 		String page="";

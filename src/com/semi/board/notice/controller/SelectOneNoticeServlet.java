@@ -1,6 +1,7 @@
 package com.semi.board.notice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.board.Free.model.service.FreeService;
+import com.semi.board.Free.model.vo.Free;
 import com.semi.board.notice.model.service.NoticeService;
 import com.semi.board.notice.model.vo.Notice;
 
@@ -36,12 +39,16 @@ public class SelectOneNoticeServlet extends HttpServlet {
 		System.out.println(num);
 		
 		Notice n = new NoticeService().selectOne(num);
-		
+		ArrayList<Notice> reply = new NoticeService().selectReply(num);
+
 		String page ="";
 		
 		if(n != null) {
 			page ="views/board/notice/viewNotice.jsp";
-			
+			if(reply != null) {
+				request.setAttribute("reply", reply);
+
+			}
 			request.setAttribute("n", n);
 		}else {
 			page = "views/common/errorPage.jsp";

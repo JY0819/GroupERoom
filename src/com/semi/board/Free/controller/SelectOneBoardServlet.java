@@ -1,6 +1,7 @@
 package com.semi.board.Free.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,12 +37,15 @@ public class SelectOneBoardServlet extends HttpServlet {
 		System.out.println("글번호: "+num);
 	
 		Free f = new FreeService().selectOne(num);
-		
+		ArrayList<Free> reply = new FreeService().selectReply(num);
 		String page ="";
 		
 		if(f != null) {
 			page ="views/board/free/viewFree.jsp";
-			
+			if(reply != null) {
+				request.setAttribute("reply", reply);
+
+			}
 			request.setAttribute("f", f);
 		}else {
 			page = "views/common/errorPage.jsp";

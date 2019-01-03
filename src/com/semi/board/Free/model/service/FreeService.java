@@ -210,7 +210,7 @@ public class FreeService {
 			return listCount;
 		}
 		//첨부파일까지 추가해서 글 작성
-		public int insertAttachment(Free f, ArrayList<Attachment> fileList) {
+		/*public int insertAttachment(Free f, ArrayList<Attachment> fileList) {
 			Connection con = getConnection();
 			int result = 0;
 			int result1 = new FreeDao().insertFree(con, f);
@@ -235,6 +235,18 @@ public class FreeService {
 			close(con);
 			
 			return result;
+			
+		}*/
+		//글 클릭하면서 댓글 목록 같이 조회
+		public ArrayList<Free> selectReply(int num) {
+			Connection con = getConnection();
+			
+			ArrayList<Free> reply = new FreeDao().selectReply(con, num);
+			
+			System.out.println("service 댓글: "+reply.size());
+			close(con);
+			
+			return reply;
 			
 		}
 	

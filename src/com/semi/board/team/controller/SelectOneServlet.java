@@ -10,20 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.board.Free.model.service.FreeService;
+import com.semi.board.Free.model.vo.Free;
 import com.semi.board.team.model.service.TeamService;
 import com.semi.board.team.model.vo.Team;
 
 /**
- * Servlet implementation class SelectTeamListServlet
+ * Servlet implementation class SelectOneServlet
  */
-@WebServlet("/selectList.tm")
-public class SelectTeamListServlet extends HttpServlet {
+@WebServlet("/selectOne.tm")
+public class SelectOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectTeamListServlet() {
+    public SelectOneServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,19 +34,26 @@ public class SelectTeamListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Team> list = new TeamService().selectList();
+		int num = Integer.parseInt(request.getParameter("num"));
 		
-		String page="";
-		
-		if(list != null) {
-			request.setAttribute("list", list);
-			
-			page="views/board/team/boardTeam.jsp";
-		}else {
-			request.setAttribute("msg", "부서게시판 글 불러오기 실패!");
-			page="views/common/errorPage.jsp";
-		}
+		System.out.println("글번호: "+num);
 	
+		Team t = new TeamService().selectOne(num);
+/*		ArrayList<Team> reply = new TeamService().selectReply(num);
+*/		String page ="";
+		
+		if(t != null) {
+			page ="views/board/team/viewTeam.jsp";
+			/*if(reply != null) {
+				request.setAttribute("reply", reply);
+			}*/
+			request.setAttribute("t", t);
+		}else {
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "부서게시판 게시글 상세보기 실패!");
+		}
+
+		//새고하면 조회수 늘어나는 거 생각하기!->forward로 해야함
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	
@@ -60,8 +69,11 @@ public class SelectTeamListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
-		doGet(request, response);
+				doGet(request, response);
+	
+	
 	}
 
 }

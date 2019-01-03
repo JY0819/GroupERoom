@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.semi.board.notice.model.vo.*, com.semi.admin.user.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*,com.semi.board.notice.model.vo.*, com.semi.admin.user.model.vo.*"%>
 <%
 	Notice n = (Notice)request.getAttribute("n"); 
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
+	ArrayList<Notice> reply = (ArrayList<Notice>)request.getAttribute("reply");
+
 %>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
@@ -93,9 +95,18 @@ body {
 				<br>
 				
 		<BR>
-			<div class="repleArea">
+				<div class="repleArea">
 			<div class="replySelectArea">
 			<table id="replySelectTable" class="table table-striped" style="text-align: center; border: 1px;">
+				<% if(reply != null){
+				for(int i=0;i<reply.size();i++){ %>
+				<tr>
+				
+					<td><%=reply.get(i).getWriterId() %></td>
+					<td><%=reply.get(i).getbContent() %></td>
+					<td><%=reply.get(i).getbDate() %></td>
+				</tr>
+				<%}} %>
 			</table>
 			</div>
 			<table align="center">

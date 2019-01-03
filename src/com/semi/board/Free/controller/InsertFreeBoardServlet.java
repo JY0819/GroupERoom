@@ -19,6 +19,8 @@ import com.semi.admin.user.model.vo.Employee;
 import com.semi.board.Free.model.service.FreeService;
 import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
+import com.semi.board.notice.model.service.NoticeService;
+import com.semi.board.notice.model.vo.Notice;
 import com.semi.common.MyFileRenamePolicy;
 
 /**
@@ -48,8 +50,24 @@ public class InsertFreeBoardServlet extends HttpServlet {
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
 		String writer = String.valueOf(loginUser.getEmpid());
 		
+		Free f = new Free();
+		f.setbTitle(title);
+		f.setbContent(content);
+		f.setDeptId(loginUser.getDeptId());
+		f.setWriterId(writer);
+		
+		int result = new FreeService().insertFree(f);
+		
+		String page="";
+		
+		if(result > 0) {
+			response.sendRedirect(request.getContextPath()+"/selectList.fr");
+		}else {
+			request.setAttribute("msg", "자유게시판 글 작성 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 		//첨부파일
-		if(ServletFileUpload.isMultipartContent(request)) {
+		/*if(ServletFileUpload.isMultipartContent(request)) {
 			//전송파일 용량 제한 : 10mb로 제한
 			int maxSize = 1024 * 1024 * 10;
 			String root = request.getSession().getServletContext().getRealPath("/");
@@ -119,14 +137,20 @@ public class InsertFreeBoardServlet extends HttpServlet {
 			
 				
 			}
-			
-		}
+			*/
 		
 		
-	
-	
+		
 	}
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
