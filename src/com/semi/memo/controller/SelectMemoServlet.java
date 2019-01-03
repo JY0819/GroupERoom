@@ -33,15 +33,13 @@ public class SelectMemoServlet extends HttpServlet {
 		int empId=Integer.parseInt(request.getParameter("empId"));
 		System.out.println(empId);
 		
-		int result=empId;
-		
 		Memo memo=new MemoService().selectMemo(empId);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
-		if(result>0) {	//다 쓰면 result > memo로 바꾸기
-			new Gson().toJson(result, response.getWriter());
+		if(memo!=null) {	//다 쓰면 result > memo로 바꾸기
+			new Gson().toJson(memo, response.getWriter());
 		}else {
 			new Gson().toJson("작성된 메모가 없습니다", response.getWriter());
 		}

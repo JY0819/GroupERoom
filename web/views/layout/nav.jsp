@@ -72,15 +72,16 @@
 		console.log("empid:"+memoEmpId)
 		console.log("메모");
 		$.ajax({
-			url:"select.memo",
+			url:"/semi/select.memo",
 			type:"post",
 			data:{empId:memoEmpId},
 			success:function(data){
-				console.log("메모 ajax 전송 성공 실패");
+				console.log("메모 ajax 전송 성공");
 				console.log("result:"+data);
+				
 				var $memoDiv=$("#memoDiv");
 				var $memoArea=$("#memoArea");
-				$memoArea.val(data);
+				$memoArea.html(data.memoContents);
 				
 			},
 			error:function(data){
@@ -91,15 +92,17 @@
 			}
 		});
 	}
-	
+	$(function(){
 	$("#memoArea").focusout(function(){
-		var memoContents=("#memoArea").val();
+		var memoContents=$("#memoArea").val();
+		var empId=<%=empId%>;
+		console.log(memoContents);
 		$.ajax({
-			url:"insert.memo",
+			url:"/semi/insert.memo",
 			type:"post",
 			data:{memoContents:memoContents, empId:empId},
 			success:function(data){
-				
+				console.log("메모 저장 ajax 통신 성공");
 			},
 			error:function(data){
 				console.log("메모 저장 ajax 통신 실패");
@@ -108,6 +111,7 @@
 				console.log("메모 저장 ajax");
 			}
 		});
+	});
 	});
 	
 	

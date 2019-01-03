@@ -39,7 +39,7 @@ public class ScheduleService {
 			}
 			System.out.println("list3 : "+list3.size());
 		}
-		ArrayList<HashMap<String, Object>> list4=new ScheduleDao().selectUseVac(con, empId);
+		//ArrayList<HashMap<String, Object>> list4=new ScheduleDao().selectUseVac(con, empId);
 		
 		//System.out.println("list1/list2/list3 : "+list1.size()+'/'+list2.size()+'/'+list3.size());
 		System.out.println("서비스 list : "+list);

@@ -33,6 +33,7 @@ public class MemoDao {
 		Memo memo=null;
 		
 		String query=prop.getProperty("selectMemo");
+		System.out.println(query);
 		
 		try {
 			pstmt=con.prepareStatement(query);
@@ -42,12 +43,15 @@ public class MemoDao {
 			
 			memo=new Memo();
 			
-			if(rset.next()) {
-				memo.setEmpId(rset.getInt("EMPID"));
-				memo.setMemoContents(rset.getString("NOTECONTENTS"));
+			while(rset.next()) {
+			
+				System.out.println("들어가?");
 				memo.setMemoNo(rset.getInt("NOTENO"));
+				memo.setMemoContents(rset.getString("NOTECONTENTS"));
+				memo.setEmpId(rset.getInt("EMPID"));
 			}
 			
+			System.out.println("dao"+memo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
