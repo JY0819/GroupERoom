@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.common.vo.DeptEmp;
 import com.semi.schedule.model.vo.Schedule;
 
 public class ScheduleDao {
@@ -519,6 +520,49 @@ public class ScheduleDao {
 	public Employee selectEmp(Connection con, Integer integer) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectVacList(Connection con, int empId) {
+		ArrayList<HashMap<String, Object>> vacList=new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> vac=null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectVac");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, empId);
+			pstmt.setInt(2, empId);
+			pstmt.setInt(3, empId);
+			
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				vac=new HashMap<String, Object>();
+				
+				vac.put("empName", rset.getString("EMPNAME"));
+				vac.put("useStart", rset.getString("USESTART"));
+				vac.put("useEnd", rset.getString("USEEND"));
+				vac.put("useDay", rset.getInt("CNT"));
+				vac.put("tDay", rset.getInt("TDAY"));
+				SimpleDateFormat startDate=new SimpleDateFormat(rset.getString("USESTART"));
+				
+				SimpleDateFormat endDate=new SimpleDateFormat(rset.getString("USEEND"));
+				
+				System.out.println("시작 : "+startDate+"/"+"/ 끝 : "+endDate);
+				if(rset.getString("USEEND")!=null) {
+					vacList.add(vac);
+				}				
+			}
+			System.out.println(empId+":"+vacList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return vacList;
 	}
 
 

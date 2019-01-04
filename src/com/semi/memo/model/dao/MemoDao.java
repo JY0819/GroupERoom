@@ -47,8 +47,11 @@ public class MemoDao {
 				memo.setMemoNo(rset.getInt("NOTENO"));
 				memo.setMemoContents(rset.getString("NOTECONTENTS"));
 				memo.setEmpId(rset.getInt("EMPID"));
+				if(rset.getInt("NOTENO")==0) {
+					memo=null;	
+				}else {					
+				}
 			}
-			System.out.println("dao"+memo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -34,7 +34,6 @@ public class SelectMemoServlet extends HttpServlet {
 		System.out.println(empId);
 		
 		Memo memo=new MemoService().selectMemo(empId);
-		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
