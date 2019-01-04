@@ -74,7 +74,66 @@ td {
 	position: relative;
 	right: 40px;
 }
-
+.white_content {
+	text-align: center;
+	z-index: 1;
+    position: absolute;
+    top: 0;
+    height: 900px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+	}
+	.white_content:target {
+	    opacity:1;
+	    pointer-events: auto;
+	}
+	.white_content > div {
+		text-align: center;
+		position: absolute;
+		top: 25%;
+		left: 25%;
+		width: 50%;
+		height: 50%;
+		padding: 16px;
+		border: 16px solid #205181;
+		background-color: white;
+		overflow: auto;	
+	}
+	.white_content > div > .close > .saveBtn2 {
+		text-align: center;
+		background-color: #205181;
+		color:white;
+	    position: absolute;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 85%;
+		left: 200px;
+	    font-size: 16px;
+	    border: 0;
+	    outline: 0;
+	}
+	.white_content > div > .close > .closeBtn2 {
+		position: absolute;
+		text-align: center;
+		background-color: #F1C40F;
+		width: 100px;
+		height: 40px;
+		color:white;
+		border-radius: 10px;
+	    font-size: 16px;
+		top: 85%;
+		left: 400px;
+	    border: 0;
+	    outline: 0;
+	}
 /* returnBox */
 /*내문서함으로 이동 버튼  */
 .moveBtn {

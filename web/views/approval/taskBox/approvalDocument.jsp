@@ -22,9 +22,17 @@
 	</div>
 
 	<div class="content-right container">
-		<button class="success">승인</button>
+		<a href="#open"><button class="success">승인</button></a>
 		<button class="return" onclick="returnBox()">반려</button>
-		
+		<div class="white_content" id="open">
+        	<div>
+        	<form class="documentForm" action="<%= request.getContextPath()  %>/passCheck.pc" method="post">
+        		<h3>결재 비밀번호를 입력해주세요.</h3>
+        		<input type="password" name="password" value="">
+            	<a class="close" href="#"><button type="button" class="saveBtn2" onclick="success()">확인</button></a><a class="close" href="#"><button type="button" class="closeBtn2" onclick="closePopUp();">닫기</button></a>
+            </form>
+        	</div>
+    	</div>
 		<table>
 			<thead>
 				<tr>
@@ -39,6 +47,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			
 			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
@@ -68,7 +77,6 @@
 				</tr>
 				<% } %>
 			</tbody>
-
 		</table>
 		<div class="btnArea">
 				<div class="paging" align="center">
@@ -84,7 +92,6 @@
 	</div>
 
 </section>
-
 
 <script>
 	/*체크박스 조절*/
@@ -119,6 +126,28 @@
             sendArr.push(docNum);
             location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+re;
 		});
+	}
+
+	function closePopUp() {
+		if(choice == '결재자1선택'){
+			$("#person1").val("");
+		}else if(choice == '결재자2선택'){
+			$("#person2").val("");
+		}else {
+			$("#person3").val("");
+		}
+	} 
+	function success() {
+		var sendArr = new Array();
+		var checkbox = $("input[name=checkTd]:checked");
+	 	checkbox.each(function(i){
+	 		var tr = checkbox.parent().parent().eq(i);
+	 		var td = tr.children();
+            var docNum = td.eq(4).text();
+            var re = "re";
+            sendArr.push(docNum);
+            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+re;
+	 	});
 	}
 </script>
 

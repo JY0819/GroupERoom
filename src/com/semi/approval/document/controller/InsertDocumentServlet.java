@@ -74,7 +74,6 @@ public class InsertDocumentServlet extends HttpServlet {
 				//다음요소가 있는지 물어보는것
 				String name = files.nextElement();
 				
-				System.out.println("name : " + name);
 				//실제 파일의 정보를 가져오기 위한 키의 역할함
 				
 				saveFiles.add(multipartRequest.getFilesystemName(name));
@@ -94,6 +93,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			String wDate = multipartRequest.getParameter("date");
 			String reason = multipartRequest.getParameter("reason");
 			String content = multipartRequest.getParameter("content");
+			String entry = multipartRequest.getParameter("entryDay");
 			String submission = "N";
 			//===================================================
 			//결재번호 받기
@@ -107,7 +107,6 @@ public class InsertDocumentServlet extends HttpServlet {
 					}
 				}
 			}
-			System.out.println("count값: " +  count);
 			int[] apprNo = new int[count];
 			if(count > 0) {
 				for(int i=0; i<apprNo.length; i++) {
@@ -135,21 +134,23 @@ public class InsertDocumentServlet extends HttpServlet {
 			Date startDay = null;
 			Date endDay = null;
 			Date writeDay = null;
+			Date entryDay = null;
 			
 			String sDate = "";
 			String eDate = "";
-			if(!sTemp.equals("") && !eTemp.equals("") && !wDate.equals("")) {
-				sDate = sTemp.substring(0, sTemp.length()-6);
-				eDate = eTemp.substring(0, eTemp.length()-6);
+			
+			if(!sTemp.equals("") && !eTemp.equals("")) {
+				sDate = sTemp.substring(0, sTemp.length());
+				eDate = eTemp.substring(0, eTemp.length());
 				//휴가시작 날짜
 				
 					String[] dateArr = sDate.split("-");
 	
 					int[] drr = new int[dateArr.length];
-				if(documentKind.equals("1")) {	
-					for(int i=0; i<dateArr.length; i++) {
+					if(documentKind.equals("1")) {	
+						for(int i=0; i<dateArr.length; i++) {
 							drr[i] = Integer.parseInt(dateArr[i]);
-					}
+						}
 					startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
 					
 					//==============================================================
@@ -173,11 +174,21 @@ public class InsertDocumentServlet extends HttpServlet {
 				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
 				
 				//==============================================================
+				//입사일
+				dateArr = entry.split("-");
+				drr = new  int[dateArr.length];
+				
+				for(int i=0; i<dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				entryDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
 				//아닐경우
 			}else {
 				if(documentKind.equals("1")) {
 					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				}else if(documentKind.equals("2")) {
+					endDay =  new java.sql.Date(new GregorianCalendar().getTimeInMillis());					
 				}
 				writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 			}
@@ -197,6 +208,9 @@ public class InsertDocumentServlet extends HttpServlet {
 				document.setVacApprReason(reason);
 				document.setVacApprStart(startDay);
 				document.setVacApprEnd(endDay);
+			}
+			else if(document.equals("2")) {
+				document.setEntryDay(entryDay);
 			}
 			
 			//결재선 객체 생성

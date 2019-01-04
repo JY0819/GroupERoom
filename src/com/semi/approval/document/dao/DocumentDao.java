@@ -44,7 +44,13 @@ public class DocumentDao {
 			
 			pstmt = con.prepareStatement(query);
 			rset = pstmt.executeQuery();
-			if(rset.next()) {
+			if(rset.next() == false) {
+				document = new Document();
+				document.setManageEmpId(id);
+				document.setManageDocNo(1);
+				document.setManageNo(1);
+			}
+			else {
 				document = new Document();
 				document.setManageEmpId(id);
 				document.setManageDocNo(rset.getInt("MANAGEDOCNO"));
@@ -211,39 +217,7 @@ public class DocumentDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}else if(attachNo != 0&& !document.getManageClass().equals("1")) {
-			query = prop.getProperty("insertDocumentFOVX");
-			try {
-				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, document.getManageEmpId());
-				pstmt.setInt(2, document.getManageDocNo());
-				pstmt.setInt(3, attachNo);
-				pstmt.setString(4, document.getManageTitle());
-				pstmt.setString(5, document.getManageContents());
-				pstmt.setDate(6, document.getManageDay());
-				pstmt.setString(7, document.getManageClass());
-				pstmt.setInt(8, document.getManageNo());
-				pstmt.setString(9, document.getSubmission());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}else if(attachNo == 0 && !document.equals("1")){
-			query = prop.getProperty("insertDocumentFXVX");
-			try {
-				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, document.getManageEmpId());
-				pstmt.setInt(2, document.getManageDocNo());
-				pstmt.setInt(3, attachNo);
-				pstmt.setString(4, document.getManageTitle());
-				pstmt.setString(5, document.getManageContents());
-				pstmt.setDate(6, document.getManageDay());
-				pstmt.setString(7, document.getManageClass());
-				pstmt.setInt(8, document.getManageNo());
-				pstmt.setString(9, document.getSubmission());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}else if(attachNo == 0 && document.equals("1")){
+		}else if(attachNo == 0 && document.getManageClass().equals("1")){
 			query = prop.getProperty("insertDocumentFXVO");
 			try {
 				pstmt = con.prepareStatement(query);
@@ -258,6 +232,72 @@ public class DocumentDao {
 				pstmt.setInt(9, document.getManageNo());
 				pstmt.setDate(10, document.getVacApprEnd());
 				pstmt.setString(11, document.getSubmission());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		}else if(attachNo != 0 && document.getManageClass().equals("2")) {
+			query = prop.getProperty("insertDocumentFOEO");
+			try {
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setInt(3, attachNo);
+				pstmt.setString(4, document.getManageTitle());
+				pstmt.setString(5, document.getManageContents());
+				pstmt.setDate(6, document.getManageDay());
+				pstmt.setString(7, document.getManageClass());
+				pstmt.setInt(8, document.getManageNo());
+				pstmt.setString(9, document.getSubmission());
+				pstmt.setDate(10, document.getEntryDay());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else if(attachNo == 0 && document.getManageClass().equals("2")) {
+			query = prop.getProperty("insertDocumentFXEO");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setString(3, document.getManageTitle());
+				pstmt.setString(4, document.getManageContents());
+				pstmt.setDate(5, document.getManageDay());
+				pstmt.setString(6, document.getManageClass());
+				pstmt.setInt(7, document.getManageNo());
+				pstmt.setString(8, document.getSubmission());
+				pstmt.setDate(9, document.getEntryDay());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else if(attachNo != 0) {
+			query = prop.getProperty("insertDocumentFOXX");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setInt(3, attachNo);
+				pstmt.setString(4, document.getManageTitle());
+				pstmt.setString(5, document.getManageContents());
+				pstmt.setDate(6, document.getManageDay());
+				pstmt.setString(7, document.getManageClass());
+				pstmt.setInt(8, document.getManageNo());
+				pstmt.setString(9, document.getSubmission());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else {
+			query = prop.getProperty("insertDocumentFXXX");
+			try {			
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, document.getManageEmpId());
+				pstmt.setInt(2, document.getManageDocNo());
+				pstmt.setString(3, document.getManageTitle());
+				pstmt.setString(4, document.getManageContents());
+				pstmt.setDate(5, document.getManageDay());
+				pstmt.setString(6, document.getManageClass());
+				pstmt.setInt(7, document.getManageNo());
+				pstmt.setString(8, document.getSubmission());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

@@ -15,6 +15,7 @@ import com.semi.approval.document.dao.DocumentDao;
 import com.semi.approval.document.vo.Document;
 import com.semi.approval.document.vo.MyDocument;
 import com.semi.approval.document.vo.SumEmpInfo;
+import com.semi.common.dao.AddressDao;
 import com.semi.common.service.CommonSeqService;
 import com.semi.common.vo.Attachments;
 public class DocumentService {
@@ -41,6 +42,20 @@ public class DocumentService {
 		}
 		close(con);
 		return hmap;
+	}
+	
+	public ArrayList<String> selectDeptList() {
+		Connection con = getConnection();
+		ArrayList<String> list = new AddressDao().selectDeptIdList(con);
+		
+		if(list != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return list;
 	}
 
 	public int insertDocument(ArrayList<Object> list, ApprLine[] apprLine, ArrayList<Attachments> fileList) {

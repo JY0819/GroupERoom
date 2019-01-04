@@ -17,13 +17,14 @@ public class Document implements java.io.Serializable{
 	private int manageNo;
 	private Date vacApprEnd;
 	private String submission;
+	private Date entryDay;
 	private String[] apprs;
 	public Document() {
 		
 	}
 	public Document(int manageEmpId, int manageDocNo, int attachNo, String manageTitle, String manageContents,
 			Date manageDay, String manageClass, Date vacApprStart, String vacApprReason, int manageNo, Date vacApprEnd,
-			String submission, String[] apprs) {
+			String submission, Date entryDay, String[] apprs) {
 		super();
 		this.manageEmpId = manageEmpId;
 		this.manageDocNo = manageDocNo;
@@ -37,6 +38,7 @@ public class Document implements java.io.Serializable{
 		this.manageNo = manageNo;
 		this.vacApprEnd = vacApprEnd;
 		this.submission = submission;
+		this.entryDay = entryDay;
 		this.apprs = apprs;
 	}
 	public int getManageEmpId() {
@@ -111,6 +113,12 @@ public class Document implements java.io.Serializable{
 	public void setSubmission(String submission) {
 		this.submission = submission;
 	}
+	public Date getEntryDay() {
+		return entryDay;
+	}
+	public void setEntryDay(Date entryDay) {
+		this.entryDay = entryDay;
+	}
 	public String[] getApprs() {
 		return apprs;
 	}
@@ -122,8 +130,8 @@ public class Document implements java.io.Serializable{
 		return "Document [manageEmpId=" + manageEmpId + ", manageDocNo=" + manageDocNo + ", attachNo=" + attachNo
 				+ ", manageTitle=" + manageTitle + ", manageContents=" + manageContents + ", manageDay=" + manageDay
 				+ ", manageClass=" + manageClass + ", vacApprStart=" + vacApprStart + ", vacApprReason=" + vacApprReason
-				+ ", manageNo=" + manageNo + ", vacApprEnd=" + vacApprEnd + ", submission=" + submission + ", apprs="
-				+ Arrays.toString(apprs) + "]";
+				+ ", manageNo=" + manageNo + ", vacApprEnd=" + vacApprEnd + ", submission=" + submission + ", entryDay="
+				+ entryDay + ", apprs=" + Arrays.toString(apprs) + "]";
 	}
 	
 }
