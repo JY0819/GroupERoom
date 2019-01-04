@@ -4,8 +4,9 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 	ArrayList<Free> list = (ArrayList<Free>)request.getAttribute("list");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 	String searchCondition = (String)request.getAttribute("searchCondition");
-	String searchValue = (String)request.getAttribute("userName");
-	System.out.println(searchCondition);
+	String searchValue = (String)request.getAttribute("searchValue");
+	
+	
  	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
@@ -34,7 +35,10 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 		<div id="title">
 			<h1 align="left">| 자유게시판 |</h1>
 			<hr>
-			<h2 align="center"><%=searchValue %>로 검색한 결과</h2>
+			
+			<h2 align="center"><%=searchValue %>(으)로 검색한 결과</h2>
+			
+			
 		</div>
 		
 		
@@ -139,7 +143,6 @@ if(p == currentPage){
 <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=maxPage%>&searchValue=<%=searchValue%>">>></a></li>
 </ul>
 ​
-
 
 	</div>
 	<br>

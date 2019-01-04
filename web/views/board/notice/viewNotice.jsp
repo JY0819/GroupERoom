@@ -196,6 +196,7 @@ body {
 						$tr.append($dateTd);
 						$replySelectTable.append($tr);
 						
+						$("#replyContent").val("");
 					}
 					
 					

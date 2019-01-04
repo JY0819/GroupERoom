@@ -672,7 +672,7 @@ System.out.println("상세보기 dao : "+query);
 				
 				list.add(f);
 				}
-				System.out.println("dao list: "+list.size());
+				System.out.println("이름검색dao list: "+list.size());
 				
 
 			} catch (SQLException e) {
@@ -731,7 +731,7 @@ System.out.println("상세보기 dao : "+query);
 				
 				list.add(f);
 				}
-				System.out.println("dao list: "+list.size());
+				System.out.println("제목으로 검색dao list: "+list.size());
 				
 
 			} catch (SQLException e) {

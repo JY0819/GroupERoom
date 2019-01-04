@@ -80,6 +80,7 @@ public class SearchServlet extends HttpServlet {
 				int maxPage; 	 //전체 페이지의 마지막 페이지
 				int startPage; 	 //한 번에 표시될 페이지가 시작할 페이지
 				int endPage; 	 //한 번에 표시될 페이지가 끝나는 페이지
+				String searchValue=request.getParameter("searchValue");
 		System.out.println("servlet1임");
 			String searchCondition=request.getParameter("searchCondition");
 
@@ -99,12 +100,12 @@ public class SearchServlet extends HttpServlet {
 				int listCount;
 				//전체 게시글 수 조회
 				if(searchCondition.equals("findName")) {
-					String userName = request.getParameter("searchValue");
+					String userName=request.getParameter("searchValue");
 
 					 listCount=fs.getSearchNameListCount(userName);
 					 System.out.println("게시글 수:"+listCount);
 				}else {
-					String title = request.getParameter("searchValue");
+					String title=request.getParameter("searchValue");
 
 					 listCount = fs.getSearchTitleListCount(title);
 					 System.out.println("게시글 수:"+listCount);
@@ -152,7 +153,7 @@ public class SearchServlet extends HttpServlet {
 					
 				}
 
-				System.out.println("list사이즈:"+list.size());
+				System.out.println("servlet list사이즈:"+list.size());
 				System.out.println("pi: "+pi);
 				
 				
@@ -165,9 +166,9 @@ public class SearchServlet extends HttpServlet {
 				page = "views/board/free/searchViewFree.jsp";
 
 				request.setAttribute("list", list);
-
 				request.setAttribute("pi", pi);
-
+				request.setAttribute("searchValue", searchValue);
+				
 				}else {
 
 				page ="views/common/errorPage.jsp";

@@ -35,9 +35,9 @@
 		<hr>
 		
 		<div class="noticeListBtn">
-			<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
-			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
-		</div>
+			<button type="button" id="writeBtn" class="btn btn-primary">작성하기</button>
+<!--  			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
+ -->		</div>
 		<br>
 		<table class="table table-striped" id="listArea">
 			
@@ -51,7 +51,9 @@
 				</tr>
 			<% for(Team t : list){ %>
 				 <tr>
+				
 					<td><%=t.getDeptId() %></td>
+					
 					 <td><%=t.getBno() %></td> 
 					<td><%=t.getbTitle() %></td>
 					<td><%=t.getWriterId() %></td>
@@ -63,8 +65,8 @@
 			
 				
 		</table>
+			<form action="<%=request.getContextPath() %>/search.tm" method="get" >
 		
-	<form action="<%=request.getContextPath() %>/search.tm" method="get" >
 		<div id="searchBtn" align="center">
     	<select name="searchCondition" >
 			<option value="findName" selected>작성자</option>  

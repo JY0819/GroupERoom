@@ -167,6 +167,7 @@ System.out.println("selectOne dao query: "+query);
 				t.setComLevel(rset.getInt("COMMENTLEVEL"));
 				t.setRecomId(rset.getString("RECOMMENTID"));
 				
+				t.setDeptId(rset.getString("DEPTID"));
 				t.setReplebno(rset.getInt("REPLEBOARDNO"));
 				t.setWriterId(rset.getString("EMPNAME"));
 				t.setStatus(rset.getString("WHETHEROFDELETE"));
@@ -407,6 +408,7 @@ System.out.println("selectOne dao query: "+query);
 			t.setbClass(rset.getString("BOARDCLASS"));
 			t.setbTitle(rset.getString("BOARDTITLE"));
 			t.setbContent(rset.getString("BOARDCONTENTS"));
+
 			t.setbDate(rset.getDate("BOARDDATE"));
 			t.setbClicks(rset.getInt("BOARDCLICKS"));
 			t.setbAttach(rset.getString("BOARDATTACH"));
@@ -414,6 +416,8 @@ System.out.println("selectOne dao query: "+query);
 			t.setComLevel(rset.getInt("COMMENTLEVEL"));
 			t.setRecomId(rset.getString("RECOMMENTID"));
 			
+
+			t.setDeptId(rset.getString("DEPTID"));
 			t.setReplebno(rset.getInt("REPLEBOARDNO"));
 			t.setWriterId(rset.getString("EMPNAME"));
 			t.setStatus(rset.getString("WHETHEROFDELETE"));
@@ -427,6 +431,101 @@ System.out.println("selectOne dao query: "+query);
 			
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+	//글 클릭하면 댓글 바로 보이기
+	public ArrayList<Team> selectReply(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ArrayList<Team> reply = null;
+		ResultSet rset = null;
+		Team t = null;
+
+		String query = prop.getProperty("selectReply");
+		System.out.println(num);
+		System.out.println(query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset=pstmt.executeQuery();
+			
+		
+				reply= new ArrayList<Team>();
+				
+				while(rset.next()) {
+					t= new Team();
+				
+				
+				t.setBno(rset.getInt("BOARDNO"));
+				t.setbContent(rset.getString("BOARDCONTENTS"));
+				t.setbDate(rset.getDate("BOARDDATE"));
+				
+				t.setReplebno(rset.getInt("REPLEBOARDNO"));
+				t.setWriterId(rset.getString("EMPNAME"));
+			
+				reply.add(t);
+				}
+							
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return reply;
+	}
+	//부서코드 검색
+	public ArrayList<Team> searchValue(Connection con, String searchValue) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Team> list = null;
+		
+		String query = prop.getProperty("searchValue");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, searchValue);
+			
+			rset=pstmt.executeQuery();
+			
+			list = new ArrayList<Team>();
+			
+			while(rset.next()) {
+				Team t = new Team();
+				
+				t.setBno(rset.getInt("BOARDNO"));
+				t.setbClass(rset.getString("BOARDCLASS"));
+				t.setbTitle(rset.getString("BOARDTITLE"));
+				t.setbContent(rset.getString("BOARDCONTENTS"));
+				t.setbDate(rset.getDate("BOARDDATE"));
+				t.setbClicks(rset.getInt("BOARDCLICKS"));
+				t.setbAttach(rset.getString("BOARDATTACH"));
+				t.setComNo(rset.getInt("COMMENTNO"));
+				t.setComLevel(rset.getInt("COMMENTLEVEL"));
+				t.setRecomId(rset.getString("RECOMMENTID"));
+				
+				t.setReplebno(rset.getInt("REPLEBOARDNO"));
+				t.setWriterId(rset.getString("EMPNAME"));
+				t.setStatus(rset.getString("WHETHEROFDELETE"));
+				t.setFile01(rset.getInt("FILE01"));
+				t.setFile02(rset.getInt("FILE02"));
+				t.setFile03(rset.getInt("FILE03"));
+		
+				list.add(t);
+				
+			}
+			System.out.println("dao listsize:"+list.size());
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);

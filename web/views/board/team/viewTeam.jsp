@@ -50,7 +50,7 @@ body {
 				<tbody>
 				<tr>
 						<td>부서</td>
-						<td><%=t.getDeptId() %></td>
+						<td><input type="hidden" name="searchValue" value="<%=t.getDeptId() %>"><%=t.getDeptId() %></td>
 					</tr>
 				<tr>
 						<td>글번호</td>
@@ -82,6 +82,7 @@ body {
 					</tr>
 				</tbody>
 			</table>
+			</form>
 			
 			<div class="attachfile">
 				<label for="inputattach">첨부된 파일</label>
@@ -96,17 +97,28 @@ body {
 				</div>
 				<br>
 				
-			<table class="table table-striped" style="text-align: center; border: 1px;">
+		<BR>
+			<div class="repleArea">
+			<div class="replySelectArea">
+			<table id="replySelectTable" class="table table-striped" style="text-align: center; border: 1px;">
+				<% if(reply != null){
+				for(int i=0;i<reply.size();i++){ %>
+				<tr>
+				
+					<td><%=reply.get(i).getWriterId() %></td>
+					<td><%=reply.get(i).getbContent() %></td>
+					<td><%=reply.get(i).getbDate() %></td>
+				</tr>
+				<%}} %>
+			</table>
+			</div>
+			<table align="center">
 			<tr>
-				<td td style="width: 20%;">댓글</td>
-				<td colspan="3"></td>			
-			</tr>
-			<tr>
-						 <td style="width: 20%;">댓글작성
+						 <td style="width: 20%;" text-align="center">댓글작성
 						</td> 
-						<td width="800px">
-						<input type="text" class="form-control" placeholder="댓글을 작성해주세요">
-						</td>
+						<td width="700px">
+						<input type="text" class="form-control" id="replyContent" placeholder="댓글을 작성해주세요">
+						</td>&nbsp;&nbsp;
 						<td>
 						<button id="addReply" class="btn btn-primary" >댓글등록</button>
 						
@@ -114,26 +126,34 @@ body {
 						
 					</tr>
 			</table>
-				
-			</div>
 			
+			
+		
+				</div>	
+			</div>
 			<br>
+			<Br>
+			
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
+				
 				<button id="modifyBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectTeam.tm?num=<%=t.getBno()%>'">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
+				
 			</div>
 			
 		</div>
 	</div>
 	
 	</div>
+	
+	
 </section>
 
 	<script>
 	$(function(){
 		$("#gotoList").click(function(){
-			location.href="/semi/selectList.tm";
+			location.href="<%=request.getContextPath() %>/search.tm?searchValue=<%= t.getDeptId() %>";
 		});
 	});
 	

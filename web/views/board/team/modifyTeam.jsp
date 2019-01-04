@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.semi.board.team.model.vo.*, com.semi.admin.user.model.vo.*"%>
+<!-- admin 만 글 수정 가능 -->
 <%
-	
-	Team t = (Team)request.getAttribute("t"); 
+	Team t = (Team)request.getAttribute("t");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 %>
 
@@ -21,7 +21,6 @@ body {
 }
 </style>
 
-
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
@@ -33,49 +32,53 @@ body {
 		</div>
 		<hr>
 		
-
 	<div class="container">
 
 		<div class="row">
-			<form method="post" action="">
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
 							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">부서게시판 글 수정</th>
 						</tr> 
 					</thead>
-<form action="", method="post" id="editTable">
+			<form action="", method="post" id="editTable">
+
 					<tbody>
 					<tr>
-						<td><input type="text" name="deptId" class="form-control" value="<%=t.getDeptId() %>" maxlength="30" readOnly></td>
-					</tr>
-					<tr>
-						<td><input type="hidden" id="bno" value="<%=t.getBno() %>" name="bno" >
-						
+						<td>
+							<input type="text" name="deptId" class="form-control" value="<%=t.getDeptId() %>" maxlength="30" readOnly>
 						</td>
-						
-					</tr>
-					<tr>
-						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
-						
-					</tr>
+						</tr>
+						<tr>
 						<tr>
 							<td>
+						<input type="hidden" id="bno" value="<%=t.getBno() %>" name="bno" >
+						<input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							
 							<input type="text" name ="title"class="form-control" value="<%=t.getbTitle() %>" maxlength="50">
-							</td>
+							</td>						
 						</tr>
 						<tr>
-							<td>
-							<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=t.getbContent() %></textarea>	
-							</td>
-						</tr>
+						<td>
+						<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=t.getbContent() %></textarea>							</td>						</tr>
+						</td>
+						</tr>					
+					
+					</tbody>
+					</form>
+				</table>
+				
 					</tbody>
 					
 				</table>
 				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
-					<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+					<input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
 						<div class="bootstrap-filestyle input-group">
 						<input type="text" id="userfile" class="form-control" name="userfile" disabled="">
 							<span class="group-span-filestyle input-group-btn" tabindex="0">
@@ -85,19 +88,14 @@ body {
 						</span>
 					</div>
 				</div>
-				
-				<div class="insertNoticeBtn">
+				<div class="updateNoticeBtn">
 					<button type="submit" id="enrollBtn" class="btn btn-primary">수정</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
 			</form>
 		</div>
+
 	</div>
-<br>
-<br>
-<br>
-<br>
-<br>
 	
 	<script>
 		$(function(){
@@ -127,8 +125,10 @@ body {
 			});
 			
 		});
+			
+		
 	</script>
 	
-</section>
-
-<jsp:include page="/views/layout/treeview/board/layout-down.jsp" />
+	
+</body>
+</html>

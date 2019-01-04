@@ -145,5 +145,25 @@ public class TeamService {
 		
 		return list;
 	}
+	//글 클릭하면 댓글 보이기
+	public ArrayList<Team> selectReply(int num) {
+		Connection con = getConnection();
+		
+		ArrayList<Team> reply = new TeamDao().selectReply(con, num);
+		
+		System.out.println("service 댓글: "+reply.size());
+		close(con);
+		
+		return reply;
+	}
+	//부서코드 검색
+	public ArrayList<Team> searchValue(String searchValue) {
+		Connection con = getConnection();
+		ArrayList<Team> list = new TeamDao().searchValue(con, searchValue);
+		System.out.println("service listsize:"+list.size());
+		close(con);
+		
+		return list;
+	}
 	
 }

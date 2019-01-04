@@ -130,14 +130,16 @@ body {
 		
 				</div>	
 			</div>
-			<br>
-			<br>
-			<div class="detailNoticeBtn">
+			
+			<!-- <div class="detailNoticeBtn"> -->
+			<table>
+			<tr>
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
 				<button id="editBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectFree.fr?num=<%=f.getBno()%>'">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
-				
-			</div>
+				</tr>
+				</table>
+			<!-- </div> -->
 			
 		
 	</div>
