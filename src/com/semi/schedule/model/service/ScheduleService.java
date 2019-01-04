@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.common.vo.DeptEmp;
 import com.semi.schedule.model.dao.ScheduleDao;
 import com.semi.schedule.model.vo.Schedule;
 
@@ -119,6 +120,7 @@ public class ScheduleService {
 		return result;
 	}
 
+/*	
 	public HashMap<String, ArrayList<Employee>> selectDeptEmp() {
 		Connection con=getConnection();
 		HashMap<String, ArrayList<Employee>> hmap=new HashMap<String, ArrayList<Employee>>();
@@ -159,6 +161,22 @@ public class ScheduleService {
 		
 		close(con);
 		return hmap;
+	}
+	*/
+
+	public ArrayList<HashMap<String, Object>> selectVacList(ArrayList<DeptEmp> empList) {
+		Connection con=getConnection();
+		ArrayList<HashMap<String, Object>> vacList=new ArrayList<HashMap<String, Object>>();
+		ArrayList<HashMap<String, Object>> vac=null;
+		for(int i=0;i<empList.size();i++) {
+			vac=new ScheduleDao().selectVacList(con, empList.get(i).getEmpId());
+			for(int j=0;j<vac.size();j++) {
+				vacList.add(vac.get(j));
+			}
+		}
+		System.out.println("service vacList:"+vacList);
+		close(con);
+		return vacList;
 	}
 
 }

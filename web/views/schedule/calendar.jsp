@@ -6,8 +6,7 @@
 <%
 	Employee loginUser=(Employee)request.getSession().getAttribute("loginUser");
 	ArrayList<HashMap<String, Object>> list=(ArrayList<HashMap<String, Object>>)request.getAttribute("list");
-	HashMap<String, ArrayList<DeptEmp>> address=(HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("address");
-
+	ArrayList<HashMap<String, Object>> vacList=(ArrayList<HashMap<String, Object>>)request.getAttribute("vacList");
 %>
 <%--수정해야할 것들
 상세보기 클릭 시 - 다른 날짜 클릭할 수 없게 처리하기 <<< 꼭!!!  O
@@ -145,8 +144,7 @@ css 좀 더 보기좋게 수정
 			for(var j=0;j<holidayLun.length;j++){
 				if(lunar_date.lunHolis.toString().substring(4,8)===holidayLun[j][0].toString()){
 					//음력 공휴일 적용
-					cell.innerHTML='<span class="sunday">'+i+'<br>'+
-					holidayLun[j][1]+'</span>';
+					cell.innerHTML='<span class="sunday">'+i+'<br>'+holidayLun[j][1]+'</span>';
 					
 					//대체 휴일이 적용 될 경우 대체휴일
 					if(j==0 && cnt%7==1){replaceHolis=3;}
@@ -199,6 +197,19 @@ css 좀 더 보기좋게 수정
 			}
 		<%
 		}
+		%>
+		<%for(int i=0;i<vacList.size();i++){
+			HashMap<String, Object> hmap=vacList.get(i);
+			System.out.println(hmap);%>
+			if($("#useVacschedule").is(":checked")){
+				
+				$("#calSchedule"+<%=hmap.get("useStart")%>).append("<p name='calendarClass' value='2'><%=hmap.get("empName")%>휴가</p>");
+				$("#calSchedule"+<%=hmap.get("useStart")%>).children("p[value='2']").css("color","#736DCC");
+				
+			}
+			
+		<%
+			}
 		%>
 		<%-- <%ArrayList<DeptEmp> empList=address.get(loginUser.getDeptId());%> --%>
 		
@@ -528,7 +539,7 @@ css 좀 더 보기좋게 수정
 			<label for="Teamschedule"><%=loginUser.getDeptName() %>팀 일정</label><br><br>
 			<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
 			<label for="Companyschedule">회사 일정</label><br><br>
-			<input type="checkbox" id="useVacschedule" name="useVacschedule" value="4" checked>
+			<input type="checkbox" id="useVacschedule" name="useVacschedule" value="4">
 			<label for="useVacschedule">휴가</label><br>
 		</div>
 		<%} %>
@@ -593,7 +604,7 @@ css 좀 더 보기좋게 수정
 					<option value="3">회사 일정</option>
 					<%} %> 
 				</select>
-				<input type="time" name="addScheduleTime"><br>
+				<input type="time" name="addScheduleTime" value="09:00"><br>
 				<input type="text" size="25" maxlength="200" placeholder="추가할 일정 입력" name="addSchedule">
 			</div>
 			<div class="scheduleBtn" id="saveAddBtn">추가</div>
@@ -961,7 +972,7 @@ css 좀 더 보기좋게 수정
 			var empId=<%=loginUser.getEmpid()%>;
 			if($("#useVacschedule").is(":checked")){
 				$.ajax({
-					url:"/semi//address.common",
+					url:"/semi/address.common",
 					type:"post",
 					data:{empId:empId},
 					success:function(data){
