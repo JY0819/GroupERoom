@@ -40,8 +40,8 @@
 				<tr>
 					<th>사원 번호</th>
 					<th>이름</th>
-	<!-- 				<th>부서</th> -->
-	<!-- 				<th>직책</th> -->
+					<th>부서</th>
+					<th>직책</th>
 					<th>성별</th>
 					<th>연락처</th>
 				</tr>
@@ -53,8 +53,8 @@
 				<tr>
 					<td><%=emp.getEmpid()%></td>
 					<td><%=emp.getEmpName()%></td>
-	<%-- 				<td><%=emp.getDeptName()%></td> --%>
-	<%-- 				<td><%=emp.getPositionName()%></td> --%>
+					<td><%=emp.getDeptName()%></td>
+					<td><%=emp.getPositionName()%></td>
 					<td><%=emp.getEmpGender()%></td>
 					<td><%=emp.getEmpPhone()%></td>
 				</tr>

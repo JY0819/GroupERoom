@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+body {
+	height: 750px;
+}
+
+#contentImgArea {
+	margin-right: 100px;
+}
+
+#update, #goList, #delete {
+	float: right;
+	width: 80px;
+	font-weight: bold;
+	background: #205181;
+	color: white;
+	margin-right: 5px;
+}
+
+#goList {
+	background: orange;
+}
+
+#delete {
+	background: red;
+}
