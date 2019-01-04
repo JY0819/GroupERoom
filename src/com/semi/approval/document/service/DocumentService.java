@@ -65,8 +65,15 @@ public class DocumentService {
 		int result1 = new DocumentDao().insertAttachments(con, attachNo, fileList);
 		int result2 = new DocumentDao().insertAppr(con, apprLine, list);
 		int result3 = new DocumentDao().insertDoc(con, list);
-		int result4 = new DocumentDao().insertDocument(con, attachNo, list);
-		
+		int result4 = 0;
+		Document document = (Document)list.get(0);
+		if(document.getManageClass().equals("1")) {
+			result4 = new DocumentDao().insertFOVODocument(con, attachNo, list);
+		}else if(document.getManageClass().equals("2")) {
+			result4 = new DocumentDao().insertFOEODocument(con, attachNo, list);
+		}else {
+			result4 = new DocumentDao().insertFOWODocument(con, attachNo, list);
+		}
 		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 1) {
 			commit(con);
 			result = 1;
@@ -85,7 +92,15 @@ public class DocumentService {
 		int result = 0;
 		int result1 = new DocumentDao().insertAppr(con, apprLine, list);
 		int result2 = new DocumentDao().insertDoc(con, list);
-		int result3 = new DocumentDao().insertDocument(con, attachNo, list);
+		int result3 = 0;
+		Document document = (Document)list.get(0);
+		if(document.getManageClass().equals("1")) {
+			result3 = new DocumentDao().insertFXVODocument(con, attachNo, list);
+		}else if(document.getManageClass().equals("2")) {
+			result3 = new DocumentDao().insertFXEODocument(con, attachNo, list);
+		}else {
+			result3 = new DocumentDao().insertFXWODocument(con, attachNo, list);
+		}
 		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(con);
 			result = 1;

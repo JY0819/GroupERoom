@@ -187,6 +187,7 @@ public class InsertDocumentServlet extends HttpServlet {
 				if(documentKind.equals("1")) {
 					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 				}else if(documentKind.equals("2")) {
 					endDay =  new java.sql.Date(new GregorianCalendar().getTimeInMillis());					
 				}
@@ -209,7 +210,7 @@ public class InsertDocumentServlet extends HttpServlet {
 				document.setVacApprStart(startDay);
 				document.setVacApprEnd(endDay);
 			}
-			else if(document.equals("2")) {
+			else if(documentKind.equals("2")) {
 				document.setEntryDay(entryDay);
 			}
 			
@@ -255,8 +256,10 @@ public class InsertDocumentServlet extends HttpServlet {
 			int result = 0;
 			if(originFiles.get(0) != null) {
 				result = new DocumentService().insertDocument(list, apprLine, fileList);
+				System.out.println("결과옴");
 			}else{
 				result = new DocumentService().insertDocument(list, apprLine);
+				System.out.println("결과옴");
 			}
 			if(result > 0) {
 				response.sendRedirect("/semi/selectDocument.sd");

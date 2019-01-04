@@ -52,10 +52,8 @@ public class SelectDocumentNumServlet extends HttpServlet {
 				request.setAttribute("map", hmap);
 				request.setAttribute("address", address);
 				request.setAttribute("deptIdList", deptIdList);
-				if(pageName.equals("va")) {
-					page = "views/approval/documentList/vacationDocument.jsp";
-					request.getRequestDispatcher(page).forward(request, response);
-				}
+				page = "views/approval/documentList/vacationDocument.jsp";
+				request.getRequestDispatcher(page).forward(request, response);
 			}
 		}else if(pageName.equals("wo")) {
 			if(document != null && hmap != null && address != null && deptIdList != null) {
@@ -63,10 +61,8 @@ public class SelectDocumentNumServlet extends HttpServlet {
 				request.setAttribute("map", hmap);
 				request.setAttribute("address", address);
 				request.setAttribute("deptIdList", deptIdList);
-				if(pageName.equals("va")) {
-					page = "views/approval/documentList/workDocument.jsp";
-					request.getRequestDispatcher(page).forward(request, response);
-				}
+				page = "views/approval/documentList/workDocument.jsp";
+				request.getRequestDispatcher(page).forward(request, response);
 			}
 		}else if(pageName.equals("em")){
 			if(document != null && hmap != null && address != null && deptIdList != null) {
@@ -74,10 +70,8 @@ public class SelectDocumentNumServlet extends HttpServlet {
 				request.setAttribute("map", hmap);
 				request.setAttribute("address", address);
 				request.setAttribute("deptIdList", deptIdList);
-				if(pageName.equals("va")) {
-					page = "views/approval/documentList/employmentDocument.jsp";
-					request.getRequestDispatcher(page).forward(request, response);
-				}
+				page = "views/approval/documentList/employmentDocument.jsp";
+				request.getRequestDispatcher(page).forward(request, response);
 			} 
 		}else {
 			page = "views/approval/common/errorPage.jsp";
