@@ -180,7 +180,23 @@ css 좀 더 보기좋게 수정
 		
 		//불러온 일정 삽입
 		<%for(int i=0;i<list.size();i++){
-			HashMap<String, Object> hmap=list.get(i);%>
+			HashMap<String, Object> hmap=list.get(i);
+			if((hmap.get("calendarContents")).toString().length()>9){%>
+				if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+				}
+				
+				if(Number(<%=hmap.get("calendarClass")%>)==2 && $("#Teamschedule").is(":checked") ){
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+				}
+				
+				if(Number(<%=hmap.get("calendarClass")%>)==3 && $("#Companyschedule").is(":checked")){
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+				}
+			<%}else{%>
 			if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
@@ -195,18 +211,37 @@ css 좀 더 보기좋게 수정
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
 			}
-		<%
+		<%}
 		}
 		%>
 		<%for(int i=0;i<vacList.size();i++){
 			HashMap<String, Object> hmap=vacList.get(i);
-			System.out.println(hmap);%>
+			%>
 			if($("#useVacschedule").is(":checked")){
 				
-				$("#calSchedule"+<%=hmap.get("useStart")%>).append("<p name='calendarClass' value='2'><%=hmap.get("empName")%>휴가</p>");
-				$("#calSchedule"+<%=hmap.get("useStart")%>).children("p[value='2']").css("color","#736DCC");
-				
+			<%for(int j=0;j<((ArrayList<String>)hmap.get("useDays")).size();j++){%>
+					if($("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("span").hasClass("saturday")){
+						
+					}else if($("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("span").hasClass("sunday")){
+						
+					}else{						
+						$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).append("<p name='calendarClass' value='4'><%=hmap.get("empName")%> 휴가</p>");
+						$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("p[value='4']").css("color","#736DCC");
+					}
+			<%}%>
+			
+			 <%--
+				if($("#calSchedule"+<%=hmap.get("useStart")%>).children("span").hasClass("saturday")){
+					
+				}else if($("#calSchedule"+<%=hmap.get("useStart")%>).children("span").hasClass("sunday")){
+					
+				}else{						
+					$("#calSchedule"+<%=hmap.get("useStart")%>).append("<p name='calendarClass' value='2'><%=hmap.get("empName")%>휴가</p>");
+					$("#calSchedule"+<%=hmap.get("useStart")%>).children("p[value='2']").css("color","#736DCC");
+				}
+				--%>
 			}
+			
 			
 		<%
 			}
@@ -214,8 +249,9 @@ css 좀 더 보기좋게 수정
 		<%-- <%ArrayList<DeptEmp> empList=address.get(loginUser.getDeptId());%> --%>
 		
 		// 휴가 불러오기 >
-
+		setLabel();
 		view(); //일정 입력 기본정보 불러오는 함수
+		
 	}
 		
 	//음력 월 data
@@ -539,7 +575,7 @@ css 좀 더 보기좋게 수정
 			<label for="Teamschedule"><%=loginUser.getDeptName() %>팀 일정</label><br><br>
 			<input type="checkbox" id="Companyschedule" name="companyschedule" value="3" checked>
 			<label for="Companyschedule">회사 일정</label><br><br>
-			<input type="checkbox" id="useVacschedule" name="useVacschedule" value="4">
+			<input type="checkbox" id="useVacschedule" name="useVacschedule" value="4" checked>
 			<label for="useVacschedule">휴가</label><br>
 		</div>
 		<%} %>
@@ -888,14 +924,22 @@ css 좀 더 보기좋게 수정
 				<%for(int i=0;i<list.size();i++){
 					HashMap<String, Object> hmap=list.get(i);
 					if((int)hmap.get("calendarClass")==1){
-						
 				%>
 						if(Number($("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").children("input[type='hidden']").val())==Number(<%=hmap.get("calendarNo")%>)){
-							
+	
 						}else{
-							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-							$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
-						}
+						<%if((hmap.get("calendarContents")).toString().length()>9){%>
+							if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
+								$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+								$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+							}
+						<%}else{%>
+							if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
+								$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
+								$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+							}
+					<%}%>
+					}
 				<%}
 				}%>
 	        }else{
@@ -921,8 +965,13 @@ css 좀 더 보기좋게 수정
 						if(Number($("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").children("input[type='hidden']").val())==Number(<%=hmap.get("calendarNo")%>)){
 					
 						}else{
+							<%if((hmap.get("calendarContents")).toString().length()>9){%>
+							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+							$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+							<%}else{%>
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+							<%}%>
 						}
 			<%	}
 				}%>
@@ -949,8 +998,13 @@ css 좀 더 보기좋게 수정
 						if(Number($("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").children("input[type='hidden']").val())==Number(<%=hmap.get("calendarNo")%>)){
 					
 						}else{
+							<%if((hmap.get("calendarContents")).toString().length()>9){%>
+							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+							$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+							<%}else{%>
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
+							<%}%>
 						}
 				<%
 					}
@@ -971,33 +1025,44 @@ css 좀 더 보기좋게 수정
 			var name=$("#useVacschedule").val();
 			var empId=<%=loginUser.getEmpid()%>;
 			if($("#useVacschedule").is(":checked")){
-				$.ajax({
-					url:"/semi/address.common",
-					type:"post",
-					data:{empId:empId},
-					success:function(data){
-						console.log("휴가성공");
-					},
-					error:function(data){
-						console.log("휴가 실패");
-					},
-					complete:function(data){
-						console.log("휴가");
+			<%for(int i=0;i<vacList.size();i++){
+				HashMap<String, Object> hmap=vacList.get(i);
+				for(int j=0;j<((ArrayList<String>)hmap.get("useDays")).size();j++){%>
+					if($("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("span").hasClass("saturday")){
+						
+					}else if($("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("span").hasClass("sunday")){
+						
+					}else{						
+						$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).append("<p name='calendarClass' value='4'><%=hmap.get("empName")%>휴가</p>");
+						$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("p[value='4']").css("color","#736DCC");
+						console.log($("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("p[name='calendarClass']").val());
 					}
-				});
+			<%}
+			}%>
 	        }else{
-	    		
+	    		<%for(int i=0;i<vacList.size();i++){
+	    			HashMap<String, Object> hmap=vacList.get(i);
+	    			for(int j=0;j<((ArrayList<String>)hmap.get("useDays")).size();j++){
+	    		%>
+	    				$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>+" > p[value='4']").remove();	
+	    		<%
+	    			}
+	    		}%>
 	        }
 		});
 		
-		$(function(){
+		function setLabel(){
 			$("#calendarMain").children().children("td").click(function(){
 				var $scheduleLabelOne=$("#daySchedule"); 
 				$scheduleLabelOne.html(""); 
 			});
 			$("#calendarMain").children().children().children("p").click(function(){
 				var calendarNo=$(this).children("input[type='hidden']").val();
-				console.log($(this).children("input[type='hidden']").val());
+				console.log("val"+$(this).children("input[type='hidden']").val());
+				console.log($(this).parent().children("p"));
+				if($(this).val()==4){
+					
+				}else{
 				$.ajax({
 					url:"/semi/selectDay.sche",
 					data:{scheduleDateId:scheduleDateId,calendarNo:calendarNo},
@@ -1061,8 +1126,9 @@ css 좀 더 보기좋게 수정
 						console.log("ajax");
 					}
 				});
+				}
 			});
-		});
+		}
 		
 		//일정 상세보기 팝업 닫기
 		<%--
