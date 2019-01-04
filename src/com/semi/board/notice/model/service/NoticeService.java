@@ -165,6 +165,15 @@ public class NoticeService {
 		
 		return reply;
 	}
+	//검색용
+	public ArrayList<Notice> searchValue(String searchValue) {
+		Connection con = getConnection();
+		ArrayList<Notice> list = new NoticeDao().searchValue(con, searchValue);
+		System.out.println("service listsize:"+list.size());
+		close(con);
+		
+		return list;
+	}
 	
 
 }

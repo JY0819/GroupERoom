@@ -5,13 +5,13 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+	int endPage = pi.getEndPage(); */
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
@@ -86,7 +86,7 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 	</div>	
 	</form>
 	<br>
-<div class="pagingArea" align="center">
+<%-- <div class="pagingArea" align="center">
 <ul class="pagination">
 
 <li><a href="<%=request.getContextPath()%>/selectList.no?currentPage=1"><<</a></li>
@@ -142,7 +142,7 @@ if(p == currentPage){
 ​
 
 
-	</div>
+	</div> --%>
 	<br>
 	<br>
 	<br>

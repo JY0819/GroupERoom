@@ -471,5 +471,57 @@ public class NoticeDao {
 		
 		return reply;
 	}
+	//검색
+	public ArrayList<Notice> searchValue(Connection con, String searchValue) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Notice> list = null;
+		
+		String query = prop.getProperty("searchValue");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, searchValue);
+			
+			rset=pstmt.executeQuery();
+			
+			list = new ArrayList<Notice>();
+			
+			while(rset.next()) {
+				Notice n = new Notice();
+				
+				n.setBno(rset.getInt("BOARDNO"));
+				n.setbClass(rset.getString("BOARDCLASS"));
+				n.setbTitle(rset.getString("BOARDTITLE"));
+				n.setbContent(rset.getString("BOARDCONTENTS"));
+				n.setbDate(rset.getDate("BOARDDATE"));
+				n.setbClicks(rset.getInt("BOARDCLICKS"));
+				n.setbAttach(rset.getString("BOARDATTACH"));
+				n.setComNo(rset.getInt("COMMENTNO"));
+				n.setComLevel(rset.getInt("COMMENTLEVEL"));
+				n.setRecomId(rset.getString("RECOMMENTID"));
+				
+				n.setReplebno(rset.getInt("REPLEBOARDNO"));
+				n.setWriterId(rset.getString("EMPNAME"));
+				n.setStatus(rset.getString("WHETHEROFDELETE"));
+				n.setFile01(rset.getInt("FILE01"));
+				n.setFile02(rset.getInt("FILE02"));
+				n.setFile03(rset.getInt("FILE03"));
+			
+				list.add(n);
+				
+			}
+			System.out.println("dao listsize:"+list.size());
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
 
 }

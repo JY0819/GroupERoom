@@ -172,7 +172,7 @@ public class FreeService {
 			Connection con = getConnection();
 			ArrayList<Free> list = new FreeDao().searchName(userName, con, currentPage, limit);
 			
-			System.out.println("service: "+list.size());
+			System.out.println("name으로 검색service: "+list.size());
 			close(con);
 			
 			return list;
@@ -183,7 +183,7 @@ public class FreeService {
 			Connection con = getConnection();
 			ArrayList<Free> list = new FreeDao().searchTitle(title, con, currentPage, limit);
 			
-			System.out.println("service: "+list.size());
+			System.out.println("title로 검색service: "+list.size());
 			close(con);
 			
 			return list;
