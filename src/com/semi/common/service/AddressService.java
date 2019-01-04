@@ -46,9 +46,15 @@ public class AddressService {
 				System.out.println(deptIdList.get(i)+" : "+hmap.get(deptIdList.get(i)).get(j).getEmpId());
 			}
 		}
-		
+		System.out.println(hmap);
 		close(con);
 		return hmap;
 	}
-
+	public ArrayList<String> selectDeptIdList(){
+		Connection con=getConnection();
+		ArrayList<String> deptIdList=new AddressDao().selectDeptIdList(con);
+		
+		close(con);
+		return deptIdList;
+	}
 }

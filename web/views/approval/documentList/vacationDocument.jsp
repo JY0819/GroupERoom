@@ -1,3 +1,4 @@
+<%@page import="com.semi.common.vo.DeptEmp"%>
 <%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
@@ -7,6 +8,8 @@
 <%
 	Document document = (Document)request.getAttribute("doc");
 	HashMap<Integer, ArrayList<SumEmpInfo>> hmap = (HashMap<Integer, ArrayList<SumEmpInfo>>)request.getAttribute("map");
+	HashMap<String, ArrayList<DeptEmp>> address=(HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("address");
+	ArrayList<String> deptIdList=(ArrayList<String>)request.getAttribute("deptIdList");
 %>
 <!DOCTYPE html>
 <html>
@@ -45,22 +48,16 @@
     	<div class="white_content" id="open">
         	<div>
         		<dl><h4>주소록</h4> 
-        			<dt><i class="fas fa-bookmark"></i>즐겨찾기</dt>
-        				<dd class="empNo"><i class="fas fa-star"></i>홍길동</dd>
-        				<dd class="empNo"><i class="fas fa-star"></i>고길동</dd>
-        			<% for(int i=0; i<hmap.size(); i++) { %>
-        			<dt><i class="fab fa-bandcamp"><%= hmap.get(i).get(0).getDeptName() %>팀</i></dt>
-        				<% for(int j=0; j<hmap.get(i).size(); j++) { %>
-        				<dd class="empNo" onclick="choiceEmpNo();"><i class="far fa-star"></i><%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %></dd>
-        					<% } %>
+        			<% for(int i=0; i<address.size(); i++) { 
+        					if(address.get(deptIdList.get(i)).isEmpty()){
+        						
+        					}else{%>
+        			<dt><i class="fab fa-bandcamp"><%= address.get(deptIdList.get(i)).get(0).getDeptName() %>팀</i></dt>
+        				<% for(int j=0; j<address.get(deptIdList.get(i)).size(); j++) { %>
+        				<dd class="empNo" onclick="choiceEmpNo();"><i class="far fa-star"></i><%= address.get(deptIdList.get(i)).get(j).getEmpId() %>&nbsp;<%= address.get(deptIdList.get(i)).get(j).getEmpName() %></dd>
+        					<% } 
+        						}%>
         				<% } %>
-        			<!--이부분은 양식으로 만들어놓은 주소록 <dt><i class="fab fa-bandcamp"></i>마케팅팀</dt>
-        				<dd id="d5"><i class="far fa-star"></i>고길동(사원)</dd>
-        				<dd id="d6"><i class="far fa-star"></i>고길동(사원)</dd>
-        			<dt><i class="fab fa-bandcamp"></i>개발팀</dt>
-        				<dd id="d7"><i class="far fa-star"></i>고길동(사원)</dd>
-        				<dd id="d8"><i class="far fa-star"></i>고길동(사원)</dd>
-        			<dt><i class="fab fa-bandcamp"></i>디자인팀</dt>	 -->
         		</dl>
             	<a class="close" href="#"><button type="button" class="saveBtn2">저장</button></a><a class="close" href="#"><button type="button" class="closeBtn2" onclick="closePopUp();">닫기</button></a>
         	</div>
@@ -88,7 +85,7 @@
 		</tr>
 		<tr>
 			<td class="td">휴가기간</td>
-			<td class="content" colspan="2"><input type="datetime-local" name="startDate"><br><input type="datetime-local" name="endDate"></td>
+			<td class="content" colspan="2"><input type="date" name="startDate"><br><input type="date" name="endDate"></td>
 			<td class="td">분류</td>
 			<td class="content" colspan="3">
 				<select name="documentKind">
