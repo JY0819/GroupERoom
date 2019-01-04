@@ -148,15 +148,15 @@
 		        
 				}
 		 
-		 <%-- $("#listArea td").mouseenter(function() {
-				$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+		  $("#listArea td").mouseenter(function() {
+				$(this).parent().css({"cursor":"pointer"});
 			}).mouseout(function() {
-				$(this).parent().css({"background":"white"});
+				/* $(this).parent().css({"background":"white"}); */
 			}).click(function() {
 				var docno = $(this).parent().children().eq(3).text();
 				
 				location.href="<%= request.getContextPath()%>/detailOne.one?docno=" + docno;
-			}); --%>
+			}); 
 	</script>
 </section>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />

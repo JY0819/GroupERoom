@@ -1,6 +1,8 @@
 package com.semi.approval.controller.finishApprovalController;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +30,11 @@ public class FinishServletOne extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int docno = Integer.parseInt(request.getParameter("docno"));
 		System.out.println("docno : " + docno);
+		
+		String page = "";
+		page = "views/approval/documentList/documentDetail.jsp";
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**
