@@ -168,9 +168,12 @@ public class FreeService {
 			return list;
 		}*/
 		//이름으로 검색 결과 페이징
-		public ArrayList<Free> searchName(String userName, int currentPage, int limit) {
+		public ArrayList<Free> searchName(String userName, int currentPage ,int maxPage, int limit) {
 			Connection con = getConnection();
-			ArrayList<Free> list = new FreeDao().searchName(userName, con, currentPage, limit);
+			
+			ArrayList<Free> list = new FreeDao().searchName(userName, con, currentPage,maxPage, limit);
+			System.out.println("servcie list: "+list.size());
+
 			
 			System.out.println("name으로 검색service: "+list.size());
 			close(con);
@@ -179,9 +182,9 @@ public class FreeService {
 		}
 		
 		//글제목으로 검색 결과 페이징
-		public ArrayList<Free> searchTitle(String title, int currentPage, int limit) {
+		public ArrayList<Free> searchTitle(String title, int currentPage, int maxPage,int limit) {
 			Connection con = getConnection();
-			ArrayList<Free> list = new FreeDao().searchTitle(title, con, currentPage, limit);
+			ArrayList<Free> list = new FreeDao().searchTitle(title, con, currentPage, maxPage, limit);
 			
 			System.out.println("title로 검색service: "+list.size());
 			close(con);

@@ -58,7 +58,7 @@ public class SelectNoticeListServlet extends HttpServlet {
 				int maxPage; 	 //전체 페이지의 마지막 페이지
 				int startPage; 	 //한 번에 표시될 페이지가 시작할 페이지
 				int endPage; 	 //한 번에 표시될 페이지가 끝나는 페이지
-		System.out.println("servlet1임");
+		System.out.println("notice servlet1임");
 				//현재 페이지 처리
 				currentPage = 1;
 				

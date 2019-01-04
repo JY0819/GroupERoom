@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+
 import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
 import com.semi.board.notice.model.vo.Notice;
@@ -625,81 +626,86 @@ System.out.println("상세보기 dao : "+query);
 			
 			return list;
 		}*/
-		//이름으로 검색 결과 페이징
-		public ArrayList<Free> searchName(String userName, Connection con, int currentPage, int limit) {
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			ArrayList<Free> list = null;
+		//이름으로 검색하기
+		public ArrayList<Free> searchName(String userName, Connection con, int currentPage,int maxPage, int limit) {
+			PreparedStatement pstmt=null;
+			ResultSet rset=null;
+			ArrayList<Free> list=null;
+			System.out.println("dao userName: "+userName);
+			System.out.println("dao currentPage: "+currentPage);
+			String query=prop.getProperty("searchName");
 			
-			String query = prop.getProperty("searchName");
-			
+			System.out.println("dao query: "+query);
 			try {
-				pstmt = con.prepareStatement(query);
+				pstmt=con.prepareStatement(query);
+			
 				
-				int startRow = (currentPage - 1) * limit + 1;
+				int startRow = (currentPage - 1) * limit + 1; // 조회할 때 시작할 행 번호
 				int endRow = startRow + limit - 1;
 				
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
+				System.out.println("dao startRow: "+startRow);
+				System.out.println("dao endRow: "+endRow);
+				pstmt.setInt(1, 1);
+				pstmt.setInt(2, limit*maxPage);
 				pstmt.setString(3, userName);
 				
 				rset=pstmt.executeQuery();
-				
-				list= new ArrayList<Free>();
+				list=new ArrayList<Free>();
 				
 				while(rset.next()) {
+					Free f=new Free();
 					
-				
-					Free f = new Free();
-				
-				f.setBno(rset.getInt("BOARDNO"));
-				f.setbClass(rset.getString("BOARDCLASS"));
-				f.setbTitle(rset.getString("BOARDTITLE"));
-				f.setbContent(rset.getString("BOARDCONTENTS"));
-				f.setbDate(rset.getDate("BOARDDATE"));
-				f.setbClicks(rset.getInt("BOARDCLICKS"));
-				f.setbAttach(rset.getString("BOARDATTACH"));
-				f.setComNo(rset.getInt("COMMENTNO"));
-				f.setComLevel(rset.getInt("COMMENTLEVEL"));
-				f.setRecomId(rset.getString("RECOMMENTID"));
-				
-				f.setReplebno(rset.getInt("REPLEBOARDNO"));
-				f.setWriterId(rset.getString("EMPNAME"));
-				f.setStatus(rset.getString("WHETHEROFDELETE"));
-				f.setFile01(rset.getInt("FILE01"));
-				f.setFile02(rset.getInt("FILE02"));
-				f.setFile03(rset.getInt("FILE03"));
-				
-				list.add(f);
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbClass(rset.getString("BOARDCLASS"));
+					f.setbTitle(rset.getString("BOARDTITLE"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					f.setbClicks(rset.getInt("BOARDCLICKS"));
+					f.setbAttach(rset.getString("BOARDATTACH"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setRecomId(rset.getString("RECOMMENTID"));
+					
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setStatus(rset.getString("WHETHEROFDELETE"));
+					f.setFile01(rset.getInt("FILE01"));
+					f.setFile02(rset.getInt("FILE02"));
+					f.setFile03(rset.getInt("FILE03"));
+					if(rset.getInt("ROWNUM") >=startRow && rset.getInt("ROWNUM") <=endRow) {
+						list.add(f);
+					}
+					
+					
 				}
-				System.out.println("이름검색dao list: "+list.size());
-				
+				System.out.println("name검색dao list: "+list.size());
 
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}finally {
-				close(pstmt);
+			} finally {
 				close(rset);
+				close(pstmt);
 			}
 			
 			return list;
 		}
 		//글제목으로 검색 결과 페이징
-		public ArrayList<Free> searchTitle(String title, Connection con, int currentPage, int limit) {
+		public ArrayList<Free> searchTitle(String title, Connection con, int currentPage, int maxPage,int limit) {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			ArrayList<Free> list = null;
 			
 			String query = prop.getProperty("searchTitle");
 			System.out.println("dao query: "+query);
-
+System.out.println("dao current Page:"+currentPage);
 			try {
 				pstmt = con.prepareStatement(query);
 				int startRow = (currentPage - 1) * limit + 1;
 				int endRow = startRow + limit - 1;
-				
+				System.out.println("dao제목 startRow:"+currentPage);
+				//System.out.println("dao제목 endRow: "+endRow);
 				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
+				pstmt.setInt(2, maxPage*limit);
 				pstmt.setString(3, title);
 				
 				rset=pstmt.executeQuery();
@@ -896,5 +902,6 @@ System.out.println("상세보기 dao : "+query);
 			
 			return reply;
 		}
+		
 		
 }

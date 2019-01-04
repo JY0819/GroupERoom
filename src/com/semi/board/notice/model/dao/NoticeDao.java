@@ -243,7 +243,8 @@ public class NoticeDao {
 			
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
-			
+			System.out.println("notice startRow: "+startRow);
+			System.out.println("notice endRow: "+endRow);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			
