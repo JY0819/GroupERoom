@@ -120,7 +120,7 @@ public class ScheduleService {
 		return result;
 	}
 
-/*	
+/*
 	public HashMap<String, ArrayList<Employee>> selectDeptEmp() {
 		Connection con=getConnection();
 		HashMap<String, ArrayList<Employee>> hmap=new HashMap<String, ArrayList<Employee>>();
@@ -162,8 +162,8 @@ public class ScheduleService {
 		close(con);
 		return hmap;
 	}
-	*/
-
+	
+*/
 	public ArrayList<HashMap<String, Object>> selectVacList(ArrayList<DeptEmp> empList) {
 		Connection con=getConnection();
 		ArrayList<HashMap<String, Object>> vacList=new ArrayList<HashMap<String, Object>>();
@@ -178,5 +178,6 @@ public class ScheduleService {
 		close(con);
 		return vacList;
 	}
+
 
 }

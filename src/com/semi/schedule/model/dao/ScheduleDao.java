@@ -5,7 +5,6 @@ import static com.semi.common.JDBCTemplate.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +12,8 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -68,7 +69,6 @@ public class ScheduleDao {
 					time="";
 				}
 				hmap.put("calendarTime", time);
-				
 				list.add(hmap);
 				System.out.println("리스트 +"+list.size());
 				
@@ -540,22 +540,34 @@ public class ScheduleDao {
 			
 			while(rset.next()) {
 				vac=new HashMap<String, Object>();
-				
+				ArrayList<String> useDays=new ArrayList<String>();
 				vac.put("empName", rset.getString("EMPNAME"));
-				vac.put("useStart", rset.getString("USESTART"));
+				vac.put("useStart", rset.getString("USESTART"));				
 				vac.put("useEnd", rset.getString("USEEND"));
 				vac.put("useDay", rset.getInt("CNT"));
 				vac.put("tDay", rset.getInt("TDAY"));
-				SimpleDateFormat startDate=new SimpleDateFormat(rset.getString("USESTART"));
-				
-				SimpleDateFormat endDate=new SimpleDateFormat(rset.getString("USEEND"));
-				
-				System.out.println("시작 : "+startDate+"/"+"/ 끝 : "+endDate);
+				SimpleDateFormat vacDate=new SimpleDateFormat("yyyyMMdd");
+			
 				if(rset.getString("USEEND")!=null) {
+					try {
+						Date startDate = vacDate.parse(rset.getString("USESTART"));
+						String useStart="";
+						Calendar cal=Calendar.getInstance();
+						cal.setTime(startDate);
+						
+						for(int i=0;i<rset.getInt("TDAY");i++) {
+							useStart = vacDate.format(cal.getTime());
+							useDays.add(useStart);
+							cal.add(Calendar.DATE, +1);
+						}
+						vac.put("useDays", useDays);
+						System.out.println(empId+":"+vacList);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 					vacList.add(vac);
 				}				
 			}
-			System.out.println(empId+":"+vacList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
