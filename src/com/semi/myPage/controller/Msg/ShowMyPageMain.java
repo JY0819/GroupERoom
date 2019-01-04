@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.admin.user.model.vo.Employee;
-import com.semi.approval.document.service.DocumentService;
-import com.semi.approval.document.vo.SumEmpInfo;
+import com.semi.common.service.AddressService;
+import com.semi.common.vo.DeptEmp;
 import com.semi.myPage.model.Etc.vo.PageInfo;
 import com.semi.myPage.model.Msg.service.MsgService;
 import com.semi.myPage.model.Msg.vo.Msg;
@@ -75,10 +75,8 @@ public class ShowMyPageMain extends HttpServlet {
 		
 		
 		// 주소록 불러오기
-		HashMap<Integer, ArrayList<SumEmpInfo>> hmap = new DocumentService().selectDept();
-		
-		
-		
+		HashMap<String, ArrayList<DeptEmp>> hmap = new AddressService().selectDeptEmp();
+		ArrayList<String> deptIdList=new AddressService().selectDeptIdList();
 		
 		String page = "";
 		
@@ -86,6 +84,7 @@ public class ShowMyPageMain extends HttpServlet {
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("map", hmap);
+			request.setAttribute("deptIdList", deptIdList);
 			page = "views/myPage/mypageMain.jsp";
 		}
 		

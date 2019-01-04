@@ -1,10 +1,12 @@
+<%@page import="com.semi.common.vo.DeptEmp"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.semi.approval.document.vo.SumEmpInfo"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	HashMap<Integer, ArrayList<SumEmpInfo>> hmap = (HashMap<Integer, ArrayList<SumEmpInfo>>)request.getAttribute("map");
+	HashMap<String, ArrayList<DeptEmp>> hmap = (HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("map");
+	ArrayList<String> deptIdList = (ArrayList<String>)request.getAttribute("deptIdList");
 %>
 <jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
 
@@ -52,6 +54,7 @@
 .empNo:hover{
 	background: black;
 	color: white;
+	cursor: pointer;
 }
 </style>
 
@@ -69,18 +72,22 @@
 	<div class="content-right container">
 		<div align="center" style="margin-top: 50px; margin-bottom: 100px;">
 			<div class="diary">
-				<form action="">
+				<form action="<%= request.getContextPath() %>/sendAddressMsg" method="post">
 				<table style="margin-top: 30px;">
 					<tr>
 						<td style="float: left;">
 							<div class="white_content" id="open">
 				        		<dl>
-				        			<% for(int i=0; i < hmap.size(); i++) { %>
-				        			<dt>
-				        				<i class="fab fa-bandcamp">&nbsp;<%= hmap.get(i).get(0).getDeptName() %>팀</i>
+				        			<% for(int i=0; i<deptIdList.size(); i++) { %>
+				        			<dt style="padding: 3px;">
+				        				<% if(hmap.get(deptIdList.get(i)).isEmpty()) { %>
+				        				
+				        				<% } else { %>
+				        				<i class="fab fa-bandcamp">&nbsp;<%= hmap.get(deptIdList.get(i)).get(0).getDeptName() %></i>
+				        				<% } %>
 				        			</dt>
-				        				<% for(int j=0; j<hmap.get(i).size(); j++) { %>
-				        				<dd class="empNo" onclick="choiceEmpNo();">&nbsp;&nbsp;&nbsp;<i class="far fa-star"></i>&nbsp;<%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %></dd>
+				        				<% for(int j=0; j < hmap.get(deptIdList.get(i)).size(); j++) { %>
+				        				<dd class="empNo">&nbsp;&nbsp;&nbsp;<i class="far fa-star"></i>&nbsp;<%= hmap.get(deptIdList.get(i)).get(j).getEmpId() %>&nbsp;<%= hmap.get(deptIdList.get(i)).get(j).getEmpName() %></dd>
 				        				<% } %>
 				        			<% } %>
 				        		</dl>
@@ -91,11 +98,11 @@
 								<tr>
 									<td>
 										<input type="text" id="sendObject" value="받는 사람" readonly>
-										<input type="hidden" name="receiveEmpid" value="">
+										<input type="hidden" id="receiveEmpid" name="receiveEmpid" value="">
 									</td>
 								</tr>
 								<tr>
-									<td><textarea id="messageArea">보낼 내용</textarea></td>
+									<td><textarea id="messageArea" name="messageArea">보낼 내용</textarea></td>
 								</tr>
 								<tr>
 									<td style="text-align: center;">
@@ -115,14 +122,13 @@
 </section>
 
 <script type="text/javascript">
-	function choiceEmpNo() {
+	$(function () {
 		$(".empNo").click(function() {
 			var name = $(this).text();
-			console.log(name);
 			$("#sendObject").val(name.substring(name.length-3, name.length));
-			$("#receiveEmpid").val(name.substring(0, name.length-4));
+			$("#receiveEmpid").val(name.substring(4, name.length-4));
 		});
-	}
+	})
 </script>
 
 <jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />

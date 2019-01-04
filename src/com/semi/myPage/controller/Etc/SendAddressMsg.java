@@ -1,8 +1,6 @@
 package com.semi.myPage.controller.Etc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,19 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.admin.user.model.vo.Employee;
-import com.semi.approval.document.service.DocumentService;
-import com.semi.approval.document.vo.SumEmpInfo;
-import com.semi.common.service.AddressService;
-import com.semi.common.vo.DeptEmp;
-import com.semi.myPage.model.Etc.vo.PageInfo;
 import com.semi.myPage.model.Msg.service.MsgService;
-import com.semi.myPage.model.Msg.vo.Msg;
 
-@WebServlet("/showAddress")
-public class ShowAddressBook extends HttpServlet {
+@WebServlet("/sendAddressMsg")
+public class SendAddressMsg extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ShowAddressBook() {
+    public SendAddressMsg() {
         super();
     }
 
@@ -33,21 +25,17 @@ public class ShowAddressBook extends HttpServlet {
 		
 		int userId = loginUser.getEmpid();
 		
-		// 주소록 불러오기
-		HashMap<String, ArrayList<DeptEmp>> hmap = new AddressService().selectDeptEmp();
-		ArrayList<String> deptIdList=new AddressService().selectDeptIdList();
+		int result = new MsgService().sendMsg(userId, request.getParameter("messageArea"), Integer.parseInt(request.getParameter("receiveEmpid")));
+		
 		
 		String page = "";
-		
-		if (hmap != null) {
-			request.setAttribute("map", hmap);
-			request.setAttribute("deptIdList", deptIdList);
-			page = "views/myPage/addressBook/AddressBook.jsp";
+		if (result > 0) {
+			page = "myPageSendMessage";
+		} else {
+			page = "error";
 		}
-		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
