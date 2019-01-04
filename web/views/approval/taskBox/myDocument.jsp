@@ -129,9 +129,8 @@
 	 		var td = tr.children();
 	 		
             var docNum = td.eq(4).text();
-            var my = "my";
             trashArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/sendTrash.st?docNum=" + trashArr + "," + my;
+            location.href="<%= request.getContextPath()%>/sendTrash.st?docNum=" + trashArr + ",";
 	 	});
 	}
 </script>
