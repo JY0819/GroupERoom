@@ -39,7 +39,6 @@
 					<th>작 성 자</th>
 					<th>문 서 번 호</th>
 					<th>결 과</th>
-					<th>의 견</th>
 					<th>작 성 날 짜</th>
 					<th>처 리 날 짜</th>
 
@@ -56,7 +55,6 @@
 					<td><%= finish.getDocNo() %></td>
 					<% if(finish.getResult().equals("Y")) %>
 					<td><%= finish.getResult().replaceAll("Y", "승인") %></td>
-					<td><%= finish.getOpinion() %></td>
 					<td><%= finish.getApprDay() %></td>
 					<td><%= finish.getApprDate() %></td>
 
@@ -148,8 +146,8 @@
 		        
 				}
 		 
-		  $("#listArea td").mouseenter(function() {
-				$(this).parent().css({"cursor":"pointer"});
+		  $("#listArea td:eq(3)").mouseenter(function() {
+				$(this).css({"cursor":"pointer"});
 			}).mouseout(function() {
 				/* $(this).parent().css({"background":"white"}); */
 			}).click(function() {

@@ -199,10 +199,10 @@
                 tdArr.push(apprno);
                 console.log(apprno);
                
-              
+                location.href="<%=request.getContextPath()%>/deleteTrash.tr?apprno=" + tdArr+",";
 		 	});
 			
-		 	 location.href="<%=request.getContextPath()%>/deleteTrash.tr?apprno=" + tdArr+",";
+		 	 <%-- location.href="<%=request.getContextPath()%>/deleteTrash.tr?apprno=" + tdArr+","; --%>
 	        /*   $("#ex3_Result2").html(tdArr);    */
 	        
 			}
@@ -214,15 +214,18 @@
 		 	checkbox.each(function(i){
 		 		var tr = checkbox.parent().parent().eq(i);
 		 		var td = tr.children();
-		 		
+		 	if(td.eq(5).text()=='승인대기중'){
              apprno = td.eq(4).text();
              tdArr.push(apprno);
              console.log(apprno);
-            
-           
+             location.href="<%=request.getContextPath()%>/trashmove.tm?apprno=" + tdArr+",";
+		 	}
+		 	else{
+		 		alert("승인된 문서는 내문서함으로 이동할 수 없습니다.");
+		 	}
 		 	});
 			
-		 	 location.href="<%=request.getContextPath()%>/trashmove.tm?apprno=" + tdArr+",";
+		 	 
 	        
 	 }
 
