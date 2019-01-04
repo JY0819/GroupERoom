@@ -100,7 +100,7 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 <% }else{ %>
 
 
- <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage - 1%>&searchValue=<%=searchValue%>"><</a></li>
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage - 1%>&searchCondition=findName&searchValue=<%=searchValue%>"><</a></li>
 <% } %>
 
 ​
@@ -116,7 +116,7 @@ if(p == currentPage){
 <% }else{ %>
 
 
-<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%= p %>&searchValue=<%=searchValue%>"><%= p %></a></li>
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%= p %>&searchCondition=findName&searchValue=<%=searchValue%>"><%= p %></a></li>
 <% } %>
 
 ​
@@ -134,13 +134,13 @@ if(p == currentPage){
 <% }else{ %>
 
 
- <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage + 1%>&searchValue=<%=searchValue%>">></a></li>
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage + 1%>&searchCondition=findName&searchValue=<%=searchValue%>">></a></li>
 <% } %>
 
 ​
 
 
-<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=maxPage%>&searchValue=<%=searchValue%>">>></a></li>
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=maxPage%>&searchCondition=findName&searchValue=<%=searchValue%>">>></a></li>
 </ul>
 ​
 

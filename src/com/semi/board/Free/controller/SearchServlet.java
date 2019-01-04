@@ -81,7 +81,7 @@ public class SearchServlet extends HttpServlet {
 				int startPage; 	 //한 번에 표시될 페이지가 시작할 페이지
 				int endPage; 	 //한 번에 표시될 페이지가 끝나는 페이지
 				String searchValue=request.getParameter("searchValue");
-		System.out.println("servlet1임");
+		System.out.println("Free검색 servlet1임");
 			String searchCondition=request.getParameter("searchCondition");
 
 				//현재 페이지 처리
@@ -140,7 +140,7 @@ public class SearchServlet extends HttpServlet {
 					
 					System.out.println("이름검색: "+userName);
 					
-					list=new FreeService().searchName(userName, currentPage, limit);
+					list=new FreeService().searchName(userName, currentPage, maxPage, limit);
 					
 				}else {
 					String title = request.getParameter("searchValue");
@@ -148,7 +148,7 @@ public class SearchServlet extends HttpServlet {
 					System.out.println("제목검색: "+title);
 				
 					
-					list=new FreeService().searchTitle(title, currentPage,limit);
+					list=new FreeService().searchTitle(title, currentPage, maxPage,limit);
 
 					
 				}
