@@ -2,6 +2,7 @@ package com.semi.admin.user.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +24,8 @@ public class SelectMemberListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Employee> list = new EmployeeService().selectList();
+		
+		//ArrayList<HashMap<String, Object>> list = new EmployeeService().selectList();
 		
 		String page = "";
 		if (list != null) {

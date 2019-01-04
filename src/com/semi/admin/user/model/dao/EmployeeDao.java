@@ -248,21 +248,10 @@ public class EmployeeDao {
 
 				emp.setEmpid(rset.getInt("EMPID"));
 				emp.setEmpName(rset.getString("EMPNAME"));
-				emp.setEmpPwd(rset.getString("EMPPWD"));
-				emp.setApprovePwd(rset.getString("APPROVEPWD"));
 				emp.setEmpGender(rset.getString("EMPGENDER"));
-				emp.setEmpBirth(rset.getDate("EMPBIRTH"));
-				emp.setEmpAddr(rset.getString("EMPADDR"));
 				emp.setEmpPhone(rset.getString("EMPPHONE"));
-				emp.setEmpVacCount(rset.getInt("EMPVACCOUNT"));
-				emp.setAdminAuthority(rset.getString("ADMINAUTHORITY"));
 				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
-				emp.setPhotoId(rset.getInt("PHOTOID"));
-				emp.setEntryDay(rset.getDate("ENTRYDAY"));
-				emp.setLeaveDay(rset.getDate("LEAVEDAY"));
-				emp.setDeptId(rset.getString("DEPTID"));
 				emp.setDeptName(rset.getString("DEPTNAME"));
-				emp.setPositionId(rset.getString("POSITIONID"));
 				emp.setPositionName(rset.getString("POSITIONNAME"));
 
 				list.add(emp);
@@ -307,12 +296,12 @@ public class EmployeeDao {
 				emp.setEmpBirth(rset.getDate("EMPBIRTH"));
 				emp.setEmpAddr(rset.getString("EMPADDR"));
 				emp.setEmpPhone(rset.getString("EMPPHONE"));
-				emp.setEmpVacCount(rset.getInt("EMPVACCOUNT"));
 				emp.setAdminAuthority(rset.getString("ADMINAUTHORITY"));
 				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
-				// emp.setPhotoId(rset.getInt("PHOTOID"));
 				emp.setEntryDay(rset.getDate("ENTRYDAY"));
-				// emp.setLeaveDay(rset.getDate("LEAVEDAY"));
+				emp.setLeaveDay(rset.getDate("LEAVEDAY"));
+				emp.setDeptName(rset.getString("DEPTNAME"));
+				emp.setPositionName(rset.getString("POSITIONNAME"));
 
 				at = new Attachments();
 
@@ -337,6 +326,50 @@ public class EmployeeDao {
 		}
 
 		return hmap;
+	}
+
+	// 사원 삭제
+	public int deleteMember(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteDepartment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	// 사원 삭제
+	public int deleteMember(Connection con, int userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteMember");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 
 }
