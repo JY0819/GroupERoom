@@ -88,19 +88,29 @@
 					<td class="line"><%= lv.getUseReason() %></td>
 					<td class="line">0.5</td>
 				</tr>
-					<% } else if(lv.getDays() > 1){ %>
-				<tr>
-					<td class="line"><%= listCount - lv.getRnum() + 1 %></td>
-					<td class="line"><%= lv.getType() %></td>
-					<td class="line"><%= lv.getUseStart() %> ~ <%= lv.getUseEnd() %></td>
-					<td class="line"><%= lv.getUseReason() %></td>
-					<td class="line"><%= lv.getDays() %></td>
-				</tr>
+					<% } else if(lv.getDays() == 1){ %>
+						<% if(lv.getUseStart().equals(lv.getUseEnd())) { %>
+						<tr>
+							<td class="line"><%= listCount - lv.getRnum() + 1 %></td>
+							<td class="line"><%= lv.getType() %></td>
+							<td class="line"><%= lv.getUseStart() %></td>
+							<td class="line"><%= lv.getUseReason() %></td>
+							<td class="line"><%= lv.getDays() %></td>
+						</tr>
+						<% } else { %>
+						<tr>
+							<td class="line"><%= listCount - lv.getRnum() + 1 %></td>
+							<td class="line"><%= lv.getType() %></td>
+							<td class="line"><%= lv.getUseStart() %> ~ <%= lv.getUseEnd() %></td>
+							<td class="line"><%= lv.getUseReason() %></td>
+							<td class="line"><%= lv.getDays() %></td>
+						</tr>
+						<% } %>
 					<% } else { %>
 				<tr>
 					<td class="line"><%= listCount - lv.getRnum() + 1 %></td>
 					<td class="line"><%= lv.getType() %></td>
-					<td class="line"><%= lv.getUseStart() %></td>
+					<td class="line"><%= lv.getUseStart() %> ~ <%= lv.getUseEnd() %></td>
 					<td class="line"><%= lv.getUseReason() %></td>
 					<td class="line"><%= lv.getDays() %></td>
 				</tr>

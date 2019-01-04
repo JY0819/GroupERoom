@@ -68,14 +68,11 @@ public class ShowMyPageLogOfVac extends HttpServlet {
 		
 		ArrayList<LogOfVacation> list = ls.ShowMyPageLogOfVac(userId, currentPage, limit);
 		
-		
-		
 		for (int i = 0; i < list.size(); i++) {
 			if(list.get(i).getUseEnd() == null) {
 				list.get(i).setType("반차");
 			} else {
 				list.get(i).setType("연차");
-				list.get(i).setDays((int)(list.get(i).getUseEnd().getTime() - list.get(i).getUseStart().getTime()) / 1000 / 3600 / 24 + 1);
 			}
 		}
 		

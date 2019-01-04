@@ -23,16 +23,27 @@ public class InsertAttend extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int empid = Integer.parseInt(request.getParameter("empid"));
 		
-		int result = new AttendService().insertAttend(empid);
+		int result = 0;
+		int resultChk = 0;
 		
 		String page = "";
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		if (result > 0) {
+		
+		resultChk = new AttendService().chkToDay(empid);
+		if (resultChk == 1) {
 			out.println("<script>\r\n" + 
-					"alert('정상 처리 되었습니다.');\r\n" + 
+					"alert('이미 처리 되었습니다.');\r\n" + 
 					"</script>");
+		} else {
+			result = new AttendService().insertAttend(empid);
+			if (result > 0) {
+				out.println("<script>\r\n" + 
+						"alert('정상 처리 되었습니다.');\r\n" + 
+						"</script>");
+			}
 		}
+
 		out.flush();
 		out.close();
 	}

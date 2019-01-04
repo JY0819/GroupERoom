@@ -53,6 +53,7 @@ public class LogOfVacationDao {
 				v.setUseVacAppDay(rset.getDate("useVacAppDay"));
 				v.setEmpId(rset.getString("aName"));
 				v.setApprEmpId(rset.getString("bName"));
+				v.setDays(rset.getInt("CNT"));
 				
 				list.add(v);
 			}
@@ -97,6 +98,7 @@ public class LogOfVacationDao {
 				v.setUseVacAppDay(rset.getDate("useVacAppDay"));
 				v.setEmpId(rset.getString("aName"));
 				v.setApprEmpId(rset.getString("bName"));
+				v.setDays(rset.getInt("CNT"));
 				
 				list.add(v);
 			}

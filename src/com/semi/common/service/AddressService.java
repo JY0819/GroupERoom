@@ -50,5 +50,11 @@ public class AddressService {
 		close(con);
 		return hmap;
 	}
-
+	public ArrayList<String> selectDeptIdList(){
+		Connection con=getConnection();
+		ArrayList<String> deptIdList=new AddressDao().selectDeptIdList(con);
+		
+		close(con);
+		return deptIdList;
+	}
 }

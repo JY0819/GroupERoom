@@ -1,3 +1,4 @@
+<%@page import="com.semi.common.vo.DeptEmp"%>
 <%@page import="com.semi.approval.document.vo.SumEmpInfo"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.semi.myPage.model.Etc.vo.PageInfo"%>
@@ -8,7 +9,8 @@
 <% 
 	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	HashMap<Integer, ArrayList<SumEmpInfo>> hmap = (HashMap<Integer, ArrayList<SumEmpInfo>>)request.getAttribute("map");
+	HashMap<String, ArrayList<DeptEmp>> hmap = (HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("map");
+	ArrayList<String> deptIdList = (ArrayList<String>)request.getAttribute("deptIdList");
 	
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -23,6 +25,7 @@
 	}else{
 		exist = true;
 	}
+	
 %>
 
 <jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
@@ -106,13 +109,17 @@
 						<div class="white_content" id="open" style="padding-left: 50px; vertical-align: top;">
 				        	<div>
 				        		<dl>
-				        			<% for(int i=0; i<hmap.size(); i++) { %>
+				        			<% for(int i=0; i<deptIdList.size(); i++) { %>
 				        			<dt style="padding: 3px;">
-				        				<i class="fab fa-bandcamp">&nbsp;<%= hmap.get(i).get(0).getDeptName() %>팀</i>
+				        				<% if(hmap.get(deptIdList.get(i)).isEmpty()) { %>
+				        				
+				        				<% } else { %>
+				        				<i class="fab fa-bandcamp">&nbsp;<%= hmap.get(deptIdList.get(i)).get(0).getDeptName() %></i>
+				        				<% } %>
 				        			</dt>
-				        				<% for(int j=0; j < hmap.get(i).size(); j++) { %>
+				        				<% for(int j=0; j < hmap.get(deptIdList.get(i)).size(); j++) { %>
 				        				<dd class="empNo" style="padding: 3px;">
-				        					&nbsp;&nbsp;&nbsp;<i class="far fa-star"></i>&nbsp;<%= hmap.get(i).get(j).getEmpNo() %>&nbsp;<%= hmap.get(i).get(j).getEmpName() %>
+				        					&nbsp;&nbsp;&nbsp;<i class="far fa-star"></i>&nbsp;<%= hmap.get(deptIdList.get(i)).get(j).getEmpId() %>&nbsp;<%= hmap.get(deptIdList.get(i)).get(j).getEmpName() %>
 				        				</dd>
 				        				<% } %>
 				        			<% } %>
