@@ -2,39 +2,54 @@
 	td{
 		width:110px;
 		height:90px;
-		border:1px solid #CBCBCB;
-		padding:10px;
+		border-bottom: 1px solid #CBCBCB;
+		border-top: 1px solid #CBCBCB;
+/*		border:1px solid #CBCBCB;*/
+		padding:8px 5px;
+		
 	}
 	tbody{
 		vertical-align:top;
 		text-align:right;
 	}
-	table {
+	table#calendar {
+		
 		border:0px;
+		color:#0F2942;
 		font-size: 13px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		/*border:1px solid #CBCBCB;*/
 	}
 	#title{
+		z-index:0;
 		text-align:center;
 		vertical-align:center;
+		background:#FCFCFC;
 	}
 	#day{
-		background:#f5f5f5;
+		z-index:0;
+		background:#FEFEFE;
 		text-align: center;
 		vertical-align: center;
 		font-weight:bold;
 		font-size:18px;
 	}
 	.sunday{
-		color:#ff0000;
+		color:#BD0000;
 		font-weight:bold;
 	}
 	.saturday{
-		color:#0000ff;
+		color:#0000C0;
 		font-weight:bold;
 	}
 	td:hover{
-		background:#F8F8F8;
+		background:#F0f0f0;
+	}
+	#preCal:hover, #nextCal:hover{
+		cursor:pointer;
+	}
+	#calendarTitle:hover{
+		background:#FCFCFC
 	}
 	td > p:hover{
 		cursor:pointer;
@@ -150,6 +165,7 @@
 		border-radius:5px;
 		position:absolute;
 		padding:25px 5px 5px 5px;
+		display: none;
 	}
 	div.deleteSchedule{
 		z-index:9;
@@ -162,6 +178,7 @@
 		border-radius:5px;
 		position:absolute;
 		padding:15px 5px 5px 5px;
+		display: none;
 	}
 	div.scheduleDay{
 		width:250px;
@@ -170,6 +187,7 @@
 		font-size:25px;
 		margin-left:auto;
 		margin-right:auto;	
+		
 	}
 	div.message{
 		padding:10px 10px 10px 5px;
@@ -189,11 +207,11 @@
 		margin-left:auto;
 		margin-right:auto;
 		border-radius:5px;
+		display: none;
 	}
 	.btnDiv{
 		width:200px;
 		height:50px;
-		
 	}
 	.btnDiv .scheduleBtn{
 		position:absolute;
@@ -229,7 +247,12 @@
 		line-height:30px;
 		border:1px solid #f9f9f9;
 	}
-
+	div.scheduleBtn:hover{
+		cursor: pointer;
+	}
+	div.scheduleBtn:active{
+		box-shadow: 3px 3px 3px #DDDDDD inset;
+	}
 	#daySchedule{
 		width:250px;
 		height:120px;
@@ -331,10 +354,18 @@
 	} 
 	
 	#nonClick{
+		z-index:2;
+		position:absolute;
+		height:100%;
+		width:100%;
+		background:#000000;
+		opacity:0;
+	}
+	#nonClick1{
 		z-index:6;
 		position:absolute;
-		height:600px;
-		width:800px;
-		background:#fafafa;
-		opacity:0.0;
+		height:100%;
+		width:100%;
+		background:#E4E6E8;
+		opacity:0;
 	}

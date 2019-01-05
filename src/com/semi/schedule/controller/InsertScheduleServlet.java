@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.schedule.model.service.ScheduleService;
 import com.semi.schedule.model.vo.Schedule;
@@ -34,20 +35,23 @@ public class InsertScheduleServlet extends HttpServlet {
 
 		int calendarClass=Integer.parseInt(request.getParameter("scheduleClass"));
 		String scheContents=request.getParameter("scheContents");
-		int empId=((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid();
-		
+		Employee loginUser=(Employee)(request.getSession().getAttribute("loginUser"));
+		int empId=loginUser.getEmpid();
+		String repeat=request.getParameter("repeat");
+		int cnt = -1;
+		int month=-1;
 		String tempDate1=request.getParameter("scheDate");
 		tempDate1=tempDate1.replace("년 ", "-").replace("월 ","-").replace("일","");
-		System.out.println("날짜 : "+tempDate1);
+		System.out.print("날짜 : "+tempDate1);
 		
 		String temptime=request.getParameter("time");
 		temptime=temptime+":00";
-		System.out.println("시간 : "+temptime);
+		System.out.println(" / 시간 : "+temptime);
 		
 		String scheduleDate=tempDate1+" "+temptime;
 		
-		System.out.println("empId : "+empId);
-		System.out.println("클래스 : "+scheduleDate);
+		System.out.print("empId : "+empId);
+		System.out.print(" / 클래스 : "+calendarClass+" / ");
 		System.out.println(scheduleDate);
 		//Date scheDate=Date.valueOf(tempDate+' '+temptime);
 		/*temptime=temptime+".0";
@@ -63,22 +67,37 @@ public class InsertScheduleServlet extends HttpServlet {
 		
 		System.out.println("reqSche: "+reqSche);
 		int result=0;
-		if(reqSche.getCalendarClass()==1) {
-			result=new ScheduleService().insertMySchedule(reqSche);
-		}else if(reqSche.getCalendarClass()==2) {
-			result=new ScheduleService().insertTeamSchedule(reqSche);
-		}else if(reqSche.getCalendarClass()==3){
-			result=new ScheduleService().insertCompanySchedule(reqSche);
-		}
-		
-		
-		String page="";
-		
-		if(result>0) {
-			response.sendRedirect(request.getContextPath()+"/schedule.sche");
+		if(scheContents.length()==0 || temptime.length()==0) {
+			System.out.println("여기로옴");
 		}else {
-			request.setAttribute("msg", "일정 추가 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			if(reqSche.getCalendarClass()==1) {
+				result=new ScheduleService().insertMySchedule(reqSche);
+			}else if(reqSche.getCalendarClass()==2) {
+				result=new ScheduleService().insertTeamSchedule(reqSche);
+			}else if(reqSche.getCalendarClass()==3 && loginUser.getAdminAuthority().equals("Y")){
+				result=new ScheduleService().insertCompanySchedule(reqSche);
+			}
+		}
+		if(repeat!=null) {
+			switch(repeat) {
+				case "일" : cnt=1; break;	case "월" : cnt=2; break;
+				case "화" : cnt=3; break;	case "수" : cnt=4; break;
+				case "목" : cnt=5; break;	case "금" : cnt=6; break;
+				case "토" : cnt=0; break;
+			}
+			month=Integer.parseInt(request.getParameter("month"));
+		}
+		System.out.println(month+"월 "+repeat+"/"+cnt);
+		
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		if(result>0) {
+			new Gson().toJson(result, response.getWriter());
+			//response.sendRedirect(request.getContextPath()+"/schedule.sche");
+		}else {
+			new Gson().toJson(result, response.getWriter());
+			//request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		
 		

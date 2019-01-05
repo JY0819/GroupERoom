@@ -58,15 +58,13 @@ public class SelectDayScheduleServlet extends HttpServlet {
 	
 			
 		
-		String page="";
+
 		if(sche!=null) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(sche, response.getWriter());
 		}else {
-			page="views/common/errorPage.jsp";
-			request.setAttribute("msg", "일정 상세조회 실패");
-			request.getRequestDispatcher(page).forward(request, response);
+			new Gson().toJson("실패", response.getWriter());
 		}
 		
 
