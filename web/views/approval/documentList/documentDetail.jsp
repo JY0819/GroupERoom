@@ -23,13 +23,13 @@
 	<table class="detailDoc">
 		
 		<tr>
-			<td class="td">번호<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value="번호"></td>
+			<td class="td">분류<input type="hidden" name="va" value="va"></td>
+			<td class="content"><input type="text" name="num" value=""></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
-			<td class="td">1차</td>
-			<td class="td">2차</td>
-			<td class="td">3차</td>
+			<td class="td">1차 결재 확인</td>
+			<td class="td">2차 결재 확인</td>
+			<td class="td">3차 결재 확인</td>
 		</tr>
 		<tr>
 		<!--이미지 태그넣기  -->
@@ -40,15 +40,15 @@
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
 		</tr>
 		<tr>
-			<td class="td">결재자</td>
+			<td class="td">1차<br>결재자</td>
 			<td class="content"><input type="text" id="person1" name="person1"><input type="hidden" id="appr1" name="empNo1" value=""></td>
 		</tr>
 		<tr>
-			<td class="td">결재자</td>
+			<td class="td">2차<br>결재자</td>
 			<td class="content"><input type="text" id="person2" name="person2"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<tr>
-			<td class="td">결재자</td>
+			<td class="td">3차<br>결재자</td>
 			<td class="content"><input type="text" id="person3" name="person3"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<tr>
@@ -67,10 +67,8 @@
 		<tr>
 			<td class="td">휴가기간</td>
 			<td class="content" colspan="2"><input type="text" name="startDate"><br><input type="text" name="endDate"></td>
-			<td class="td">분류</td>
-			<td class="text" colspan="3">
-				<input type="text" name="docutype">
-			</td>
+			<td class="td">사유</td>
+			<td class="content" colspan="7"><input type="text" name="reason"></td>
 		</tr>
 		<tr>
 			<td class="td">제목</td>
@@ -78,10 +76,7 @@
 			<td class="td">작성일</td>
 			<td class="content" colspan="3"><input type="text" name="date"></td>
 		</tr>
-		<tr>
-			<td class="td">사유</td>
-			<td class="content" colspan="7"><input type="text" name="reason"></td>
-		</tr>
+		
 		<tr>
 			<td colspan="7" class="td">내용</td>
 		</tr> 
@@ -91,7 +86,7 @@
 		
 		
 	</table>
-	<button class="closeBtn" onclick="back();">닫기</button>
+	<button class="closedetail" onclick="back();">닫기</button>
 	<script>
 		  /* function back() {
 			location.href = "/semi/selectDocument.sd";
