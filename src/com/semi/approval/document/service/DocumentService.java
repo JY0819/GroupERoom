@@ -20,6 +20,7 @@ import com.semi.common.service.CommonSeqService;
 import com.semi.common.vo.Attachments;
 public class DocumentService {
 
+	//문서번호, 번호, 사원번호 불러옴
 	public Document selectForm(int id) {
 		Connection con = getConnection();
 		Document document = new DocumentDao().selectForm(con, id);
@@ -95,13 +96,16 @@ public class DocumentService {
 		int result3 = 0;
 		Document document = (Document)list.get(0);
 		if(document.getManageClass().equals("1")) {
+			System.out.println("파일없는 휴가신청 실행");
 			result3 = new DocumentDao().insertFXVODocument(con, attachNo, list);
 		}else if(document.getManageClass().equals("2")) {
+			System.out.println("파일없는 재직증명서 실행");
 			result3 = new DocumentDao().insertFXEODocument(con, attachNo, list);
 		}else {
+			System.out.println("파일없는 업무계획서 실행");
 			result3 = new DocumentDao().insertFXWODocument(con, attachNo, list);
 		}
-		if(result1 > 0 && result2 > 0 && result3 > 0) {
+		if(result1 > 0 && result2 > 0 && result3 > 1) {
 			commit(con);
 			result = 1;
 		}else {
@@ -146,7 +150,6 @@ public class DocumentService {
 	public ArrayList<MyDocument> selectSubmitList() {
 		Connection con = getConnection();
 		ArrayList<MyDocument> list = new DocumentDao().selectSubmitList(con);
-		
 		if(list != null) {
 			commit(con);
 		}else {
@@ -154,6 +157,19 @@ public class DocumentService {
 		}
 		close(con);
 		return list;
+	}
+	
+	public ArrayList<ApprLine> selectSubmitApprList(int[] apprNum) {
+		Connection con = getConnection();
+		ArrayList<ApprLine> apprList = new DocumentDao().selectSubmitApprList(con, apprNum);
+		
+		if(apprList != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return apprList;
 	}
 
 	public int sendTrashList(String[] docNumList) {
@@ -238,6 +254,25 @@ public class DocumentService {
 		}
 		close(con);
 		return list;
+	}
+
+	public int updateApprStatus(String[] docNumList) {
+		Connection con = getConnection();
+		int result = new DocumentDao().updateApprStatus(con, docNumList);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
+	public boolean checkPassword(int empId, int password) {	
+		Connection con = getConnection();
+		boolean check = new DocumentDao().checkPassword(con, empId,  password);
+		return check;
 	}
 	
 }

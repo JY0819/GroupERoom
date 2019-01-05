@@ -191,7 +191,7 @@ public class DocumentDao {
 		return result;
 	}
 	
-	//문서 삽입
+	//첨부파일 있는 휴가신청서 삽입
 	public int insertFOVODocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -232,6 +232,7 @@ public class DocumentDao {
 		}
 		return result;
 	}
+	//첨부파일 있는 재직증명서 삽입
 	public int insertFOEODocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -271,6 +272,7 @@ public class DocumentDao {
 		
 		return result;
 	}
+	//첨부파일 있는 업무계획서 삽입
 	public int insertFOWODocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -309,6 +311,7 @@ public class DocumentDao {
 		return result;
 	}
 	
+	//첨부파일 없는 휴가신청서 삽입
 	public int insertFXVODocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -328,8 +331,8 @@ public class DocumentDao {
 			pstmt.setInt(9, document.getManageNo());
 			pstmt.setDate(10, document.getVacApprEnd());
 			pstmt.setString(11, document.getSubmission());
+			result = pstmt.executeUpdate();
 			
-
 			query = prop.getProperty("insertApprLine");
 			ApprLine[] apprLine = (ApprLine[])list.get(1);
 			for(int i=0; i<apprLine.length; i++) {
@@ -347,6 +350,7 @@ public class DocumentDao {
 		return result;
 	}
 	
+	//첨부파일 없는 재직증명서 삽입
 	public int insertFXEODocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -364,6 +368,7 @@ public class DocumentDao {
 			pstmt.setInt(7, document.getManageNo());
 			pstmt.setString(8, document.getSubmission());
 			pstmt.setDate(9, document.getEntryDay());
+			result = pstmt.executeUpdate();
 			
 			query = prop.getProperty("insertApprLine");
 			ApprLine[] apprLine = (ApprLine[])list.get(1);
@@ -381,6 +386,8 @@ public class DocumentDao {
 		}
 		return result;
 	}
+	
+	//첨부파일 없는 업무계획서 삽입
 	public int insertFXWODocument(Connection con, int attachNo, ArrayList<Object> list) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -397,7 +404,7 @@ public class DocumentDao {
 			pstmt.setString(6, document.getManageClass());
 			pstmt.setInt(7, document.getManageNo());
 			pstmt.setString(8, document.getSubmission());
-			pstmt.setDate(9, document.getEntryDay());
+			result = pstmt.executeUpdate();
 			
 			query = prop.getProperty("insertApprLine");
 			ApprLine[] apprLine = (ApprLine[])list.get(1);
@@ -504,6 +511,7 @@ public class DocumentDao {
 			
 			while(rset.next()) {
 				myDocument = new MyDocument();
+				
 				myDocument.setNum(count);
 				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
@@ -511,6 +519,7 @@ public class DocumentDao {
 				myDocument.setDocNum(rset.getInt("MANAGEDOCNO"));
 				myDocument.setTitle(rset.getString("MANAGETITLE"));
 				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
+				myDocument.setApprNum(rset.getInt("APPRNO"));
 				
 				count++;
 				list.add(myDocument);
@@ -521,6 +530,41 @@ public class DocumentDao {
 			close(rset);
 			close(pstmt);
 		}
+		return list;
+	}
+	
+	public ArrayList<ApprLine> selectSubmitApprList(Connection con, int[] apprNum) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ApprLine> list = null;
+		
+		String query = prop.getProperty("selectSubmitDocumentAppr");
+		
+		try {
+			list = new ArrayList<ApprLine>();
+			for(int i=0; i<apprNum.length; i++) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNum[i]);
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					ApprLine apprLine = new ApprLine();
+					apprLine.setApprEmpId(rset.getInt("APPREMPID"));
+					apprLine.setApprOrder(rset.getInt("APPRORDER"));
+					apprLine.setApprName(rset.getString("EMPNAME"));
+					apprLine.setCheck(false);
+					list.add(apprLine);
+				}
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
 		return list;
 	}
 
@@ -558,7 +602,7 @@ public class DocumentDao {
 		try {
 			
 			pstmt = con.prepareStatement(query);
-			for(int i=0; i<docNumList.length-1; i++) {
+			for(int i=0; i<docNumList.length; i++) {
 				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
 				rset = pstmt.executeQuery();
 				while(rset.next()) {
@@ -589,6 +633,7 @@ public class DocumentDao {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
+			close(pstmt2);
 		}
 		return result;
 	}
@@ -744,6 +789,40 @@ public class DocumentDao {
 		}
 		
 		return list;
+	}
+
+	public int updateApprStatus(Connection con, String[] docNumList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateApprStatus");
+		return result;
+	}
+
+	public boolean checkPassword(Connection con, int empId, int password) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		boolean check = false;
+		
+		String query = prop.getProperty("checkPassword");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, empId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				int temp = rset.getInt("APPROVEPWD");
+				if(temp == password) {
+					check = !check;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return check;
 	}
 
 }

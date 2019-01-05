@@ -1,6 +1,9 @@
 package com.semi.approval.document.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
+
+import com.semi.approval.approve.model.vo.ApprLine;
 
 public class MyDocument implements java.io.Serializable{
 	private int num;
@@ -13,13 +16,14 @@ public class MyDocument implements java.io.Serializable{
 	private Date writeDay;
 	private String result;
 	private String submission;
+	private int apprNum;
 	
 	public MyDocument() {
 		
 	}
 
 	public MyDocument(int num, int writerNum, String writer, String deptName, int docNum, String title, String opinion,
-			Date writeDay, String result, String submission) {
+			Date writeDay, String result, String submission, int apprNum) {
 		super();
 		this.num = num;
 		this.writerNum = writerNum;
@@ -31,6 +35,7 @@ public class MyDocument implements java.io.Serializable{
 		this.writeDay = writeDay;
 		this.result = result;
 		this.submission = submission;
+		this.apprNum = apprNum;
 	}
 
 	public int getNum() {
@@ -113,11 +118,19 @@ public class MyDocument implements java.io.Serializable{
 		this.submission = submission;
 	}
 
+	public int getApprNum() {
+		return apprNum;
+	}
+
+	public void setApprNum(int apprNum) {
+		this.apprNum = apprNum;
+	}
+
 	@Override
 	public String toString() {
 		return "MyDocument [num=" + num + ", writerNum=" + writerNum + ", writer=" + writer + ", deptName=" + deptName
 				+ ", docNum=" + docNum + ", title=" + title + ", opinion=" + opinion + ", writeDay=" + writeDay
-				+ ", result=" + result + ", submission=" + submission + "]";
+				+ ", result=" + result + ", submission=" + submission + ", apprNum=" + apprNum + "]";
 	}
 	
 }
