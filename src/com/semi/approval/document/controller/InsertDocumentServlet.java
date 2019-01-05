@@ -32,7 +32,8 @@ public class InsertDocumentServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//====================================================
+		
+		//=======================================================
 		//파일처리
 		if(ServletFileUpload.isMultipartContent(request)) {
 			//파일이 담겨있으면 true 반환
@@ -43,60 +44,72 @@ public class InsertDocumentServlet extends HttpServlet {
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
 			
-			System.out.println(root);
-			//톰캣 서버옵션 맨 위 체크해야 내 경로로 파일 경로가 뜬다.
-			//체크 안하면 톰캣경로로 뜸
-			
 			String filePath = root + "assets/images/approval/approvalUpload";
-		
-			//사용자가 올린 파일명을 그대로 저장하지 않는 것이 일반적이다.
-			//1. 같은 파일명이 있는 경우 이전 파일을 덮어 쓸 수 있다.
-			//2. 한글로된 파일명, 특수기호, 띄어쓰기는 서버에 따라 문제가 생길 수 도 있다.
 			
-			//DefaultFileRenamePolicy는 cos.jar 파일에서 제공하는 클래스이다.
-			//같은 파일명이 존재하는지를 검사하고 있을 경우에는 뒤에 숫자를 붙여준다.
-			//ex : aaa.zip, aaa1.zip, aaa2.zip 이런식으로 붙는다.
-			
-			//MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 			MultipartRequest multipartRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-			
-			//다중 파일을 묶어서 업로드 하기 위해 컬렉션 사용
-			//저장한 파일의 이름을 저장할 arrayList 생성
+
 			ArrayList<String> saveFiles = new ArrayList<String>();
 			
-			//원본 파일의 이름을 저장 할 ArrayList 생성
 			ArrayList<String> originFiles = new ArrayList<String>();
 			
-			//각 파일의 정보를 구해온 뒤 DB에 저장할 목적의 데이터를 꺼내온다.
 			Enumeration<String> files = multipartRequest.getFileNames();
 			
 			while(files.hasMoreElements()) {
-				//다음요소가 있는지 물어보는것
 				String name = files.nextElement();
-				
-				//실제 파일의 정보를 가져오기 위한 키의 역할함
-				
 				saveFiles.add(multipartRequest.getFilesystemName(name));
 				originFiles.add(multipartRequest.getOriginalFileName(name));
 			}
-			
+			//=======================================================
+		
+			//값 변수에 담기
+		
+			//번호
 			int num = Integer.parseInt(multipartRequest.getParameter("num"));
+			
+			//결재자1
 			String appr1 = multipartRequest.getParameter("person1");
+			
+			//결재자2
 			String appr2 = multipartRequest.getParameter("person2");
+			
+			//결재자3
 			String appr3 = multipartRequest.getParameter("person3");
+			
+			//문서번호
 			int docNum = Integer.parseInt(multipartRequest.getParameter("docNum"));
+			
+			//사원번호
 			int empNum = Integer.parseInt(multipartRequest.getParameter("empNum"));
-			String sTemp = multipartRequest.getParameter("startDate");
-			String eTemp = multipartRequest.getParameter("endDate");
+			
+			//휴가시작일
+			String sDate = multipartRequest.getParameter("startDate");
+			
+			//휴가종료일
+			String eDate = multipartRequest.getParameter("endDate");
+			
+			//문서종류
 			String documentKind = multipartRequest.getParameter("documentKind");
+			
+			//제목
 			String title = multipartRequest.getParameter("title");
+			
+			//작성일
 			String wDate = multipartRequest.getParameter("date");
+			
+			//휴가사유
 			String reason = multipartRequest.getParameter("reason");
+		
+			//내용
 			String content = multipartRequest.getParameter("content");
-			String entry = multipartRequest.getParameter("entryDay");
+		
+			//문서 상신 여부
 			String submission = "N";
+		
+			//사원 입사일
+			String entry = multipartRequest.getParameter("entryDay");
 			//===================================================
-			//결재번호 받기
+		
+			//결재자가 비어있지 않으면 결재차수 카운트
 			int count = 0;
 			if(!multipartRequest.getParameter("empNo1").equals("")) {
 				count++;
@@ -107,6 +120,7 @@ public class InsertDocumentServlet extends HttpServlet {
 					}
 				}
 			}
+			//카운트 한만큼 배열생성해 담기
 			int[] apprNo = new int[count];
 			if(count > 0) {
 				for(int i=0; i<apprNo.length; i++) {
@@ -118,62 +132,75 @@ public class InsertDocumentServlet extends HttpServlet {
 						}
 					}
 				}
-			}else {
-				apprNo = null;
-			}
-			//====================================================
-			//분류 이름에 따라 숫자로 넣음
-			if(documentKind.equals("휴가신청서")) {
-				documentKind = "1";
-			}else if(documentKind.equals("재직증명서")) {
-				documentKind = "2";
-			}else {
-				documentKind = "3";
 			}
 			
+			//====================================================
+			
+	
+			//====================================================
+			
+			//날짜 담기위한 데이트 변수
 			Date startDay = null;
 			Date endDay = null;
 			Date writeDay = null;
 			Date entryDay = null;
 			
-			String sDate = "";
-			String eDate = "";
+			//====================================================
+			//받아온 문자열이 있으면 날짜형으로 변환
 			
-			if(!sTemp.equals("") && !eTemp.equals("")) {
-				sDate = sTemp.substring(0, sTemp.length());
-				eDate = eTemp.substring(0, eTemp.length());
-				//휴가시작 날짜
-				
-					String[] dateArr = sDate.split("-");
-	
-					int[] drr = new int[dateArr.length];
-					if(documentKind.equals("1")) {	
-						for(int i=0; i<dateArr.length; i++) {
-							drr[i] = Integer.parseInt(dateArr[i]);
-						}
-					startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+			//휴가신청서(1)일때 휴가시작일, 휴가종료일, 작성일 생성
+			if(documentKind.equals("휴가신청서")) {
+				if(!sDate.equals("") && !eDate.equals("")) {
 					
-					//==============================================================
-					//휴가끝 날짜
+					//휴가시작 날짜
+					String[] dateArr = sDate.split("-");
+					int[] drr = new int[dateArr.length];
+	
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+						
+					//휴가끝
 					dateArr = eDate.split("-");
 					drr = new  int[dateArr.length];
-					
+						
 					for(int i=0; i<dateArr.length; i++) {
 						drr[i] = Integer.parseInt(dateArr[i]);
 					}
 					endDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+						
+					//작성일
+					if(!wDate.equals("")) {
+						dateArr = wDate.split("-");
+						drr = new  int[dateArr.length];
+						
+						for(int i=0; i<dateArr.length; i++) {
+							drr[i] = Integer.parseInt(dateArr[i]);
+						}
+						writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+					}else {
+						writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					}
+				}else {
+					//입력받은 날짜가 없을 때 현재시간 넣어줌
+					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 				}
-				//==============================================================
-				//작성일 날짜
-				dateArr = wDate.split("-");
-				drr = new  int[dateArr.length];
+			}
+			
+			//재직증명서일때
+			else if(documentKind.equals("재직증명서")) {
+				if(!wDate.equals("")) {
+				//작성일
+				String[] dateArr = wDate.split("-");
+				int[] drr = new  int[dateArr.length];
 				
 				for(int i=0; i<dateArr.length; i++) {
 					drr[i] = Integer.parseInt(dateArr[i]);
 				}
 				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
 				
-				//==============================================================
 				//입사일
 				dateArr = entry.split("-");
 				drr = new  int[dateArr.length];
@@ -182,8 +209,55 @@ public class InsertDocumentServlet extends HttpServlet {
 					drr[i] = Integer.parseInt(dateArr[i]);
 				}
 				entryDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+				}else {
+					//입력받은 날짜가 없을 때 현재시간 넣어줌
+					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				}
+			}
+			//====================================================
+				//if(!sDate.equals("") && !eDate.equals("")) {
+
+					/*//휴가시작 날짜
+					String[] dateArr = sDate.split("-");
+					int[] drr = new int[dateArr.length];
+	
+					if(documentKind.equals("1")) {	
+						for(int i=0; i<dateArr.length; i++) {
+							drr[i] = Integer.parseInt(dateArr[i]);
+						}
+						startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
+					
+					//==============================================================
+					/*//휴가끝 날짜
+					dateArr = eDate.split("-");
+					drr = new  int[dateArr.length];
+					
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					endDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
+	
+				//==============================================================
+				//작성일 날짜
+				/*dateArr = wDate.split("-");
+				drr = new  int[dateArr.length];
+				
+				for(int i=0; i<dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
+				
+				//==============================================================
+				/*//입사일
+				dateArr = entry.split("-");
+				drr = new  int[dateArr.length];
+				
+				for(int i=0; i<dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				entryDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
 				//아닐경우
-			}else {
+			/*}else {
 				if(documentKind.equals("1")) {
 					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
@@ -192,8 +266,19 @@ public class InsertDocumentServlet extends HttpServlet {
 					endDay =  new java.sql.Date(new GregorianCalendar().getTimeInMillis());					
 				}
 				writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+			}*/
+			//====================================================
+			
+			//분류 이름에 따라 문자형 숫자로 넣음
+			if(documentKind.equals("휴가신청서")) {
+				documentKind = "1";
+			}else if(documentKind.equals("재직증명서")) {
+				documentKind = "2";
+			}else {
+				documentKind = "3";
 			}
-				
+			//====================================================
+			
 			//문서객체생성
 			Document document = new Document();
 			
@@ -214,6 +299,7 @@ public class InsertDocumentServlet extends HttpServlet {
 				document.setEntryDay(entryDay);
 			}
 			
+			//====================================================
 			//결재선 객체 생성
 			int[] apprLineCount = new int[3];
 			String[] apprName = new String[3];
@@ -235,6 +321,9 @@ public class InsertDocumentServlet extends HttpServlet {
 					apprLine[i].setApprEmpId(apprNo[i]);
 					apprLine[i].setApprOrder(apprLineCount[i]);
 				}
+			
+			//====================================================	
+			
 			//Attachment 객체 생성하여 arrayList 객체 생성
 			ArrayList<Attachments> fileList = null;
 			
@@ -249,10 +338,16 @@ public class InsertDocumentServlet extends HttpServlet {
 				}
 			}
 			
+			//====================================================
+			
+			//문서와 결재선 담을 리스트 생성
 			ArrayList<Object> list = new ArrayList<Object>();
 			list.add(document);
 			list.add(apprLine);
 			
+			//====================================================
+			
+			//첨부파일이 구분해 SERVICE에 접근
 			int result = 0;
 			if(originFiles.get(0) != null) {
 				result = new DocumentService().insertDocument(list, apprLine, fileList);
@@ -261,6 +356,9 @@ public class InsertDocumentServlet extends HttpServlet {
 				result = new DocumentService().insertDocument(list, apprLine);
 				System.out.println("결과옴");
 			}
+			
+			//====================================================
+			
 			if(result > 0) {
 				response.sendRedirect("/semi/selectDocument.sd");
 				

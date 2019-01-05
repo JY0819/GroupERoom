@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Employee employee = (Employee)request.getAttribute("loginUser");
+	Employee employee = (Employee)session.getAttribute("loginUser");
 	Document document = (Document)request.getAttribute("doc");
 	HashMap<Integer, ArrayList<SumEmpInfo>> hmap = (HashMap<Integer, ArrayList<SumEmpInfo>>)request.getAttribute("map");
 	HashMap<String, ArrayList<DeptEmp>> address=(HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("address");

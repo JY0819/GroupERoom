@@ -11,25 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.approval.document.service.DocumentService;
 
-@WebServlet("/sendReturn.sr")
-public class SendReturnServlet extends HttpServlet {
+@WebServlet("/successUpdate.su")
+public class SuccessUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SendReturnServlet() {
+    public SuccessUpdateServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] docNumList = request.getParameter("docNum").split(",");
-		int result = new DocumentService().sendReturn(docNumList);
+		String apprNum = request.getParameter("apprNum");
+		String apprOrder = request.getParameter("apprOrder");
+		System.out.println("결재자 번호: " + apprNum);
+		System.out.println("결재자 차수: " + apprOrder);
+		int result = new DocumentService().updateApprStatus(docNumList);
 		
 		String page = "";
 		if(result > 0) {
-				page = "/semi/selectSubmitDocumentServlet.sds";
+			page = "selectSubmitDocumentServlet.sds";
 			response.sendRedirect(page);
 		}else {
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "문서조회실패");
+			request.setAttribute("msg", "문서 승인 실패");
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);
 		}

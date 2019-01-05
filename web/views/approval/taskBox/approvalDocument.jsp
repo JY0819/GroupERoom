@@ -1,3 +1,4 @@
+<%@page import="com.semi.approval.approve.model.vo.ApprLine"%>
 <%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@page import="com.semi.approval.document.vo.MyDocument"%>
 <%@page import="java.util.ArrayList"%>
@@ -5,6 +6,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	Employee employee = (Employee)session.getAttribute("loginUser");
+	ArrayList<ApprLine> appr = (ArrayList<ApprLine>)request.getAttribute("appr");
 	ArrayList<MyDocument> list = (ArrayList<MyDocument>)request.getAttribute("list");
 %>
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
@@ -22,15 +24,29 @@
 	</div>
 
 	<div class="content-right container">
-		<a href="#open"><button class="success">승인</button></a>
+		<% for(int i=0; i<list.size(); i++){ 
+		if(employee.getEmpid() == appr.get(i).getApprEmpId() && appr.get(i).isCheck()) { %>
+		<button class="success">승인</button>
 		<button class="return" onclick="returnBox()">반려</button>
+		<% }else { %>
+		<a href="#open"><button class="success">결재하기</button></a>
+		<% } %>
+		<% } %>
 		<div class="white_content" id="open">
+		
         	<div>
-        	<form class="documentForm" action="<%= request.getContextPath()  %>/passCheck.pc" method="post">
+        	<form action="<%= request.getContextPath()%>/passCheck.pc" method="post">   
         		<h3>결재 비밀번호를 입력해주세요.</h3>
-        		<input type="password" name="password" value="">
-            	<a class="close" href="#"><button type="button" class="saveBtn2" onclick="success()">확인</button></a><a class="close" href="#"><button type="button" class="closeBtn2" onclick="closePopUp();">닫기</button></a>
-            </form>
+        		<input type="password" name="password">&nbsp;&nbsp;<button type="submit">확인</button>
+        		<input type="hidden" name="apprWriter" value="<%= employee.getEmpid()%>">
+        	</form>		        
+         		<% for(int i=0; i<appr.size(); i++) {
+        		if(employee.getEmpid() == appr.get(i).getApprEmpId()) { %>
+        		<input id="apprNum" type="hidden" name="apprNum" value=<%= appr.get(i).getApprEmpId()  %>>
+        		<input id="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>>
+        		<% } %>
+        		<% } %> 
+            	<button type="button" class="saveBtn2" onclick="success()">승인</button><a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
         	</div>
     	</div>
 		<table>
@@ -49,8 +65,8 @@
 			<tbody>
 			
 			<% if(list != null) { %>
-			<% for(int i=0; i<list.size(); i++) { 
-				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
+			<% for(int i=0; i<list.size(); i++) {
+				if(appr.get(i).getApprEmpId() == employee.getEmpid()) {
 				%>
 				<tr>
 					<td><input type="checkbox" name="checkTd"
@@ -59,7 +75,7 @@
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getDeptName() %></td>
 					<td><%= list.get(i).getDocNum() %></td>
-					<a href="/semi/selectOne.so"><td><%= list.get(i).getTitle() %></td></a>
+					<td><%= list.get(i).getTitle() %></td>
 					<td><%= list.get(i).getWriteDay() %></td>
 				</tr>
 				<% } %>
@@ -122,13 +138,12 @@
 	 		var tr = checkbox.parent().parent().eq(i);
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
-            var re = "re";
             sendArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+re;
+            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ",";
 		});
 	}
 
-	function closePopUp() {
+/* 	function closePopUp() {
 		if(choice == '결재자1선택'){
 			$("#person1").val("");
 		}else if(choice == '결재자2선택'){
@@ -136,7 +151,7 @@
 		}else {
 			$("#person3").val("");
 		}
-	} 
+	} */ 
 	function success() {
 		var sendArr = new Array();
 		var checkbox = $("input[name=checkTd]:checked");
@@ -144,9 +159,10 @@
 	 		var tr = checkbox.parent().parent().eq(i);
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
-            var re = "re";
+            var apprNum = $("#apprNum").text();
+            var apprOrder = $("#apprOrder").text();
             sendArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+re;
+            location.href="<%= request.getContextPath()%>/successUpdate.su?docNum=" + sendArr + ","+"&apprNum=" + apprNum + "&apprOrder=" + apprOrder;
 	 	});
 	}
 </script>

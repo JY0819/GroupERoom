@@ -7,34 +7,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class PassCheckServlet
- */
+import com.semi.approval.document.service.DocumentService;
+
 @WebServlet("/passCheck.pc")
 public class PassCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public PassCheckServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int password = Integer.parseInt(request.getParameter("password"));
+		int empId = Integer.parseInt(request.getParameter("apprWriter"));
+		boolean check = new DocumentService().checkPassword(empId, password);
+		
+		String page = "";
+		if(check) {
+			page = "/semi/selectSubmitDocumentServlet.sds?check=" + check;
+			response.sendRedirect(page);
+		}else {
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("check", check);
+			request.getRequestDispatcher(page).forward(request, response);
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
