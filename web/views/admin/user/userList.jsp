@@ -44,6 +44,7 @@
 					<th>직책</th>
 					<th>성별</th>
 					<th>연락처</th>
+					<th>퇴사여부</th>
 				</tr>
 				
 				<%
@@ -57,6 +58,7 @@
 					<td><%=emp.getPositionName()%></td>
 					<td><%=emp.getEmpGender()%></td>
 					<td><%=emp.getEmpPhone()%></td>
+					<td><%=emp.getWhetherOfRetire()%></td>
 				</tr>
 				
 				<%

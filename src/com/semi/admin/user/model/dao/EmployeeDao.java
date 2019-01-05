@@ -349,7 +349,51 @@ public class EmployeeDao {
 
 		return result;
 	}
+	
+	// 사원 부서 이력 삭제 (result1)
+	public int deleteDept(Connection con, int userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteMemberLogDept");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
 
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	// 사원 직책 이력 삭제 (result2)
+	public int deletePosition(Connection con, int userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteMemberLogPos");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	// 사원 삭제
 	public int deleteMember(Connection con, int userId) {
 		PreparedStatement pstmt = null;
@@ -371,5 +415,9 @@ public class EmployeeDao {
 
 		return result;
 	}
+
+	
+
+	
 
 }

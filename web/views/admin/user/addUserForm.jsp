@@ -143,17 +143,12 @@
 				</div>
 			</div>
 
-
-
 			<div class="col-lg-offset-2 col-lg-7">
-			<button type="button" class="btn btn-default" id="goList" onclick="goList();">목록으로</button>
-				
+				<button type="button" class="btn btn-default" id="goList" onclick="goList();">목록으로</button>
 			</div>
 		</form>
 		
-		<div class="col-lg-offset-2 col-lg-7">
-				<button type="submit" class="btn btn-default" id="enrollBtn" onclick="insertMember();">등록</button>
-		</div>
+		<button type="submit" class="btn btn-default" id="enrollBtn" onclick="insertMember();">등록</button>
 
 		<script>
 			function goList() {

@@ -108,11 +108,20 @@ public class EmployeeService {
 	// 사원 삭제
 	public int deleteMember(int userId) {
 		Connection con = getConnection();
+		int result = 0;
 
-		int result = new EmployeeDao().deleteMember(con, userId);
+		// 부서 이력의 사원 삭제	
+		int result1 = new EmployeeDao().deleteDept(con, userId);
+		
+		// 직책 이력의 사원 삭제
+		int result2 = new EmployeeDao().deletePosition(con, userId);
+		
+		// 사원 삭제
+		int result3 = new EmployeeDao().deleteMember(con, userId);
 
-		if (result > 0) {
+		if (result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(con);
+			result = 1;
 		} else {
 			rollback(con);
 		}
