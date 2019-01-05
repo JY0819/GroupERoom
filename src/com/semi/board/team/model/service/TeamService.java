@@ -1,15 +1,15 @@
 package com.semi.board.team.model.service;
 
+import static com.semi.common.JDBCTemplate.close;
+import static com.semi.common.JDBCTemplate.commit;
+import static com.semi.common.JDBCTemplate.getConnection;
+import static com.semi.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.semi.board.Free.model.dao.FreeDao;
-import com.semi.board.Free.model.vo.Free;
-import com.semi.board.notice.model.dao.NoticeDao;
-import com.semi.board.notice.model.vo.Notice;
 import com.semi.board.team.model.dao.TeamDao;
 import com.semi.board.team.model.vo.Team;
-import static com.semi.common.JDBCTemplate.*;
 
 public class TeamService {
 	//글목록 조회
@@ -126,19 +126,19 @@ public class TeamService {
 		return replyList;
 	}
 	//전체 게시글 수 조회
-	public int getListCount() {
+	public int getListCount(String deptId) {
 		Connection con = getConnection();
 		
-		int listCount = new TeamDao().getlistCount(con);
+		int listCount = new TeamDao().getlistCount(con, deptId);
 		
 		close(con);
 		
 		return listCount;
 	}
 	//페이징 처리 후 글 목록 조회
-	public ArrayList<Team> selectList(int currentPage, int limit) {
+	public ArrayList<Team> selectList(int currentPage, int maxPage, int limit, String deptId) {
 		Connection con = getConnection();
-		ArrayList<Team> list = new TeamDao().selectList(con, currentPage, limit);
+		ArrayList<Team> list = new TeamDao().selectList(con, currentPage, maxPage, limit, deptId);
 		
 		System.out.println("service: "+list.size());
 		close(con);
@@ -161,6 +161,78 @@ public class TeamService {
 		Connection con = getConnection();
 		ArrayList<Team> list = new TeamDao().searchValue(con, searchValue);
 		System.out.println("service listsize:"+list.size());
+		close(con);
+		
+		return list;
+	}
+	//이름으로 검색 게시글 수 
+	public int getSearchNameListCount(String userName, String deptId) {
+		Connection con = getConnection();
+		
+		int listCount = new TeamDao().getSearchNameListCount(con, userName, deptId);
+		
+		System.out.println("service listCount:"+listCount);
+		close(con);
+		
+		return listCount;
+	}
+	//제목으로 검색 게시글 수
+	public int getSearchTitleListCount(String title, String deptId) {
+		Connection con = getConnection();
+		
+		int listCount = new TeamDao().getSearchTitleListCount(con, title, deptId);
+		
+		System.out.println("service 제목listCount:"+listCount);
+		close(con);
+		
+		return listCount;
+	}
+	//글내용으로 검색 게시글 수
+	public int getSearchContentListCount(String content, String deptId) {
+		Connection con = getConnection();
+		
+		int listCount = new TeamDao().getSearchContentListCount(con, content, deptId);
+		
+		System.out.println("service 내용listCount:"+listCount);
+		close(con);
+		
+		return listCount;
+	}
+	//이름으로 검색 후 결과 페이징
+	public ArrayList<Team> searchName(String userName, int currentPage, int maxPage, int limit, String deptId) {
+		Connection con = getConnection();
+		
+		ArrayList<Team> list = new TeamDao().searchName(userName, con, currentPage,maxPage, limit, deptId);
+		System.out.println("servcie list: "+list.size());
+
+		
+		System.out.println("name으로 검색service: "+list.size());
+		close(con);
+		
+		return list;
+	}
+	//제목으로 검색 결과 페이징
+	public ArrayList<Team> searchTitle(String title, int currentPage, int maxPage, int limit, String deptId) {
+		Connection con = getConnection();
+		
+		ArrayList<Team> list = new TeamDao().searchTitle(title, con, currentPage,maxPage, limit, deptId);
+		System.out.println("servcie list: "+list.size());
+
+		
+		System.out.println("title으로 검색service: "+list.size());
+		close(con);
+		
+		return list;
+	}
+	//내용으로 검색 결과 페이징
+	public ArrayList<Team> searchContent(String content, int currentPage, int maxPage, int limit, String deptId) {
+		Connection con = getConnection();
+		
+		ArrayList<Team> list = new TeamDao().searchContent(content, con, currentPage,maxPage, limit, deptId);
+		System.out.println("servcie list: "+list.size());
+
+		
+		System.out.println("content으로 검색service: "+list.size());
 		close(con);
 		
 		return list;

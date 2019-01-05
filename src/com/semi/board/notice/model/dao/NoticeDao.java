@@ -524,5 +524,187 @@ public class NoticeDao {
 		
 		return list;
 	}
+	//제목으로 검색 결과 게시글 수
+	public int getSearchTitleListCount(Connection con, String title) {
+		PreparedStatement pstmt = null;
+		int listCount = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("searchTitleListCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, title);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			System.out.println("dao 제목listCount: "+listCount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+			
+		return listCount;
+	}
+	//내용으로 검색 결과 게시글 수
+	public int getSearchContentListCount(Connection con, String content) {
+		PreparedStatement pstmt = null;
+		int listCount = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("searchContentListCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, content);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			System.out.println("dao 내용listCount: "+listCount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+			
+		return listCount;
+	}
+	//제목으로 검색 결과 페이징
+	public ArrayList<Notice> searchTitle(String title, Connection con, int currentPage, int maxPage, int limit) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		ArrayList<Notice> list=null;
+		System.out.println("dao title: "+title);
+		System.out.println("dao currentPage: "+currentPage);
+		String query=prop.getProperty("searchTitle");
+		
+		System.out.println("dao query: "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+		
+			
+			int startRow = (currentPage - 1) * limit + 1; // 조회할 때 시작할 행 번호
+			int endRow = startRow + limit - 1;
+			
+			System.out.println("dao startRow: "+startRow);
+			System.out.println("dao endRow: "+endRow);
+			pstmt.setInt(1, 1);
+			pstmt.setInt(2, limit*maxPage);
+			pstmt.setString(3, title);
+			
+			rset=pstmt.executeQuery();
+			list=new ArrayList<Notice>();
+			
+			while(rset.next()) {
+				Notice n=new Notice();
+				
+				n.setBno(rset.getInt("BOARDNO"));
+				n.setbClass(rset.getString("BOARDCLASS"));
+				n.setbTitle(rset.getString("BOARDTITLE"));
+				n.setbContent(rset.getString("BOARDCONTENTS"));
+				n.setbDate(rset.getDate("BOARDDATE"));
+				n.setbClicks(rset.getInt("BOARDCLICKS"));
+				n.setbAttach(rset.getString("BOARDATTACH"));
+				n.setComNo(rset.getInt("COMMENTNO"));
+				n.setComLevel(rset.getInt("COMMENTLEVEL"));
+				n.setRecomId(rset.getString("RECOMMENTID"));
+				
+				n.setReplebno(rset.getInt("REPLEBOARDNO"));
+				n.setWriterId(rset.getString("EMPNAME"));
+				n.setStatus(rset.getString("WHETHEROFDELETE"));
+				n.setFile01(rset.getInt("FILE01"));
+				n.setFile02(rset.getInt("FILE02"));
+				n.setFile03(rset.getInt("FILE03"));
+				
+				if(rset.getInt("ROWNUM") >=startRow && rset.getInt("ROWNUM") <=endRow) {
+					list.add(n);
+				}
+				
+				
+			}
+			System.out.println("title검색dao list: "+list.size());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	//글내용으로 검색 결과 페이징
+	public ArrayList<Notice> searchContent(String content, Connection con, int currentPage, int maxPage, int limit) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		ArrayList<Notice> list=null;
+		System.out.println("dao content: "+content);
+		System.out.println("dao currentPage: "+currentPage);
+		String query=prop.getProperty("searchContent");
+		
+		System.out.println("dao query: "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+		
+			
+			int startRow = (currentPage - 1) * limit + 1; // 조회할 때 시작할 행 번호
+			int endRow = startRow + limit - 1;
+			
+			System.out.println("dao startRow: "+startRow);
+			System.out.println("dao endRow: "+endRow);
+			pstmt.setInt(1, 1);
+			pstmt.setInt(2, limit*maxPage);
+			pstmt.setString(3, content);
+			
+			rset=pstmt.executeQuery();
+			list=new ArrayList<Notice>();
+			
+			while(rset.next()) {
+				Notice n=new Notice();
+				
+				n.setBno(rset.getInt("BOARDNO"));
+				n.setbClass(rset.getString("BOARDCLASS"));
+				n.setbTitle(rset.getString("BOARDTITLE"));
+				n.setbContent(rset.getString("BOARDCONTENTS"));
+				n.setbDate(rset.getDate("BOARDDATE"));
+				n.setbClicks(rset.getInt("BOARDCLICKS"));
+				n.setbAttach(rset.getString("BOARDATTACH"));
+				n.setComNo(rset.getInt("COMMENTNO"));
+				n.setComLevel(rset.getInt("COMMENTLEVEL"));
+				n.setRecomId(rset.getString("RECOMMENTID"));
+				
+				n.setReplebno(rset.getInt("REPLEBOARDNO"));
+				n.setWriterId(rset.getString("EMPNAME"));
+				n.setStatus(rset.getString("WHETHEROFDELETE"));
+				n.setFile01(rset.getInt("FILE01"));
+				n.setFile02(rset.getInt("FILE02"));
+				n.setFile03(rset.getInt("FILE03"));
+				
+				if(rset.getInt("ROWNUM") >=startRow && rset.getInt("ROWNUM") <=endRow) {
+					list.add(n);
+				}
+				
+				
+			}
+			System.out.println("content 검색dao list: "+list.size());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 
 }

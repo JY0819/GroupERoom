@@ -4,14 +4,16 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 <%
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
-
-	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String searchCondition = (String)request.getAttribute("searchCondition");
+	String searchValue = (String)request.getAttribute("searchValue");
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage(); */
+	int endPage = pi.getEndPage(); 
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
@@ -80,24 +82,30 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 		<form action="<%=request.getContextPath() %>/search.no" method="get" >
 		
 		<div id="searchBtn" align="center">
+		<select name="searchCondition" >
+			<option value="findTitle" selected>글제목</option>  
+			<option value="findContent" >글내용</option>  	
+    	</select>
     	<input type="search" name="searchValue">
     	<button type="submit" class="btn btn-primary">검색</button>
     	
 	</div>	
 	</form>
 	<br>
-<%-- <div class="pagingArea" align="center">
+ <div class="pagingArea" align="center">
 <ul class="pagination">
+<%if(searchCondition.equals("findTitle")){ %>
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=1"><<</a></li>
+​
 
-<li><a href="<%=request.getContextPath()%>/selectList.no?currentPage=1"><<</a></li>
-​<% if(currentPage <= 1){ %>
+<% if(currentPage <= 1){ %>
 <script>console.log(<%=currentPage%>);</script>
 
-<li><a><</a></li>
+ <li><a><</a></li> 
 <% }else{ %>
 
 
- <li><a href="<%=request.getContextPath()%>/selectList.no?currentPage=<%=currentPage - 1%>"><</a></li>
+ <li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%=currentPage - 1%>&searchCondition=findTitle&searchValue=<%=searchValue%>"><</a></li>
 <% } %>
 
 ​
@@ -113,7 +121,7 @@ if(p == currentPage){
 <% }else{ %>
 
 
-<li><a href="<%=request.getContextPath()%>/selectList.no?currentPage=<%= p %>"><%= p %></a></li>
+<li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%= p %>&searchCondition=findTitle&searchValue=<%=searchValue%>"><%= p %></a></li>
 <% } %>
 
 ​
@@ -131,18 +139,74 @@ if(p == currentPage){
 <% }else{ %>
 
 
- <li><a href="<%=request.getContextPath()%>/selectList.no?currentPage=<%=currentPage + 1%>">></a></li>
+ <li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%=currentPage + 1%>&searchCondition=findTitle&searchValue=<%=searchValue%>">></a></li>
 <% } %>
 
 ​
 
 
-<li><a href="<%=request.getContextPath()%>/selectList.no?currentPage=<%=maxPage%>">>></a></li>
+<li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%=maxPage%>&searchCondition=findTitle&searchValue=<%=searchValue%>">>></a></li>
 </ul>
+​
+​
+<%}else{ %>
+
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=1"><<</a></li>
+​
+
+<% if(currentPage <= 1){ %>
+<script>console.log(<%=currentPage%>);</script>
+
+ <li><a><</a></li> 
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%=currentPage - 1%>&searchCondition=findContent&searchValue=<%=searchValue%>"><</a></li>
+<% } %>
+
+​
+
+<% for(int p = startPage; p <= endPage; p++){ 
+
+if(p == currentPage){
+
+%>
+
+
+<li><a><%= p %></a></li>
+<% }else{ %>
+
+
+<li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%= p %>&searchCondition=findContent&searchValue=<%=searchValue%>"><%= p %></a></li>
+<% } %>
+
+​
+
+<% } %>
+
+​
+
+​
+
+<% if(currentPage >= maxPage){ %>
+
+
+<li><a>></a></li>
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%=currentPage + 1%>&searchCondition=findContent&searchValue=<%=searchValue%>">></a></li>
+<% } %>
+
 ​
 
 
-	</div> --%>
+<li><a href="<%=request.getContextPath()%>/search.no?currentPage=<%=maxPage%>&searchCondition=findContent&searchValue=<%=searchValue%>">>></a></li>
+</ul>
+
+<%} %>
+
+	</div> 
 	<br>
 	<br>
 	<br>

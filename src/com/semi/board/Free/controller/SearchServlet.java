@@ -81,7 +81,7 @@ public class SearchServlet extends HttpServlet {
 				int startPage; 	 //한 번에 표시될 페이지가 시작할 페이지
 				int endPage; 	 //한 번에 표시될 페이지가 끝나는 페이지
 				String searchValue=request.getParameter("searchValue");
-		System.out.println("Free검색 servlet1임");
+		System.out.println("-------------------------------------Free검색 servlet1임");
 			String searchCondition=request.getParameter("searchCondition");
 
 				//현재 페이지 처리
@@ -103,13 +103,18 @@ public class SearchServlet extends HttpServlet {
 					String userName=request.getParameter("searchValue");
 
 					 listCount=fs.getSearchNameListCount(userName);
-					 System.out.println("게시글 수:"+listCount);
-				}else {
+					 System.out.println("이름 게시글 수:"+listCount);
+				}else if(searchCondition.equals("findTitle")) {
 					String title=request.getParameter("searchValue");
 
 					 listCount = fs.getSearchTitleListCount(title);
-					 System.out.println("게시글 수:"+listCount);
+					 System.out.println("제목 게시글 수:"+listCount);
 
+				}else {
+					String content=request.getParameter("searchValue");
+
+					 listCount = fs.getSearchContentListCount(content);
+					 System.out.println("내용 게시글 수:"+listCount);
 				}
 				
 				//총 페이지 수 계산
@@ -142,13 +147,22 @@ public class SearchServlet extends HttpServlet {
 					
 					list=new FreeService().searchName(userName, currentPage, maxPage, limit);
 					
-				}else {
+				}else if(searchCondition.equals("findTitle")) {
 					String title = request.getParameter("searchValue");
 					
 					System.out.println("제목검색: "+title);
 				
 					
 					list=new FreeService().searchTitle(title, currentPage, maxPage,limit);
+
+					
+				}else {
+					String content = request.getParameter("searchValue");
+					
+					System.out.println("내용검색: "+content);
+				
+					
+					list=new FreeService().searchContent(content, currentPage, maxPage,limit);
 
 					
 				}
@@ -168,7 +182,7 @@ public class SearchServlet extends HttpServlet {
 				request.setAttribute("list", list);
 				request.setAttribute("pi", pi);
 				request.setAttribute("searchValue", searchValue);
-				
+				request.setAttribute("searchCondition", searchCondition);
 				}else {
 
 				page ="views/common/errorPage.jsp";

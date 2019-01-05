@@ -79,7 +79,9 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
 		<div id="searchBtn" align="center">
     	<select name="searchCondition" >
 			<option  value="findName" selected>작성자</option>  
-			<option  value="findTitle" >글제목</option>  	
+			<option  value="findTitle" >글제목</option>  
+			<option  value="findContent" >글내용</option>  	
+				
     	</select>
     	<input type="search" name="searchValue">
     	<button type="submit" class="btn btn-primary">검색</button>
@@ -90,7 +92,9 @@ import="java.util.*, com.semi.board.Free.model.vo.*, com.semi.admin.user.model.v
  <div class="pagingArea" align="center">
 <ul class="pagination">
 <%-- <button onclick="location.href='<%=request.getContextPath()%>/selectList.fr?currentPage=1'"><<</button>
- --%><li><a href="<%=request.getContextPath()%>/search.fr?currentPage=1"><<</a></li>
+ --%>
+ <%if(searchCondition.equals("findName")){ %>
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=1"><<</a></li>
 ​
 
 <% if(currentPage <= 1){ %>
@@ -143,6 +147,118 @@ if(p == currentPage){
 <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=maxPage%>&searchCondition=findName&searchValue=<%=searchValue%>">>></a></li>
 </ul>
 ​
+<%}else if(searchCondition.equals("findTitle")){ %>
+
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=1"><<</a></li>
+​
+
+<% if(currentPage <= 1){ %>
+<script>console.log(<%=currentPage%>);</script>
+
+ <li><a><</a></li> 
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage - 1%>&searchCondition=findTitle&searchValue=<%=searchValue%>"><</a></li>
+<% } %>
+
+​
+
+<% for(int p = startPage; p <= endPage; p++){ 
+
+if(p == currentPage){
+
+%>
+
+
+<li><a><%= p %></a></li>
+<% }else{ %>
+
+
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%= p %>&searchCondition=findTitle&searchValue=<%=searchValue%>"><%= p %></a></li>
+<% } %>
+
+​
+
+<% } %>
+
+​
+
+​
+
+<% if(currentPage >= maxPage){ %>
+
+
+<li><a>></a></li>
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage + 1%>&searchCondition=findTitle&searchValue=<%=searchValue%>">></a></li>
+<% } %>
+
+​
+
+
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=maxPage%>&searchCondition=findTitle&searchValue=<%=searchValue%>">>></a></li>
+</ul>
+
+<%}else{ %>
+
+
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=1"><<</a></li>
+​
+
+<% if(currentPage <= 1){ %>
+<script>console.log(<%=currentPage%>);</script>
+
+ <li><a><</a></li> 
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage - 1%>&searchCondition=findContent&searchValue=<%=searchValue%>"><</a></li>
+<% } %>
+
+​
+
+<% for(int p = startPage; p <= endPage; p++){ 
+
+if(p == currentPage){
+
+%>
+
+
+<li><a><%= p %></a></li>
+<% }else{ %>
+
+
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%= p %>&searchCondition=findContent&searchValue=<%=searchValue%>"><%= p %></a></li>
+<% } %>
+
+​
+
+<% } %>
+
+​
+
+​
+
+<% if(currentPage >= maxPage){ %>
+
+
+<li><a>></a></li>
+<% }else{ %>
+
+
+ <li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=currentPage + 1%>&searchCondition=findContent&searchValue=<%=searchValue%>">></a></li>
+<% } %>
+
+​
+
+
+<li><a href="<%=request.getContextPath()%>/search.fr?currentPage=<%=maxPage%>&searchCondition=findContent&searchValue=<%=searchValue%>">>></a></li>
+</ul>
+
+<%} %>
 
 	</div>
 	<br>

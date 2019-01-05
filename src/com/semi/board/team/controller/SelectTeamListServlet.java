@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.board.team.model.service.TeamService;
 import com.semi.board.team.model.vo.PageInfo;
 import com.semi.board.team.model.vo.Team;
@@ -54,11 +56,15 @@ public class SelectTeamListServlet extends HttpServlet {
 				int maxPage; 	 //전체 페이지의 마지막 페이지
 				int startPage; 	 //한 번에 표시될 페이지가 시작할 페이지
 				int endPage; 	 //한 번에 표시될 페이지가 끝나는 페이지
-				String deptId=request.getParameter("deptId");
+				
+				HttpSession session = request.getSession();
+				Employee loginUser = (Employee)session.getAttribute("loginUser");
+				String deptId=loginUser.getDeptId();
+				
 				System.out.println("부서:"+deptId);
 
 				
-		System.out.println("servlet1임");
+		System.out.println("---------------부서 게시판List servlet1임");
 				//현재 페이지 처리
 				currentPage = 1;
 				
@@ -75,7 +81,7 @@ public class SelectTeamListServlet extends HttpServlet {
 
 				//전체 게시글 수 조회
 
-				int listCount = ts.getListCount();
+				int listCount = ts.getListCount(deptId);
 		System.out.println("전체 게시글 수 : "+listCount);
 				//총 페이지 수 계산
 				//예를 들어, 목록 수가 123개면 페이지 수는 13페이지가 필요하다.
@@ -97,7 +103,7 @@ public class SelectTeamListServlet extends HttpServlet {
 
 				PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 
-				ArrayList<Team> list = new TeamService().selectList(currentPage, limit);
+				ArrayList<Team> list = new TeamService().selectList(currentPage, maxPage,limit, deptId);
 
 				System.out.println("list사이즈:"+list.size());
 				System.out.println("pi: "+pi);
@@ -112,7 +118,7 @@ public class SelectTeamListServlet extends HttpServlet {
 				page = "views/board/team/boardTeam.jsp";
 
 				request.setAttribute("list", list);
-
+				
 				request.setAttribute("pi", pi);
 
 				}else {

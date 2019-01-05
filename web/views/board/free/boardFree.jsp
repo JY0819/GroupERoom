@@ -71,6 +71,8 @@
     	<select name="searchCondition" >
 			<option value="findName" selected>작성자</option>  
 			<option value="findTitle" >글제목</option>  	
+		    <option value="findContent" >글내용</option>  	
+			
     	</select>
     	<input type="search" name="searchValue">
     	<button type="submit" class="btn btn-primary">검색</button>

@@ -80,6 +80,10 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 		<form action="<%=request.getContextPath() %>/search.no" method="get" >
 		
 		<div id="searchBtn" align="center">
+		<select name="searchCondition" >
+			<option value="findTitle" selected>글제목</option>  
+			<option value="findContent" >글내용</option>  	
+    	</select>
     	<input type="search" name="searchValue">
     	<button type="submit" class="btn btn-primary">검색</button>
     	

@@ -28,11 +28,11 @@
 		
     		<h3 align="center">부서코드를 입력하세요</h3>
     		<br>
-    			<form action="<%=request.getContextPath() %>/search.tm" method="get" >
+    			<form action="<%=request.getContextPath()%>/search.tm" method="get" id="enterTable">
 		
 		<div id="searchBtn" align="center">
-    	<input type="search" name="searchValue">
-    	<button type="submit" class="btn btn-primary">확인</button>
+    	<input type="search" name="searchValue" id="searchValue">
+    	<button type="submit" id="goToBoard" class="btn btn-primary">확인</button>
     	
 	</div>	
 	</form>
@@ -47,7 +47,16 @@
 
 </section>
 <script>
-	
+ <%-- 	$(function(){
+		$("#goToBoard").click(function(){
+			if(<%=loginUser.getDeptId()%>==$("#searchValue").val()){
+				$("#endterTable").attr("action", "<%=request.getContextPath()%>/search.tm");
+				$("#endterTable").submit();
+			}else{
+				alret("입력 부서코드가 일치하지 않습니다.");
+			}
+		})
+	});  --%>
 	
 	
 </script>
