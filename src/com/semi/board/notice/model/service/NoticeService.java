@@ -174,6 +174,48 @@ public class NoticeService {
 		
 		return list;
 	}
+	//제목으로 검색 결과 게시글 수
+	public int getSearchTitleListCount(String title) {
+		Connection con = getConnection();
+		
+		int listCount = new NoticeDao().getSearchTitleListCount(con, title);
+		
+		System.out.println("service 제목 listCount:"+listCount);
+		close(con);
+		
+		return listCount;
+	}
+	//내용으로 검색 결과 게시글 수
+	public int getSearchContentListCount(String content) {
+		Connection con = getConnection();
+		
+		int listCount = new NoticeDao().getSearchContentListCount(con, content);
+		
+		System.out.println("service 내용 listCount:"+listCount);
+		close(con);
+		
+		return listCount;
+	}
+	//제목으로 검색 결과 페이징
+	public ArrayList<Notice> searchTitle(String title, int currentPage, int maxPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<Notice> list = new NoticeDao().searchTitle(title, con, currentPage, maxPage, limit);
+		
+		System.out.println("title로 검색service: "+list.size());
+		close(con);
+		
+		return list;
+	}
+	//글내용으로 검색 페이징
+	public ArrayList<Notice> searchContent(String content, int currentPage, int maxPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<Notice> list = new NoticeDao().searchContent(content, con, currentPage, maxPage, limit);
+		
+		System.out.println("내용으로 검색service: "+list.size());
+		close(con);
+		
+		return list;
+	}
 	
 
 }

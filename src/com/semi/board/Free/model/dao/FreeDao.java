@@ -691,60 +691,63 @@ System.out.println("상세보기 dao : "+query);
 		}
 		//글제목으로 검색 결과 페이징
 		public ArrayList<Free> searchTitle(String title, Connection con, int currentPage, int maxPage,int limit) {
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			ArrayList<Free> list = null;
+			PreparedStatement pstmt=null;
+			ResultSet rset=null;
+			ArrayList<Free> list=null;
+			System.out.println("dao userName: "+title);
+			System.out.println("dao currentPage: "+currentPage);
+			String query=prop.getProperty("searchTitle");
 			
-			String query = prop.getProperty("searchTitle");
 			System.out.println("dao query: "+query);
-System.out.println("dao current Page:"+currentPage);
 			try {
-				pstmt = con.prepareStatement(query);
-				int startRow = (currentPage - 1) * limit + 1;
+				pstmt=con.prepareStatement(query);
+			
+				
+				int startRow = (currentPage - 1) * limit + 1; // 조회할 때 시작할 행 번호
 				int endRow = startRow + limit - 1;
-				System.out.println("dao제목 startRow:"+currentPage);
-				//System.out.println("dao제목 endRow: "+endRow);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, maxPage*limit);
+				
+				System.out.println("dao startRow: "+startRow);
+				System.out.println("dao endRow: "+endRow);
+				pstmt.setInt(1, 1);
+				pstmt.setInt(2, limit*maxPage);
 				pstmt.setString(3, title);
 				
 				rset=pstmt.executeQuery();
-				
-				list= new ArrayList<Free>();
+				list=new ArrayList<Free>();
 				
 				while(rset.next()) {
+					Free f=new Free();
 					
-				
-					Free f = new Free();
-				
-				f.setBno(rset.getInt("BOARDNO"));
-				f.setbClass(rset.getString("BOARDCLASS"));
-				f.setbTitle(rset.getString("BOARDTITLE"));
-				f.setbContent(rset.getString("BOARDCONTENTS"));
-				f.setbDate(rset.getDate("BOARDDATE"));
-				f.setbClicks(rset.getInt("BOARDCLICKS"));
-				f.setbAttach(rset.getString("BOARDATTACH"));
-				f.setComNo(rset.getInt("COMMENTNO"));
-				f.setComLevel(rset.getInt("COMMENTLEVEL"));
-				f.setRecomId(rset.getString("RECOMMENTID"));
-				
-				f.setReplebno(rset.getInt("REPLEBOARDNO"));
-				f.setWriterId(rset.getString("EMPNAME"));
-				f.setStatus(rset.getString("WHETHEROFDELETE"));
-				f.setFile01(rset.getInt("FILE01"));
-				f.setFile02(rset.getInt("FILE02"));
-				f.setFile03(rset.getInt("FILE03"));
-				
-				list.add(f);
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbClass(rset.getString("BOARDCLASS"));
+					f.setbTitle(rset.getString("BOARDTITLE"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					f.setbClicks(rset.getInt("BOARDCLICKS"));
+					f.setbAttach(rset.getString("BOARDATTACH"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setRecomId(rset.getString("RECOMMENTID"));
+					
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setStatus(rset.getString("WHETHEROFDELETE"));
+					f.setFile01(rset.getInt("FILE01"));
+					f.setFile02(rset.getInt("FILE02"));
+					f.setFile03(rset.getInt("FILE03"));
+					if(rset.getInt("ROWNUM") >=startRow && rset.getInt("ROWNUM") <=endRow) {
+						list.add(f);
+					}
+					
+					
 				}
-				System.out.println("제목으로 검색dao list: "+list.size());
-				
+				System.out.println("title검색dao list: "+list.size());
 
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}finally {
-				close(pstmt);
+			} finally {
 				close(rset);
+				close(pstmt);
 			}
 			
 			return list;
@@ -901,6 +904,198 @@ System.out.println("dao current Page:"+currentPage);
 			}
 			
 			return reply;
+		}
+		//글 내용으로 검색 결과 페이징
+		public ArrayList<Free> searchContent(String content, Connection con, int currentPage, int maxPage, int limit) {
+			PreparedStatement pstmt=null;
+			ResultSet rset=null;
+			ArrayList<Free> list=null;
+			System.out.println("dao content: "+content);
+			System.out.println("dao currentPage: "+currentPage);
+			String query=prop.getProperty("searchContent");
+			
+			System.out.println("dao query: "+query);
+			try {
+				pstmt=con.prepareStatement(query);
+			
+				
+				int startRow = (currentPage - 1) * limit + 1; // 조회할 때 시작할 행 번호
+				int endRow = startRow + limit - 1;
+				
+				System.out.println("dao startRow: "+startRow);
+				System.out.println("dao endRow: "+endRow);
+				pstmt.setInt(1, 1);
+				pstmt.setInt(2, limit*maxPage);
+				pstmt.setString(3, content);
+				
+				rset=pstmt.executeQuery();
+				list=new ArrayList<Free>();
+				
+				while(rset.next()) {
+					Free f=new Free();
+					
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbClass(rset.getString("BOARDCLASS"));
+					f.setbTitle(rset.getString("BOARDTITLE"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					f.setbClicks(rset.getInt("BOARDCLICKS"));
+					f.setbAttach(rset.getString("BOARDATTACH"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setRecomId(rset.getString("RECOMMENTID"));
+					
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setStatus(rset.getString("WHETHEROFDELETE"));
+					f.setFile01(rset.getInt("FILE01"));
+					f.setFile02(rset.getInt("FILE02"));
+					f.setFile03(rset.getInt("FILE03"));
+					if(rset.getInt("ROWNUM") >=startRow && rset.getInt("ROWNUM") <=endRow) {
+						list.add(f);
+					}
+					
+					
+				}
+				System.out.println("content검색dao list: "+list.size());
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return list;
+		}
+		//글내용으로 검색 결과 게시글 수
+		public int getSearchContentListCount(Connection con, String content) {
+			PreparedStatement pstmt = null;
+			int listCount = 0;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("searchContentListCount");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, content);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+				System.out.println("dao listCount:"+listCount);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+				
+			return listCount;
+		}
+		//시퀀스 값 조회
+		public int selectCurrval(Connection con) {
+			Statement stmt = null;
+			ResultSet rset = null;
+			//select관련은 무조건 ResultSet!!
+
+			int bno =0;
+
+			String query = prop.getProperty("selectCurrval");
+
+			try {
+
+			stmt=con.createStatement();
+
+			rset=stmt.executeQuery(query);
+
+			if(rset.next()) {
+			bno = rset.getInt("CURRVAL");
+			}
+
+			} catch (SQLException e) {
+			e.printStackTrace();
+
+			}finally {
+
+			close(stmt);
+			close(rset);
+			//여기서 close(con)해버리면 service에서 트랜잭션 처리가 안되니 주의할 것~~!!!
+
+			}
+
+			return bno;
+		}
+		//첨부파일 등록
+		public int insertThumbnailContent(Connection con, Free f) {
+			PreparedStatement pstmt = null;
+
+			int result=0;
+
+			String query = prop.getProperty("insertThumb");
+
+			try {
+
+			pstmt=con.prepareStatement(query);
+
+			pstmt.setString(1, f.getbTitle());
+			pstmt.setString(2, f.getbContent());
+			pstmt.setString(3, f.getDeptId());
+			pstmt.setInt(4, Integer.parseInt(f.getWriterId()));
+
+			result = pstmt.executeUpdate();
+
+			} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			}finally {
+
+			close(pstmt);
+
+			}
+
+			return result;
+		}
+		//첨부파일 등록2
+		public int insertAttachment(Connection con, ArrayList<Attachment> fileList) {
+			PreparedStatement pstmt = null;
+			int result=0;
+			String query = prop.getProperty("insertAttachment");
+
+			try {
+
+			for(int i=0; i < fileList.size(); i++) {
+
+			pstmt=con.prepareStatement(query);
+
+			pstmt.setInt(1, fileList.get(i).getAno());
+			pstmt.setString(2, fileList.get(i).getOriginName());
+			pstmt.setString(3, fileList.get(i).getChangeName());
+			pstmt.setString(4, fileList.get(i).getFilePath());
+
+			int level=0;
+			
+			if(i == 0) level =0;
+			else level = 1;
+
+			pstmt.setInt(5, level);
+
+			result += pstmt.executeUpdate(); //'='하면 안돼
+
+			}
+
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}finally {
+			close(pstmt);
+			}
+
+			return result;
 		}
 		
 		

@@ -3,7 +3,7 @@
 <%
 	ArrayList<Team> list = (ArrayList<Team>)request.getAttribute("list");
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
-	
+
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
@@ -31,6 +31,7 @@
 	<div class="content-right container">
 		<div id="title">
 			<h1 align="left"> | 부서게시판 |</h1>
+			<h3>[<%=loginUser.getDeptName() %>]부서</h3>
 		</div>
 		<hr>
 		
@@ -50,6 +51,7 @@
 					<th>조회수</th>
 				</tr>
 			<% for(Team t : list){ %>
+			<%if(loginUser.getDeptId().equals(t.getDeptId())){ %>
 				 <tr>
 				
 					<td><%=t.getDeptId() %></td>
@@ -60,7 +62,8 @@
 					<td><%=t.getbDate() %></td>
 					<td><%=t.getbClicks() %></td>
 				</tr>
-					<%} %>
+				
+					<%}} %>
 	
 			
 				
@@ -70,7 +73,9 @@
 		<div id="searchBtn" align="center">
     	<select name="searchCondition" >
 			<option value="findName" selected>작성자</option>  
-			<option value="findTitle" >글제목</option>  	
+			<option value="findTitle" >글제목</option>  
+			<option value="findContent" >글내용</option>  	
+				
     	</select>
     	<input type="search" name="searchValue">
     	<button type="submit" class="btn btn-primary">검색</button>

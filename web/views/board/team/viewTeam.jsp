@@ -153,7 +153,7 @@ body {
 	<script>
 	$(function(){
 		$("#gotoList").click(function(){
-			location.href="<%=request.getContextPath() %>/search.tm?searchValue=<%= t.getDeptId() %>";
+			location.href="selectList.tm";
 		});
 	});
 	

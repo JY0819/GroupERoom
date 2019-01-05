@@ -34,7 +34,7 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form action="<%= request.getContextPath()%>/insert.fr" method="post">
+			<form action="<%= request.getContextPath()%>/insertFile.fr" method="post" encType="multipart/form-data">
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
