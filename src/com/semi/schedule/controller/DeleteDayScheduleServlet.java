@@ -43,7 +43,7 @@ public class DeleteDayScheduleServlet extends HttpServlet {
 		if(result>0) {
 			new Gson().toJson(calendarNo, response.getWriter());
 		}else {
-			new Gson().toJson(calendarNo, response.getWriter());
+			new Gson().toJson("실패", response.getWriter());
 		}
 	}
 

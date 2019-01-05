@@ -35,12 +35,12 @@ public class UpdateDayScheduleServlet extends HttpServlet {
 		String scheduleDateId=request.getParameter("scheduleDateId");
 		int calendarNo=Integer.parseInt(request.getParameter("modcalendarNo"));
 		int calendarClass=Integer.parseInt(request.getParameter("modscheduleClass"));
-		String scheduleTime=request.getParameter("modscheduleTime");
-		scheduleTime=scheduleTime+":00";
+		String tempTime=request.getParameter("modscheduleTime");
+		String scheduleTime=tempTime+":00";
 		String calendarContents=request.getParameter("modschedule");
 		
 		System.out.println(scheduleDateId+'/'+calendarNo+'/'+calendarClass+'/'+scheduleTime+'/'+calendarContents);
-		
+		System.out.println(calendarContents.length());
 		
 		Schedule reqSche=new Schedule();
 		reqSche.setCalendarClass(calendarClass);
@@ -52,24 +52,25 @@ public class UpdateDayScheduleServlet extends HttpServlet {
 		System.out.println(loginUser.getEmpid());
 		
 		int result=0;
-		if(reqSche.getCalendarClass()==1) {
-			result=new ScheduleService().updateMyDaySchedule(reqSche, loginUser);
-		}else if(reqSche.getCalendarClass()==2) {
-			result=new ScheduleService().updatTeamDaySchedule(reqSche, loginUser);
-		}else if(reqSche.getCalendarClass()==3&&loginUser.getAdminAuthority().equals("Y")) {
-			result=new ScheduleService().updateCompanyDaySchedule(reqSche, loginUser);
+		if(tempTime.length()==0 || calendarContents.length()==0) {
+			System.out.println("내용부족");
+		}else {
+			if(reqSche.getCalendarClass()==1) {
+				result=new ScheduleService().updateMyDaySchedule(reqSche, loginUser);
+			}else if(reqSche.getCalendarClass()==2) {
+				result=new ScheduleService().updatTeamDaySchedule(reqSche, loginUser);
+			}else if(reqSche.getCalendarClass()==3&&loginUser.getAdminAuthority().equals("Y")) {
+				result=new ScheduleService().updateCompanyDaySchedule(reqSche, loginUser);
+			}
 		}
 		
-		
-		String page="";
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		if(result>0) {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(result, response.getWriter());
 		}else {
-			page="views/common/errorPage.jsp";
-			request.setAttribute("msg", "일정 수정 실패");
-			request.getRequestDispatcher(page).forward(request, response);
+			new Gson().toJson("실패", response.getWriter());
 		}
 	}
 

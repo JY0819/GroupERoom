@@ -9,8 +9,6 @@
 	ArrayList<HashMap<String, Object>> vacList=(ArrayList<HashMap<String, Object>>)request.getAttribute("vacList");
 %>
 <%--수정해야할 것들
-상세보기 클릭 시 - 다른 날짜 클릭할 수 없게 처리하기 <<< 꼭!!!  O
-상세보기 클릭 시 회사일정일 경우 관리자에게만 삭제/수정 버튼 활성화(혹은 보이게 하기) <<< 꼭!!!  O 
 css 좀 더 보기좋게 수정
 팝업되는 각종 div들 function (show/hide) 효율적으로 수정 
 
@@ -108,10 +106,10 @@ css 좀 더 보기좋게 수정
 			lunaMonthCal(holis);
 			
 			cell = row.insertCell();
+			cnt=cnt+1;
 			cell.innerHTML ='<span style="font-weight:bold;">'+i+'</span>';
 			cell.id='calSchedule'+holis; //일정 입력용 Id 부여
-			
-			cnt=cnt+1;
+			console.log(holis+" cnt : "+(cnt%7));
 			
 			if (cnt%7 == 0) {
 				// 1주일이 7일 > 7일마다 새 열 추가
@@ -249,7 +247,7 @@ css 좀 더 보기좋게 수정
 		<%-- <%ArrayList<DeptEmp> empList=address.get(loginUser.getDeptId());%> --%>
 		
 		// 휴가 불러오기 >
-		setLabel();
+		//setLabel();
 		view(); //일정 입력 기본정보 불러오는 함수
 		
 	}
@@ -564,6 +562,7 @@ css 좀 더 보기좋게 수정
 
 
 <section class="content">
+<div id="nonClick"></div>
 	<div class="content-left">
 		<div id="treeview"></div>
 		<%if(loginUser!=null){ %>
@@ -584,7 +583,7 @@ css 좀 더 보기좋게 수정
 	<div class="content-right container">
 	<%if(loginUser!=null){ %>
 	<div class="schedule">
-		<div id="nonClick"></div>
+		<div id="nonClick1"></div>
 		<div id="goCal">
 			<!-- <input type="date" name="goCalDate" id="goCalDate" size="3"> 
 			<script>
@@ -608,13 +607,13 @@ css 좀 더 보기좋게 수정
 					<td onclick="nextCalendar()" id="nextCal"><label style="font-size:30px">></label></td>
 				</tr>
 				<tr id="day"> 
-					<td class="sunday day" align="center">일</td>
-					<td class="day">월</td>
-					<td class="day">화</td>
-					<td class="day">수</td>
-					<td class="day">목</td>
-					<td class="day">금</td>
-					<td class="saturday day" align="center">토</td>
+					<td class="sunday day" align="center" name="day" value="1">일</td>
+					<td class="day" name="day" value="2">월</td>
+					<td class="day" name="day" value="3">화</td>
+					<td class="day" name="day" value="4">수</td>
+					<td class="day" name="day" value="5">목</td>
+					<td class="day" name="day" value="6">금</td>
+					<td class="saturday day" align="center" name="day" value="0">토</td>
 				</tr>
 			</thead>
 			<tbody id="calendarMain"> <%-- 날짜 들어가는 부분 --%>
@@ -625,7 +624,6 @@ css 좀 더 보기좋게 수정
 			<div class="scheduleDay" id="viewScheduleDay"></div> <%--날짜 --%>
 			<div id="daySchedule" vertical-align="center" text-align="center"></div> <%--그날의 일정보기 --%>
 			<div class="scheduleBtn" id="addBtn">추가</div>
-			
 			<div class="scheduleBtn" id="modifyBtn">수정</div>
 			<div class="scheduleBtn" id="delBtn">삭제</div>
 			<div class="scheduleBtn" id="closeBtn">닫기</div>
@@ -701,6 +699,7 @@ css 좀 더 보기좋게 수정
 		$("#modConfirm").hide();
 		$("#delDelConfirm").hide();
 		$("#nonClick").hide();
+		$("#nonClick1").hide();
 		/*달력 생성*/
 		buildCalendar();
 		
@@ -709,7 +708,25 @@ css 좀 더 보기좋게 수정
 		var scheduleDateId="";
 		var length;
 		var calendarNoArray1=new Array();
+		var cnt;
 		function view(){
+		$(function(){
+			<%-- 요일 반복일정 추가... 추후--%>
+			$("#day").children().click(function(){
+				console.log($(this).text());
+				$("#viewScheduleDay").html((today.getMonth()+1)+"월 "+$(this).text()+"요일 반복일정");
+				cnt=$(this).text();
+				$("#modifyBtn").css("display","none");
+				$("#delBtn").css("display","none");
+				$("#viewSchedule").fadeIn(500);
+				$("#nonClick").fadeIn(500);
+				$("#nonClick1").show();
+				/* <div class="scheduleBtn" id="addBtn">추가</div>
+				<div class="scheduleBtn" id="modifyBtn">수정</div>
+				<div class="scheduleBtn" id="delBtn">삭제</div>
+				<div class="scheduleBtn" id="closeBtn">닫기</div> */
+			});
+			
 			$("#calendarMain").children().children().click(function(){
 				if($(this).text().length==1){
 					scheduleDate=(today.getYear()+1900)+"년 "
@@ -720,9 +737,10 @@ css 좀 더 보기좋게 수정
 						scheduleDateId=(today.getYear()+1900)+''+(today.getMonth()+1)+''+$(this).children("span").html();
 					}
 					$("#viewScheduleDay").text(scheduleDate);
-					
-					$("#viewSchedule").show();
-					$("#nonClick").show();
+					setLabel();
+					$("#viewSchedule").fadeIn(500);
+					$("#nonClick").fadeIn(500);
+					$("#nonClick1").show();
 					console.log("날짜클릭!");
 				}else if($(this).text().length>1){
 					if(isNaN(Number($(this).text().charAt(1)))){
@@ -743,47 +761,68 @@ css 좀 더 보기좋게 수정
 						}
 					}
 					$("#viewScheduleDay").text(scheduleDate);
-					$("#viewSchedule").show();
-					$("#nonClick").show();
+					setLabel();
+					$("#viewSchedule").fadeIn(500);
+					$("#nonClick").fadeIn(500);
+					$("#nonClick1").show();
 					
 				}else{
 					console.log("빈칸클릭!1");
 				}
 			});
+		});
 		}
 		$("#closeBtn").click(function(){
 			console.log();
-			$("#viewSchedule").hide();
-			$("#nonClick").hide();
+			$("#modifyBtn").css("display","inline-table");
+			$("#delBtn").css("display","inline-table");
+			$("#viewSchedule").fadeOut(500);
+			$("#nonClick").fadeOut(500);
+			$("#nonClick1").hide();
 		});
 		//일정 추가 팝업 열기
 		$("#addBtn").click(function(){
-			$("#addScheduleDay").text(scheduleDate);
-			$("#addSchedule").show();
+			if($("#modifyBtn").is(":visible")){
+				$("#addScheduleDay").text(scheduleDate);
+			}else{
+				$("#addScheduleDay").text((today.getMonth()+1)+"월 "+cnt+"요일 반복일정");
+				$("#addScheduleDay").append('<input type="hidden" name="repeat" value="'+cnt+'">');
+			}
+			$("#addSchedule").fadeIn(250);
 		});
 		
 		//일정 추가 팝업 닫기
 		$("#saveAddBtn").click(function(){
-			$("#addSchedule").hide();
+			//$("#addSchedule").hide();
 			var scheduleClass=$("select[name='scheduleClass']").val();
 			var time=$('input[name=addScheduleTime]').val();
 			var scheContents=$('input[name=addSchedule]').val();
 			var scheDate=$("#addScheduleDay").text();
+			var repeat=$("input[name='repeat']").val();
+			var month=today.getMonth();
+			console.log("month:"+month);
+			console.log("추가 "+repeat);
 			console.log(scheDate);
 			$.ajax({
 				url:"insertSchedule.sche",
 				type:"post",
-				data:{scheduleClass:scheduleClass, scheDate:scheDate, time:time, scheContents:scheContents},
+				data:{scheduleClass:scheduleClass, scheDate:scheDate, time:time, scheContents:scheContents,repeat:repeat,month:month},
 				success:function(data){
+					console.log(data);
 					$("#viewSchedule").hide();
-					$("#addConfirm").show();
-					console.log("성공");
+					$("#addSchedule").hide();
+					if(Number(data)==0){
+						$("#addScheduleMsg").html("일정 추가에<br>실패했습니다.");
+					}
+					$("#addConfirm").fadeIn(250);
+					
 				},
 				error:function(data){
 					console.log("실패");
 					$("#viewSchedule").hide();
+					$("#addSchedule").hide();
 					$("#addScheduleMsg").html("일정 추가에<br>실패했습니다.");
-					$("#addConfirm").show();
+					$("#addConfirm").fadeIn(250);
 				},
 				complete:function(){
 					console.log(scheDate);
@@ -807,7 +846,7 @@ css 좀 더 보기좋게 수정
 				if(<%=loginUser.getAdminAuthority().equals("N")%> && $('input[name=viewCalClass]').val()==3){
 					alert("수정 권한이 없습니다.");
 				}else{
-					$("#modSchedule").show();
+					$("#modSchedule").fadeIn(250);
 				}				
 			}else{
 				var $scheduleLabelDelMsg=$("#daySchedule").html('선택된 일정이 없습니다'); 
@@ -816,7 +855,7 @@ css 좀 더 보기좋게 수정
 		
 		//일정 수정 팝업 닫기
 		$("#saveModBtn").click(function(){
-			$("#modSchedule").hide();
+			//$("#modSchedule").hide();
 			
 			console.log($('#modscheduleClass').val());
 			console.log(scheduleDateId);
@@ -827,7 +866,7 @@ css 좀 더 보기좋게 수정
 			var modscheduleTime=$('input[name=modScheduleTime]').val();
 			var modschedule=$('input[name=modSchedule]').val();
 			var modcalendarNo=$('input[name=modScheduleNo]').val();
-			
+			console.log(modscheduleTime);
 			$.ajax({
 				url:"modDay.sche",
 				type:"post",
@@ -837,29 +876,36 @@ css 좀 더 보기좋게 수정
 					console.log(data);
 					//이 데이터를 완료 div 페이지 메시지에 띄우기!
 					$("#viewSchedule").hide();
-					$("#modConfirm").show();
+					$("#modSchedule").hide();
+					if(data=="실패"){
+						$("#modScheduleMsg").html("일정 수정을<br>실패했습니다.");
+					}
+					
+					$("#modConfirm").fadeIn(250);
 				},
 				error:function(data){
 					console.log("실패");
 					$("#viewSchedule").hide();
+					$("#modSchedule").hide();
 					$("#modScheduleMsg").html("일정 수정을<br>실패했습니다.");
-					$("#modConfirm").show();
+					$("#modConfirm").fadeIn(250);
 				},
 				complete:function(data){
 					console.log("수정 ajax");
-					console.log();
 				}
 			});
 			
 		});
 		$("#closeModBtn").click(function(){
-			$("#modSchedule").hide();
-			$("#nonClick").hide();
+			$("#modSchedule").fadeOut(500);
+			$("#nonClick").fadeOut(500);
+			$("#nonClick1").hide();
 		});
 		$("#closeModConfirm").click(function(){
 			//새로고침 ajax 추가하기
 			$("#modConfirm").hide();
 			$("#nonClick").hide();
+			$("#nonClick1").hide();
 			window.location.reload();
 		});
 		
@@ -870,7 +916,7 @@ css 좀 더 보기좋게 수정
 				if(<%=loginUser.getAdminAuthority().equals("N")%> && $('input[name=viewCalClass]').val()==3){
 					alert("삭제 권한이 없습니다.");
 				}else{
-					$("#delSchedule").show();
+					$("#delSchedule").fadeIn(250);
 				}
 			}else{
 				var $scheduleLabelDelMsg=$("#daySchedule").html('선택된 일정이 없습니다'); 
@@ -881,10 +927,11 @@ css 좀 더 보기좋게 수정
 		$("#closeDelBtn").click(function(){
 			$("#delSchedule").hide();
 			$("#nonClick").hide();
+			$("#nonClick1").hide();
 		});
 		//일정 삭제버튼 클릭 > 삭제
 		$("#deleteDelBtn").click(function(){
-			$("#delSchedule").hide(); 
+			//$("#delSchedule").hide(); 
 			console.log("삭제 input[hidden] : "+$("#delMessage").children().eq(0).val());
 			var delCalendarNo=$("input[name=delCalNo]").val();
 			var delCalendarClass=$("input[name=delCalClass]").val();
@@ -896,13 +943,18 @@ css 좀 더 보기좋게 수정
 					console.log(data+"넘어옴");
 					//이 데이터를 완료 div 페이지 메시지에 띄우기!
 					$("#viewSchedule").hide();
-					$("#delDelConfirm").show();
+					$("#delSchedule").hide();
+					if(data=="실패"){
+						$("#delScheduleMsg").html("일정 삭제에<br>실패했습니다.");
+					}
+					$("#delDelConfirm").fadeIn(250);
 				},
 				error:function(data){
 					console.log("삭제 ajax 전송 실패");
 					$("#viewSchedule").hide();
+					$("#delSchedule").hide();
 					$("#delScheduleMsg").html("일정 삭제에<br>실패했습니다.");
-					$("#delDelConfirm").show();
+					$("#delDelConfirm").fadeIn(250);
 				},
 				complete:function(data){
 					console.log("삭제 ajax 루트 끝");
@@ -912,6 +964,7 @@ css 좀 더 보기좋게 수정
 		$("#closeDelConfirm").click(function(){ //일정 삭제 완료 팝업
 			$("#delDelConfirm").hide();
 			$("#nonClick").hide();
+			$("#nonClick1").hide();
 			window.location.reload();
 		});
 		
@@ -947,7 +1000,7 @@ css 좀 더 보기좋게 수정
 					HashMap<String, Object> hmap=list.get(i);
 					if((int)hmap.get("calendarClass")==1){
 			%>
-						$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+						$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p[value='1']").remove();
 						console.log(<%=hmap.get("calendarId")%>+" 삭제");
 						
 			<%	}							
@@ -980,7 +1033,7 @@ css 좀 더 보기좋게 수정
 	    			HashMap<String, Object> hmap=list.get(i);
 	    			if((int)hmap.get("calendarClass")==2){
 	    		%>	
-	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p[value='2']").remove();
 	    		<%
 	    			}
 	    		}%>
@@ -1014,7 +1067,7 @@ css 좀 더 보기좋게 수정
 	    			HashMap<String, Object> hmap=list.get(i);
 	    			if((int)hmap.get("calendarClass")==3){
 	    		%>
-	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p").remove();
+	    				$("#calSchedule"+<%=hmap.get("calendarId")%>+" > p[value='3']").remove();
 	    		<%
 	    			}
 	    		}%>
@@ -1051,6 +1104,7 @@ css 좀 더 보기좋게 수정
 	        }
 		});
 		
+		 // 선택시 일정 있을 경우 일정 불러오게
 		function setLabel(){
 			$("#calendarMain").children().children("td").click(function(){
 				var $scheduleLabelOne=$("#daySchedule"); 
@@ -1068,14 +1122,13 @@ css 좀 더 보기좋게 수정
 					data:{scheduleDateId:scheduleDateId,calendarNo:calendarNo},
 					type:"post",
 					success:function(data){
-						$("#nonClick").show();
 						//선택한 일정 정보 받아옴 
 						console.log("성공");
 						var $scheduleLabel=$("#daySchedule"); 
 						$scheduleLabel.html(""); //기존 라벨 클리어
-						console.log(data);
+						/* console.log(data);
 						console.log(data.calendarContents);
-						console.log(data.scheduleDate); //받아온 데이터 확인
+						console.log(data.scheduleDate); //받아온 데이터 확인 */
 					
 						//상세보기 div 세팅
 						var $labelHidden=$("<input type='hidden' name='viewCalNo'>").val(data.calendarNo);
@@ -1089,7 +1142,11 @@ css 좀 더 보기좋게 수정
 						$scheduleLabel.append($labelHidden2);
 						$scheduleLabel.append($labelTime);
 						$scheduleLabel.append($labelContents);
-						
+						if(data=="실패"){
+							$scheduleLabel.append("일정 상세조회에<br>실패했습니다. <br> 다시 시도해주세요.");
+						}
+						$("#nonClick").fadeIn(500);
+						$("#nonClick1").show();
 						//수정 div 세팅
 						if(data.calendarClass==1){
 							$('#modscheduleClass option:eq(0)').prop("selected", true);
@@ -1118,6 +1175,7 @@ css 좀 더 보기좋게 수정
 						$DelLabel.append($DelContents);
 						$DelLabel.append($br);
 						$DelLabel.append("일정을 삭제하시겠습니까?");
+						
 					},
 					error:function(data){
 						console.log("실패");
