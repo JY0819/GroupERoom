@@ -416,6 +416,21 @@ public class EmployeeDao {
 		return result;
 	}
 
+	public int updateEmployee(Connection con, Employee emp) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int updateEmpDept(Connection con, Employee emp, LogDepartment ld) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int updateEmpPos(Connection con, Employee emp, LogPosition lp) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 	

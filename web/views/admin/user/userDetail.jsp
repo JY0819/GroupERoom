@@ -20,17 +20,28 @@
 	}
 	
 	function updateUser(){
-		$("#userUpdateForm").attr("action", "<%=request.getContextPath()%>/updateMember.me");
+		$("#userUpdateForm").attr("action", "<%=request.getContextPath()%>/admin/updateMember.me");
 	}
 	
 	function deleteUser(){
 		$("#userUpdateForm").attr("action", "<%=request.getContextPath()%>/deleteMember.me");
 	}
 	
-	<%-- $(document).ready(function(){
-		var dept = "<%=emp.getDeptName()%>";
+	$(document).ready(function(){
+		var dept = "<%=emp.getDeptName() %>";
 		$("#dept").val(dept);
-	}); --%>
+	}); 
+	
+	$(document).ready(function(){
+		var position = "<%=emp.getPositionName() %>";
+		$("#position").val(position);
+	}); 
+	
+	$(document).ready(function(){
+		var retireYN = "<%=emp.getWhetherOfRetire() %>";
+		$("#retireYN").val(retireYN);
+	}); 
+	
 </script>
 
 <section class="content">
@@ -79,7 +90,7 @@
 			<div class="form-group">
 				<label for="inputGender" class="col-lg-2 control-label">성별</label>
 				<div class="col-lg-2">
-					<input type="text" class="form-control" id="gender" name="gender" value="<%=emp.getEmpGender() %>"readonly>
+					<input type="text" class="form-control" id="gender" name="gender" value="<%=emp.getEmpGender() %>" readonly>
 				</div>
 				
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
@@ -96,26 +107,26 @@
 				
 				<label for="inputBirth" class="col-lg-1 control-label">생년월일</label>
 				<div class="col-lg-2">
-					<input id="fromDate" type="date" class="form-control onlyNumber" id="birth" name="birth" value="<%=emp.getEmpBirth() %>"readonly> 
+					<input id="fromDate" type="date" class="form-control onlyNumber" id="birth" name="birth" value="<%=emp.getEmpBirth() %>" readonly> 
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label for="inputDept" class="col-lg-2 control-label">부서</label>
 				<div class="col-lg-3">
-					<!-- <select class="form-control" multiple="multiple" id="dept" name="dept">
+					<select class="form-control" id="dept" name="dept">
 						<option value="1">대표</option>
 						<option value="2">경리</option>
 						<option value="3">회계</option>
 						<option value="4">마케팅</option>
 						<option value="5">개발</option>
-					</select> -->
-					<input type="text" class="form-control" value="<%=emp.getDeptName() %>">
+					</select>
+					<input type="text" class="form-control" id="dept" name="dept" value="<%=emp.getDeptName() %>">
 				</div>
 				
 				<label for="inputDept" class="col-lg-1 control-label">직책</label>
 				<div class="col-lg-3">
-					<!-- <select class="form-control" multiple="multiple" id="position" name="position">
+					<select class="form-control" id="position" name="position">
 						<option value="1">대표이사</option>
 						<option value="10">이사</option>
 						<option value="11">부장</option>
@@ -123,8 +134,8 @@
 						<option value="13">과장</option>
 						<option value="14">대리</option>
 						<option value="15">사원</option>
-					</select> -->
-					<input type="text" class="form-control" value="<%=emp.getPositionName() %>">
+					</select> 
+					<input type="text" class="form-control" id="position" name="position" value="<%=emp.getPositionName() %>">
 				</div>
 			</div>
 			
@@ -136,7 +147,10 @@
 				
 				<label class="col-lg-1 control-label">퇴사 여부</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" id="retireYN" name="retireYN" value="<%=emp.getWhetherOfRetire() %>">
+					<select class="form-control" id="retireYN" name="retireYN">
+						<option value="Y">퇴사</option>
+						<option value="N">재직</option>
+					</select>
 				</div>
 			</div>
 

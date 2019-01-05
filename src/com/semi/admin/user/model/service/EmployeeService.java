@@ -110,12 +110,12 @@ public class EmployeeService {
 		Connection con = getConnection();
 		int result = 0;
 
-		// 부서 이력의 사원 삭제	
+		// 부서 이력의 사원 삭제
 		int result1 = new EmployeeDao().deleteDept(con, userId);
-		
+
 		// 직책 이력의 사원 삭제
 		int result2 = new EmployeeDao().deletePosition(con, userId);
-		
+
 		// 사원 삭제
 		int result3 = new EmployeeDao().deleteMember(con, userId);
 
@@ -131,4 +131,24 @@ public class EmployeeService {
 		return result;
 	}
 
+	// 관리자 - 사원정보 수정
+	public int updateEmployee(Employee emp, LogDepartment ld, LogPosition lp) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		int result1 = new EmployeeDao().updateEmployee(con, emp);
+		int result2 = new EmployeeDao().updateEmpDept(con, emp, ld);
+		int result3 = new EmployeeDao().updateEmpPos(con, emp, lp);
+		
+		if (result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(con);
+			result = 1;
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+
+		return result;
+	}
 }
