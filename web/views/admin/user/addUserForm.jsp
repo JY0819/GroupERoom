@@ -9,6 +9,30 @@
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "<%= request.getAttribute("title")%>";
+	
+	$(function(){
+		$("#idCheck").click(function() {
+			var userId = $("#userId").val();
+			
+			$.ajax({
+				url : "/semi/idCheck.me",
+				type : "post",
+				data : {
+						userId : userId
+						},
+				success : function(data) {
+					if (data === "fail") {
+						alert("존재하는 사원 아이디입니다.");
+					} else {
+						alert("사용 가능한 사원 아이디입니다.");
+					}
+				},
+				error : function() {
+					console.log("실패!");
+				}
+			});
+		});
+	});
 </script>
 
 <section class="content">
@@ -37,8 +61,12 @@
 			<!-- 회원 가입 사항 -->
 			<div class="form-group" id="div_id">
 				<label for="inputId" class="col-lg-2 control-label">사원번호</label>
-				<div class="col-lg-7">
-					<input type="text" class="form-control onlyNumber" id="id" name="userId" data-rule-required="true" placeholder="숫자만 입력 가능합니다." maxlength="30">
+				<div class="col-lg-5">
+					<input type="text" class="form-control onlyNumber" id="userId" name="userId" data-rule-required="true" placeholder="숫자만 입력 가능합니다." maxlength="30">
+				</div>
+				
+				<div class="col-lg-1">
+					<button type="button" class="btn btn-default" id="idCheck">중복확인</button>
 				</div>
 			</div>
 			
@@ -334,13 +362,13 @@
 							var divApprovalPwd = $('#divApprovalPwd');
 
 							//아이디 검사
-							if ($('#id').val() == "") {
+							if ($('#userId').val() == "") {
 								modalContents.text("아이디를 입력하여 주시기 바랍니다.");
 								modal.modal('show');
 
 								divId.removeClass("has-success");
 								divId.addClass("has-error");
-								$('#id').focus();
+								$('#userId').focus();
 								return false;
 							} else {
 								divId.removeClass("has-error");

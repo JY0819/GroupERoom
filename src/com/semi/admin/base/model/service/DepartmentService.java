@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import com.semi.admin.base.model.dao.DepartmentDao;
 import com.semi.admin.base.model.dao.PositionDao;
 import com.semi.admin.base.model.vo.Department;
+import com.semi.admin.user.model.dao.EmployeeDao;
+import com.semi.admin.user.model.vo.Employee;
+import com.semi.admin.user.model.vo.LogDepartment;
 
 public class DepartmentService {
 
@@ -82,6 +85,17 @@ public class DepartmentService {
 		close(con);
 		
 		return result;
+	}
+
+	// 부서에 속한 사원 조회
+	public ArrayList<Employee> deptMember(String deptId) {
+		Connection con = getConnection();
+		
+		ArrayList<Employee> list = new DepartmentDao().deptMember(con, deptId);
+		
+		close(con);
+		
+		return list;
 	}
 
 }

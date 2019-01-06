@@ -1,5 +1,6 @@
 package com.semi.admin.user.model.service;
 
+import static com.semi.common.JDBCTemplate.*;
 import static com.semi.common.JDBCTemplate.close;
 import static com.semi.common.JDBCTemplate.commit;
 import static com.semi.common.JDBCTemplate.getConnection;
@@ -15,6 +16,7 @@ import com.semi.admin.user.model.dao.EmployeeDao;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.admin.user.model.vo.LogDepartment;
 import com.semi.admin.user.model.vo.LogPosition;
+import com.semi.admin.user.model.vo.UseVac;
 import com.semi.common.service.CommonSeqService;
 import com.semi.common.vo.Attachments;
 
@@ -37,9 +39,10 @@ public class EmployeeService {
 
 		int photoId = new CommonSeqService(con).getFileSeq();
 
-		// 사원 정보
+		System.out.println("photoId" + photoId);
+		// 파일 첨부
 		int result1 = new EmployeeDao().insertAttachment(con, fileList, photoId);
-		// 첨부 파일
+		// 사원 정보
 		int result2 = new EmployeeDao().insertMember(con, emp, photoId);
 		// 부서
 		int result3 = new EmployeeDao().insertDepartment(con, emp, ld);
@@ -151,4 +154,49 @@ public class EmployeeService {
 
 		return result;
 	}
+
+	// 아이디 중복 검사
+	public int idCheck(Integer userId) {
+		Connection con = getConnection();
+		
+		int result = new EmployeeDao().idCheck(con, userId);
+		
+		close(con);
+		
+		return result;
+	}
+	
+	// 사원 리스트에서 이름으로 검색
+	public ArrayList<Employee> searchMember(String userName) {
+		Connection con = getConnection();
+		
+		ArrayList<Employee> list = new EmployeeDao().searchMember(con, userName);
+		
+		close(con);
+		
+		return list;
+	}
+
+	// 사원 휴가 내역 리스트
+	public ArrayList<UseVac> selectVacList() {
+		Connection con = getConnection();
+
+		ArrayList<UseVac> list = new EmployeeDao().selectVacList(con);
+
+		close(con);
+
+		return list;
+	}
+
+	// 휴가 사원 이름으로 검색
+	public ArrayList<UseVac> searchVac(String userName) {
+		Connection con = getConnection();
+		
+		ArrayList<UseVac> list = new EmployeeDao().searchVac(con, userName);
+		
+		close(con);
+		
+		return list;
+	}
+
 }
