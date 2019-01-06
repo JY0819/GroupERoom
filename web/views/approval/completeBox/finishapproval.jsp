@@ -52,7 +52,7 @@
 						style="height: 17px; width: 17px;"></td>
 					<td><%= finish.getApprNo() %></td>
 					<td><%= finish.getApprWriter() %></td>
-					<td><%= finish.getDocNo() %></td>
+					<td name="mouseent"><%= finish.getDocNo() %></td>
 					<% if(finish.getResult().equals("Y")) %>
 					<td><%= finish.getResult().replaceAll("Y", "승인") %></td>
 					<td><%= finish.getApprDay() %></td>
@@ -146,7 +146,7 @@
 		        
 				}
 		 
-		  $("#listArea td:eq(3)").mouseenter(function() {
+		  $("td[name=mouseent]").mouseenter(function() {
 				$(this).css({"cursor":"pointer"});
 			}).mouseout(function() {
 				/* $(this).parent().css({"background":"white"}); */
