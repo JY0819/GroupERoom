@@ -42,7 +42,7 @@
 	margin-left: 20px;
 	margin-bottom: 20px;
 }
-.line{
+/* .line{
 	border: 2px solid skyblue;
 	border-collapse: collapse;
 	padding: 8px;
@@ -53,12 +53,12 @@
 }
 #alignDiv{
 	margin-top: 80px;
-}
+} */
 </style>
 
 <script>
 	var jsonData = treeviewJson.myPageJson;
-	var nodeName = "근태관리";
+	var nodeName = "근태조회";
 </script>
 
 <section class="content">
@@ -68,9 +68,15 @@
 	</div>
 
 	<div class="content-right container">
+		<div id="title">
+			<h1 align="left">근태 조회</h1>
+		</div>
+		<hr>
+	
 		<form action="" method="post" id="formId">
 		<div align="center" id="alignDiv">
-			<table id="messageList" class="line" align="center">
+		<table style="width: 100%"><tr><td>
+			<table class="table table-striped" id="listArea" align="center">
 				<% if(exist) { %>
 				<tr>
 					<th class="line"></th>
@@ -98,10 +104,11 @@
 				<% } %>
 				<% } else { %>
 				<tr>
-					<th class="line" colspan="4"><p>출근 내역이 없습니다!</p></th>
+					<th class="line" colspan="4"><p align="center">출근 내역이 없습니다!</p></th>
 				</tr>
 				<% } %>
 			</table>
+		</td></tr></table>
 			<div class="paging" align="center">
 				<ul class="pagination">
 					

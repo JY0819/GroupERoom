@@ -32,12 +32,14 @@ public class InsertAttend extends HttpServlet {
 		
 		resultChk = new AttendService().chkToDay(empid);
 		if (resultChk == 1) {
+			out.println("<title>GroupERoom</title>\r\n");
 			out.println("<script>\r\n" + 
 					"alert('이미 처리 되었습니다.');\r\n" + 
 					"</script>");
 		} else {
 			result = new AttendService().insertAttend(empid);
 			if (result > 0) {
+				out.println("<title>GroupERoom</title>\r\n");
 				out.println("<script>\r\n" + 
 						"alert('정상 처리 되었습니다.');\r\n" + 
 						"</script>");

@@ -42,7 +42,7 @@
 	margin-left: 20px;
 	margin-bottom: 20px;
 }
-.line{
+/* .line{
 	border: 2px solid skyblue;
 	border-collapse: collapse;
 	padding: 8px;
@@ -53,7 +53,7 @@
 }
 #alignDiv{
 	margin-top: 80px;
-}
+} */
 </style>
 
 <script>
@@ -68,9 +68,14 @@
 	</div>
 
 	<div class="content-right container">
+		<div id="title">
+			<h1 align="left">보낸 쪽지함</h1>
+		</div>
+		<hr>
+		
 		<form action="" method="post" id="formId">
 		<div align="center" id="alignDiv">
-			<table id="messageList" class="line" align="center">
+			<table class="table table-striped" id="listArea" align="center">
 				<% if(exist) { %>
 				<tr>
 					<th class="line"></th>
@@ -85,7 +90,7 @@
 					<td class="line"><%= m.getMsgSendD() %></td>
 					<td class="line"><%= m.getMsgSender() %></td>
 					<td class="line"><%= m.getMsgReceiver() %></td>
-					<td class="line"><a href="<%=request.getContextPath()%>/myPageSendMessageDetail?msgno=<%= m.getMsgNo() %>&sendList=true" style="color: black;"><%= m.getMsgContents() %></a></td>
+					<td class="line" width="500px"><a href="<%=request.getContextPath()%>/myPageSendMessageDetail?msgno=<%= m.getMsgNo() %>&sendList=true" style="color: black;"><%= m.getMsgContents() %></a></td>
 				</tr>
 				<% 		count++; %>
 				<% 		} %>
