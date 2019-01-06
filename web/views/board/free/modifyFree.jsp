@@ -4,6 +4,7 @@
 	
 	Free f = (Free)request.getAttribute("f"); 
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
+	Attachment at = (Attachment)request.getAttribute("at");
 %>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
@@ -37,6 +38,7 @@ body {
 	<div class="container">
 
 		<div class="row">
+						<form action="<%= request.getContextPath()%>/updateFree.fr" method="post" encType="multipart/form-data">
 			
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
@@ -44,7 +46,6 @@ body {
 							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">자유게시판 글 수정</th>
 						</tr> 
 					</thead>
-<form action="", method="post" id="editTable">
 					<tbody>
 					<tr>
 						
@@ -68,13 +69,14 @@ body {
 					</tbody>
 					
 				</table>
-				</form>
 				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
-					<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+					<input id="fileInput" name="fileInput"type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
 						<div class="bootstrap-filestyle input-group">
-						<input type="text" id="userfile" class="form-control" name="userfile" disabled="">
+							<input type="hidden" id="inputFile" class="form-control" name="originAno"  value="<%=at.getAno()%>">
+						
+						<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
 							<span class="group-span-filestyle input-group-btn" tabindex="0">
 							<label for="fileInput" class="btn btn-default ">
 								<span><i class="fas fa-file-upload"></i></span>
@@ -87,14 +89,16 @@ body {
 					<button id="enrollBtn" class="btn btn-primary">수정</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
+			</form>
+			
 			
 		</div>
 	</div>
-
 	
 	<script>
 		$(function(){
 			$("#fileInput").on('change', function(){  // 값이 변경되면
+				console.log("dd");
 				if (window.FileReader) {  // modern browser
 					var filename = $(this)[0].files[0].name;
 				} else {  // old IE
@@ -102,6 +106,7 @@ body {
 				}
 				// 추출한 파일명 삽입
 				$("#userfile").val(filename);
+				console.log($("input[name='originAno']").val());
 			});
 		});
 		
@@ -111,15 +116,16 @@ body {
 			});
 		});
 		
-		$(function(){
+		<%-- $(function(){
 			$("#enrollBtn").click(function(){
 				
 				$("#editTable").attr("action", "<%=request.getContextPath()%>/updateFree.fr");
+				$("#editTable").attr("encType", "multpart/form-data");
 				$("#editTable").submit();
 				
-			});
+			}); 
 			
-		});
+		});--%>
 			
 		
 	</script>

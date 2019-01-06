@@ -152,7 +152,7 @@ if(p == currentPage){
 <script>
 	$(function(){
 		$("#writeBtn").click(function(){
-			location.href="/semi/views/board/free/writeFree.jsp";
+			location.href="/semi/views/board/free/writeFree2.jsp";
 		});
 	});
 	
