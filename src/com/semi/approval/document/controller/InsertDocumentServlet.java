@@ -89,7 +89,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			
 			//문서종류
 			String documentKind = multipartRequest.getParameter("documentKind");
-			
+			System.out.println(documentKind);
 			//제목
 			String title = multipartRequest.getParameter("title");
 			
@@ -179,28 +179,28 @@ public class InsertDocumentServlet extends HttpServlet {
 							drr[i] = Integer.parseInt(dateArr[i]);
 						}
 						writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
-					}else {
-						writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 					}
 				}else {
 					//입력받은 날짜가 없을 때 현재시간 넣어줌
 					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 				}
 			}
 			
 			//재직증명서일때
 			else if(documentKind.equals("재직증명서")) {
+
 				if(!wDate.equals("")) {
-				//작성일
-				String[] dateArr = wDate.split("-");
-				int[] drr = new  int[dateArr.length];
-				
-				for(int i=0; i<dateArr.length; i++) {
-					drr[i] = Integer.parseInt(dateArr[i]);
-				}
+					//작성일
+					String[] dateArr = wDate.split("-");
+					int[] drr = new  int[dateArr.length];
+					
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
 				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
-				
+
 				//입사일
 				dateArr = entry.split("-");
 				drr = new  int[dateArr.length];
@@ -213,60 +213,20 @@ public class InsertDocumentServlet extends HttpServlet {
 					//입력받은 날짜가 없을 때 현재시간 넣어줌
 					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 				}
-			}
-			//====================================================
-				//if(!sDate.equals("") && !eDate.equals("")) {
-
-					/*//휴가시작 날짜
-					String[] dateArr = sDate.split("-");
-					int[] drr = new int[dateArr.length];
-	
-					if(documentKind.equals("1")) {	
-						for(int i=0; i<dateArr.length; i++) {
-							drr[i] = Integer.parseInt(dateArr[i]);
-						}
-						startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
-					
-					//==============================================================
-					/*//휴가끝 날짜
-					dateArr = eDate.split("-");
-					drr = new  int[dateArr.length];
+			}else {
+				if(!wDate.equals("")) {
+					//작성일
+					String[] dateArr = wDate.split("-");
+					int[] drr = new  int[dateArr.length];
 					
 					for(int i=0; i<dateArr.length; i++) {
 						drr[i] = Integer.parseInt(dateArr[i]);
 					}
-					endDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
-	
-				//==============================================================
-				//작성일 날짜
-				/*dateArr = wDate.split("-");
-				drr = new  int[dateArr.length];
-				
-				for(int i=0; i<dateArr.length; i++) {
-					drr[i] = Integer.parseInt(dateArr[i]);
-				}
-				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
-				
-				//==============================================================
-				/*//입사일
-				dateArr = entry.split("-");
-				drr = new  int[dateArr.length];
-				
-				for(int i=0; i<dateArr.length; i++) {
-					drr[i] = Integer.parseInt(dateArr[i]);
-				}
-				entryDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());*/
-				//아닐경우
-			/*}else {
-				if(documentKind.equals("1")) {
-					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
-					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+				}else {
 					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
-				}else if(documentKind.equals("2")) {
-					endDay =  new java.sql.Date(new GregorianCalendar().getTimeInMillis());					
 				}
-				writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
-			}*/
+			}
 			//====================================================
 			
 			//분류 이름에 따라 문자형 숫자로 넣음
@@ -358,7 +318,6 @@ public class InsertDocumentServlet extends HttpServlet {
 			}
 			
 			//====================================================
-			
 			if(result > 0) {
 				response.sendRedirect("/semi/selectDocument.sd");
 				
@@ -373,6 +332,238 @@ public class InsertDocumentServlet extends HttpServlet {
 				}
 				request.setAttribute("msg", "문서 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			}
+			//파일없을때
+		}else {
+			//값 변수에 담기
+			
+			//번호
+			int num = Integer.parseInt(request.getParameter("num"));
+			
+			//결재자1
+			String appr1 = request.getParameter("person1");
+			
+			//결재자2
+			String appr2 = request.getParameter("person2");
+			
+			//결재자3
+			String appr3 = request.getParameter("person3");
+			
+			//문서번호
+			int docNum = Integer.parseInt(request.getParameter("docNum"));
+			
+			//사원번호
+			int empNum = Integer.parseInt(request.getParameter("empNum"));
+			
+			//휴가시작일
+			String sDate = request.getParameter("startDate");
+			
+			//휴가종료일
+			String eDate = request.getParameter("endDate");
+			
+			//문서종류
+			String documentKind = request.getParameter("documentKind");
+			System.out.println(documentKind);
+			//제목
+			String title = request.getParameter("title");
+			
+			//작성일
+			String wDate = request.getParameter("date");
+			
+			//휴가사유
+			String reason = request.getParameter("reason");
+		
+			//내용
+			String content = request.getParameter("content");
+		
+			//문서 상신 여부
+			String submission = "N";
+		
+			//사원 입사일
+			String entry = request.getParameter("entryDay");
+			//===================================================
+		
+			//결재자가 비어있지 않으면 결재차수 카운트
+			int count = 0;
+			if(!request.getParameter("empNo1").equals("")) {
+				count++;
+				if(!request.getParameter("empNo2").equals("")) {
+					count++;
+					if(!request.getParameter("empNo3").equals("")) {
+						count++;
+					}
+				}
+			}
+			//카운트 한만큼 배열생성해 담기
+			int[] apprNo = new int[count];
+			if(count > 0) {
+				for(int i=0; i<apprNo.length; i++) {
+					apprNo[i] = Integer.parseInt(request.getParameter("empNo1"));
+					if(i > 0 && count > 1) {
+						apprNo[i] = Integer.parseInt(request.getParameter("empNo2"));
+						if(i > 1 && count > 2) {
+							apprNo[i] = Integer.parseInt(request.getParameter("empNo3"));
+						}
+					}
+				}
+			}
+
+			//====================================================
+			
+			//날짜 담기위한 데이트 변수
+			Date startDay = null;
+			Date endDay = null;
+			Date writeDay = null;
+			Date entryDay = null;
+			
+			//====================================================
+			//받아온 문자열이 있으면 날짜형으로 변환
+			
+			//휴가신청서(1)일때 휴가시작일, 휴가종료일, 작성일 생성
+			if(documentKind.equals("휴가신청서")) {
+				if(!sDate.equals("") && !eDate.equals("")) {
+					
+					//휴가시작 날짜
+					String[] dateArr = sDate.split("-");
+					int[] drr = new int[dateArr.length];
+	
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					startDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+						
+					//휴가끝
+					dateArr = eDate.split("-");
+					drr = new  int[dateArr.length];
+						
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					endDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+						
+					//작성일
+					if(!wDate.equals("")) {
+						dateArr = wDate.split("-");
+						drr = new  int[dateArr.length];
+						
+						for(int i=0; i<dateArr.length; i++) {
+							drr[i] = Integer.parseInt(dateArr[i]);
+						}
+						writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+					}
+				}else {
+					//입력받은 날짜가 없을 때 현재시간 넣어줌
+					startDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					endDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				}
+			}
+			
+			//재직증명서일때
+			else if(documentKind.equals("재직증명서")) {
+
+				if(!wDate.equals("")) {
+					//작성일
+					String[] dateArr = wDate.split("-");
+					int[] drr = new  int[dateArr.length];
+					
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+
+				//입사일
+				dateArr = entry.split("-");
+				drr = new  int[dateArr.length];
+				
+				for(int i=0; i<dateArr.length; i++) {
+					drr[i] = Integer.parseInt(dateArr[i]);
+				}
+				entryDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+				}else {
+					//입력받은 날짜가 없을 때 현재시간 넣어줌
+					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				}
+			}else {
+				if(!wDate.equals("")) {
+					//작성일
+					String[] dateArr = wDate.split("-");
+					int[] drr = new  int[dateArr.length];
+					
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+				writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+				}else {
+					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+				}
+			}
+			//====================================================
+			
+			//분류 이름에 따라 문자형 숫자로 넣음
+			if(documentKind.equals("휴가신청서")) {
+				documentKind = "1";
+			}else if(documentKind.equals("재직증명서")) {
+				documentKind = "2";
+			}else {
+				documentKind = "3";
+			}
+			//====================================================
+			
+			//문서객체생성
+			Document document = new Document();
+			
+			document.setManageEmpId(empNum);
+			document.setManageDocNo(docNum);
+			document.setManageTitle(title);
+			document.setManageContents(content);
+			document.setManageDay(writeDay);
+			document.setManageClass(documentKind);
+			document.setManageNo(num);
+			document.setSubmission(submission);
+			if(documentKind.equals("1")) {
+				document.setVacApprReason(reason);
+				document.setVacApprStart(startDay);
+				document.setVacApprEnd(endDay);
+			}
+			else if(documentKind.equals("2")) {
+				document.setEntryDay(entryDay);
+			}
+			
+			//====================================================
+			//결재선 객체 생성
+			int[] apprLineCount = new int[3];
+			String[] apprName = new String[3];
+			if(!appr1.equals("")) {
+				apprLineCount[0] = 1;
+				apprName[0] = appr1;
+				if(!appr2.equals("")) {
+					apprLineCount[1] = 2;
+					apprName[1] = appr2;
+					if(!appr3.equals("")) {
+						apprLineCount[2] = 3;
+						apprName[2] = appr3;
+					}
+				}
+			}
+			ApprLine[] apprLine = new ApprLine[apprNo.length];
+				for(int i=0; i<apprNo.length; i++) {
+					apprLine[i] = new ApprLine();
+					apprLine[i].setApprEmpId(apprNo[i]);
+					apprLine[i].setApprOrder(apprLineCount[i]);
+				}
+			
+			ArrayList<Object> list = new ArrayList<Object>();
+			list.add(document);
+			list.add(apprLine);
+			
+			int result = new DocumentService().insertDocument(list, apprLine);
+			
+			if(result > 0) {
+				response.sendRedirect("/semi/selectDocument.sd");				
+			}else {
+			request.setAttribute("msg", "문서 등록 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 		}
 	}

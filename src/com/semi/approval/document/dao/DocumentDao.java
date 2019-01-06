@@ -134,7 +134,6 @@ public class DocumentDao {
 				pstmt.setInt(1, document.getManageEmpId());
 				pstmt.setInt(2, document.getManageEmpId());
 				System.out.println("날짜: " + document.getManageDay());
-				pstmt.setDate(3, document.getManageDay());
 				result = pstmt.executeUpdate();
 
 		} catch (SQLException e1) {
@@ -423,7 +422,7 @@ public class DocumentDao {
 		return result;
 	}
 	
-	//문서 조회
+	//내문서함 문서 조회
 	public ArrayList<MyDocument> selectList(Connection con) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -470,7 +469,7 @@ public class DocumentDao {
 		return list;
 	}
 
-	//문서 상신시 상신컬럼 변경
+	//문서 상신시 SUBMISSION 컬럼 변경
 	public int updateDocumentList(Connection con, String[] docNumList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -495,7 +494,7 @@ public class DocumentDao {
 		return result;
 	}
 
-	//결재할 문서로 상신 처리
+	//결재할 문서페이지 상신된 문서 조회
 	public ArrayList<MyDocument> selectSubmitList(Connection con) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -533,6 +532,7 @@ public class DocumentDao {
 		return list;
 	}
 	
+	//상신된 문서 결재할 결재자 조회
 	public ArrayList<ApprLine> selectSubmitApprList(Connection con, int[] apprNum) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -543,6 +543,7 @@ public class DocumentDao {
 		try {
 			list = new ArrayList<ApprLine>();
 			for(int i=0; i<apprNum.length; i++) {
+				
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, apprNum[i]);
 				rset = pstmt.executeQuery();
@@ -552,7 +553,9 @@ public class DocumentDao {
 					apprLine.setApprEmpId(rset.getInt("APPREMPID"));
 					apprLine.setApprOrder(rset.getInt("APPRORDER"));
 					apprLine.setApprName(rset.getString("EMPNAME"));
+					apprLine.setApprNo(rset.getInt("APPRNO"));
 					apprLine.setCheck(false);
+					apprLine.setApproval(rset.getString("APPROVAL"));
 					list.add(apprLine);
 				}
 			}
@@ -586,54 +589,6 @@ public class DocumentDao {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
-		}
-		return result;
-	}
-
-	//결재차수와 결재번호 가져와 logofapprove 삽입 후 반려처리 부분
-	public int sendReturn(Connection con, String[] docNumList) {
-		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
-		ResultSet rset = null;
-		int result = 0;
-		
-		String query = prop.getProperty("selectApprOrder");
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		try {
-			
-			pstmt = con.prepareStatement(query);
-			for(int i=0; i<docNumList.length; i++) {
-				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
-				rset = pstmt.executeQuery();
-				while(rset.next()) {
-					list.add(rset.getInt("APPRNO"));
-					list.add(rset.getInt("APPRORDER"));
-				}
-			}
-			query = prop.getProperty("insertLogOfApproveReturn");
-			for(int i=0; i<list.size()-1; i++) {
-				pstmt = con.prepareStatement(query);
-				pstmt.setString(1, "반려");
-				pstmt.setInt(2, list.get(i));
-				if(list.get(i) == 0) {
-					break;
-				}
-				pstmt.setInt(3, list.get(i+1));
-			}
-			result = pstmt.executeUpdate();
-			
-			query = prop.getProperty("updateApprDate");
-			for(int i=0; i<list.size(); i+=2) {
-				pstmt2 = con.prepareStatement(query);
-				pstmt2.setInt(1, list.get(i));
-			}
-			result += pstmt2.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-			close(pstmt2);
 		}
 		return result;
 	}
@@ -688,7 +643,8 @@ public class DocumentDao {
 		}
 		return list;
 	}
-
+	
+	//상세보기때 불어올 문서
 	public Document selectOne(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -723,7 +679,7 @@ public class DocumentDao {
 		
 		return document;
 	}
-
+	//상세보기 할때 불러올 파일검색
 	public Attachments selectFile(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -754,7 +710,7 @@ public class DocumentDao {
 		}
 		return attachments;
 	}
-
+	//문서진행현황 페이지에 넣을 데이터들 조회
 	public ArrayList<MyDocument> selectStatus(Connection con, int empId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -790,15 +746,8 @@ public class DocumentDao {
 		
 		return list;
 	}
-
-	public int updateApprStatus(Connection con, String[] docNumList) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		String query = prop.getProperty("updateApprStatus");
-		return result;
-	}
-
+	
+	//결재 비밀번호 체크
 	public boolean checkPassword(Connection con, int empId, int password) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -820,9 +769,113 @@ public class DocumentDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(rset);
 			close(pstmt);
 		}
 		return check;
 	}
+	
+	//결재완료전 차수 판단
+	public int selectApprNo(Connection con, int apprNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int tempOrder = 0;
+		
+		String query = prop.getProperty("selectApprOrder");
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, apprNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				tempOrder = rset.getInt("APPRORDER");
+			}				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return tempOrder;
+	}
+	
+	//결재했을때 결재완료로 업데이트 
+	public int insertApprStatus(Connection con, String[] docNumList, int apprNum, int apprOrder, int apprNo, int tempOrder) {
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		int result = 0;	
+			
+			String query = prop.getProperty("successInsertApprStatus");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo);
+				pstmt.setInt(2, apprOrder);
+				result = pstmt.executeUpdate();
+				
+				query = prop.getProperty("updateApprLine");
+				pstmt2 = con.prepareStatement(query);
+				pstmt2.setInt(1, apprNo);
+				pstmt2.setInt(2, apprOrder);
+				result += pstmt2.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(pstmt2);
+			}		
+		return result;
+	}
+
+	
+	
+	//마지막 차수가 결재 했을때 appr 승인여부 하기 
+	public int updateApprDate(Connection con, int apprNo, int apprOrder) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+			String query = prop.getProperty("updateApprDate");
+			try {
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo);
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		return result;
+	}
+	
+	//결재차수와 결재번호 가져와 logofapprove 삽입 후 반려처리 부분
+	
+		public int sendReturn(Connection con, String[] docNumList) {
+			PreparedStatement pstmt = null;
+			PreparedStatement pstmt2 = null;
+			int result = 0;
+			
+			String query = prop.getProperty("returnInsertApprStatus");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo);
+				pstmt.setInt(2, apprOrder);
+				result = pstmt.executeUpdate();
+				
+				query = prop.getProperty("updateApprDateS");
+				for(int i=0; i<list.size(); i+=2) {
+					pstmt2 = con.prepareStatement(query);
+					pstmt2.setInt(1, list.get(i));
+				}
+				result += pstmt2.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(pstmt2);
+			}
+			return result;
+		}
 
 }
