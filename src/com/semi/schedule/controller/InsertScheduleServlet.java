@@ -39,13 +39,13 @@ public class InsertScheduleServlet extends HttpServlet {
 		int empId=loginUser.getEmpid();
 		String repeat=request.getParameter("repeat");
 		int cnt = -1;
-		int month=-1;
+		int month=Integer.parseInt(request.getParameter("month"));
 		String tempDate1=request.getParameter("scheDate");
 		tempDate1=tempDate1.replace("년 ", "-").replace("월 ","-").replace("일","");
 		System.out.print("날짜 : "+tempDate1);
 		
 		String temptime=request.getParameter("time");
-		temptime=temptime+":00";
+		String scheduleTime=temptime+":00";
 		System.out.println(" / 시간 : "+temptime);
 		
 		String scheduleDate=tempDate1+" "+temptime;
@@ -62,32 +62,35 @@ public class InsertScheduleServlet extends HttpServlet {
 		Schedule reqSche=new Schedule();
 		reqSche.setCalendarClass(calendarClass);
 		reqSche.setScheduleDate(scheduleDate);
+		reqSche.setScheduleTime(scheduleTime);
 		reqSche.setEmpId(empId);
 		reqSche.setCalendarContents(scheContents);
 		
 		System.out.println("reqSche: "+reqSche);
 		int result=0;
-		if(scheContents.length()==0 || temptime.length()==0) {
+		
+		if(scheContents.length()==0 || temptime.length()==0) { //내용이나 시간이 비어있으면 등록 과정 안거치고 바로 실패로 전송함
 			System.out.println("여기로옴");
 		}else {
-			if(reqSche.getCalendarClass()==1) {
-				result=new ScheduleService().insertMySchedule(reqSche);
-			}else if(reqSche.getCalendarClass()==2) {
-				result=new ScheduleService().insertTeamSchedule(reqSche);
-			}else if(reqSche.getCalendarClass()==3 && loginUser.getAdminAuthority().equals("Y")){
-				result=new ScheduleService().insertCompanySchedule(reqSche);
+			if(repeat!=null) {
+				switch(repeat) {
+					case "일" : cnt=1; break;	case "월" : cnt=2; break;
+					case "화" : cnt=3; break;	case "수" : cnt=4; break;
+					case "목" : cnt=5; break;	case "금" : cnt=6; break;
+					case "토" : cnt=0; break;
+				}
+				result=new ScheduleService().insertRepeatSchedule(month, cnt, reqSche);
+				System.out.println(month+"월 "+repeat+"/"+cnt);
+			}else {
+				if(reqSche.getCalendarClass()==1) {
+					result=new ScheduleService().insertMySchedule(reqSche);
+				}else if(reqSche.getCalendarClass()==2) {
+					result=new ScheduleService().insertTeamSchedule(reqSche);
+				}else if(reqSche.getCalendarClass()==3 && loginUser.getAdminAuthority().equals("Y")){
+					result=new ScheduleService().insertCompanySchedule(reqSche);
+				}
 			}
 		}
-		if(repeat!=null) {
-			switch(repeat) {
-				case "일" : cnt=1; break;	case "월" : cnt=2; break;
-				case "화" : cnt=3; break;	case "수" : cnt=4; break;
-				case "목" : cnt=5; break;	case "금" : cnt=6; break;
-				case "토" : cnt=0; break;
-			}
-			month=Integer.parseInt(request.getParameter("month"));
-		}
-		System.out.println(month+"월 "+repeat+"/"+cnt);
 		
 		
 		response.setContentType("application/json");

@@ -181,17 +181,17 @@ css 좀 더 보기좋게 수정
 			HashMap<String, Object> hmap=list.get(i);
 			if((hmap.get("calendarContents")).toString().length()>9){%>
 				if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
-					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
 					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
 				}
 				
 				if(Number(<%=hmap.get("calendarClass")%>)==2 && $("#Teamschedule").is(":checked") ){
-					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
 					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
 				}
 				
 				if(Number(<%=hmap.get("calendarClass")%>)==3 && $("#Companyschedule").is(":checked")){
-					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
 					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
 				}
 			<%}else{%>
@@ -712,6 +712,7 @@ css 좀 더 보기좋게 수정
 		function view(){
 		$(function(){
 			<%-- 요일 반복일정 추가... 추후--%>
+			<%--
 			$("#day").children().click(function(){
 				console.log($(this).text());
 				$("#viewScheduleDay").html((today.getMonth()+1)+"월 "+$(this).text()+"요일 반복일정");
@@ -726,6 +727,7 @@ css 좀 더 보기좋게 수정
 				<div class="scheduleBtn" id="delBtn">삭제</div>
 				<div class="scheduleBtn" id="closeBtn">닫기</div> */
 			});
+			--%>
 			
 			$("#calendarMain").children().children().click(function(){
 				if($(this).text().length==1){
@@ -983,7 +985,7 @@ css 좀 더 보기좋게 수정
 						}else{
 						<%if((hmap.get("calendarContents")).toString().length()>9){%>
 							if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
-								$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+								$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
 								$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
 							}
 						<%}else{%>
@@ -1019,7 +1021,7 @@ css 좀 더 보기좋게 수정
 					
 						}else{
 							<%if((hmap.get("calendarContents")).toString().length()>9){%>
-							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
 							<%}else{%>
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
@@ -1052,7 +1054,7 @@ css 좀 더 보기좋게 수정
 					
 						}else{
 							<%if((hmap.get("calendarContents")).toString().length()>9){%>
-							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 4)%>"+"..."+"</p>");
+							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='3']").css("color","#C64A4A");
 							<%}else{%>
 							$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
