@@ -38,7 +38,7 @@
 	height: 40px;
 	margin-bottom: 20px;
 }
-.line{
+/* .line{
 	border: 2px solid skyblue;
 	border-collapse: collapse;
 	padding: 8px;
@@ -49,7 +49,7 @@
 }
 #alignDiv{
 	margin-top: 80px;
-}
+} */
 </style>
 
 <script>
@@ -64,9 +64,14 @@
 	</div>
 
 	<div class="content-right container">
+		<div id="title">
+			<h1 align="left">쪽지 보관함</h1>
+		</div>
+		<hr>
+	
 		<form action="" method="post" id="formId">
 		<div align="center" id="alignDiv">
-			<table>
+			<table style="width: 100%">
 				<tr>
 					<td>
 						<div class="alignBox" style="float: left; display: inline-block;">
@@ -83,14 +88,14 @@
 				</tr>
 				<tr>
 					<td>
-						<table id="messageList" class="line" align="center">
+						<table class="table table-striped" id="listArea" align="center">
 							<% if(exist) { %>
 							<tr>
 								<th class="line"><input id="all" type="checkbox" value="all"></th>
 								<th class="line">보낸 날짜</th>
 								<th class="line">보낸 사람</th>
 								<th class="line">받는 사람</th>
-								<th class="line" style="width: 300px;">내용</th>
+								<th class="line" style="width: 500px;">내용</th>
 							</tr>
 							<% 		for(Msg m : list) { %>
 							<tr>
@@ -100,21 +105,21 @@
 								<td class="line"><%= m.getMsgSendD() %></td>
 								<td class="line"><%= m.getMsgSender() %></td>
 								<td class="line"><%= m.getMsgReceiver() %></td>
-								<td class="line"><a href="<%=request.getContextPath()%>/myPageMessageLockerDetail?msgno=<%= m.getMsgNo() %>&sendList=false" style="color: black;"><%= m.getMsgContents() %></a></td>
+								<td class="line" width="500px"><a href="<%=request.getContextPath()%>/myPageMessageLockerDetail?msgno=<%= m.getMsgNo() %>&sendList=false" style="color: black;"><%= m.getMsgContents() %></a></td>
 							</tr>
 							<% 		count++; %>
 							<% 		listSize--; %>
 							<% 		} %>
 							<% } else { %>
 							<tr>
-								<th class="line" colspan="5"><p>보관한 메세지가 없어요!</p></th>
+								<th class="line" colspan="5"><p align="center">보관한 메세지가 없어요!</p></th>
 							</tr>
 							<% } %>
 						</table>
 					</td>
 				</tr>
 			</table>
-			<div class="paging" align="center">
+			<div class="paging" align="center" style="margin-bottom: 80px;">
 				<ul class="pagination">
 					
 					<% for(int p = startPage; p <= endPage; p++) {

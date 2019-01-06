@@ -10,13 +10,15 @@ public class Msg implements java.io.Serializable {
 	private Date msgReceiveD;
 	private String msgSender;
 	private String msgReceiver;
+	private int msgSenderID;
+	private int msgReceiverID;
 	
 	public Msg() {
 		
 	}
 
 	public Msg(int rnum, int msgNo, String msgContents, Date msgSendD, Date msgReceiveD, String msgSender,
-			String msgReceiver) {
+			String msgReceiver, int msgSenderID, int msgReceiverID) {
 		super();
 		this.rnum = rnum;
 		this.msgNo = msgNo;
@@ -25,6 +27,8 @@ public class Msg implements java.io.Serializable {
 		this.msgReceiveD = msgReceiveD;
 		this.msgSender = msgSender;
 		this.msgReceiver = msgReceiver;
+		this.msgSenderID = msgSenderID;
+		this.msgReceiverID = msgReceiverID;
 	}
 
 	public int getMsgNo() {
@@ -83,10 +87,27 @@ public class Msg implements java.io.Serializable {
 		this.rnum = rnum;
 	}
 
+	public int getMsgSenderID() {
+		return msgSenderID;
+	}
+
+	public void setMsgSenderID(int msgSenderID) {
+		this.msgSenderID = msgSenderID;
+	}
+
+	public int getMsgReceiverID() {
+		return msgReceiverID;
+	}
+
+	public void setMsgReceiverID(int msgReceiverID) {
+		this.msgReceiverID = msgReceiverID;
+	}
+
 	@Override
 	public String toString() {
 		return "Msg [rnum=" + rnum + ", msgNo=" + msgNo + ", msgContents=" + msgContents + ", msgSendD=" + msgSendD
-				+ ", msgReceiveD=" + msgReceiveD + ", msgSender=" + msgSender + ", msgReceiver=" + msgReceiver + "]";
+				+ ", msgReceiveD=" + msgReceiveD + ", msgSender=" + msgSender + ", msgReceiver=" + msgReceiver
+				+ ", msgSenderID=" + msgSenderID + ", msgReceiverID=" + msgReceiverID + "]";
 	}
 
 	

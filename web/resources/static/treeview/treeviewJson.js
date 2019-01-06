@@ -104,23 +104,22 @@ var treeviewJson = {
 		{
 			text: "마이페이지", href: "/semi/myPageMain"
 		   ,nodes: [
-			   
+			   		{
+			   		   text: "쪽지보내기", href: "/semi/showAddress"
+			   		},
 					{ 
-					   text: "쪽지", href: "/semi/myPageMessage"
+					   text: "쪽지함", href: "/semi/myPageMessage"
 					  ,nodes: [ 
 							     {text: "받은 쪽지함", href: "/semi/myPageMessage"}
 							    ,{text: "보낸 쪽지함", href: "/semi/myPageSendMessage"} 
 							    ,{text: "쪽지 보관함", href: "/semi/myPageLockerMessage"}
 					  		  ]
 					}
-				   ,{ 
-					  text: "주소록", href: "/semi/showAddress"
-					}
 				   ,{
-					  text: "휴가", href: "/semi/myPageLogOfVac"
+					  text: "휴가조회", href: "/semi/myPageLogOfVac"
 				   	}
 				   ,{
-					  text: "근태관리", href: "/semi/chkAttend"
+					  text: "근태조회", href: "/semi/chkAttend"
 				   	}
 				   ,{
 					  text: "정보 수정", href: "/semi/views/myPage/myInfo/ChangeInfo.jsp"

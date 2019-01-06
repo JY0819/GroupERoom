@@ -12,7 +12,7 @@
 
 <style>
 .diary {
-	border: 2px solid skyblue;
+	border: 1px solid rgb(221, 221, 221);
 	border-radius: 15px;
 	width: 600px;
 	padding: 20px;
@@ -60,7 +60,7 @@
 
 <script>
 	var jsonData = treeviewJson.myPageJson;
-	var nodeName = "주소록";
+	var nodeName = "쪽지보내기";
 </script>
 
 <section class="content">
@@ -122,11 +122,18 @@
 </section>
 
 <script type="text/javascript">
+	var selectedEmp;
 	$(function () {
 		$(".empNo").click(function() {
 			var name = $(this).text();
 			$("#sendObject").val(name.substring(name.length-3, name.length));
 			$("#receiveEmpid").val(name.substring(4, name.length-4));
+			
+			$(this).css({"background":"black", "color":"white"});
+			if (selectedEmp != null) {
+				selectedEmp.css({"background":"white", "color":"black"});
+			}
+			selectedEmp = $(this);
 		});
 	})
 </script>

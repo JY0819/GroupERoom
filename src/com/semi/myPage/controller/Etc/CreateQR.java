@@ -33,7 +33,7 @@ public class CreateQR extends HttpServlet {
 		
 		// 주소 생성
 		InetAddress ip = InetAddress.getLocalHost();
-		String Port = "9999";
+		int Port = request.getLocalPort();
 		String mapping = "insertAttend";
 		String empid = request.getParameter("empid");
 		String page = "http://" + ip.getHostAddress() + ":" + Port + "/semi/" + mapping + "?empid=" + empid;

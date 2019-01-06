@@ -29,11 +29,19 @@ public class updateAttend extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		if (result > 0) {
-			out.println("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>");
+			out.println("<title>GroupERoom</title>\r\n");
 			out.println("<script>\r\n" +
 					"		alert('정상 처리 되었습니다.');\r\n" + 
 					"		location.href='chkAttend';\r\n" + 
 					"</script>");
+		} else {
+			result = new AttendService().insertAttend(empid);
+			if (result > 0) {
+				out.println("<title>GroupERoom</title>\r\n");
+				out.println("<script>\r\n" + 
+						"alert('조금 있다가 다시 시도해주세요!');\r\n" + 
+						"</script>");
+			}
 		}
 		out.flush();
 		out.close();

@@ -349,6 +349,8 @@ public class MsgDao {
 				msg.setMsgReceiver(rset.getString("receiver"));
 				msg.setMsgSendD(rset.getDate("msgSendD"));
 				msg.setMsgReceiveD(rset.getDate("msgReceiveD"));
+				msg.setMsgSenderID(rset.getInt("senderid"));
+				msg.setMsgReceiverID(rset.getInt("receiverid"));
 			}
 			
 		} catch (SQLException e) {

@@ -49,10 +49,10 @@
 	margin-right: 50px;
 	margin-left: 100px;
 }
-.alignBox{
+/* .alignBox{
 	position: relative;
 	display: inline-block;
-}
+} */
 .diary{
 	border: 2px solid skyblue;
 	border-radius: 15px;
@@ -70,7 +70,7 @@
 	top: 100px;
 	margin-bottom: 200px;
 }
-#messageList{
+/* #messageList{
 	width: 700px;
 }
 .line{
@@ -78,7 +78,7 @@
 	border-collapse: collapse;
 	padding: 8px;
 	text-align: center;
-}
+} */
 </style>
 
 <script>
@@ -98,7 +98,7 @@
 			<table id="myPageMainTable">
 				<tr>
 					<td>
-						<div class="alignBox"><input class="btn" id="btn2" type="button" value="쪽지 보내기"></div>
+						<div class="alignBox"><input class="btn" id="btn2" type="button" value="쪽지 보내기" onclick="location.href='<%=request.getContextPath()%>/showAddress'"></div>
 					</td>
 					<td>
 						<div class="alignBox"><input class="btn" id="btn1" type="button" value="받은 쪽지함" onclick="location.href='<%=request.getContextPath()%>/myPageMessage'"></div>
@@ -129,7 +129,7 @@
 					</td>
 					<td>
 						<div style="height: 235px;">
-						<table id="messageList" class="line" align="center">
+						<table class="table table-striped" id="listArea" align="center">
 							<% if(exist) { %>
 							<tr>
 								<th class="line"></th>

@@ -42,25 +42,25 @@
 	margin-left: 20px;
 	margin-bottom: 20px;
 }
-.line{
+/* .line{
 	border: 2px solid skyblue;
 	border-collapse: collapse;
 	padding: 8px;
 	text-align: center;
 	height: 40px;
-}
+} */
 #msgContents{
 	width: 300px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap; 
 }
-#messageList{
+/* #messageList{
 	width: 700px;
 }
 #alignDiv{
 	margin-top: 80px;
-}
+} */
 </style>
 
 <script>
@@ -75,9 +75,14 @@
 	</div>
 
 	<div class="content-right container">
+		<div id="title">
+			<h1 align="left">받은 쪽지함</h1>
+		</div>
+		<hr>
+		
 		<form action="" method="post" id="formId">
 		<div align="center" id="alignDiv">
-			<table>
+			<table style="width: 100%">
 				<tr>
 					<td>
 						<div class="alignBox" style="float: left; display: inline-block;">
@@ -100,7 +105,7 @@
 				</tr>
 				<tr>
 					<td>
-						<table id="messageList" class="line" align="center">
+						<table class="table table-striped" id="listArea" align="center">
 							<% if(exist) { %>
 							<tr>
 								<th class="line"><input id="all" type="checkbox" value="all"></th>
@@ -117,20 +122,20 @@
 								<td class="line"><%= m.getMsgSendD() %></td>
 								<td class="line"><%= m.getMsgSender() %></td>
 								<td class="line"><%= m.getMsgReceiver() %></td>
-								<td class="line" id="msgContents"><a href="<%=request.getContextPath()%>/myPageMessageDetail?msgno=<%= m.getMsgNo() %>&sendList=false" style="color: black;"><%= m.getMsgContents() %></a></td>
+								<td class="line" id="msgContents" width="500px"><a href="<%=request.getContextPath()%>/myPageMessageDetail?msgno=<%= m.getMsgNo() %>&sendList=false" style="color: black;"><%= m.getMsgContents() %></a></td>
 							</tr>
 							<% 		count++; %>
 							<% 		} %>
 							<% } else { %>
 							<tr>
-								<th class="line" colspan="5"><p>받은 메세지가 없어요!</p></th>
+								<th class="line" colspan="5"><p align="center">받은 메세지가 없어요!</p></th>
 							</tr>
 							<% } %>
 						</table>
 					</td>
 				</tr>
 			</table>
-			<div class="paging" align="center">
+			<div class="paging" align="center" style="margin-bottom: 80px;">
 				<ul class="pagination">
 					
 					<% for(int p = startPage; p <= endPage; p++) {
