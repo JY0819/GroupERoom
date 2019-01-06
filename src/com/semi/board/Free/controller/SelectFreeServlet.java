@@ -1,6 +1,7 @@
 package com.semi.board.Free.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.board.Free.model.service.FreeService;
+import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
 
 /**
  * Servlet implementation class SelectFreeServlet
  */
 @WebServlet("/selectFree.fr")
+//수정용
 public class SelectFreeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,16 +34,19 @@ public class SelectFreeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String num = request.getParameter("num");
+		int num = Integer.parseInt(request.getParameter("num"));
 		
-		Free f = new FreeService().selectOne(num);
+		HashMap<String, Object> hmap = new FreeService().editOne(num);
+		Free f = (Free)hmap.get("Free");
+		Attachment at 
+        = (Attachment)hmap.get("attachment");
 		
 		String page="";
 		
 		if(f != null) {
 			page="views/board/free/modifyFree.jsp";
 			request.setAttribute("f", f);
-			
+			request.setAttribute("at", at);
 		}else {
 			page="views/common/errorPage.jsp";
 			request.setAttribute("msg", "자유 게시판 글 수정 상세보기 실패");

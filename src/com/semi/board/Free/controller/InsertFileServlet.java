@@ -41,7 +41,7 @@ public class InsertFileServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(ServletFileUpload.isMultipartContent(request)) {
-
+			
 			//전송 파일 용량 제한 : 10MB로 제한
 			int maxSize = 1024 * 1024 * 10;
 
@@ -67,7 +67,7 @@ public class InsertFileServlet extends HttpServlet {
 
 
 			MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-
+			System.out.println("servlet multiRequest : "+multiRequest);
 
 			//다중 파일을 묶어서 업로드 하기 위해 컬렉션 사용
 			//저장한 파일의 이름을 저장할 arrayList 생성
@@ -79,7 +79,9 @@ public class InsertFileServlet extends HttpServlet {
 			//각 파일의 정보를 구해온 뒤 DB에 저장할 목적의 데이터를 꺼내온다.
 			Enumeration<String> files = multiRequest.getFileNames();
 			//Enumeration: 각각의 객체를 한 번에 하나씩 처리할 수 있음
-
+			System.out.println("servlet files:"+files);
+/*			String fileName=multiRequest.getFilesystemName("fileInput");
+			System.out.println("fileName: "+fileName);*/
 			while(files.hasMoreElements()) {//다음 요소가 있는지
 
 				String name=files.nextElement();
@@ -101,12 +103,14 @@ public class InsertFileServlet extends HttpServlet {
 			System.out.println("multiTitle:"+multiTitle);
 
 			System.out.println("multiContent:"+multiContent);
-
+			
+			System.out.println("servlet saveFiles"+originFiles+saveFiles);
 			
 			HttpSession session = request.getSession();
 			Employee loginUser = (Employee)session.getAttribute("loginUser");
 			String writer = String.valueOf(loginUser.getEmpid());
 			
+			System.out.println("writer: "+writer);
 			// 객체 생성
 			Free f = new Free();
 			f.setbTitle(multiTitle);
@@ -118,17 +122,19 @@ public class InsertFileServlet extends HttpServlet {
 
 			//반복문 거꾸로 돌리기!!(아까 시스템아웃에 파일이름들 역순으로 나왔던 거 때문스)
 			for(int i=originFiles.size() -1; i>=0; i--) {
-
+System.out.println("도니");
 				Attachment at = new Attachment();
 
 				at.setFilePath(filePath);
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
+				System.out.println(at.getFilePath()
+						+at.getChangeName());
 
 				fileList.add(at);
 
 			}
-
+			System.out.println("servlet fileList사이즈 : "+fileList.size());
 
 			int result = new FreeService().insertThumbnail(f, fileList);
 
@@ -150,6 +156,7 @@ public class InsertFileServlet extends HttpServlet {
 					failedFile.delete();
 
 				}
+				
 
 				request.setAttribute("msg", "첨부파일 등록 실패!");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
@@ -159,10 +166,9 @@ public class InsertFileServlet extends HttpServlet {
 		}
 	
 	
-	
-	
-	
 	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

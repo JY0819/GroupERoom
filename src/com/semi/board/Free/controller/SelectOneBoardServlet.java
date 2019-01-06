@@ -2,6 +2,7 @@ package com.semi.board.Free.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.board.Free.model.service.FreeService;
+import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
 
 /**
@@ -36,7 +38,11 @@ public class SelectOneBoardServlet extends HttpServlet {
 		
 		System.out.println("글번호: "+num);
 	
-		Free f = new FreeService().selectOne(num);
+		HashMap<String, Object> hmap = new FreeService().selectOne(num);
+		Free f = (Free)hmap.get("Free");
+		Attachment at 
+        = (Attachment)hmap.get("attachment");
+		
 		ArrayList<Free> reply = new FreeService().selectReply(num);
 		String page ="";
 		
@@ -44,8 +50,9 @@ public class SelectOneBoardServlet extends HttpServlet {
 			page ="views/board/free/viewFree.jsp";
 			if(reply != null) {
 				request.setAttribute("reply", reply);
-
 			}
+			
+			request.setAttribute("at", at);
 			request.setAttribute("f", f);
 		}else {
 			page = "views/common/errorPage.jsp";

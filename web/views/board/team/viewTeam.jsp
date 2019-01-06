@@ -146,7 +146,9 @@ body {
 	</div>
 	
 	</div>
-	
+	<div>
+	<h1>　</h1>
+</div>
 	
 </section>
 
@@ -201,6 +203,7 @@ body {
 						$replySelectTable.append($tr);
 						
 						$("#replyContent").val("");
+						window.location.reload();
 					}
 					
 					
