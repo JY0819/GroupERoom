@@ -179,5 +179,36 @@ public class ScheduleService {
 		return vacList;
 	}
 
+	public int insertRepeatSchedule(int month, int cnt, Schedule reqSche) {
+		Connection con=getConnection();
+		int result=0;
+		int result1=0;
+		ArrayList<String> scheduleDateList=null;
+		
+		//반복되는 날짜 계산용
+		scheduleDateList=new ScheduleDao().repeatDate(month, cnt);
+		
+		if(scheduleDateList !=null) {
+			for(int i=0;i<scheduleDateList.size();i++) {
+				if(reqSche.getCalendarClass()==1) {
+					reqSche.setScheduleDate(scheduleDateList.get(i)+" "+reqSche.getScheduleTime());
+					result1=new ScheduleDao().insertMySchedule(con, reqSche);
+				}else if(reqSche.getCalendarClass()==2) {
+					reqSche.setScheduleDate(scheduleDateList.get(i)+" "+reqSche.getScheduleTime());
+					result1=new ScheduleService().insertTeamSchedule(reqSche);
+				}else if(reqSche.getCalendarClass()==3){
+					reqSche.setScheduleDate(scheduleDateList.get(i)+" "+reqSche.getScheduleTime());
+					result1=new ScheduleService().insertCompanySchedule(reqSche);
+				}
+			}
+		}
+		
+		if(result1>0) {
+			
+		}
+		
+		return result;
+	}
+
 
 }
