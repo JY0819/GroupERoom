@@ -25,8 +25,8 @@
 
 	<div class="content-right container">
 		<% for(int i=0; i<list.size(); i++){ 
-		if(employee.getEmpid() == appr.get(i).getApprEmpId() && appr.get(i).isCheck()) { %>
-		<button class="success">승인</button>
+		if(appr.get(i).isCheck()) { %>
+		<button class="success" onclick="success()">승인</button>
 		<button class="return" onclick="returnBox()">반려</button>
 		<% }else { %>
 		<a href="#open"><button class="success">결재하기</button></a>
@@ -39,14 +39,8 @@
         		<h3>결재 비밀번호를 입력해주세요.</h3>
         		<input type="password" name="password">&nbsp;&nbsp;<button type="submit">확인</button>
         		<input type="hidden" name="apprWriter" value="<%= employee.getEmpid()%>">
-        	</form>		        
-         		<% for(int i=0; i<appr.size(); i++) {
-        		if(employee.getEmpid() == appr.get(i).getApprEmpId()) { %>
-        		<input id="apprNum" type="hidden" name="apprNum" value=<%= appr.get(i).getApprEmpId()  %>>
-        		<input id="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>>
-        		<% } %>
-        		<% } %> 
-            	<button type="button" class="saveBtn2" onclick="success()">승인</button><a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
+        	</form>		                 		
+            	<a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
         	</div>
     	</div>
 		<table>
@@ -59,26 +53,74 @@
 					<th>부 서</th>
 					<th>문 서 번 호</th>
 					<th>제 목</th>
-					<th>작 성 날 짜</th>
-				</tr>
+					<th>작 성 날 짜</th>					
+					<% for(int i=0; i<appr.size(); i++) {
+        		if(employee.getEmpid() == appr.get(i).getApprEmpId()) { %>
+        		<th><input id="apprEmpId" type="hidden" name="apprEmpId" value=<%= appr.get(i).getApprEmpId()  %>></th>
+        		<th><input id="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>></th>
+        		<th><input id="apprNo" type="hidden" name="apprNo" value=<%= appr.get(i).getApprNo() %>></th>
+        		<% } %>
+        		<% } %> 
+				</tr>				
 			</thead>
 			<tbody>
 			
 			<% if(list != null) { %>
-			<% for(int i=0; i<list.size(); i++) {
+			<% for(int i=0; i<appr.size(); i++) {
 				if(appr.get(i).getApprEmpId() == employee.getEmpid()) {
-				%>
-				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td><%= list.get(i).getNum() %></td>
-					<td><%= list.get(i).getWriter() %></td>
-					<td><%= list.get(i).getDeptName() %></td>
-					<td><%= list.get(i).getDocNum() %></td>
-					<td><%= list.get(i).getTitle() %></td>
-					<td><%= list.get(i).getWriteDay() %></td>
-				</tr>
-				<% } %>
+					for(int j=0; j<appr.size(); j++) { 
+					switch(appr.get(j).getApprOrder()){
+						case 1: 
+						if(appr.get(0).getApproval().equals("N")){ 
+							for(int k=0; k<list.size(); k++) {%>							 
+							 <tr>
+								<td><input type="checkbox" name="checkTd"
+									style="height: 17px; width: 17px;"></td>
+								<td><%= list.get(k).getNum() %></td>
+								<td><%= list.get(k).getWriter() %></td>
+								<td><%= list.get(k).getDeptName() %></td>
+								<td><%= list.get(k).getDocNum() %></td>
+								<td><%= list.get(k).getTitle() %></td>
+								<td><%= list.get(k).getWriteDay() %></td>
+							</tr>
+							 <% } %>
+					<% }; %>
+						<%
+							break;
+						case 2:
+							 if(appr.get(0).getApproval().equals("Y") && appr.get(1).getApproval().equals("N")){ 
+							for(int k=0; k<list.size(); k++) {%>							 
+							 <tr>
+								<td><input type="checkbox" name="checkTd"
+									style="height: 17px; width: 17px;"></td>
+								<td><%= list.get(k).getNum() %></td>
+								<td><%= list.get(k).getWriter() %></td>
+								<td><%= list.get(k).getDeptName() %></td>
+								<td><%= list.get(k).getDocNum() %></td>
+								<td><%= list.get(k).getTitle() %></td>
+								<td><%= list.get(k).getWriteDay() %></td>
+							</tr>
+							 <% } %>
+							 <% };
+							break;
+						case 3:
+							 if(appr.get(1).getApproval().equals("Y") && appr.get(2).getApproval().equals("N")) { 
+							 for(int k=0; k<list.size(); k++) {%>							 
+							 <tr>
+								<td><input type="checkbox" name="checkTd"
+									style="height: 17px; width: 17px;"></td>
+								<td><%= list.get(k).getNum() %></td>
+								<td><%= list.get(k).getWriter() %></td>
+								<td><%= list.get(k).getDeptName() %></td>
+								<td><%= list.get(k).getDocNum() %></td>
+								<td><%= list.get(k).getTitle() %></td>
+								<td><%= list.get(k).getWriteDay() %></td>
+							</tr>
+							 <% } %>
+						<%}; break; 
+ 					  } 
+					  }			  
+					  } %>
 				<% } %>
 				<% }else { %>
 					<tr>
@@ -138,8 +180,12 @@
 	 		var tr = checkbox.parent().parent().eq(i);
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
+            var apprEmpId = $("#apprEmpId").val();
+            var apprOrder = $("#apprOrder").val();
+            var apprNo = $("#apprNo").val();
+            var kind = 'Y';
             sendArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ",";
+            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+"&apprEmpId=" + apprEmpId + "&apprOrder=" + apprOrder + "&apprNo=" + apprNo + "&kind=" + kind;
 		});
 	}
 
@@ -159,10 +205,12 @@
 	 		var tr = checkbox.parent().parent().eq(i);
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
-            var apprNum = $("#apprNum").text();
-            var apprOrder = $("#apprOrder").text();
+            var apprEmpId = $("#apprEmpId").val();
+            var apprOrder = $("#apprOrder").val();
+            var apprNo = $("#apprNo").val();
+            var kind = 'Y';
             sendArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/successUpdate.su?docNum=" + sendArr + ","+"&apprNum=" + apprNum + "&apprOrder=" + apprOrder;
+            location.href="<%= request.getContextPath()%>/successUpdate.su?docNum=" + sendArr + ","+"&apprEmpId=" + apprEmpId + "&apprOrder=" + apprOrder + "&apprNo=" + apprNo + "&kind=" + kind;
 	 	});
 	}
 </script>

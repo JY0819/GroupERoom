@@ -33,6 +33,7 @@ public class DocumentService {
 		return document;
 	}
 
+	//주소록 불러오기
 	public HashMap<Integer, ArrayList<SumEmpInfo>> selectDept() {
 		Connection con = getConnection();
 		HashMap<Integer, ArrayList<SumEmpInfo>> hmap = new DocumentDao().selectDept(con);
@@ -44,7 +45,7 @@ public class DocumentService {
 		close(con);
 		return hmap;
 	}
-	
+	//주소록 부서 불러오기
 	public ArrayList<String> selectDeptList() {
 		Connection con = getConnection();
 		ArrayList<String> list = new AddressDao().selectDeptIdList(con);
@@ -58,7 +59,7 @@ public class DocumentService {
 		
 		return list;
 	}
-
+	//파일있는 문서삽입
 	public int insertDocument(ArrayList<Object> list, ApprLine[] apprLine, ArrayList<Attachments> fileList) {
 		Connection con = getConnection();
 		int result = 0;
@@ -86,7 +87,7 @@ public class DocumentService {
 		
 		return result;
 	}
-	
+	//파일없는 문서삽입
 	public int insertDocument(ArrayList<Object> list, ApprLine[] apprLine) {
 		Connection con = getConnection();
 		int attachNo = 0;
@@ -116,7 +117,7 @@ public class DocumentService {
 		
 		return result;
 	}
-
+	//내문서함 불러오기
 	public ArrayList<MyDocument> selectList() {
 		Connection con = getConnection();
 		ArrayList<MyDocument> list = new DocumentDao().selectList(con);
@@ -131,7 +132,7 @@ public class DocumentService {
 		
 		return list;
 	}
-
+	//내문서함에서 결재할 문서 상신시 submission 하기
 	public int updateDocumentList(String[] docNumList) {
 		Connection con = getConnection();
 		int result = new DocumentDao().updateDocumentList(con, docNumList);
@@ -146,7 +147,7 @@ public class DocumentService {
 		
 		return result;
 	}
-
+	//결재할 문서 불러오기
 	public ArrayList<MyDocument> selectSubmitList() {
 		Connection con = getConnection();
 		ArrayList<MyDocument> list = new DocumentDao().selectSubmitList(con);
@@ -158,7 +159,7 @@ public class DocumentService {
 		close(con);
 		return list;
 	}
-	
+	//결재할 결재자들 불러오기
 	public ArrayList<ApprLine> selectSubmitApprList(int[] apprNum) {
 		Connection con = getConnection();
 		ArrayList<ApprLine> apprList = new DocumentDao().selectSubmitApprList(con, apprNum);
@@ -171,7 +172,7 @@ public class DocumentService {
 		close(con);
 		return apprList;
 	}
-
+	//휴지통으로 보낼 문서들 변경
 	public int sendTrashList(String[] docNumList) {
 		Connection con = getConnection();
 		int result = new DocumentDao().sendTrashList(con, docNumList);
@@ -186,7 +187,7 @@ public class DocumentService {
 		
 		return result;
 	}
-
+	//반려함으로 보낼 문서들 변경
 	public int sendReturn(String[] docNumList) {
 		Connection con = getConnection();
 		int result = new DocumentDao().sendReturn(con, docNumList);
@@ -201,7 +202,7 @@ public class DocumentService {
 		
 		return result;
 	}
-
+	//반려함 불러오기
 	public ArrayList<MyDocument> selectReturnDocumentList() {
 		Connection con = getConnection();
 		ArrayList<MyDocument> list = new DocumentDao().selectReturnDocumentList(con);
@@ -216,7 +217,7 @@ public class DocumentService {
 		
 		return list;
 	}
-
+	//상세페이지 선택된 문서 불러오기
 	public Document selectOne(int num) {
 		Connection con = getConnection();
 		Document document = new DocumentDao().selectOne(con, num);
@@ -229,7 +230,7 @@ public class DocumentService {
 		close(con);
 		return document;
 	}
-
+	//상세페이지 파일불러오기
 	public Attachments selectFile(int num) {
 		Connection con =getConnection();
 		Attachments attachments = new DocumentDao().selectFile(con, num);
@@ -242,7 +243,7 @@ public class DocumentService {
 		close(con);
 		return attachments;
 	}
-
+	//문서진행현황 불러오기
 	public ArrayList<MyDocument> selectStatus(int empId) {
 		Connection con = getConnection();
 		ArrayList<MyDocument> list = new DocumentDao().selectStatus(con, empId);
@@ -255,24 +256,45 @@ public class DocumentService {
 		close(con);
 		return list;
 	}
-
-	public int updateApprStatus(String[] docNumList) {
+	//결재시 업데이트
+	public int insertApprStatus(String[] docNumList, int apprNum, int apprOrder, int apprNo) {
 		Connection con = getConnection();
-		int result = new DocumentDao().updateApprStatus(con, docNumList);
+		int tempOrder = new DocumentDao().selectApprNo(con, apprNo);
+		int insertResult = 0;
+		int updateResult = 0;
 		
-		if(result > 0) {
+		if(apprOrder == 1 && tempOrder != 1) {
+			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);
+		}else if(apprOrder == 1 && tempOrder == 1) {
+			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);			
+			updateResult = new DocumentDao().updateApprDate(con, apprNo, apprOrder);
+		}else if(apprOrder == 2 && tempOrder != 2) {
+			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);
+		}else if(apprOrder == 2 && tempOrder == 2) {
+			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);
+			updateResult = new DocumentDao().updateApprDate(con, apprNo, apprOrder);
+		}else {
+			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);			
+			updateResult = new DocumentDao().updateApprDate(con, apprNo, apprOrder);
+		}
+		
+		int result = 0;
+		if(insertResult > 0) {
 			commit(con);
+			result += 1;
 		}else {
 			rollback(con);
+		}
+		if(updateResult > 0) {
+			result += 1;
 		}
 		close(con);
 		return result;
 	}
-
+	//결재 비밀번호 체크
 	public boolean checkPassword(int empId, int password) {	
 		Connection con = getConnection();
 		boolean check = new DocumentDao().checkPassword(con, empId,  password);
 		return check;
 	}
-	
 }

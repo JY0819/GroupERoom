@@ -21,11 +21,13 @@ public class SuccessUpdateServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] docNumList = request.getParameter("docNum").split(",");
-		String apprNum = request.getParameter("apprNum");
-		String apprOrder = request.getParameter("apprOrder");
-		System.out.println("결재자 번호: " + apprNum);
-		System.out.println("결재자 차수: " + apprOrder);
-		int result = new DocumentService().updateApprStatus(docNumList);
+		int apprEmpId = Integer.parseInt(request.getParameter("apprEmpId"));
+		int apprOrder = Integer.parseInt(request.getParameter("apprOrder"));
+		int apprNo = Integer.parseInt(request.getParameter("apprNo"));
+		String kind = request.getParameter("kind");
+		 
+		int result = new DocumentService().insertApprStatus(docNumList, apprEmpId, apprOrder, apprNo);
+
 		
 		String page = "";
 		if(result > 0) {

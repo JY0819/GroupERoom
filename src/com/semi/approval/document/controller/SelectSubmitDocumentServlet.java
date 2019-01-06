@@ -24,7 +24,6 @@ public class SelectSubmitDocumentServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String temp = request.getParameter("check");
-		System.out.println("받은 체크값: " + temp);
 		ArrayList<MyDocument> list = new DocumentService().selectSubmitList();
 		int[] apprNum = new int[list.size()];
 		
@@ -42,6 +41,7 @@ public class SelectSubmitDocumentServlet extends HttpServlet {
 				 apprList.get(i).setCheck(check);
 				}
 			}
+			
 			page = "views/approval/taskBox/approvalDocument.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("appr", apprList);

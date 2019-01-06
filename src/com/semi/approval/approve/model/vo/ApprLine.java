@@ -6,16 +6,18 @@ public class ApprLine implements java.io.Serializable{
 	private int apprOrder;
 	private int apprNo;
 	private boolean check;
+	private String approval;
 	
 	public ApprLine() {}
 
-	public ApprLine(int apprEmpId, String apprName, int apprOrder, int apprNo, boolean check) {
+	public ApprLine(int apprEmpId, String apprName, int apprOrder, int apprNo, boolean check, String approval) {
 		super();
 		this.apprEmpId = apprEmpId;
 		this.apprName = apprName;
 		this.apprOrder = apprOrder;
 		this.apprNo = apprNo;
 		this.check = check;
+		this.approval = approval;
 	}
 
 	public int getApprEmpId() {
@@ -57,11 +59,19 @@ public class ApprLine implements java.io.Serializable{
 	public void setCheck(boolean check) {
 		this.check = check;
 	}
+	
+	public String getApproval() {
+		return approval;
+	}
+
+	public void setApproval(String approval) {
+		this.approval = approval;
+	}
 
 	@Override
 	public String toString() {
 		return "ApprLine [apprEmpId=" + apprEmpId + ", apprName=" + apprName + ", apprOrder=" + apprOrder + ", apprNo="
-				+ apprNo + ", check=" + check + "]";
+				+ apprNo + ", check=" + check + ", approval=" + approval + "]";
 	}
 	
 }
