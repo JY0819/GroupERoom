@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.semi.admin.base.model.vo.Department;
+import com.semi.admin.user.model.vo.Employee;
+import com.semi.admin.user.model.vo.LogDepartment;
 
 public class DepartmentDao {
 	private Properties prop = new Properties();
@@ -171,6 +173,41 @@ public class DepartmentDao {
 		}
 		
 		return result;
+	}
+	
+	// 부서에 속한 사원 조회
+	public ArrayList<Employee> deptMember(Connection con, String deptId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Employee> list = null;
+		
+		String query = prop.getProperty("departmentMembers");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, deptId);
+			
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<Employee>();
+
+			while (rset.next()) {
+				Employee emp = new Employee();
+
+				emp.setEmpid(rset.getInt("EMPID"));
+				emp.setEmpName(rset.getString("EMPNAME"));
+				emp.setPositionName(rset.getString("POSITIONNAME"));
+
+				list.add(emp);
+			}
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }

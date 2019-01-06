@@ -3,6 +3,7 @@
 <%
 	Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
 	int empid = loginUser.getEmpid();
+	String adminAuthority = loginUser.getAdminAuthority();
 %>
 
 <style type="text/css">
@@ -19,6 +20,8 @@
 	function openHome() {
 		location.href="/semi/views/main/home.jsp";
 	}	
+	
+	console.log("<%=adminAuthority%>");
 </script>
 
 <nav class="navigation">
@@ -32,8 +35,15 @@
 		<span><a href="<%=request.getContextPath()%>/selectList.no">Board</a></span>
 		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
 		<span><a href="<%=request.getContextPath()%>/myPageMain">MyPage</a></span>
+		<%
+			if(adminAuthority.equals("Y")) {
+		%>
+		
 		<span><a href="<%=request.getContextPath()%>/memberList.me">Admin</a></span>
 		
+		<%
+			}
+		%>
 	</div>
 	
 	<div class="nav-right">

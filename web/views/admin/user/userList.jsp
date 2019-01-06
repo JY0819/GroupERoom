@@ -3,11 +3,14 @@
 <%
 	ArrayList<Employee> list = (ArrayList<Employee>) request.getAttribute("list");
 %>
+<%
+	request.setAttribute("title", "사원 조회");
+%>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
-	var nodeName = "사원 관리";
+	var nodeName = "<%= request.getAttribute("title")%>";
 	
 	$(function(){
 		$("#listArea td").mouseenter(function(){
@@ -20,8 +23,61 @@
 			console.log(num);
 			
 			location.href="<%=request.getContextPath()%>/selectOne.me?num=" + num;
-			
 		});
+		
+		$("#searchBtn").click(function() {
+			var searchName = $("#searchName").val();
+			
+			$.ajax({
+				url : "/semi/searchName.me",
+				type : "post",
+				data : {
+						searchName : searchName
+						},
+				success : function(data) {
+					console.log(data);
+					resetTable(data);
+					
+				},
+				error : function() {
+					console.log("실패!");
+				}
+			});
+		});
+		
+		function resetTable(data){
+			console.log($("#listArea").not("#listHeader"))
+			$("#listArea tr").not("#listHeader").remove(); // 초기화
+			
+			// html 그려주기
+			if(data.length > 0){	// 배열의 크기
+				var html = "";
+				 for(var i = 0; i < data.length; i++){
+					var empid = data[i].empid || "";
+					var empName = data[i]["empName"] || "";
+					var deptName = data[i].deptName || "";
+					var positionName = data[i].positionName || "";
+					var empGender = data[i]["empGender"] || "";
+					var empPhone = data[i]["empPhone"] || "";
+					var whetherOfRetire = data[i]["whetherOfRetire"] || "";
+					
+				 	html += "<tr>                                           ";
+					html += "	<td>" + empid + "</td>               ";
+					html += "	<td>" + empName + "</td>             ";
+					html += "	<td>" + deptName + "</td>            ";
+					html += "	<td>" + positionName + "</td>        ";
+					html += "	<td>" + empGender + "</td>           ";
+					html += "	<td>" + empPhone + "</td>            ";
+					html += "	<td>" + whetherOfRetire + "</td>     ";
+					html += "</tr>                                          ";
+				
+				 }
+				 var header = $("#listArea").html();
+				 var totalhtml = header + html;
+				 $("#listArea").not("#listHeader").html(totalhtml);
+			}	 
+				 
+		}
 	});
 </script>
 
@@ -33,11 +89,17 @@
 	<div class="content-right container">
 		<div>
 			<div>
-				<h1>사원 관리</h1>
+				<h1><%= request.getAttribute("title")%></h1>
 			</div>
-			
+
+			<div class="form-inline">
+				<input class="form-control mr-sm-2" type="search" placeholder="사원 이름을 입력하세요" aria-label="Search" id="searchName"> 
+				<button class="btn btn-outline-success my-2 my-sm-0" id="searchBtn">Search</button>
+			</div>
+
+			<hr>
 			<table class="table" id= "listArea">
-				<tr>
+				<tr id="listHeader">
 					<th>사원 번호</th>
 					<th>이름</th>
 					<th>부서</th>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" 
 	import="java.util.*, com.semi.admin.user.model.vo.*, com.semi.common.vo.*"%>
 <%
-	request.setAttribute("title", "사원 관리");
+	request.setAttribute("title", "사원 조회");
 %>
 <%
 	Employee emp = (Employee) request.getAttribute("emp");
@@ -28,19 +28,16 @@
 	}
 	
 	$(document).ready(function(){
-		var dept = "<%=emp.getDeptName() %>";
+		var dept = "<%=emp.getDeptId()%>";
 		$("#dept").val(dept);
-	}); 
 	
-	$(document).ready(function(){
-		var position = "<%=emp.getPositionName() %>";
+		var position = "<%=emp.getPositionId()%>";
 		$("#position").val(position);
-	}); 
-	
-	$(document).ready(function(){
-		var retireYN = "<%=emp.getWhetherOfRetire() %>";
+
+		var retireYN = "<%=emp.getWhetherOfRetire()%>";
 		$("#retireYN").val(retireYN);
-	}); 
+	});
+	
 	
 </script>
 
@@ -121,7 +118,6 @@
 						<option value="4">마케팅</option>
 						<option value="5">개발</option>
 					</select>
-					<input type="text" class="form-control" id="dept" name="dept" value="<%=emp.getDeptName() %>">
 				</div>
 				
 				<label for="inputDept" class="col-lg-1 control-label">직책</label>
@@ -135,8 +131,7 @@
 						<option value="14">대리</option>
 						<option value="15">사원</option>
 					</select> 
-					<input type="text" class="form-control" id="position" name="position" value="<%=emp.getPositionName() %>">
-				</div>
+				</div> 
 			</div>
 			
 			<div class="form-group" id="divAdminYN">
@@ -179,24 +174,5 @@
 		
 	</div>
 </section>
-
-<!-- <script>
-	$("#inputFileArea").hide();
-	
-	$("#contentImgArea").click(function(){
-		$("#userImg").click();
-	});
-	
-	function loadImg(value){
-		if(value.files && value.files[0]){
-			var reader = new FileReader();
-			
-			reader.onload = function(e){
-				$("#contentImg").attr('src', e.target.result);
-			}
-			reader.readAsDataURL(event.target.files[0]);
-		}
-	};
-</script> -->
 
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

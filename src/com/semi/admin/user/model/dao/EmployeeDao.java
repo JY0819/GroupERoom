@@ -17,6 +17,7 @@ import com.semi.admin.base.model.vo.Department;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.admin.user.model.vo.LogDepartment;
 import com.semi.admin.user.model.vo.LogPosition;
+import com.semi.admin.user.model.vo.UseVac;
 import com.semi.common.vo.Attachments;
 
 public class EmployeeDao {
@@ -131,13 +132,17 @@ public class EmployeeDao {
 		try {
 			for (int i = 0; i < fileList.size(); i++) {
 				pstmt = con.prepareStatement(query);
-
+				System.out.println(fileList.get(i).getAttachPreName());
+				System.out.println(fileList.get(i).getAttachName());
+				System.out.println(fileList.get(i).getAttachPath());
 				pstmt.setInt(1, photoId); // ATTACHNO
 				pstmt.setString(2, fileList.get(i).getAttachPreName());
 				pstmt.setString(3, fileList.get(i).getAttachName());
 				pstmt.setString(4, fileList.get(i).getAttachPath());
 				result = pstmt.executeUpdate();
+				
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -300,7 +305,9 @@ public class EmployeeDao {
 				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
 				emp.setEntryDay(rset.getDate("ENTRYDAY"));
 				emp.setLeaveDay(rset.getDate("LEAVEDAY"));
+				emp.setDeptId(rset.getString("DEPTID"));
 				emp.setDeptName(rset.getString("DEPTNAME"));
+				emp.setPositionId(rset.getString("POSITIONID"));
 				emp.setPositionName(rset.getString("POSITIONNAME"));
 
 				at = new Attachments();
@@ -416,23 +423,233 @@ public class EmployeeDao {
 		return result;
 	}
 
+	/**
+	 * @see 관리자 - 회원 수정
+	 * @author 이주영
+	 * @since 19.01.05
+	 */
 	public int updateEmployee(Connection con, Employee emp) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateEmployee");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, emp.getEmpPwd());
+			pstmt.setString(2, emp.getEmpPhone());
+			pstmt.setString(3, emp.getEmpAddr());
+			pstmt.setString(4, emp.getWhetherOfRetire());
+			pstmt.setDate(5, emp.getLeaveDay());
+			pstmt.setInt(6, emp.getEmpid());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
-
+	
+	/**
+	 * @see 관리자 - 회원 수정 (부서 이력 변경)
+	 * @author 이주영
+	 * @since 19.01.05
+	 */
 	public int updateEmpDept(Connection con, Employee emp, LogDepartment ld) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateEmpLogDept");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, emp.getEmpid());
+			pstmt.setString(2, ld.getDeptId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
-
+	
+	/**
+	 * @see 관리자 - 회원 수정 (직책 이력 변경)
+	 * @author 이주영
+	 * @since 19.01.05
+	 */
 	public int updateEmpPos(Connection con, Employee emp, LogPosition lp) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateEmpLogPos");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, lp.getPositionId());
+			pstmt.setInt(2, emp.getEmpid());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
-	
+	// 아이디 중복검사
+	public int idCheck(Connection con, Integer userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("empIdCheck");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
+	// 이름으로 검색
+	public ArrayList<Employee> searchMember(Connection con, String userName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Employee> list = null;
+
+		String query = prop.getProperty("searchEmpName");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, userName);
+			
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<Employee>();
+
+			while (rset.next()) {
+				Employee emp = new Employee();
+
+				emp.setEmpid(rset.getInt("EMPID"));
+				emp.setEmpName(rset.getString("EMPNAME"));
+				emp.setEmpGender(rset.getString("EMPGENDER"));
+				emp.setEmpPhone(rset.getString("EMPPHONE"));
+				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
+				emp.setDeptName(rset.getString("DEPTNAME"));
+				emp.setPositionName(rset.getString("POSITIONNAME"));
+
+				list.add(emp);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	// 사원 휴가 내역 리스트
+	public ArrayList<UseVac> selectVacList(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<UseVac> list = null;
+
+		String query = prop.getProperty("selectMemberVacList");
+
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+
+			list = new ArrayList<UseVac>();
+
+			while (rset.next()) {
+				UseVac vac = new UseVac();
+
+				vac.setEmpId(rset.getInt("EMPID"));
+				vac.setEmpName(rset.getString("EMPNAME"));
+				vac.setDeptName(rset.getString("DEPTNAME"));
+				vac.setTotalDay(rset.getString("TOTALDAY"));
+				vac.setUseStart(rset.getDate("USESTART"));
+				vac.setUseEnd(rset.getDate("USEEND"));
+				
+				list.add(vac);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return list;
+	}
 	
+	// 휴가 사원 이름으로 검색
+	public ArrayList<UseVac> searchVac(Connection con, String userName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<UseVac> list = null;
+
+		String query = prop.getProperty("searchVacation");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, userName);
+			
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<UseVac>();
+
+			while (rset.next()) {
+				UseVac vac = new UseVac();
+
+				vac.setEmpId(rset.getInt("EMPID"));
+				vac.setEmpName(rset.getString("EMPNAME"));
+				vac.setDeptName(rset.getString("DEPTNAME"));
+				vac.setTotalDay(rset.getString("TOTALDAY"));
+				vac.setUseStart(rset.getDate("USESTART"));
+				vac.setUseEnd(rset.getDate("USEEND"));
+
+				list.add(vac);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 
 }
