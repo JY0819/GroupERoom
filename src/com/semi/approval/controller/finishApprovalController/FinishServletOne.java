@@ -1,6 +1,8 @@
 package com.semi.approval.controller.finishApprovalController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.semi.approval.approve.model.vo.DetailDoc;
+import com.semi.approval.model.service.finishApprovalService.DetailOneService;
+import com.semi.approval.model.service.finishApprovalService.FinishApprovalService;
+import com.semi.board.Free.model.vo.Attachment;
 
 /**
  * Servlet implementation class FinishServletOne
@@ -30,9 +37,19 @@ public class FinishServletOne extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int docno = Integer.parseInt(request.getParameter("docno"));
 		System.out.println("docno : " + docno);
+		HashMap<String,Object> hmap = new DetailOneService().selectDetailMap(docno);
+		DetailDoc d =  (DetailDoc)hmap.get("detaildoc");
+		ArrayList<Attachment> fileList = (ArrayList<Attachment>)hmap.get("attachment");
 		
 		String page = "";
-		page = "views/approval/documentList/documentDetail.jsp";
+		if(hmap != null) {
+			page = "views/approval/documentList/documentDetail.jsp";
+			request.setAttribute("d", d);
+			request.setAttribute("fileList", fileList);
+		}
+		else {
+			System.out.println("오류");
+		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	}
