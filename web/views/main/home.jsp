@@ -49,8 +49,7 @@ p.imgText {
 		} else if (e.id == 'board') {
 			location.href="<%=request.getContextPath()%>/selectList.fr";
 		} else if (e.id == 'myP') {
-			location.href="<%=request.getContextPath()%>
-	/myPageMain";
+			location.href="<%=request.getContextPath()%>/myPageMain";
 		} else if (e.id == 'admin') {
 			location.href = "/semi/views/admin/user/userList.jsp";
 		}
