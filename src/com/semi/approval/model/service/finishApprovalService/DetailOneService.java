@@ -1,8 +1,10 @@
 package com.semi.approval.model.service.finishApprovalService;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.model.dao.finishApprovalDao.DetailOneDao;
 import static com.semi.common.JDBCTemplate.*;
 
@@ -19,6 +21,14 @@ public class DetailOneService {
 			
 		return hmap;
 		
+	}
+
+	public ArrayList<ApprLine> selectLineList(int docno) {
+		
+		Connection con = getConnection();
+		ArrayList<ApprLine> list = new DetailOneDao().selelctList(con,docno);
+		close(con);
+		return list;
 	}
 
 }

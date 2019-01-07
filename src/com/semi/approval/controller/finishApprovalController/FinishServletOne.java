@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.approve.model.vo.DetailDoc;
 import com.semi.approval.model.service.finishApprovalService.DetailOneService;
 import com.semi.approval.model.service.finishApprovalService.FinishApprovalService;
@@ -40,12 +41,13 @@ public class FinishServletOne extends HttpServlet {
 		HashMap<String,Object> hmap = new DetailOneService().selectDetailMap(docno);
 		DetailDoc d =  (DetailDoc)hmap.get("detaildoc");
 		ArrayList<Attachment> fileList = (ArrayList<Attachment>)hmap.get("attachment");
-		
+		ArrayList<ApprLine> linelist = new DetailOneService().selectLineList(docno);
 		String page = "";
 		if(hmap != null) {
 			page = "views/approval/documentList/documentDetail.jsp";
 			request.setAttribute("d", d);
 			request.setAttribute("fileList", fileList);
+			request.setAttribute("linelist", linelist);
 		}
 		else {
 			System.out.println("오류");
