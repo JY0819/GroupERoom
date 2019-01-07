@@ -41,9 +41,9 @@ public class SelectDocumentServlet extends HttpServlet {
 		limit = 5;
 		
 		
-		TrashService trashService =new TrashService();
+		DocumentService documentService = new DocumentService();
 		//전체 게시글 수 조회
-		int listCount = trashService.getListCount();
+		int listCount = documentService.getListCount();
 		
 		//총 페이지 수 계산
 		//예를 들어, 목록 수가 123개면 페이지수는 13페이지가 필요하다.
@@ -63,6 +63,7 @@ public class SelectDocumentServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
 		ArrayList<MyDocument> list = new DocumentService().selectList(currentPage,limit);
+		
 		String page = "";
 		if(list != null) {
 			page = "views/approval/taskBox/myDocument.jsp";

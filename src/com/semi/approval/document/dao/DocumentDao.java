@@ -422,47 +422,59 @@ public class DocumentDao {
 		return result;
 	}
 	
+		public int getListCount(Connection con) {
+			Statement stmt = null;
+			int listCount = 0;
+			ResultSet rset = null;
+			String query = prop.getProperty("listCount");
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(stmt);
+			}
+			
+			
+			return listCount;
+		}
+	
 	//내문서함 문서 조회
 	public ArrayList<MyDocument> selectList(Connection con, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
 		ResultSet rset = null;
-		ResultSet rset2= null;
 		MyDocument myDocument = null;
 		ArrayList<MyDocument> list = null;
 		
-		String query = prop.getProperty("selectList1");
+		String query = prop.getProperty("selectList");
 		
 		try {
 			
-			pstmt = con.prepareStatement(query);
+			int count = 1;
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;		
+			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			int count = 1;
-			
 			rset = pstmt.executeQuery();
+			
 			list = new ArrayList<MyDocument>();
 
 			while(rset.next()) {
 				myDocument = new MyDocument();
 				myDocument.setNum(count);
-				myDocument.setWriterNum(rset.getInt("APPRWRITER"));
+				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
 				myDocument.setDocNum(rset.getInt("DOCNO"));
-				String query2 = prop.getProperty("selectList2");
-				pstmt2 = con.prepareStatement(query2);
-				pstmt2.setInt(1, myDocument.getDocNum());
-				pstmt2.setInt(2, startRow);
-				pstmt2.setInt(3, endRow);
-				rset2 = pstmt2.executeQuery();
-				if(rset2.next()) {
-					myDocument.setTitle(rset2.getString("MANAGETITLE"));
-					myDocument.setWriteDay(rset2.getDate("MANAGEDAY"));
-					myDocument.setSubmission(rset2.getString("SUBMISSION"));
-				}
+				myDocument.setTitle(rset.getString("MANAGETITLE"));
+				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
+				myDocument.setSubmission(rset.getString("SUBMISSION"));
 				list.add(myDocument);
 				count++;
 			}
@@ -597,7 +609,7 @@ public class DocumentDao {
 	}
 
 	//반려함 문서조회
-	public ArrayList<MyDocument> selectReturnDocumentList(Connection con) {
+	public ArrayList<MyDocument> selectReturnDocumentList(Connection con, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rset = null;
@@ -608,10 +620,13 @@ public class DocumentDao {
 		String query = prop.getProperty("selectReturnDocument1");
 		
 		try {
-			
-			pstmt = con.prepareStatement(query);
-			rset = pstmt.executeQuery();
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;		
 			int count = 1;
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
 			list = new ArrayList<MyDocument>();
 			
 			while(rset.next()) {
@@ -620,18 +635,19 @@ public class DocumentDao {
 				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
-				myDocument.setOpinion(rset.getString("OPINION"));
-				myDocument.setResult(rset.getString("APPRSTATUS"));
-				int docNum = rset.getInt("DOCNO");
+				myDocument.setDocNum(rset.getInt("DOCNO"));
+				int docNum = myDocument.getDocNum();
+				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
+				myDocument.setApprNum(rset.getInt("APPRNO"));
 				String query2 = prop.getProperty("selectReturnDocument2");
 				pstmt2 = con.prepareStatement(query2);
 				pstmt2.setInt(1, docNum);
+				pstmt2.setInt(2, startRow);
+				pstmt2.setInt(3, endRow);
 				rset2 = pstmt2.executeQuery();
 				if(rset2.next()) {
-					myDocument.setDocNum(rset2.getInt("MANAGEDOCNO"));
-					myDocument.setWriteDay(rset2.getDate("MANAGEDAY"));
-				}
-				
+					myDocument.setResult(rset2.getString("APPRSTATUS"));
+				}				
 				list.add(myDocument);
 				count++;
 			}
@@ -904,5 +920,28 @@ public class DocumentDao {
 				close(pstmt2);
 			}
 			return result;
+		}
+
+		//반려함 listCount
+		public int getListReturnCount(Connection con) {
+			Statement stmt = null;
+			int listCount = 0;
+			ResultSet rset = null;
+			String query = prop.getProperty("listReturnCount");
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(stmt);
+			}
+			
+			
+			return listCount;
 		}
 }
