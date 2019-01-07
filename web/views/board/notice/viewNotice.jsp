@@ -132,7 +132,7 @@ body {
 			<br>
 			<div class="detailNoticeBtn">
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
-				<% if(loginUser != null && loginUser.getEmpid()==2){ %>
+				<% if(loginUser != null && loginUser.getAdminAuthority().equals("Y")){ %>
 				<button id="editBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectNotice.no?num=<%=n.getBno()%>'">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
 				<%} %>
