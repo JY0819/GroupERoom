@@ -41,42 +41,45 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 			<h1 align="left">| 공지사항 |</h1>
 		</div>
 		<% if(loginUser != null && loginUser.getAdminAuthority().equals("Y")){ %>
+		
 		<div class="noticeListBtn">
+		
 			<button type="button" id="writeBtn" class="btn btn-primary">작성하기</button>
-<!-- 			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
- -->		
+ 			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
+ 		
 		</div>
 		<%} %>
 		<br>
+		<form action="" id="formId" method="get">
 		<table class="table table-striped" id="listArea">
-			
+			<thead>
 				<tr>
-					<th><input type="checkbox" id="checkAll"></th>
+					<th><input type="checkbox" name="checkAll" id="th_checkAll"/></th>
 					<th>번호</th>
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
 				</tr>
-			
+		</thead>
+
+		<tbody>
 	
 					<% for(Notice n : list){ %>
 				 <tr>
-					<td><input type="checkbox" id="checkAll"></td>
-					 <td><%=n.getBno() %></td> 
-					<td><%=n.getbTitle() %></td>
+					<td><input type="checkbox" name="checkRow" value="${content.IDX}" /></td>
+					 <td><input type="hidden" name="bno"><%=n.getBno() %></td> 
+					<td id="realTitle"><%=n.getbTitle() %></td>
 					<td><%=n.getWriterId() %></td>
 					<td><%=n.getbDate() %></td>
 					<td><%=n.getbClicks() %></td>
 				</tr>
 					<%} %>
-	
-	
-			
-	
-				
-			
+		
+			</tbody>
 		</table>
+		</form>
+		
 		<form action="<%=request.getContextPath() %>/search.no" method="get" >
 		
 		<div id="searchBtn" align="center">
@@ -155,26 +158,49 @@ if(p == currentPage){
 </section>
 
 <script>
-	$(function(){
-		$("#writeBtn").click(function(){
-			location.href="/semi/views/board/notice/insertNotice.jsp";
+	
+		$(function(){
+			$("#writeBtn").click(function(){
+				location.href="/semi/views/board/notice/insertNotice.jsp";
+			});
 		});
-	});
-	
-	
+		
+		
+		function checkAll(){
+		      if( $("#th_checkAll").is(':checked') ){
+		        $("input[name=checkRow]").prop("checked", true);
+		      }else{
+		        $("input[name=checkRow]").prop("checked", false);
+		      }
+		}
+
+		
+		
 	$(function(){
-		$("#listArea td").mouseenter(function(){
-			$(this).parent().css({"color":"darkgrey", "cursor":"pointer"});
+		$("#listArea td").eq(2).mouseenter(function(){
+			$(this).css({"color":"darkgrey", "cursor":"pointer"});
 		
 		
 		}).mouseout(function(){
-			$(this).parent().css({"color":"black"})
+			$(this).css({"color":"black"})
 		
 		}).click(function(){
 			var num = $(this).parent().children().eq(1).text();//->글번호 가져오기
 			console.log(num);
 			
 			location.href="<%=request.getContextPath()%>/selectOne.no?num="+num;
+		});
+	});
+	
+	
+	
+	$(function(){
+		$("#deleteBtn").click(function(){
+			var num = $("tbody").children().children().eq(1).text();
+			console.log(num);
+			alert("정말로 삭제하시겠습니까?");
+			$("#formId").attr("action", "<%=request.getContextPath()%>/deleteNotice.no?num="+num);
+			$("#formId").submit();
 		});
 	});
 </script>

@@ -41,7 +41,7 @@ public class UpdateFreeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(ServletFileUpload.isMultipartContent(request)) {
-			System.out.println("123");
+			System.out.println("----------수정서블릿----------");
 			//전송 파일 용량 제한 : 10MB로 제한
 			int maxSize = 1024 * 1024 * 10;
 
@@ -56,7 +56,8 @@ public class UpdateFreeServlet extends HttpServlet {
 			System.out.println("servlet multiRequest : "+multiRequest);
 
 			
-			
+			String preFile = multiRequest.getParameter("preFile");
+			System.out.println("preFile: "+preFile);
 			int originAno = Integer.parseInt(multiRequest.getParameter("originAno"));
 		
 			//다중 파일을 묶어서 업로드 하기 위해 컬렉션 사용
@@ -70,50 +71,46 @@ public class UpdateFreeServlet extends HttpServlet {
 			Enumeration<String> files = multiRequest.getFileNames();
 			//Enumeration: 각각의 객체를 한 번에 하나씩 처리할 수 있음
 			
-			// 객체 생성
-						Free f = new Free();
-						f.setbTitle(multiTitle);
-						f.setbContent(multiContent);			
-						f.setWriterId(String.valueOf(((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid()));
-
-						//Attachment 객체 생성하여 arrayList 객체 생성
-						Attachment at = new Attachment();
-
-						
-
-							at.setFilePath(filePath);
-							at.setOriginName(originFiles.get(0));
-							at.setChangeName(saveFiles.get(0));
-							System.out.println(at.getFilePath()
-									+at.getChangeName());
-
-						
 			
 			
 			
 			while(files.hasMoreElements()) {//다음 요소가 있는지
-				int preFile=Integer.parseInt(multiRequest.getParameter("preFile"));
-				int newFile=Integer.parseInt(multiRequest.getParameter("newFile"));
-				System.out.println("preFile: "+preFile);
-				System.out.println("newFile: "+newFile);
-
-				
 				String name=files.nextElement();
-
-				if(newFile=null) {
-					f.setFile02(preFile);
-				}else {
-					
-				}
 				System.out.println("name : "+name); //name:실제 파일을 가져오기 위한 key역할을 함
 
-				saveFiles.add(multiRequest.getFilesystemName(name));
+				String newFile=multiRequest.getFilesystemName(name);
+				System.out.println("newFile: "+newFile);
+				
 
-				originFiles.add(multiRequest.getOriginalFileName(name));
+				
 
-				System.out.println("fileSystem name: "+multiRequest.getFilesystemName(name));
+				if(newFile == null) {//수정 시 새로운 첨부 파일 없을 경우
+					saveFiles.add(multiRequest.getFilesystemName(preFile));
 
-				System.out.println("originFile name: "+multiRequest.getOriginalFileName(name));
+					originFiles.add(multiRequest.getOriginalFileName(preFile));
+					
+					System.out.println("fileSystem name: "+multiRequest.getFilesystemName(preFile));
+
+					System.out.println("originFile name: "+multiRequest.getOriginalFileName(preFile));
+				
+
+				}else {//수정 시 새로운 파일을 첨부 한 경우
+			/*		saveFiles.add(multiRequest.getFilesystemName(newFile));
+
+					originFiles.add(multiRequest.getOriginalFileName(newFile));*/
+					/*System.out.println("newFile fileSystem name: "+multiRequest.getFilesystemName(newFile));
+
+					System.out.println("newFile originFile name: "+multiRequest.getOriginalFileName(newFile));
+					 */		
+					
+					saveFiles.add(newFile);
+					originFiles.add(multiRequest.getOriginalFileName(name));
+					System.out.println("saveFiles: "+saveFiles);
+					System.out.println("originFiles: "+originFiles);
+				}
+				
+				
+		
 			}
 			String multiTitle = multiRequest.getParameter("title");
 

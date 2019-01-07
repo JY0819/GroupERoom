@@ -40,8 +40,7 @@ public class SelectOneBoardServlet extends HttpServlet {
 	
 		HashMap<String, Object> hmap = new FreeService().selectOne(num);
 		Free f = (Free)hmap.get("Free");
-		Attachment at 
-        = (Attachment)hmap.get("attachment");
+		Attachment at = (Attachment)hmap.get("attachment");
 		
 		ArrayList<Free> reply = new FreeService().selectReply(num);
 		String page ="";

@@ -69,15 +69,23 @@ body {
 					</tbody>
 					
 				</table>
+				<input type="hidden" id="inputFile" class="form-control" name="originAno"  value="<%=at.getAno()%>">
 				
 				<div class="form-group">
-					<label for="inputattach">파일첨부</label>
+					<label for="inputattach">기존파일</label>
+					<br>
+					<%=at.getOriginName()%>
+
 
 						<div class="bootstrap-filestyle input-group">
-							<input type="hidden" id="inputFile" class="form-control" name="originAno"  value="<%=at.getAno()%>">
-							<input type="text" id="newFile" class="form-control" name="preFile" disabled="" value="<%=at.getOriginName()%>">
 						
-							<input type="text" id="newFile" class="form-control" name="newFile" disabled="" value="<%=at.getOriginName()%>">
+							<label for="inputattach">파일첨부</label>
+							
+						 <input id="fileInput" name="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+												<input type="hidden" class="form-control" name="userFile" value="<%=at.getOriginName()%>"disabled="" >
+					
+					<input type="text" id="userfile" class="form-control" name="newFile" disabled="" >
+							
 							<span class="group-span-filestyle input-group-btn" tabindex="0">
 							<label for="fileInput" class="btn btn-default ">
 								<span><i class="fas fa-file-upload"></i></span>
@@ -94,6 +102,11 @@ body {
 			
 			
 		</div>
+		<div>
+				<h1></h1>
+				<br>
+				<h1></h1>
+			</div>
 	</div>
 	
 	<script>
