@@ -1,13 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
- 	pageEncoding="UTF-8" import="java.util.*, com.semi.admin.user.model.vo.*"%>
+ 	pageEncoding="UTF-8" import="java.util.*, com.semi.admin.user.model.vo.*, com.semi.common.vo.*"%>
 <%
 	request.setAttribute("title", "휴가 조회");
 %>
 <%
-	ArrayList<UseVac> list = (ArrayList<UseVac>) request.getAttribute("list");
+	ArrayList<LogOfVacation> list = (ArrayList<LogOfVacation>) request.getAttribute("list");
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
+	
 %>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
-
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/userdetail.css">
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "<%= request.getAttribute("title")%>";
@@ -99,25 +107,30 @@
 			<table class="table" id="listArea">
 				<tr id="listHeader">
 					<th>사원 번호</th>
-					<th>이름</th>
 					<th>부서</th>
-					<th>총 휴가일 수</th>
-					<th>휴가 시작일</th>
-					<th>휴가 종료일</th>
-<!-- 						<th>잔여일</th> -->
+					<th>이름</th>
+					<th>승인자</th>
+					<th>휴가 기간</th>
+					<th>사용일</th>
+					<th>잔여일</th>
+					<th>승인일</th>
 				</tr>
 				
 				<%
-					for (UseVac vac : list) {
+					for (LogOfVacation vac : list) {
 				%>
 				
 				<tr>
 					<td><%=vac.getEmpId()%></td>
-					<td><%=vac.getEmpName()%></td>
 					<td><%=vac.getDeptName()%></td>
-					<td><%=vac.getTotalDay()%></td>
-					<td><%=vac.getUseStart()%></td>
-					<td><%=vac.getUseEnd()%></td>
+					<td><%=vac.getEmpName()%></td>
+					<td><%=vac.getApprEmpId()%></td>
+					<td><%=vac.getUseStart()%> ~ <%=vac.getUseEnd() == null ? "" : vac.getUseEnd()%></td>
+					<td><%=vac.getDays()%></td>
+					<td></td>
+					<td><%=vac.getUseVacAppDay()%></td>
+					
+					
 				</tr>
 				
 				<%
@@ -125,17 +138,59 @@
 				%>
 			</table>
 		</div>
+		<div class="text-center">
+			<ul class="pagination">
+			<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=1'"><<</button>
+				<%
+					if (currentPage <= 1){
+				%>
+					<button disabled><</button>
+				<%
+					} else {
+				%>
+					<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%=currentPage - 1%>'"><</button>
+				<%
+					}
+				%>
+				
+				<%
+				for (int p = startPage; p <= endPage; p++) {
+
+						if (p == currentPage) {
+				%>
+				
+						<li disabled><%= p %></li>
+				<%
+						} else {
+				%>
+						<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%= p %>'"><%= p %></button>
+				<%
+						}
+				%>
+				<%
+					}
+				%>
+				
+				
+				<%
+					if (currentPage >= maxPage) {
+				%>
+					<button disabled>></button>
+				<%
+					} else {
+				%>
+					<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%=currentPage + 1%>'">></button>
+				<%
+					}
+				%>
+
+				<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%=maxPage%>'">>></button>
+				
+			</ul>
+		</div>
 	</div>
 	
-	<div class="text-center">
-		<ul class="pagination">
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-		</ul>
-	</div>
+	
 </section>
 
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

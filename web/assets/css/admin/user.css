@@ -24,10 +24,3 @@ body {
 	background: orange;
 }
 
-.pagination > button {
-	background: white;
-	border: 1px solid lightgray;
-	color: #045FB4;
-	height: 32px;
-	width: 40px;
-}

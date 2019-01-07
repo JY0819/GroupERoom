@@ -15,6 +15,7 @@ import com.semi.admin.base.model.vo.Department;
 import com.semi.admin.user.model.dao.EmployeeDao;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.admin.user.model.vo.LogDepartment;
+import com.semi.admin.user.model.vo.LogOfVacation;
 import com.semi.admin.user.model.vo.LogPosition;
 import com.semi.admin.user.model.vo.UseVac;
 import com.semi.common.service.CommonSeqService;
@@ -200,24 +201,12 @@ public class EmployeeService {
 		return list;
 	}
 	
-/*
-	// 사원 휴가 내역 리스트
-	public ArrayList<UseVac> selectVacList() {
-		Connection con = getConnection();
-
-		ArrayList<UseVac> list = new EmployeeDao().selectVacList(con);
-
-		close(con);
-
-		return list;
-	}
-	*/
 	
 	// 페이징 처리 - 사원 휴가 리스트 조회
-	public ArrayList<Employee> selectVacList(int currentPage, int limit) {
+	public ArrayList<LogOfVacation> selectVacList(int currentPage, int limit) {
 		Connection con = getConnection();
 
-		ArrayList<Employee> list = new EmployeeDao().selectVacList(con, currentPage, limit);
+		ArrayList<LogOfVacation> list = new EmployeeDao().selectVacList(con, currentPage, limit);
 		
 		close(con);
 		
