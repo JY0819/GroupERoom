@@ -48,10 +48,9 @@
 				<tr>
 					<th><input type="checkbox" name="All" id="checkAlltr"
 						onclick="checkAll();" style="height: 17px; width: 17px;"></th>
-					<th>작 성 자</th>
-					<th>처 리 자</th>
 					<th>문 서 번 호</th>
 					<th>결 재 번 호</th>
+					<th>작 성 날 짜</th>
 					<th>결 과</th>
 					
 				</tr>	
@@ -64,14 +63,10 @@
 						<tr>
 						<td><input type="checkbox" name="checkTd"
 							style="height: 17px; width: 17px;" ></td>
-						<td><%= trashTable.getWriter() %></td>
-						<%if(!(trashTable.getManager() == null)){%>
-						<td><%=trashTable.getManager() %></td>
-						<%}else{ %>
-						<td></td>
-						<%} %>
+						
 						<td><%= trashTable.getDocnum() %></td>
 						<td><%= trashTable.getApprnum() %></td>
+						<td><%= trashTable.getApprDay() %></td>
 						
 						<%-- <input type="hidden" class="apprno" value="<%= a.getApprNo() %>"> --%>
 						<% if(trashTable.getResult().equals("N")) {%>
@@ -214,8 +209,8 @@
 		 	checkbox.each(function(i){
 		 		var tr = checkbox.parent().parent().eq(i);
 		 		var td = tr.children();
-		 	if(td.eq(5).text()=='승인대기중'){
-             apprno = td.eq(4).text();
+		 	if(td.eq(4).text()=='승인대기중'){
+             apprno = td.eq(2).text();
              tdArr.push(apprno);
              console.log(apprno);
              location.href="<%=request.getContextPath()%>/trashmove.tm?apprno=" + tdArr+",";

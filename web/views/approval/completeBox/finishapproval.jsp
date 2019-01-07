@@ -45,11 +45,11 @@
 				</tr>
 			</thead>
 			<tbody>
+				
 				<%for(FinishApproval finish : list) {%>
 				<%if(employee.getEmpid() == finish.getEmpid()){ %>
 				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
+					<td><input type="checkbox" name="checkTd" style="height: 17px; width: 17px;"></td>
 					<td><%= finish.getApprNo() %></td>
 					<td><%= finish.getApprWriter() %></td>
 					<td name="mouseent"><%= finish.getDocNo() %></td>
@@ -57,10 +57,10 @@
 					<td><%= finish.getResult().replaceAll("Y", "승인") %></td>
 					<td><%= finish.getApprDay() %></td>
 					<td><%= finish.getApprDate() %></td>
-
 				</tr>
 				<%} %>
 				<%} %>
+				
 			</tbody>
 
 		</table>

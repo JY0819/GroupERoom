@@ -41,7 +41,7 @@
 		<tr>
 		<!--이미지 태그넣기  -->
 			<td class="td">첨부파일</td>
-			<td class="content">&nbsp;</td>
+			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"></td>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1"></td>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve2"></td>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
