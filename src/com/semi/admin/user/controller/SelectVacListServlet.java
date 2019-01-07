@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.admin.user.model.service.EmployeeService;
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.admin.user.model.vo.LogOfVacation;
 import com.semi.admin.user.model.vo.UseVac;
 import com.semi.common.vo.PageInfo;
 import com.semi.common.vo.PageInfoDetail;
@@ -62,7 +63,17 @@ public class SelectVacListServlet extends HttpServlet {
 		
 		PageInfo pi = pid.getPageInfo(); // 페이지 정보
 		
-		ArrayList<Employee> list = new EmployeeService().selectVacList(currentPage, limit);
+		ArrayList<LogOfVacation> list = new EmployeeService().selectVacList(currentPage, limit);
+		
+		
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getUseEnd() == null) {
+				list.get(i).setType("반차");
+			} else {
+				list.get(i).setType("연차");
+			}
+		}
+		
 		
 		String page = "";
 		if (list != null) {

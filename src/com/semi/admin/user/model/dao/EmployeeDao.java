@@ -5,6 +5,7 @@ import static com.semi.common.JDBCTemplate.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,8 @@ import java.util.Properties;
 import com.semi.admin.base.model.vo.Department;
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.admin.user.model.vo.LogDepartment;
+import com.semi.admin.user.model.vo.LogOfVacation;
 import com.semi.admin.user.model.vo.LogPosition;
-import com.semi.admin.user.model.vo.UseVac;
 import com.semi.common.vo.Attachments;
 
 public class EmployeeDao {
@@ -661,10 +662,10 @@ public class EmployeeDao {
 	}*/
 	
 	// 페이징 처리 - 사원 휴가 리스트 조회
-	public ArrayList<Employee> selectVacList(Connection con, int currentPage, int limit) {
+	public ArrayList<LogOfVacation> selectVacList(Connection con, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Employee> list = null;
+		ArrayList<LogOfVacation> list = null;
 
 		String query = prop.getProperty("selectMemberVacList");
 		
@@ -679,22 +680,23 @@ public class EmployeeDao {
 
 			rset = pstmt.executeQuery();
 
-			list = new ArrayList<Employee>();
+			list = new ArrayList<LogOfVacation>();
 			
 			while (rset.next()) {
-				UseVac vac = new UseVac();
+				LogOfVacation v = new LogOfVacation();
 
-				vac.setEmpId(rset.getInt("EMPID"));
-				vac.setEmpName(rset.getString("EMPNAME"));
-				vac.setDeptName(rset.getString("DEPTNAME"));
-				vac.setTotalDay(rset.getString("TOTALDAY"));
-				vac.setUseStart(rset.getDate("USESTART"));
-				vac.setUseEnd(rset.getDate("USEEND"));
+				v.setEmpId(rset.getInt("EMPID"));
+				v.setUseReason(rset.getString("USEREASON"));
+				v.setEmpName(rset.getString("EMPNAME"));
+				v.setDeptName(rset.getString("DEPTNAME"));
+				v.setUseStart(rset.getDate("USESTART"));
+				v.setUseEnd(rset.getDate("USEEND"));
+				v.setUseVacAppDay(rset.getDate("USEVACAPPDAY"));
+				v.setApprEmpId(rset.getString("APPREMPID"));
+				v.setDays(rset.getInt("CNT"));	// 사용일
 				
-				list.add(vac);
+				list.add(v);
 			}
-
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -704,7 +706,7 @@ public class EmployeeDao {
 		
 		return list;
 	}
-	
+	/*
 	// 휴가 사원 이름으로 검색
 	public ArrayList<UseVac> searchVac(Connection con, String userName) {
 		PreparedStatement pstmt = null;
@@ -743,7 +745,7 @@ public class EmployeeDao {
 		}
 		return list;
 	}
-	
+	*/
 	// 전체 사원 수 조회
 	public int getListCount(Connection con) {
 		Statement stmt = null;

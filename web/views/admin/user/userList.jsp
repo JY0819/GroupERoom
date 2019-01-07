@@ -13,7 +13,7 @@
 	request.setAttribute("title", "사원 조회");
 %>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
-<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/user.css">
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/userdetail.css">
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "<%= request.getAttribute("title")%>";
