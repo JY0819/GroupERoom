@@ -39,19 +39,20 @@ public class InsertScheduleServlet extends HttpServlet {
 		int empId=loginUser.getEmpid();
 		String repeat=request.getParameter("repeat");
 		int cnt = -1;
-		int month=Integer.parseInt(request.getParameter("month"));
+		int year=Integer.parseInt(request.getParameter("yearR"));
+		int month=Integer.parseInt(request.getParameter("monthR"));
+		System.out.println(year +""+ month);
 		String tempDate1=request.getParameter("scheDate");
 		tempDate1=tempDate1.replace("년 ", "-").replace("월 ","-").replace("일","");
 		System.out.print("날짜 : "+tempDate1);
 		
 		String temptime=request.getParameter("time");
 		String scheduleTime=temptime+":00";
-		System.out.println(" / 시간 : "+temptime);
+		System.out.print(" / 시간 : "+temptime);
 		
 		String scheduleDate=tempDate1+" "+temptime;
 		
-		System.out.print("empId : "+empId);
-		System.out.print(" / 클래스 : "+calendarClass+" / ");
+		System.out.print(" / empId : "+empId+" / 클래스 : "+calendarClass+" / ");
 		System.out.println(scheduleDate);
 		//Date scheDate=Date.valueOf(tempDate+' '+temptime);
 		/*temptime=temptime+".0";
@@ -77,9 +78,9 @@ public class InsertScheduleServlet extends HttpServlet {
 					case "일" : cnt=1; break;	case "월" : cnt=2; break;
 					case "화" : cnt=3; break;	case "수" : cnt=4; break;
 					case "목" : cnt=5; break;	case "금" : cnt=6; break;
-					case "토" : cnt=0; break;
+					case "토" : cnt=7; break;
 				}
-				result=new ScheduleService().insertRepeatSchedule(month, cnt, reqSche);
+				result=new ScheduleService().insertRepeatSchedule(year, month, cnt, reqSche);
 				System.out.println(month+"월 "+repeat+"/"+cnt);
 			}else {
 				if(reqSche.getCalendarClass()==1) {
