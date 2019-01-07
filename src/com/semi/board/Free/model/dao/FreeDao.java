@@ -388,6 +388,7 @@ System.out.println("상세보기 dao : "+query);
 				pstmt.setInt(4, f.getBno());
 				
 				result=pstmt.executeUpdate();
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -91,7 +91,7 @@ body {
 					<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
 						<span class="group-span-filestyle input-group-btn" tabindex="0">
 <!-- 						<label for="fileInput" class="btn btn-default ">
- -->							<span><i  onclick="location.href="<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>"></i></span>
+ -->							<span><i  onclick="location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'"></i></span>
 						<!-- </label> -->
 					</span>
 											<button onclick="location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'">다운로드</button>

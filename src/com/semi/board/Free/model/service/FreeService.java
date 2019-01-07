@@ -88,6 +88,9 @@ public class FreeService {
 			int result=0;
 			int result0 = new FreeDao().updateAttachment(con, at);
 			System.out.println("updateAttachment result0 : "+result0);
+			if(result0>0) {
+				commit(con);
+			}
 			int ano=new FreeDao().selectCurrval(con);
 			
 			f.setFile02(ano);
