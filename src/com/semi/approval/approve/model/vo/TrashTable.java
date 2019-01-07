@@ -1,9 +1,10 @@
 package com.semi.approval.approve.model.vo;
 
+import java.sql.Date;
+
 public class TrashTable implements java.io.Serializable{
 	private int empid;
-	private String writer;
-	private String manager;
+	private Date apprDay;
 	private int docnum;
 	private int apprnum;
 	private String result;
@@ -12,11 +13,10 @@ public class TrashTable implements java.io.Serializable{
 	public TrashTable() {}
 
 
-	public TrashTable(int empid, String writer, String manager, int docnum, int apprnum, String result) {
+	public TrashTable(int empid, Date apprDay, int docnum, int apprnum, String result) {
 		super();
 		this.empid = empid;
-		this.writer = writer;
-		this.manager = manager;
+		this.apprDay = apprDay;
 		this.docnum = docnum;
 		this.apprnum = apprnum;
 		this.result = result;
@@ -33,23 +33,13 @@ public class TrashTable implements java.io.Serializable{
 	}
 
 
-	public String getWriter() {
-		return writer;
+	public Date getApprDay() {
+		return apprDay;
 	}
 
 
-	public void setWriter(String writer) {
-		this.writer = writer;
-	}
-
-
-	public String getManager() {
-		return manager;
-	}
-
-
-	public void setManager(String manager) {
-		this.manager = manager;
+	public void setApprDay(Date apprDay) {
+		this.apprDay = apprDay;
 	}
 
 
@@ -85,13 +75,11 @@ public class TrashTable implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "TrashTable [empid=" + empid + ", writer=" + writer + ", manager=" + manager + ", docnum=" + docnum
-				+ ", apprnum=" + apprnum + ", result=" + result + "]";
+		return "TrashTable [empid=" + empid + ", apprDay=" + apprDay + ", docnum=" + docnum + ", apprnum=" + apprnum
+				+ ", result=" + result + "]";
 	}
 
 
-	
-	
 	
 	
 }

@@ -43,7 +43,7 @@ public class FinishApprovalDao {
 				finishApproval.setApprWriter(rset.getString("EMPNAME"));
 				finishApproval.setDocNo(rset.getInt("DOCNO"));
 				finishApproval.setResult(rset.getString("APPRYN"));
-				finishApproval.setOpinion(rset.getString("OPINION"));
+			
 				finishApproval.setApprDay(rset.getDate("APPRDAY"));
 				finishApproval.setApprDate(rset.getDate("APPRDATE"));
 				list.add(finishApproval);
@@ -122,7 +122,7 @@ public class FinishApprovalDao {
 				finishapproval.setApprWriter(rset.getString("EMPNAME"));
 				finishapproval.setDocNo(rset.getInt("DOCNO"));
 				finishapproval.setResult(rset.getString("APPRYN"));
-				finishapproval.setOpinion(rset.getString("OPINION"));
+				
 				finishapproval.setApprDay(rset.getDate("APPRDAY"));
 				finishapproval.setApprDate(rset.getDate("APPRDATE"));
 				

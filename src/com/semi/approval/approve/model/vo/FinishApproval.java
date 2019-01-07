@@ -8,12 +8,11 @@ public class FinishApproval implements java.io.Serializable{
 	private String apprWriter; //작성자
 	private int docNo; //문서번호
 	private String result; //승인결과
-	private String opinion; //의견
 	private Date apprDay; //작성날짜
 	private Date apprDate; //승인날짜
 	public FinishApproval() {}
 	
-	public FinishApproval(int empid, int apprNo, String apprWriter, int docNo, String result, String opinion, Date apprDay,
+	public FinishApproval(int empid, int apprNo, String apprWriter, int docNo, String result, Date apprDay,
 			Date apprDate) {
 		super();
 		this.empid = empid;
@@ -21,7 +20,6 @@ public class FinishApproval implements java.io.Serializable{
 		this.apprWriter = apprWriter;
 		this.docNo = docNo;
 		this.result = result;
-		this.opinion = opinion;
 		this.apprDay = apprDay;
 		this.apprDate = apprDate;
 	}
@@ -56,12 +54,7 @@ public class FinishApproval implements java.io.Serializable{
 	public void setResult(String result) {
 		this.result = result;
 	}
-	public String getOpinion() {
-		return opinion;
-	}
-	public void setOpinion(String opinion) {
-		this.opinion = opinion;
-	}
+	
 	public Date getApprDay() {
 		return apprDay;
 	}
@@ -77,7 +70,7 @@ public class FinishApproval implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "FinishApproval [empid=" + empid + ", apprNo=" + apprNo + ", apprWriter=" + apprWriter + ", docNo="
-				+ docNo + ", result=" + result + ", opinion=" + opinion + ", apprDay=" + apprDay + ", apprDate="
+				+ docNo + ", result=" + result + ",  apprDay=" + apprDay + ", apprDate="
 				+ apprDate + "]";
 	}
 	

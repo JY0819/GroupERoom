@@ -31,30 +31,26 @@ public class TrashDao {
 	public ArrayList<TrashTable> selectList(Connection con) {
 		System.out.println("dao들어옴");
 		Statement stmt = null;
-		Statement stmt2 = null;
+	
 		ResultSet rset = null;
-		ResultSet rset2 = null;
+
 		ArrayList<TrashTable> list = null;
 		
 		String query = prop.getProperty("selecttrashList");
-		String query2 = prop.getProperty("selectLineManager");
+
 		
 		try {
 			
 			stmt = con.createStatement();
-			stmt2 = con.createStatement();
+
 			rset = stmt.executeQuery(query);
-			rset2 = stmt2.executeQuery(query2);
+
 			list = new ArrayList<TrashTable>();
 			while(rset.next()) {
 				TrashTable trashTable = new TrashTable();
 				trashTable.setEmpid(rset.getInt("EMPID"));
-				trashTable.setWriter(rset.getString("EMPNAME"));
+				trashTable.setApprDay(rset.getDate("APPRDAY"));
 				
-				if(rset2.next()) {
-					trashTable.setManager(rset2.getString("EMPNAME"));
-					System.out.println(trashTable.getManager());
-				}
 				trashTable.setDocnum(rset.getInt("DOCNO"));
 				System.out.println(trashTable.getDocnum());
 				trashTable.setApprnum(rset.getInt("APPRNO"));
@@ -160,38 +156,34 @@ public class TrashDao {
 		
 		
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2= null;
+
 		ResultSet rset = null;
-		ResultSet rset2 = null;
+
 		ArrayList<TrashTable> list = null;
 		
 		String query = prop.getProperty("pageselectList");
-		String query2 = prop.getProperty("pageselectList2");
+	
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt2 = con.prepareStatement(query2);
+
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
 			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			pstmt2.setInt(1, startRow);
-			pstmt2.setInt(2, endRow);
+		
 			
 			rset = pstmt.executeQuery();
-			rset2 = pstmt2.executeQuery();
+			
 			
 			list = new ArrayList<TrashTable>();
 			
 			while(rset.next()) {
 				TrashTable trashTable = new TrashTable();
 				trashTable.setEmpid(rset.getInt("EMPID"));
-				trashTable.setWriter(rset.getString("EMPNAME"));
 				
-				if(rset2.next()) {
-					trashTable.setManager(rset2.getString("EMPNAME"));
-					System.out.println(trashTable.getManager());
-				}
+				trashTable.setApprDay(rset.getDate("APPRDAY"));
+				
 				trashTable.setDocnum(rset.getInt("DOCNO"));
 				System.out.println(trashTable.getDocnum());
 				trashTable.setApprnum(rset.getInt("APPRNO"));
