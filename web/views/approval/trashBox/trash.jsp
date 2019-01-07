@@ -190,7 +190,7 @@
 		 		var tr = checkbox.parent().parent().eq(i);
 		 		var td = tr.children();
 		 		
-                apprno = td.eq(4).text();
+                apprno = td.eq(2).text();
                 tdArr.push(apprno);
                 console.log(apprno);
                

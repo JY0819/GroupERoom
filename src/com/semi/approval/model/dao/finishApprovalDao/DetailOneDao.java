@@ -7,11 +7,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.semi.approval.approve.model.vo.ApprLine;
 import com.semi.approval.approve.model.vo.DetailDoc;
+
 import com.semi.board.Free.model.vo.Attachment;
 
 import static com.semi.common.JDBCTemplate.*;
@@ -60,6 +63,7 @@ public class DetailOneDao {
 					d.setManageDay(rset.getDate("MANAGEDAY"));
 					d.setEntryDay(rset.getDate("ENTRYDAY"));
 					d.setContents(rset.getString("MANAGECONTENTS"));
+					
 					d.setAttachno(rset.getInt("ATTACHNO"));		
 					at = new Attachment();
 					at.setChangeName(rset.getString("ATTACHNAME"));
@@ -67,9 +71,12 @@ public class DetailOneDao {
 					
 					list.add(at);
 			}
-				hmap = new HashMap<String, Object>();
-				hmap.put("detaildoc", d);
-				hmap.put("attachment", list);
+				
+					
+					hmap = new HashMap<String, Object>();
+					hmap.put("detaildoc", d);
+					hmap.put("attachment", list);
+				
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -84,6 +91,38 @@ public class DetailOneDao {
 		
 		return hmap;
 		
+	}
+
+	public ArrayList<ApprLine> selelctList(Connection con, int docno) {
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+
+		ArrayList<ApprLine> list = null;
+		
+		String query = prop.getProperty("apprlinelist");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, docno);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<ApprLine>();
+			while(rset.next()) {
+				
+				ApprLine apprline = new ApprLine();
+				apprline.setApprName(rset.getString("EMPNAME"));
+				list.add(apprline);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+	
+		return list;
 	}
 
 }
