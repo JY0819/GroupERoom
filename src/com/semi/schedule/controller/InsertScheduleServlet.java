@@ -81,7 +81,7 @@ public class InsertScheduleServlet extends HttpServlet {
 					case "토" : cnt=7; break;
 				}
 				result=new ScheduleService().insertRepeatSchedule(year, month, cnt, reqSche);
-				System.out.println(month+"월 "+repeat+"/"+cnt);
+				System.out.println(result+"/"+month+"월 "+repeat+"/"+cnt);
 			}else {
 				if(reqSche.getCalendarClass()==1) {
 					result=new ScheduleService().insertMySchedule(reqSche);

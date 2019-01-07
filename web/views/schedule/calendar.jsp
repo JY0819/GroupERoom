@@ -65,7 +65,7 @@ css 좀 더 보기좋게 수정
 		var tblCalendar = document.getElementById("calendarMain");     // 테이블 달력을 만들 테이블
 		var tblCalendarYM = document.getElementById("calendarTitle");    // 몇년몇월인지 출력할 곳
 		tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // 연월 출력
-		
+	
 		// 기존 테이블에 뿌려진 줄, 칸 삭제
 		while (tblCalendar.rows.length > 0) {
 			tblCalendar.deleteRow(tblCalendar.rows.length-1); //현재 있는 열 모두 삭제

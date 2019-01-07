@@ -585,26 +585,24 @@ public class ScheduleDao {
 		
 		Calendar cal=Calendar.getInstance();
 		cal.set(year, month, countDay); //그 달의 첫날 요일 계산 
-		System.out.println(cal.getTime()+cal.toString()); //확인용 
-		System.out.print(cal.get(cal.DAY_OF_WEEK)+"cnt "+cnt);
+		//System.out.println(cal.getTime()+cal.toString()); //확인용 
+		
 		if(cal.get(cal.DAY_OF_WEEK)<cnt) {
 			System.out.print("작음 + ");
 			cal.set(cal.DATE, cnt-cal.get(cal.DAY_OF_WEEK)+countDay);
-			System.out.println(cal.getTime());
+			
 		}else if(cal.get(cal.DAY_OF_WEEK)>cnt){
-			System.out.println("큼 + ");
+			System.out.print("큼 + ");
 			cal.set(cal.DATE, week+cnt-cal.get(cal.DAY_OF_WEEK)+countDay);
-			System.out.println(cal.getTime());
+	
 		}else if(cal.get(cal.DAY_OF_WEEK)==cnt){
 			System.out.print("같음");
-			System.out.println(cal.getTime());
 		}
 		SimpleDateFormat repeatDate=new SimpleDateFormat("yyyy-MM-dd"); //입력용 String타입으로 형변환
 		list.add(repeatDate.format(cal.getTime()));
 		System.out.println(repeatDate.format(cal.getTime()));
 		
 		System.out.print("월" +cal.get(cal.MONTH));
-		System.out.println(cal.get(cal.MONTH)==month);
 	
 		while(cal.get(cal.MONTH)==month) {
 			cal.set(cal.DATE, cal.get(cal.DATE)+7); //일주일씩 늘리기
@@ -614,6 +612,5 @@ public class ScheduleDao {
 		}
 		return list;
 	}
-
 
 }
