@@ -83,7 +83,8 @@ public class EmployeeService {
 
 		return result;
 	}
-
+	
+/*
 	// 사원 리스트 조회
 	public ArrayList<Employee> selectList() {
 		Connection con = getConnection();
@@ -94,7 +95,29 @@ public class EmployeeService {
 
 		return list;
 	}
+*/
+	// 페이징 처리 - 사원 리스트 조회
+	public ArrayList<Employee> selectList(int currentPage, int limit) {
+		Connection con = getConnection();
 
+		ArrayList<Employee> list = new EmployeeDao().selectList(con, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+	
+	// 전체 사원 수 조회
+	public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new EmployeeDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+	
 	// 사원 상세보기
 	public HashMap<String, Object> selectOne(int num) {
 		Connection con = getConnection();
@@ -176,7 +199,8 @@ public class EmployeeService {
 		
 		return list;
 	}
-
+	
+/*
 	// 사원 휴가 내역 리스트
 	public ArrayList<UseVac> selectVacList() {
 		Connection con = getConnection();
@@ -185,6 +209,18 @@ public class EmployeeService {
 
 		close(con);
 
+		return list;
+	}
+	*/
+	
+	// 페이징 처리 - 사원 휴가 리스트 조회
+	public ArrayList<Employee> selectVacList(int currentPage, int limit) {
+		Connection con = getConnection();
+
+		ArrayList<Employee> list = new EmployeeDao().selectVacList(con, currentPage, limit);
+		
+		close(con);
+		
 		return list;
 	}
 
@@ -198,5 +234,19 @@ public class EmployeeService {
 		
 		return list;
 	}
+	
+	// 전체 휴가 수 조회
+	public int getVacListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new EmployeeDao().getVacListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	
+
 
 }

@@ -54,7 +54,6 @@ public class InsertMemberServlet extends HttpServlet {
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
 			}
-			
 			Integer multiUserId = Integer.parseInt(multiRequest.getParameter("userId"));
 			String multiUserName = multiRequest.getParameter("userName");
 			String multiUserPwd = multiRequest.getParameter("userPwd");
