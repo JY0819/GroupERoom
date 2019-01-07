@@ -72,11 +72,12 @@ body {
 				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
-					<input id="fileInput" name="fileInput"type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+
 						<div class="bootstrap-filestyle input-group">
 							<input type="hidden" id="inputFile" class="form-control" name="originAno"  value="<%=at.getAno()%>">
+							<input type="text" id="newFile" class="form-control" name="preFile" disabled="" value="<%=at.getOriginName()%>">
 						
-						<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
+							<input type="text" id="newFile" class="form-control" name="newFile" disabled="" value="<%=at.getOriginName()%>">
 							<span class="group-span-filestyle input-group-btn" tabindex="0">
 							<label for="fileInput" class="btn btn-default ">
 								<span><i class="fas fa-file-upload"></i></span>

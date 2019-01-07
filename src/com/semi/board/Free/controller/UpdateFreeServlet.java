@@ -58,7 +58,7 @@ public class UpdateFreeServlet extends HttpServlet {
 			
 			
 			int originAno = Integer.parseInt(multiRequest.getParameter("originAno"));
-
+		
 			//다중 파일을 묶어서 업로드 하기 위해 컬렉션 사용
 			//저장한 파일의 이름을 저장할 arrayList 생성
 			ArrayList<String> saveFiles = new ArrayList<String>();
@@ -69,13 +69,42 @@ public class UpdateFreeServlet extends HttpServlet {
 			//각 파일의 정보를 구해온 뒤 DB에 저장할 목적의 데이터를 꺼내온다.
 			Enumeration<String> files = multiRequest.getFileNames();
 			//Enumeration: 각각의 객체를 한 번에 하나씩 처리할 수 있음
-			System.out.println("servlet files:"+files);
-/*			String fileName=multiRequest.getFilesystemName("fileInput");
-			System.out.println("fileName: "+fileName);*/
-			while(files.hasMoreElements()) {//다음 요소가 있는지
+			
+			// 객체 생성
+						Free f = new Free();
+						f.setbTitle(multiTitle);
+						f.setbContent(multiContent);			
+						f.setWriterId(String.valueOf(((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid()));
 
+						//Attachment 객체 생성하여 arrayList 객체 생성
+						Attachment at = new Attachment();
+
+						
+
+							at.setFilePath(filePath);
+							at.setOriginName(originFiles.get(0));
+							at.setChangeName(saveFiles.get(0));
+							System.out.println(at.getFilePath()
+									+at.getChangeName());
+
+						
+			
+			
+			
+			while(files.hasMoreElements()) {//다음 요소가 있는지
+				int preFile=Integer.parseInt(multiRequest.getParameter("preFile"));
+				int newFile=Integer.parseInt(multiRequest.getParameter("newFile"));
+				System.out.println("preFile: "+preFile);
+				System.out.println("newFile: "+newFile);
+
+				
 				String name=files.nextElement();
 
+				if(newFile=null) {
+					f.setFile02(preFile);
+				}else {
+					
+				}
 				System.out.println("name : "+name); //name:실제 파일을 가져오기 위한 key역할을 함
 
 				saveFiles.add(multiRequest.getFilesystemName(name));
@@ -122,14 +151,14 @@ public class UpdateFreeServlet extends HttpServlet {
 
 			int result = new FreeService().updateFree(f, at, originAno);
 			
-
+System.out.println("servlet result: "+result);
 			if(result > 0) {
 
 				response.sendRedirect(request.getContextPath() 
 
 						+ "/selectList.fr");
 
-			}else {
+			}/*else {
 
 				//실패시 저장된 사진 삭제	
 				for(int i = 0; i < saveFiles.size(); i++) {
@@ -145,7 +174,7 @@ public class UpdateFreeServlet extends HttpServlet {
 				request.setAttribute("msg", "첨부파일 등록 실패!");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 
-			}
+			}*/
 
 		}
 	

@@ -378,10 +378,12 @@ System.out.println("상세보기 dao : "+query);
 			int result=0;
 			String query = prop.getProperty("updateFree");
 			System.out.println("update쿼리:"+query);
+			System.out.println("f.getFile02() :"+f.getFile02());
 			try {
 				pstmt=con.prepareStatement(query);
 				pstmt.setString(1, f.getbTitle());
 				pstmt.setString(2, f.getbContent());
+			
 				pstmt.setInt(3, f.getFile02());
 				pstmt.setInt(4, f.getBno());
 				
@@ -1170,7 +1172,7 @@ System.out.println("query: "+query);
 			PreparedStatement pstmt = null;
 			int result=0;
 			String query = prop.getProperty("updateAttachment");
-			System.out.println("query2 "+query);
+			System.out.println("updateAttachment dao query: "+query);
 			try {
 
 			
@@ -1185,7 +1187,7 @@ System.out.println("query: "+query);
 
 			result = pstmt.executeUpdate(); 
 
-			
+		
 
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1200,12 +1202,13 @@ System.out.println("query: "+query);
 			PreparedStatement pstmt = null;
 			int result =0;
 			String query = prop.getProperty("deleteAttachment");
-			
+			System.out.println("deleteAttachment dao query: "+query);
 			try {
 				pstmt=con.prepareStatement(query);
 				pstmt.setInt(1, originAno);
 				
 				result=pstmt.executeUpdate();
+				System.out.println("deleteAttachment dao result: "+result);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1221,13 +1224,13 @@ System.out.println("query: "+query);
 			ResultSet rset = null;
 			int result=0;
 			String query = prop.getProperty("selectOneAttachment");
-			
+			System.out.println("deleteOriginFile dao query :" +query);
 			try {
 				pstmt=con.prepareStatement(query);
 				pstmt.setInt(1, originAno);
 				
-				rset=pstmt.executeQuery();
-				if(rset.next()) {
+				result=pstmt.executeUpdate();
+			/*	if(rset.next()) {
 					File deleteFile = new File(rset.getString("ATTACHPATH") + rset.getString("ATTACHNAME"));	
 
 					deleteFile.delete();
@@ -1236,7 +1239,7 @@ System.out.println("query: "+query);
 					}else {
 						result=1;
 					}
-				}
+				}*/
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
