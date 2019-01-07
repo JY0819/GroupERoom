@@ -15,6 +15,7 @@ import com.semi.approval.document.dao.DocumentDao;
 import com.semi.approval.document.vo.Document;
 import com.semi.approval.document.vo.MyDocument;
 import com.semi.approval.document.vo.SumEmpInfo;
+import com.semi.approval.model.dao.trashDao.TrashDao;
 import com.semi.common.dao.AddressDao;
 import com.semi.common.service.CommonSeqService;
 import com.semi.common.vo.Attachments;
@@ -117,6 +118,14 @@ public class DocumentService {
 		
 		return result;
 	}
+	
+	public int getListCount() {
+		Connection con = getConnection();
+		int listCount = new DocumentDao().getListCount(con);
+		close(con);
+		return listCount;
+	}
+	
 	//내문서함 불러오기
 	public ArrayList<MyDocument> selectList(int currentPage, int limit) {
 		Connection con = getConnection();
@@ -189,9 +198,9 @@ public class DocumentService {
 	}
 	
 	//반려함 불러오기
-	public ArrayList<MyDocument> selectReturnDocumentList() {
+	public ArrayList<MyDocument> selectReturnDocumentList(int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<MyDocument> list = new DocumentDao().selectReturnDocumentList(con);
+		ArrayList<MyDocument> list = new DocumentDao().selectReturnDocumentList(con, currentPage, limit);
 		
 		if(list != null) {
 			commit(con);
@@ -309,5 +318,12 @@ public class DocumentService {
 		close(con);
 		
 		return result;
+	}
+
+	public int getReturnListCount() {
+		Connection con = getConnection();
+		int listCount = new DocumentDao().getListReturnCount(con);
+		close(con);
+		return listCount;
 	}
 }
