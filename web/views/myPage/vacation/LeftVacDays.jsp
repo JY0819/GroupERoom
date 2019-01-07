@@ -85,7 +85,7 @@
 					<th class="line">휴가 구분</th>
 					<th class="line" style="width: 250px;">휴가 기간</th>
 					<th class="line" style="width: 250px;">사유</th>
-					<th class="line">차감 일자</th>
+					<th class="line">차감 일자(공휴일 제외)</th>
 				</tr>
 				<% 	for(LogOfVacation lv : list) { %>
 					<% if(lv.getType().equals("반차")) { %>

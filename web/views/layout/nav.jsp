@@ -4,6 +4,7 @@
 	Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
 	int empid = loginUser.getEmpid();
 	String adminAuthority = loginUser.getAdminAuthority();
+	String socketLink = "ws://" + request.getLocalAddr() +":" + request.getLocalPort() + request.getContextPath() + "/alarmStart";
 %>
 
 <style type="text/css">
@@ -19,9 +20,7 @@
 	}
 	function openHome() {
 		location.href="/semi/views/main/home.jsp";
-	}	
-	
-	console.log("<%=adminAuthority%>");
+	}
 </script>
 
 <nav class="navigation">
@@ -53,6 +52,7 @@
 <input type="hidden" value="<%= empid %>" name="empId">
 <script>
 	$(function() {
+		getConnection();
 		var empId = $("input[name=empId]").val();
 		console.log(empId);
 		$.ajax({
@@ -70,7 +70,7 @@
 							if (data == 1) {
 								
 							}else {
-								$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/updateAttend?empid=" + empId + "'>퇴근</a></span>");
+								$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/getOffQR?empid=" + empId + "'>퇴근</a></span>");
 							}
 						},error:function(data){ // 데이터 통신에 실패한 것
 							console.log("출근 데이터 서버 통신 실패");	
@@ -116,26 +116,69 @@
 		});
 	}
 	$(function(){
-	$("#memoArea").focusout(function(){
-		var memoContents=$("#memoArea").val();
-		var empId=<%=empid%>;
-		console.log(memoContents);
-		$.ajax({
-			url:"/semi/insert.memo",
-			type:"post",
-			data:{memoContents:memoContents, empId:empId},
-			success:function(data){
-				console.log("메모 저장 ajax 통신 성공");
-			},
-			error:function(data){
-				console.log("메모 저장 ajax 통신 실패");
-			},
-			complete:function(data){
-				console.log("메모 저장 ajax");
-			}
+		$("#memoArea").focusout(function(){
+			var memoContents=$("#memoArea").val();
+			var empId=<%=empid%>;
+			console.log(memoContents);
+			$.ajax({
+				url:"/semi/insert.memo",
+				type:"post",
+				data:{memoContents:memoContents, empId:empId},
+				success:function(data){
+					console.log("메모 저장 ajax 통신 성공");
+				},
+				error:function(data){
+					console.log("메모 저장 ajax 통신 실패");
+				},
+				complete:function(data){
+					console.log("메모 저장 ajax");
+				}
+			});
 		});
 	});
-	});
 	
+</script>
+
+<script>
+// alarm
+	function getConnection(){
+		ws = new WebSocket("<%= socketLink %>");
+		//서버 시작할 때 동작		
+		ws.onopen = function(event){
+			
+		}
+		//서버로부터 메세지를 전달 받을 때 동작하는 메소드
+		ws.onmessage = function(event){
+			onMessage(event);
+		}
+		
+		//서버에서 에러가 발생할 경우 동작할 메소드
+		ws.onerror = function(event){
+			onError(event);
+		}
+			
+		//서버와의 연결이 종료될 경우 동작하는 메소드
+		ws.onclose = function(event){
+			onClose(event);
+		}
+		
+	}
+		
+	function send(msg){
+		
+	}
+		
+	function onMessage(event){
+		var serverMessage = event.data.split(",");
+		
+		$(".nav-left").append("<span><a href='#'>" + serverMessage[1] +"메시지 왔당</a></span>");
+	}
 	
+	function onError(event){
+		
+	}
+	
+	function onClose(event){
+		
+	}
 </script>
