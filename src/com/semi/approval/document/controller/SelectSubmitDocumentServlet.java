@@ -42,10 +42,6 @@ public class SelectSubmitDocumentServlet extends HttpServlet {
 				}
 			}
 			
-			for(int i=0; i<apprList.size(); i++) {
-				System.out.println(apprList.get(i).getApprEmpId());
-			}
-			
 			page = "views/approval/taskBox/approvalDocument.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("appr", apprList);

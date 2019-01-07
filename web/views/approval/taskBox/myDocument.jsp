@@ -1,3 +1,4 @@
+<%@page import="com.semi.approval.approve.model.vo.PageInfo"%>
 <%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@page import="com.semi.approval.document.vo.MyDocument"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,6 +8,12 @@
 <%
 	ArrayList<MyDocument> list = (ArrayList<MyDocument>)request.getAttribute("list");
 	Employee employee = (Employee)session.getAttribute("loginUser");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 %>
 
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
@@ -43,18 +50,20 @@
 			<tbody>
 			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
-				   	if(list.get(i).getWriterNum() == employee.getEmpid() && list.get(i).getSubmission().equals("N")) {		
+				   	if(list.get(i).getWriterNum() == employee.getEmpid() && list.get(i).getSubmission().equals("N")) {
+				   		int count = 1;
 				%>
 				<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
-					<td><%= list.get(i).getNum() %></td>
+					<td><%= count %></td>
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getDeptName() %></td>
 					<td><a class="detailA" href="/semi/selectOne.so?num=<%=list.get(i).getDocNum() %>"><%= list.get(i).getDocNum() %></a></td>
 					<td><%= list.get(i).getWriteDay() %></td>
 				</tr>
-				<% } %>
+				<% count++; 
+				} %>
 				<% } %>
 				<% }else { %>
 				<tr>
