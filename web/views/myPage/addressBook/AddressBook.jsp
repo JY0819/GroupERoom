@@ -126,7 +126,6 @@
 	console.log("<%=socketLink%>")
 	var selectedEmp;
 	$(function () {
-		getConnection2();
 		$(".empNo").click(function() {
 			var name = $(this).text();
 			$("#sendObject").val(name.substring(name.length-3, name.length));
@@ -141,49 +140,9 @@
 	});
 	$(function () {
 		$("#sendMsg").submit(function() {
-			send2();
+			sendAlarm($("#receiveEmpid").val() + ",msg");
 		});
 	});
-	function getConnection2(){
-		ws2 = new WebSocket("<%= socketLink %>");
-		//서버 시작할 때 동작		
-		ws2.onopen = function(event){
-			
-		}
-		//서버로부터 메세지를 전달 받을 때 동작하는 메소드
-		ws2.onmessage = function(event){
-			onMessage2(event);
-		}
-		
-		//서버에서 에러가 발생할 경우 동작할 메소드
-		ws2.onerror = function(event){
-			onError2(event);
-		}
-			
-		//서버와의 연결이 종료될 경우 동작하는 메소드
-		ws2.onclose = function(event){
-			onClose2(event);
-		}
-		
-	}
-		
-	function send2(msg){
-		sendMsg = $("#receiveEmpid").val() + "," + "msg"; // empid, 분류
-		
-		ws2.send(sendMsg);
-	}
-		
-	function onMessage2(event){
-		
-	}
-	
-	function onError2(event){
-		
-	}
-	
-	function onClose2(event){
-		
-	}
 </script>
 
 <jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />
