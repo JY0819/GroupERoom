@@ -42,9 +42,9 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 		</div>
 		<% if(loginUser != null && loginUser.getAdminAuthority().equals("Y")){ %>
 		<div class="noticeListBtn">
-			<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
-			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
-		
+			<button type="button" id="writeBtn" class="btn btn-primary">작성하기</button>
+<!-- 			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
+ -->		
 		</div>
 		<%} %>
 		<br>
