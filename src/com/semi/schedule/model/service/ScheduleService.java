@@ -188,20 +188,19 @@ public class ScheduleService {
 		//반복되는 날짜 계산용
 		scheduleDateList=new ScheduleDao().repeatDate(year, month, cnt);
 		System.out.println(scheduleDateList);
+		
+		//계산한 날짜 이용해서 반복일정 등록
 		if(scheduleDateList !=null) {
 			for(int i=0;i<scheduleDateList.size();i++) {
 				if(reqSche.getCalendarClass()==1) {
-					System.out.println("넘어옴");
 					reqSche.setScheduleDate(scheduleDateList.get(i)+" "+reqSche.getScheduleTime());
-					result1=new ScheduleDao().insertMySchedule(con, reqSche);
+					result1+=new ScheduleDao().insertMySchedule(con, reqSche);
 				}else if(reqSche.getCalendarClass()==2) {
-					System.out.println("넘어옴");
 					reqSche.setScheduleDate(scheduleDateList.get(i)+" "+reqSche.getScheduleTime());
-					result1=new ScheduleService().insertTeamSchedule(reqSche);
+					result1+=new ScheduleService().insertTeamSchedule(reqSche);
 				}else if(reqSche.getCalendarClass()==3){
-					System.out.println("넘어옴");
 					reqSche.setScheduleDate(scheduleDateList.get(i)+" "+reqSche.getScheduleTime());
-					result1=new ScheduleService().insertCompanySchedule(reqSche);
+					result1+=new ScheduleService().insertCompanySchedule(reqSche);
 				}
 			}
 			System.out.println(result1);
@@ -209,6 +208,7 @@ public class ScheduleService {
 		
 		if(result1==scheduleDateList.size()) {
 			result=1;
+			System.out.println("서비스result"+result);
 		}
 		close(con);
 		return result;

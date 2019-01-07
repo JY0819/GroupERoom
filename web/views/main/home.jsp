@@ -43,6 +43,10 @@ p.imgText {
 </style>
 
 <script type="text/javascript">
+	var today = new Date();
+	var nMonth;
+	var holis=""; //달력용
+
 	function move(e) {
 		if (e.id == 'app') {
 			location.href="/semi/views/approval/approvalMain.jsp";
@@ -55,6 +59,53 @@ p.imgText {
 		}
 
 	}
+	
+	function buildCalendar() {
+		/*달력 생성용*/
+		nMonth=new Date(today.getFullYear(), today.getMonth(), 1);  // 이번 달의 첫째 날
+		var lastDate=new Date(today.getFullYear(), today.getMonth()+1, 0); // 이번 달의 마지막 날
+
+		var tblCalendar=document.getElementById("calendarMain");     // 테이블 달력을 만들 테이블
+		var tblCalendarYM=document.getElementById("calendarTitle");    // 몇년몇월인지 출력할 곳
+		tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // 연월 출력
+		
+		var row = null; //주차별 열추가
+		row = tblCalendar.insertRow();
+		
+		var cnt = 0; // 1일이 시작되는 칸을 맞추어 줌
+		for (var i=0; i<nMonth.getDay(); i++) {
+			cell = row.insertCell();
+			cnt = cnt + 1;
+		}
+ 
+		for (var i=1; i<=lastDate.getDate(); i++) { //날마다 새로운 td 추가
+			var holiDate=new Date(today.getFullYear(), today.getMonth(), i); //공휴일 비교를 위한 일자 얻기
+	 		var year=today.getFullYear();
+			var month=(today.getMonth()+1);
+			var day=holiDate.getDate();
+			
+			/*공휴일 비교용 문자열*/
+			if(month<10){
+				if(i<10){holis=year+'0'+month+'0'+day;}
+				else{holis=year+'0'+month+''+day;}
+			}else{
+				if(i<10){holis=year+''+month+'0'+day;}
+				else{holis=year+''+month+''+day;}
+			}
+			
+			cell = row.insertCell();
+			cnt=cnt+1;
+			cell.innerHTML ='<span style="font-weight:bold;">'+i+'</span>';
+			if(cnt%7 ==1) {cell.innerHTML='<span class="sunday">'+i+'</span>';}
+			if(cnt%7 ==0) {cell.innerHTML='<span class="saturday">'+i+'</span>';}
+			cell.id='calSchedule'+holis; //일정 입력용 Id 부여
+			
+			if (cnt%7 == 0) {row = calendar.insertRow();}
+			
+		}
+		
+	}
+	
 </script>
 
 <div align="center">
@@ -172,11 +223,17 @@ p.imgText {
 			</td>
 		</tr>
 	</table>
-	<table>
-		<tr>
-			<!-- 달력 -->
-			<td></td>
-		</tr>
+	<table id="calendar" style="border:1px solid black">
+		<thead>
+			<tr>
+				<td id="calendarTitle" colspan="7" text-align="center"></td>
+			</tr>
+		</thead>
+		<tbody id="calendarMain">
+		</tbody>
 	</table>
 	<div style="height: 80px;"></div>
 </div>
+<script>
+buildCalendar();
+</script>
