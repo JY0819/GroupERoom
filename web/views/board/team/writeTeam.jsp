@@ -19,6 +19,9 @@
 body {
 	height: 780px;
 }
+#td{
+	width: 10px;
+}
 </style>
 
 
@@ -37,29 +40,35 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form action="<%= request.getContextPath()%>/insert.tm" method="post">				<table class="table table-striped" style="text-align: center; border: 1px;">
+			<form action="<%= request.getContextPath()%>/insert.tm" method="post">				
+			<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
-							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">부서게시판 글 작성</th>
+							<th id="formtitle" colspan="2" style="background-color: #eeeeee; text-align: center;">부서게시판 글 작성</th>
 						</tr> 
 					</thead>
 
 					<tbody>
 					
 					<tr>
-						<td><input type="text" name="deptId" class="form-control" value="<%=loginUser.getDeptName() %>" maxlength="30" readOnly></td>
+					<td id="td">부서</td>
+						<td><input type="text" name="deptId" class="form-control" value="<%=loginUser.getDeptName() %>" maxlength="30" readOnly>
+						</td>
 						
 					</tr>
 					<tr>
+					<td>작성자</td>
 						<td><input type="text" name="writer" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
 						
 					</tr>
 						<tr>
+						<td>제목</td>
 							<td>
 							<input type="text" name="title" class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">
 							</td>
 						</tr>
 						<tr>
+						<td>내용</td>
 							<td>
 							<textarea class="form-control" name="content" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>
 							</td>

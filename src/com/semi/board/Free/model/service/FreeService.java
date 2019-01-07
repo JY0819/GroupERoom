@@ -87,17 +87,23 @@ public class FreeService {
 			
 			int result=0;
 			int result0 = new FreeDao().updateAttachment(con, at);
+			System.out.println("updateAttachment result0 : "+result0);
 			int ano=new FreeDao().selectCurrval(con);
 			
 			f.setFile02(ano);
-			System.out.println("???");
-			int result2= new FreeDao().updateFree(con, f, at);
+			
+			int result2=0;
+			
+				result2= new FreeDao().updateFree(con, f, at);
+				System.out.println("service result2: "+result2);
+
+			
 			int result4 = new FreeDao().deleteOriginFile(con, originAno);
-				
+				System.out.println("service result4: "+result4);
 			int result3 = new FreeDao().deleteAttachment(con, originAno);
 			System.out.println(result0+""+result2+""+result4+""+result3);
-	if(result0 > 0 && result2 > 0 && result3 > 0 && result4 > 0 ) {
-				
+			
+			if(result0 > 0 && result2 > 0 && result3 > 0 && result4 > 0 ) {			
 				commit(con);
 				result=1;
 			}else {

@@ -50,7 +50,9 @@ body {
 				<tbody>
 				<tr>
 						<td>부서</td>
-						<td><input type="hidden" name="searchValue" value="<%=t.getDeptId() %>"><%=t.getDeptId() %></td>
+						<td>
+						
+						<input type="hidden" name="searchValue" value="<%=t.getDeptId() %>"><%=loginUser.getDeptName() %></td>
 					</tr>
 				<tr>
 						<td>글번호</td>

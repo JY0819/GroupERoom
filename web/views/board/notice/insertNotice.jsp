@@ -17,6 +17,9 @@
 body {
 	height: 780px;
 }
+#td{
+	width: 10px;
+}
 </style>
 
 
@@ -38,20 +41,23 @@ body {
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
-							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">공지사항  작성</th>
+							<th id="formtitle" colspan="2" style="background-color: #eeeeee; text-align: center;">공지사항  작성</th>
 						</tr> 
 					</thead>
 
 					<tbody>
 					<tr>
+					<td id="td">작성자</td>
   						<td><input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly></td>
  						
 					</tr>
 						<tr>
+						<td>제목</td>
 							<td>
 <input type="text" name ="title"class="form-control"placeholder="글 제목을 입력해주세요." maxlength="50">							</td>
 						</tr>
 						<tr>
+						<td>내용</td>
 							<td>
 <textarea name="content" class="form-control" placeholder="내용을 입력해주세요." maxlength="2048" style="height: 330px"></textarea>							</td>
 						</tr>
