@@ -356,7 +356,7 @@
 	#nonClick{
 		z-index:2;
 		position:absolute;
-		height:100%;
+		height:120%;
 		width:100%;
 		background:#000000;
 		opacity:0.3;
@@ -365,7 +365,7 @@
 		z-index:6;
 		position:absolute;
 		height:100%;
-		width:100%;
+		width:70%;
 		background:#E4E6E8;
 		opacity:0;
 	}

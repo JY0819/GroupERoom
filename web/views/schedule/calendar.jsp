@@ -712,7 +712,7 @@ css 좀 더 보기좋게 수정
 		function view(){
 		$(function(){
 			<%-- 요일 반복일정 추가... 추후--%>
-			<%--
+			
 			$("#day").children().click(function(){
 				console.log($(this).text());
 				$("#viewScheduleDay").html((today.getMonth()+1)+"월 "+$(this).text()+"요일 반복일정");
@@ -727,7 +727,6 @@ css 좀 더 보기좋게 수정
 				<div class="scheduleBtn" id="delBtn">삭제</div>
 				<div class="scheduleBtn" id="closeBtn">닫기</div> */
 			});
-			--%>
 			
 			$("#calendarMain").children().children().click(function(){
 				if($(this).text().length==1){
@@ -801,14 +800,15 @@ css 좀 더 보기좋게 수정
 			var scheContents=$('input[name=addSchedule]').val();
 			var scheDate=$("#addScheduleDay").text();
 			var repeat=$("input[name='repeat']").val();
-			var month=today.getMonth();
-			console.log("month:"+month);
+			var yearR=today.getFullYear();
+			var monthR=today.getMonth();
+			console.log("year: "+yearR+" / month:"+monthR);
 			console.log("추가 "+repeat);
 			console.log(scheDate);
 			$.ajax({
 				url:"insertSchedule.sche",
 				type:"post",
-				data:{scheduleClass:scheduleClass, scheDate:scheDate, time:time, scheContents:scheContents,repeat:repeat,month:month},
+				data:{scheduleClass:scheduleClass, scheDate:scheDate, time:time, scheContents:scheContents,repeat:repeat,yearR:yearR, monthR:monthR},
 				success:function(data){
 					console.log(data);
 					$("#viewSchedule").hide();
