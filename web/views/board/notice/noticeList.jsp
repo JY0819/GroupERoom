@@ -40,7 +40,7 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 		<div id="title">
 			<h1 align="left">| 공지사항 |</h1>
 		</div>
-		<% if(loginUser != null && loginUser.getEmpid()==2){ %>
+		<% if(loginUser != null && loginUser.getAdminAuthority().equals("Y")){ %>
 		<div class="noticeListBtn">
 			<button type="button" id="writeBtn" class="btn btn-primary">작성</button>
 			<button type="button" id="deleteBtn" class="btn btn-warning">삭제</button>
