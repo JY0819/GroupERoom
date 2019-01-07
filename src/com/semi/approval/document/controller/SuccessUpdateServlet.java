@@ -23,10 +23,8 @@ public class SuccessUpdateServlet extends HttpServlet {
 		String[] docNumList = request.getParameter("docNum").split(",");
 		int apprEmpId = Integer.parseInt(request.getParameter("apprEmpId"));
 		int apprOrder = Integer.parseInt(request.getParameter("apprOrder"));
-		int apprNo = Integer.parseInt(request.getParameter("apprNo"));
-		
-		 
-		int result = new DocumentService().insertApprStatus(docNumList, apprEmpId, apprOrder, apprNo);
+		/*int apprNo = Integer.parseInt(request.getParameter("apprNo"));*/
+		int result = new DocumentService().insertApprStatus(docNumList, apprEmpId, apprOrder);
 
 		
 		String page = "";

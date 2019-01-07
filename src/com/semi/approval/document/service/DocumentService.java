@@ -118,9 +118,9 @@ public class DocumentService {
 		return result;
 	}
 	//내문서함 불러오기
-	public ArrayList<MyDocument> selectList() {
+	public ArrayList<MyDocument> selectList(int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<MyDocument> list = new DocumentDao().selectList(con);
+		ArrayList<MyDocument> list = new DocumentDao().selectList(con, currentPage, limit);
 		
 		if(list != null) {
 			commit(con);
@@ -187,21 +187,7 @@ public class DocumentService {
 		
 		return result;
 	}
-	//반려함으로 보낼 문서들 변경
-	public int sendReturn(String[] docNumList, int apprEmpId, int apprOrder, int apprNo) {
-		Connection con = getConnection();
-		int result = new DocumentDao().sendReturn(con, docNumList, apprEmpId, apprOrder, apprNo);
-		
-		if(result > 0) {
-			commit(con);
-		}else {
-			rollback(con);
-		}
-		
-		close(con);
-		
-		return result;
-	}
+	
 	//반려함 불러오기
 	public ArrayList<MyDocument> selectReturnDocumentList() {
 		Connection con = getConnection();
@@ -243,6 +229,7 @@ public class DocumentService {
 		close(con);
 		return attachments;
 	}
+	
 	//문서진행현황 불러오기
 	public ArrayList<MyDocument> selectStatus(int empId) {
 		Connection con = getConnection();
@@ -256,28 +243,39 @@ public class DocumentService {
 		close(con);
 		return list;
 	}
+	
+	//결재 비밀번호 체크
+		public boolean checkPassword(int empId, int password) {	
+			Connection con = getConnection();
+			boolean check = new DocumentDao().checkPassword(con, empId,  password);
+			return check;
+		}
+	
 	//결재시 업데이트
-	public int insertApprStatus(String[] docNumList, int apprNum, int apprOrder, int apprNo) {
+	public int insertApprStatus(String[] docNumList, int apprEmpId, int apprOrder) {
 		Connection con = getConnection();
-		int tempOrder = new DocumentDao().selectApprNo(con, apprNo);
+		ArrayList<ApprLine> list = new DocumentDao().selectApprNo(con, docNumList);
 		int insertResult = 0;
 		int updateResult = 0;
 		
-		if(apprOrder == 1 && tempOrder != 1) {
-			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);
-		}else if(apprOrder == 1 && tempOrder == 1) {
-			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);			
-			updateResult = new DocumentDao().updateApprDate(con, apprNo, apprOrder);
-		}else if(apprOrder == 2 && tempOrder != 2) {
-			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);
-		}else if(apprOrder == 2 && tempOrder == 2) {
-			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);
-			updateResult = new DocumentDao().updateApprDate(con, apprNo, apprOrder);
-		}else {
-			insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprNum, apprOrder, apprNo, tempOrder);			
-			updateResult = new DocumentDao().updateApprDate(con, apprNo, apprOrder);
+		for(int i=0; i<docNumList.length; i++) {
+			if(Integer.parseInt(docNumList[i]) == list.get(i).getDocNo()) {
+				if(apprOrder == 1 && list.get(i).getApprOrder() != 1) {
+					insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprEmpId, apprOrder, list.get(i).getApprNo());
+				}else if(apprOrder == 1 && list.get(i).getApprOrder() == 1) {
+					insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprEmpId, apprOrder, list.get(i).getApprNo());			
+					updateResult = new DocumentDao().updateApprDate(con, list.get(i).getApprNo());
+				}else if(apprOrder == 2 && list.get(i).getApprOrder() != 2) {
+					insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprEmpId, apprOrder, list.get(i).getApprNo());
+				}else if(apprOrder == 2 && list.get(i).getApprOrder() == 2) {
+					insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprEmpId, apprOrder, list.get(i).getApprNo());
+					updateResult = new DocumentDao().updateApprDate(con, list.get(i).getApprNo());
+				}else {
+					insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprEmpId, apprOrder, list.get(i).getApprNo());			
+					updateResult = new DocumentDao().updateApprDate(con, list.get(i).getApprNo());
+				}
+			}
 		}
-		
 		int result = 0;
 		if(insertResult > 0) {
 			commit(con);
@@ -291,10 +289,25 @@ public class DocumentService {
 		close(con);
 		return result;
 	}
-	//결재 비밀번호 체크
-	public boolean checkPassword(int empId, int password) {	
+	
+	//반려함으로 보낼 문서들 변경
+	public int sendReturn(String[] docNumList, int apprEmpId, int apprOrder, int apprNo) {
 		Connection con = getConnection();
-		boolean check = new DocumentDao().checkPassword(con, empId,  password);
-		return check;
+		ArrayList<ApprLine> list = new DocumentDao().selectApprNo(con, docNumList);
+		int result = 0;
+		for(int i=0; i<docNumList.length; i++) {
+			if(Integer.parseInt(docNumList[i]) == list.get(i).getDocNo()) {				
+				result = new DocumentDao().sendReturn(con, docNumList, apprEmpId, list.get(i).getApprOrder(), list.get(i).getApprNo());
+			}
+		}
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
 	}
 }

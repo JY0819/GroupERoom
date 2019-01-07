@@ -423,7 +423,7 @@ public class DocumentDao {
 	}
 	
 	//내문서함 문서 조회
-	public ArrayList<MyDocument> selectList(Connection con) {
+	public ArrayList<MyDocument> selectList(Connection con, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rset = null;
@@ -436,8 +436,12 @@ public class DocumentDao {
 		try {
 			
 			pstmt = con.prepareStatement(query);
-
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;		
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			int count = 1;
+			
 			rset = pstmt.executeQuery();
 			list = new ArrayList<MyDocument>();
 
@@ -451,6 +455,8 @@ public class DocumentDao {
 				String query2 = prop.getProperty("selectList2");
 				pstmt2 = con.prepareStatement(query2);
 				pstmt2.setInt(1, myDocument.getDocNum());
+				pstmt2.setInt(2, startRow);
+				pstmt2.setInt(3, endRow);
 				rset2 = pstmt2.executeQuery();
 				if(rset2.next()) {
 					myDocument.setTitle(rset2.getString("MANAGETITLE"));
@@ -773,59 +779,74 @@ public class DocumentDao {
 	}
 	
 	//결재완료전 차수 판단
-	public int selectApprNo(Connection con, int apprNo) {
+	public ArrayList<ApprLine> selectApprNo(Connection con, String[] docNumList) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int tempOrder = 0;
+		ApprLine apprLine = null;
+		ArrayList<ApprLine> list = null;
 		
 		String query = prop.getProperty("selectApprOrder");
+		list = new ArrayList<ApprLine>();
 		try {
-			
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, apprNo);
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				tempOrder = rset.getInt("APPRORDER");
-			}				
+			for(int i=0; i<docNumList.length; i++) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) { 
+					apprLine = new ApprLine();
+					apprLine.setApprOrder(rset.getInt("APPRORDER"));
+					apprLine.setApprNo(rset.getInt("APPRNO"));
+					apprLine.setDocNo(rset.getInt("DOCNO"));
+					
+					list.add(apprLine);
+				}			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rset);
 			close(pstmt);
 		}
-		return tempOrder;
+		return list;
 	}
 	
 	//결재했을때 결재완료로 업데이트 
-	public int insertApprStatus(Connection con, String[] docNumList, int apprNum, int apprOrder, int apprNo, int tempOrder) {
+	public int insertApprStatus(Connection con, String[] docNumList, int apprEmpId, int apprOrder, int listApprNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		PreparedStatement pstmt2 = null;
 		PreparedStatement pstmt3 = null;
 		int result = 0;	
+		System.out.println("dao 옴");
 			String query = prop.getProperty("selectApprKind");
 			
 			try {
-				pstmt = con.prepareStatement(query);
-				rset = pstmt.executeQuery();
-				while(rset.next()) {
-					
+				for(int i=0; i<docNumList.length; i++) {				
+					pstmt = con.prepareStatement(query);
+					pstmt.setInt(1, apprEmpId);					
+					pstmt.setInt(2, Integer.parseInt(docNumList[i]));
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						int tempApprEmpId = rset.getInt("APPREMPID");
+						int tempApprNo = rset.getInt("APPRNO");
+						System.out.println(tempApprEmpId);
+						System.out.println(tempApprNo);
+						if(apprEmpId == tempApprEmpId && listApprNo == tempApprNo) {
+							query = prop.getProperty("successInsertApprStatus");
+							pstmt = con.prepareStatement(query);
+							pstmt.setInt(1, listApprNo);
+							pstmt.setInt(2, apprOrder);
+							result = pstmt.executeUpdate();
+							
+							query = prop.getProperty("updateApprLine");
+							pstmt2 = con.prepareStatement(query);
+							pstmt2.setInt(1, listApprNo);
+							pstmt2.setInt(2, apprOrder);
+							result += pstmt2.executeUpdate();
+						}
+					}				
 				}
-				
-				
-				
-				query = prop.getProperty("successInsertApprStatus");
-				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, apprNo);
-				pstmt.setInt(2, apprOrder);
-				result = pstmt.executeUpdate();
-				
-				query = prop.getProperty("updateApprLine");
-				pstmt2 = con.prepareStatement(query);
-				pstmt2.setInt(1, apprNo);
-				pstmt2.setInt(2, apprOrder);
-				result += pstmt2.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
@@ -838,7 +859,7 @@ public class DocumentDao {
 	
 	
 	//마지막 차수가 결재 했을때 appr 승인여부 하기 
-	public int updateApprDate(Connection con, int apprNo, int apprOrder) {
+	public int updateApprDate(Connection con, int apprNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 			String query = prop.getProperty("updateApprDate");
@@ -857,24 +878,25 @@ public class DocumentDao {
 	}
 	
 	//결재차수와 결재번호 가져와 logofapprove 삽입 후 반려처리 부분
-		public int sendReturn(Connection con, String[] docNumList, int apprEmpId, int apprOrder, int apprNo) {
+		public int sendReturn(Connection con, String[] docNumList, int apprEmpId, int listApprOrder, int listApprNo) {
 			PreparedStatement pstmt = null;
 			PreparedStatement pstmt2 = null;
 			int result = 0;
 			
 			String query = prop.getProperty("returnInsertApprStatus");
-			try {
-				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, apprNo);
-				pstmt.setInt(2, apprOrder);
-				result = pstmt.executeUpdate();
-				
-				query = prop.getProperty("updateApprDate");
-
-					pstmt2 = con.prepareStatement(query);
-					pstmt2.setInt(1, apprNo);
-				result += pstmt2.executeUpdate();
-				
+			
+			try {			
+				for(int i=0; i<docNumList.length; i++) {
+					pstmt = con.prepareStatement(query);
+					pstmt.setInt(1, listApprNo);
+					pstmt.setInt(2, listApprOrder);
+					result = pstmt.executeUpdate();
+				}
+					query = prop.getProperty("updateApprDate");
+	
+						pstmt2 = con.prepareStatement(query);
+						pstmt2.setInt(1, listApprNo);
+					result += pstmt2.executeUpdate();			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
@@ -883,5 +905,4 @@ public class DocumentDao {
 			}
 			return result;
 		}
-
 }
