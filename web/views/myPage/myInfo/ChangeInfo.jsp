@@ -146,7 +146,8 @@
 			$("#addUserForm").submit(
 				function(event) {
 	
-					var divPassword = $('#divPassword');
+					var divPasswor
+					d = $('#divPassword');
 					var divPasswordCheck = $('#divPasswordCheck');
 					var divPhoneNumber = $('#divPhoneNumber');
 					var divAddress = $('#divAddress');

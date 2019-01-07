@@ -42,6 +42,9 @@
 	margin-left: 20px;
 	margin-bottom: 20px;
 }
+.line{
+	text-align: center;
+}
 /* .line{
 	border: 2px solid skyblue;
 	border-collapse: collapse;
@@ -89,14 +92,14 @@
 				<tr>
 					<td class="line"><%= listCount - at.getRnum() + 1 %></td>
 					<td class="line"><%= at.getEmpName() %></td>
-					<td class="line"><%= at.getAttendance() %></td>
-					<td class="line"><%= at.getGetOff() %></td>
+					<td class="line"><%= at.getAttendance() %> <%= at.getAttendanceT() %></td>
+					<td class="line"><%= at.getGetOff() %> <%= at.getGetOffT() %></td>
 				</tr>
 					<% } else { %>
 				<tr>
 					<td class="line"><%= listCount - at.getRnum() + 1 %></td>
 					<td class="line"><%= at.getEmpName() %></td>
-					<td class="line"><%= at.getAttendance() %></td>
+					<td class="line"><%= at.getAttendance() %> <%= at.getAttendanceT() %></td>
 					<td class="line"></td>
 				</tr>
 				<% 		count++; %>

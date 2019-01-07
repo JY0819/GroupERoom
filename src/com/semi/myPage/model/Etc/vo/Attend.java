@@ -9,20 +9,24 @@ public class Attend implements Serializable{
 	private String empName;
 	private Date attendance;
 	private Date getOff;
-	
+	private String attendanceT;
+	private String getOffT;
 	public Attend () {
 		
 	}
-
-	public Attend(int rnum, int empId, String empName, Date attendance, Date getOff) {
+	
+	public Attend(int rnum, int empId, String empName, Date attendance, Date getOff, String attendanceT,
+			String getOffT) {
 		super();
 		this.rnum = rnum;
 		this.empId = empId;
 		this.empName = empName;
 		this.attendance = attendance;
 		this.getOff = getOff;
+		this.attendanceT = attendanceT;
+		this.getOffT = getOffT;
 	}
-
+	
 	public int getEmpId() {
 		return empId;
 	}
@@ -62,12 +66,28 @@ public class Attend implements Serializable{
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
+	
+	public String getAttendanceT() {
+		return attendanceT;
+	}
+
+	public void setAttendanceT(String attendanceT) {
+		this.attendanceT = attendanceT;
+	}
+
+	public String getGetOffT() {
+		return getOffT;
+	}
+
+	public void setGetOffT(String getOffT) {
+		this.getOffT = getOffT;
+	}
 
 	@Override
 	public String toString() {
 		return "Attend [rnum=" + rnum + ", empId=" + empId + ", empName=" + empName + ", attendance=" + attendance
-				+ ", getOff=" + getOff + "]";
+				+ ", getOff=" + getOff + ", attendanceT=" + attendanceT + ", getOffT=" + getOffT + "]";
 	}
-	
+
 	
 }

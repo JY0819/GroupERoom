@@ -96,7 +96,14 @@ public class AttendDao {
 				at.setEmpName(rset.getString("EMPNAME"));
 				at.setAttendance(rset.getDate("ATTENDANCE"));
 				at.setGetOff(rset.getDate("GETOFF"));
+				at.setAttendanceT(rset.getString("ATTENDANCE").substring(11, 16));
 				
+				if (rset.getDate("GETOFF") == null) {
+					
+				} else {
+					at.setGetOffT(rset.getString("GETOFF").substring(11, 16));
+				}
+
 				list.add(at);
 			}
 			

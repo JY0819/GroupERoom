@@ -7,6 +7,7 @@
 <%
 	HashMap<String, ArrayList<DeptEmp>> hmap = (HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("map");
 	ArrayList<String> deptIdList = (ArrayList<String>)request.getAttribute("deptIdList");
+	String socketLink = "ws://" + request.getLocalAddr() +":" + request.getLocalPort() + request.getContextPath() + "/sendAlarm";
 %>
 <jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
 
@@ -72,7 +73,7 @@
 	<div class="content-right container">
 		<div align="center" style="margin-top: 50px; margin-bottom: 100px;">
 			<div class="diary">
-				<form action="<%= request.getContextPath() %>/sendAddressMsg" method="post">
+				<form action="<%= request.getContextPath() %>/sendAddressMsg" method="post" id="sendMsg">
 				<table style="margin-top: 30px;">
 					<tr>
 						<td style="float: left;">
@@ -102,7 +103,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><textarea id="messageArea" name="messageArea">보낼 내용</textarea></td>
+									<td><textarea id="messageArea" name="messageArea" placeholder="보낼 내용"></textarea></td>
 								</tr>
 								<tr>
 									<td style="text-align: center;">
@@ -122,8 +123,10 @@
 </section>
 
 <script type="text/javascript">
+	console.log("<%=socketLink%>")
 	var selectedEmp;
 	$(function () {
+		getConnection2();
 		$(".empNo").click(function() {
 			var name = $(this).text();
 			$("#sendObject").val(name.substring(name.length-3, name.length));
@@ -135,7 +138,52 @@
 			}
 			selectedEmp = $(this);
 		});
-	})
+	});
+	$(function () {
+		$("#sendMsg").submit(function() {
+			send2();
+		});
+	});
+	function getConnection2(){
+		ws2 = new WebSocket("<%= socketLink %>");
+		//서버 시작할 때 동작		
+		ws2.onopen = function(event){
+			
+		}
+		//서버로부터 메세지를 전달 받을 때 동작하는 메소드
+		ws2.onmessage = function(event){
+			onMessage2(event);
+		}
+		
+		//서버에서 에러가 발생할 경우 동작할 메소드
+		ws2.onerror = function(event){
+			onError2(event);
+		}
+			
+		//서버와의 연결이 종료될 경우 동작하는 메소드
+		ws2.onclose = function(event){
+			onClose2(event);
+		}
+		
+	}
+		
+	function send2(msg){
+		sendMsg = $("#receiveEmpid").val() + "," + "msg"; // empid, 분류
+		
+		ws2.send(sendMsg);
+	}
+		
+	function onMessage2(event){
+		
+	}
+	
+	function onError2(event){
+		
+	}
+	
+	function onClose2(event){
+		
+	}
 </script>
 
 <jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />

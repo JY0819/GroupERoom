@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.common.service.AlarmService;
 import com.semi.myPage.model.Msg.service.MsgService;
 
 @WebServlet("/sendAddressMsg")
@@ -34,6 +35,7 @@ public class SendAddressMsg extends HttpServlet {
 		} else {
 			page = "error";
 		}
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	}

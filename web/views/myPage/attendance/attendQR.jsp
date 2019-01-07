@@ -20,7 +20,7 @@
 
 <div align="center">
 	<br> <br> <br> <br> <br>
-	<h3>해당 QR코드를 휴대폰으로 스캔하여 출근 버튼을 눌러주세요!</h1>
+	<h3>해당 QR코드를 휴대폰으로 스캔하여 처리 해주세요!</h1>
 	<img src="/semi/QRThumbnail/<%= name %>.png" width="200px" height="200px">
 	<br>
 	<input type="button" class="btn" onclick="location.href='<%=request.getContextPath()%>/chkAttend'" value="확인하기 !" size="5">
