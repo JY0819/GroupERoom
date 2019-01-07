@@ -188,9 +188,9 @@ public class DocumentService {
 		return result;
 	}
 	//반려함으로 보낼 문서들 변경
-	public int sendReturn(String[] docNumList) {
+	public int sendReturn(String[] docNumList, int apprEmpId, int apprOrder, int apprNo) {
 		Connection con = getConnection();
-		int result = new DocumentDao().sendReturn(con, docNumList);
+		int result = new DocumentDao().sendReturn(con, docNumList, apprEmpId, apprOrder, apprNo);
 		
 		if(result > 0) {
 			commit(con);

@@ -21,7 +21,11 @@ public class SendReturnServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] docNumList = request.getParameter("docNum").split(",");
-		int result = new DocumentService().sendReturn(docNumList);
+		int apprEmpId = Integer.parseInt(request.getParameter("apprEmpId"));
+		int apprOrder = Integer.parseInt(request.getParameter("apprOrder"));
+		int apprNo = Integer.parseInt(request.getParameter("apprNo"));
+
+		int result = new DocumentService().sendReturn(docNumList, apprEmpId, apprOrder, apprNo);
 		
 		String page = "";
 		if(result > 0) {

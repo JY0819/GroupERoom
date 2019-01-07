@@ -38,7 +38,6 @@
 					<th>부 서</th>
 					<th>문 서 번 호</th>
 					<th>작 성 날 짜</th>
-
 				</tr>
 			</thead>
 			<tbody>

@@ -477,14 +477,11 @@ public class DocumentDao {
 		String query = prop.getProperty("updateDocument");
 		
 		try {
-			
-			pstmt = con.prepareStatement(query);
-			
 			for(int i=0; i<docNumList.length; i++) {
+				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, Integer.parseInt((docNumList[i])));
+				result = pstmt.executeUpdate();
 			}
-			result = pstmt.executeUpdate();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -803,11 +800,22 @@ public class DocumentDao {
 	//결재했을때 결재완료로 업데이트 
 	public int insertApprStatus(Connection con, String[] docNumList, int apprNum, int apprOrder, int apprNo, int tempOrder) {
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
 		int result = 0;	
+			String query = prop.getProperty("selectApprKind");
 			
-			String query = prop.getProperty("successInsertApprStatus");
 			try {
+				pstmt = con.prepareStatement(query);
+				rset = pstmt.executeQuery();
+				while(rset.next()) {
+					
+				}
+				
+				
+				
+				query = prop.getProperty("successInsertApprStatus");
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, apprNo);
 				pstmt.setInt(2, apprOrder);
@@ -849,8 +857,7 @@ public class DocumentDao {
 	}
 	
 	//결재차수와 결재번호 가져와 logofapprove 삽입 후 반려처리 부분
-	
-		public int sendReturn(Connection con, String[] docNumList) {
+		public int sendReturn(Connection con, String[] docNumList, int apprEmpId, int apprOrder, int apprNo) {
 			PreparedStatement pstmt = null;
 			PreparedStatement pstmt2 = null;
 			int result = 0;
@@ -862,11 +869,10 @@ public class DocumentDao {
 				pstmt.setInt(2, apprOrder);
 				result = pstmt.executeUpdate();
 				
-				query = prop.getProperty("updateApprDateS");
-				for(int i=0; i<list.size(); i+=2) {
+				query = prop.getProperty("updateApprDate");
+
 					pstmt2 = con.prepareStatement(query);
-					pstmt2.setInt(1, list.get(i));
-				}
+					pstmt2.setInt(1, apprNo);
 				result += pstmt2.executeUpdate();
 				
 			} catch (SQLException e) {
