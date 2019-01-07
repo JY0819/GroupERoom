@@ -133,6 +133,11 @@
 			$("#formId").submit();
 		}
 	}
+	$(function () {
+		$("#formId").submit(function() {
+			sendAlarm($("#receiver").val() + ",msg");
+		});
+	});
 </script>
 
 <script>

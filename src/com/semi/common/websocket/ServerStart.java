@@ -12,6 +12,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.semi.common.service.AlarmService;
+import com.semi.common.vo.Alarm;
+
 @ServerEndpoint("/alarmStart")
 public class ServerStart {
 	private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());
@@ -27,13 +30,34 @@ public class ServerStart {
 	@OnMessage
 	public void onMessage(String msg, Session session) throws IOException {
 		//서버로부터 데이터를 전송받을 경우 동작할 메소드
-		System.out.println(msg);
-		msg = msg + "추가추가";
+		System.out.println("알람 생성");
+		String resultMsg = "";
+		String[] temp = msg.split(",");
+		int alarmCount = 0;
+		
+		System.out.println(msg + " - 전달받은 메세지");
+		
+		if (temp[1].equals("msg")) {
+			alarmCount = new AlarmService().chkAlarmMsg(Integer.parseInt(temp[0]));
+		} else if (temp[1].equals("board")) {
+			
+		} else if (temp[1].equals("apprIn")) {
+			
+		} else if (temp[1].equals("appr")) {
+			
+		}
+		
+		if (alarmCount > 0) { // - 알람이 존재
+			resultMsg = alarmCount + "," + temp[1] + "," + temp[0];
+		} else {
+			resultMsg = alarmCount + "error";
+		}
+		
 		//하나의 일 처리를 수행하는동안 사용자의 변경이 일어나면 안된다.
 		//즉 NullPointer를 방지하기 위해 동기화 처리를 해준다.
 		synchronized(clients) {
 			for(Session client : clients) {
-				client.getBasicRemote().sendText(msg);
+				client.getBasicRemote().sendText(resultMsg);
 				
 			}
 		}

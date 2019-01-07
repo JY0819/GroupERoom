@@ -52,7 +52,6 @@
 <input type="hidden" value="<%= empid %>" name="empId">
 <script>
 	$(function() {
-		getConnection();
 		var empId = $("input[name=empId]").val();
 		console.log(empId);
 		$.ajax({
@@ -140,8 +139,12 @@
 </script>
 
 <script>
-// alarm
-	function getConnection(){
+	// alarm
+	$(function(){
+			getConnection();
+			
+	})
+	function getConnection(){	
 		ws = new WebSocket("<%= socketLink %>");
 		//서버 시작할 때 동작		
 		ws.onopen = function(event){
@@ -164,14 +167,30 @@
 		
 	}
 		
-	function send(msg){
-		
+	function sendAlarm(msg){
+		ws.send(msg);
 	}
 		
 	function onMessage(event){
 		var serverMessage = event.data.split(",");
+		console.log(event.data);
+		// serverMessage[0] 알람 갯수, serverMessage[1] 알람 분류, serverMessage[2] 알람 받을 empid
+		if (serverMessage[1] == "msg" && serverMessage[2] == <%=empid%>) {
+			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 쪽지 알람</a></span>");
+
+		} else if (serverMessage[1] == "board" && serverMessage[2] == <%=empid%>) {
+			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 공지 알람</a></span>");
+			
+		} else if (serverMessage[1] == "apprIn" && serverMessage[2] == <%=empid%>) {
+			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 결재승인 알람</a></span>");
+			
+		} else if (serverMessage[1] == "appr" && serverMessage[2] == <%=empid%>) {
+			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 결재 알람</a></span>");
+			
+		} else {
+			console.log("알람 오류 발생");
+		}
 		
-		$(".nav-left").append("<span><a href='#'>" + serverMessage[1] +"메시지 왔당</a></span>");
 	}
 	
 	function onError(event){
@@ -181,4 +200,9 @@
 	function onClose(event){
 		
 	}
+	
+	
+	$(function(){ // 자기 알람 불러오는 코드
+		
+	})
 </script>

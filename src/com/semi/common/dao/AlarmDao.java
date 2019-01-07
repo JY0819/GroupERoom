@@ -29,6 +29,35 @@ public class AlarmDao {
 		}
 	}
 
+	public int chkAlarmMsg(Connection con, int empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		query = prop.getProperty("chkAlarmMsg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, empId);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		
+		return result;
+	}
+
 
 	
 
