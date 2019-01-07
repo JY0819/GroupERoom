@@ -233,7 +233,8 @@ public class EmployeeDao {
 
 		return result;
 	}
-
+	
+/*
 	// 사원 리스트 조회
 	public ArrayList<Employee> selectList(Connection con) {
 		Statement stmt = null;
@@ -270,7 +271,53 @@ public class EmployeeDao {
 		}
 		return list;
 	}
+*/
+	
+	// 페이징 처리 - 사원 리스트 조회
+	public ArrayList<Employee> selectList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Employee> list = null;
 
+		String query = prop.getProperty("selectMemberList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<Employee>();
+			
+			while (rset.next()) {
+				Employee emp = new Employee();
+
+				emp.setEmpid(rset.getInt("EMPID"));
+				emp.setEmpName(rset.getString("EMPNAME"));
+				emp.setEmpGender(rset.getString("EMPGENDER"));
+				emp.setEmpPhone(rset.getString("EMPPHONE"));
+				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
+				emp.setDeptName(rset.getString("DEPTNAME"));
+				emp.setPositionName(rset.getString("POSITIONNAME"));
+
+				list.add(emp);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
 	// 사원 상세보기
 	public HashMap<String, Object> selectOne(Connection con, int num) {
 		PreparedStatement pstmt = null;
@@ -577,7 +624,7 @@ public class EmployeeDao {
 		return list;
 	}
 
-	// 사원 휴가 내역 리스트
+	/*// 사원 휴가 내역 리스트
 	public ArrayList<UseVac> selectVacList(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -610,6 +657,51 @@ public class EmployeeDao {
 			close(rset);
 			close(stmt);
 		}
+		return list;
+	}*/
+	
+	// 페이징 처리 - 사원 휴가 리스트 조회
+	public ArrayList<Employee> selectVacList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Employee> list = null;
+
+		String query = prop.getProperty("selectMemberVacList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<Employee>();
+			
+			while (rset.next()) {
+				UseVac vac = new UseVac();
+
+				vac.setEmpId(rset.getInt("EMPID"));
+				vac.setEmpName(rset.getString("EMPNAME"));
+				vac.setDeptName(rset.getString("DEPTNAME"));
+				vac.setTotalDay(rset.getString("TOTALDAY"));
+				vac.setUseStart(rset.getDate("USESTART"));
+				vac.setUseEnd(rset.getDate("USEEND"));
+				
+				list.add(vac);
+			}
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
 		return list;
 	}
 	
@@ -651,5 +743,61 @@ public class EmployeeDao {
 		}
 		return list;
 	}
+	
+	// 전체 사원 수 조회
+	public int getListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+
+		String query = prop.getProperty("memberListCount");
+
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+
+		return listCount;
+	}
+	
+	// 전체 휴가 수 조회
+	public int getVacListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+
+		String query = prop.getProperty("vacListCount");
+
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+
+		return listCount;
+	}
+
+	
+
+	
 
 }

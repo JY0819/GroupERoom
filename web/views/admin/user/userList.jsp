@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-	import="java.util.*, com.semi.admin.user.model.vo.*"	%>
+	import="java.util.*, com.semi.admin.user.model.vo.*, com.semi.common.vo.*"	%>
 <%
 	ArrayList<Employee> list = (ArrayList<Employee>) request.getAttribute("list");
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 %>
 <%
 	request.setAttribute("title", "사원 조회");
 %>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
-
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/user.css">
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "<%= request.getAttribute("title")%>";
@@ -128,17 +134,66 @@
 				%>
 			</table>
 		</div>
+		
+		<div class="text-center">
+			<ul class="pagination">
+				<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=1'"><<</button>
+				<%
+					if (currentPage <= 1){
+				%>
+					<button disabled><</button>
+				<%
+					} else {
+				%>
+					<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=currentPage - 1%>'"><</button>
+				<%
+					}
+				%>
+				
+				<%
+				for (int p = startPage; p <= endPage; p++) {
+
+						if (p == currentPage) {
+				%>
+				
+						<li disabled><%= p %></li>
+				<%
+						} else {
+				%>
+						<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%= p %>'"><%= p %></button>
+				<%
+						}
+				%>
+				<%
+					}
+				%>
+				
+				
+				<%
+					if (currentPage >= maxPage) {
+				%>
+					<button disabled>></button>
+				<%
+					} else {
+				%>
+					<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=currentPage + 1%>'">></button>
+				<%
+					}
+				%>
+
+				<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=maxPage%>'">>></button>
+				
+				
+				<!-- 
+				<li><a href="#"><<</a></li>
+				<li><a href="#"><</a></li>
+				<li><a href="#"></a></li>
+				<li><a href="#">></a></li>
+				<li><a href="#">>></a></li> -->
+			</ul>
+		</div>
 	</div>
 	
-	<div class="text-center">
-		<ul class="pagination">
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-		</ul>
-	</div>
 </section>
 
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
