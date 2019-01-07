@@ -53,12 +53,13 @@
 					<th>부 서</th>
 					<th>문 서 번 호</th>
 					<th>제 목</th>
-					<th>작 성 날 짜</th>					
+					<th>작 성 날 짜</th>			
+							
 					<% for(int i=0; i<appr.size(); i++) {
         		if(employee.getEmpid() == appr.get(i).getApprEmpId()) { %>
-        		<th><input id="apprEmpId" type="hidden" name="apprEmpId" value=<%= appr.get(i).getApprEmpId()  %>></th>
-        		<th><input id="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>></th>
-        		<th><input id="apprNo" type="hidden" name="apprNo" value=<%= appr.get(i).getApprNo() %>></th>
+        		<th><input class="apprEmpId" type="hidden" name="apprEmpId" value=<%= appr.get(i).getApprEmpId()  %>></th>
+        		<th><input class="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>></th>
+        		<th><input class="apprNo" type="hidden" name="apprNo" value=<%= appr.get(i).getApprNo() %>></th>
         		<% } %>
         		<% } %> 
 				</tr>				
@@ -68,11 +69,12 @@
 			<% if(list != null) { %>
 			<% for(int i=0; i<appr.size(); i++) {
 				if(appr.get(i).getApprEmpId() == employee.getEmpid()) {
-					for(int j=0; j<appr.size(); j++) { 
-					switch(appr.get(j).getApprOrder()){
+					/* for(int j=0; j<appr.size(); j++) { */ 
+					switch(appr.get(i).getApprOrder()){
 						case 1: 
-						if(appr.get(0).getApproval().equals("N")){ 
-							for(int k=0; k<list.size(); k++) {%>							 
+						if(appr.get(i).getApproval().equals("N")){ 
+							for(int k=0; k<list.size(); k++) {
+							if(appr.get(i).getApprNo() == list.get(k).getApprNum()) {%>							 
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
@@ -83,13 +85,15 @@
 								<td><%= list.get(k).getTitle() %></td>
 								<td><%= list.get(k).getWriteDay() %></td>
 							</tr>
+							<% } %>
 							 <% } %>
 					<% }; %>
 						<%
 							break;
 						case 2:
-							 if(appr.get(0).getApproval().equals("Y") && appr.get(1).getApproval().equals("N")){ 
-							for(int k=0; k<list.size(); k++) {%>							 
+							 if(appr.get(i-1).getApproval().equals("Y") && appr.get(i).getApproval().equals("N")){ 
+							for(int k=0; k<list.size(); k++) {
+							if(appr.get(i).getApprNo() == list.get(k).getApprNum()) { %>							 
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
@@ -100,12 +104,14 @@
 								<td><%= list.get(k).getTitle() %></td>
 								<td><%= list.get(k).getWriteDay() %></td>
 							</tr>
+							<% } %>
 							 <% } %>
 							 <% };
 							break;
 						case 3:
-							 if(appr.get(1).getApproval().equals("Y") && appr.get(2).getApproval().equals("N")) { 
-							 for(int k=0; k<list.size(); k++) {%>							 
+							 if(appr.get(i-1).getApproval().equals("Y") && appr.get(i).getApproval().equals("N")) { 
+							 for(int k=0; k<list.size(); k++) {
+							 if(appr.get(i).getApprNo() == list.get(k).getApprNum()) { %>							 
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
@@ -116,10 +122,11 @@
 								<td><%= list.get(k).getTitle() %></td>
 								<td><%= list.get(k).getWriteDay() %></td>
 							</tr>
+							<% } %>
 							 <% } %>
 						<%}; break; 
- 					  } 
-					  }			  
+ 					  }
+					  /* } */			  
 					  } %>
 				<% } %>
 				<% }else { %>
@@ -180,12 +187,11 @@
 	 		var tr = checkbox.parent().parent().eq(i);
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
-            var apprEmpId = $("#apprEmpId").val();
-            var apprOrder = $("#apprOrder").val();
-            var apprNo = $("#apprNo").val();
-            var kind = 'Y';
+            var apprEmpId = $(".apprEmpId").val();
+            var apprOrder = $(".apprOrder").val();
+            var apprNo = $(".apprNo").val();
             sendArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+"&apprEmpId=" + apprEmpId + "&apprOrder=" + apprOrder + "&apprNo=" + apprNo + "&kind=" + kind;
+            location.href="<%= request.getContextPath()%>/sendReturn.sr?docNum=" + sendArr + ","+"&apprEmpId=" + apprEmpId + "&apprOrder=" + apprOrder + "&apprNo=" + apprNo;
 		});
 	}
 
@@ -205,12 +211,12 @@
 	 		var tr = checkbox.parent().parent().eq(i);
 	 		var td = tr.children();
             var docNum = td.eq(4).text();
-            var apprEmpId = $("#apprEmpId").val();
-            var apprOrder = $("#apprOrder").val();
-            var apprNo = $("#apprNo").val();
-            var kind = 'Y';
+            var apprEmpId = $(".apprEmpId").val();
+            var apprOrder = $(".apprOrder").val();
+            var apprNo = $(".apprNo").val();
+        
             sendArr.push(docNum);
-            location.href="<%= request.getContextPath()%>/successUpdate.su?docNum=" + sendArr + ","+"&apprEmpId=" + apprEmpId + "&apprOrder=" + apprOrder + "&apprNo=" + apprNo + "&kind=" + kind;
+            location.href="<%= request.getContextPath()%>/successUpdate.su?docNum=" + sendArr + ","+"&apprEmpId=" + apprEmpId + "&apprOrder=" + apprOrder + "&apprNo=" + apprNo;
 	 	});
 	}
 </script>
