@@ -32,11 +32,12 @@
 		css부분 클릭시 글씨 색이나 밑줄 변경 안하게 하려고 a태그 부분 추가함-->
 
 		<%--<span><a href="/semi/views/approval/approvalMain.jsp">Approve</a></span>
+
 		<span><a href="<%=request.getContextPath()%>/selectList.no">Board</a></span>
 		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
 		<span><a href="<%=request.getContextPath()%>/myPageMain">My Page</a></span>--%>
-
-		<span><a href="/semi/views/approval/approvalMain.jsp">결재</a></span>
+    
+    <span><a href="<%=request.getContextPath()%>/selectMainServlet.sm"></a></span>
 		<span><a href="<%=request.getContextPath()%>/selectList.no">게시판</a></span>
 		<span><a href="<%=request.getContextPath()%>/schedule.sche">일정</a></span>
 		<span><a href="<%=request.getContextPath()%>/myPageMain">마이페이지</a></span>

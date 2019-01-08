@@ -55,7 +55,7 @@
 					<td><%= list.get(i).getDocNum() %></td>
 					<td><%= list.get(i).getWriteDay() %></td>
 					<% if(list.get(i).getResult().equals("Y")) { %>
-					<td>결재완료</td>
+					<td>처리완료</td>
 					<% }else { %>
 					<td>결재대기중</td>
 					<% } %>
