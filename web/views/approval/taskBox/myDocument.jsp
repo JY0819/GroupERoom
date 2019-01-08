@@ -23,6 +23,15 @@
 <script>
 	var jsonData = treeviewJson.approvalJson;
 	var nodeName = "내 문서함";
+	
+	$(function () {
+		setTimeout(function() {
+			console.log("결재가 등록되어 알람을 뿌립니다.");
+			console.log('대기...');
+		 	console.log("0,apprIn")
+			sendAlarm("0,apprIn");
+		}, 3000);
+	});
 </script>
 <section class="content">
 

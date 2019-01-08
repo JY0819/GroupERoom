@@ -35,6 +35,7 @@ public class ServerStart {
 		System.out.println("알람 생성");
 		String resultMsg = "";
 		ArrayList<Alarm> alarm = null;
+		ArrayList<Integer> apprLine = null;
 		String[] temp = msg.split(",");
 		int alarmCount = 0;
 		
@@ -46,19 +47,51 @@ public class ServerStart {
 			if (alarmCount > 0) { // - 알람이 존재
 				resultMsg = alarmCount + "," + temp[1] + "," + temp[0];
 			} else {
-				resultMsg = alarmCount + "error";
+				resultMsg = alarmCount + ",error";
 			}
+			
 		} else if (temp[1].equals("board")) {
 			alarm = new AlarmService().chkNoticeMsg();
 			
 			if (alarm.size() > 0) { // - 알람이 존재
 				resultMsg = addHashChkBoard(alarm) + "," + temp[1];
 			} else {
-				resultMsg = alarmCount + "error";
+				resultMsg = alarmCount + ",error";
 			}
-		} else if (temp[1].equals("apprIn")) {
 			
-		} else if (temp[1].equals("appr")) {
+		} else if (temp[1].equals("apprEnd")) { // 결재선 완료 조회
+			apprLine = new AlarmService().chkApprEndMsg();
+			
+			if (apprLine.size() > 0) {
+				for (int i = 0; i < apprLine.size(); i++) {
+					resultMsg += apprLine.get(i);
+					
+					if (i != apprLine.size() - 1) {
+						resultMsg += "|";
+					}
+				}
+				
+				resultMsg += "," + temp[1];
+			} else {
+				resultMsg = alarmCount + ",error";
+			}
+			
+		} else if (temp[1].equals("apprIn")) { // 새 결재선 등록 조회
+			apprLine = new AlarmService().chkApprInMsg();
+			
+			if (apprLine.size() > 0) {
+				for (int i = 0; i < apprLine.size(); i++) {
+					resultMsg += apprLine.get(i);
+					
+					if (i != apprLine.size() - 1) {
+						resultMsg += "|";
+					}
+				}
+				
+				resultMsg += "," + temp[1];
+			} else {
+				resultMsg = alarmCount + ",error";
+			}
 			
 		}
 		

@@ -1,3 +1,4 @@
+<%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@page import="com.semi.myPage.model.Etc.vo.PageInfo"%>
 <%@page import="com.semi.myPage.model.Msg.vo.Msg"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,6 +8,7 @@
 <% 
 	ArrayList<Msg> list = (ArrayList<Msg>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	Employee user = (Employee)session.getAttribute("loginUser");
 	
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -91,6 +93,13 @@
 						<div class="alignBox">
 							<input class="btn" id="btn2" type="button" value="선택 쪽지 보관" onclick="btn2Clk()">
 						</div>
+						<div class="alignBox" style="margin: 10px;">
+							<select id='selectFilter'>
+							    <option value='' selected>모두 보기</option>
+							    <option value='<%=user.getDeptId()%>'>내 부서</option>
+							</select>
+							<input type="hidden" name="filter" value="">
+						</div>
 						<script type="text/javascript">
 							function btn1Clk() {
 								$("#formId").attr("action", "<%=request.getContextPath()%>/deleteMsg");
@@ -100,6 +109,20 @@
 								$("#formId").attr("action", "<%=request.getContextPath()%>/saveMsg");
 								$("#formId").submit();
 							}
+							$(function() {
+								$("#selectFilter").change(function() {
+									if ($(this).val() == '') { // 모두 보기
+										location.href="<%=request.getContextPath()%>/myPageMessage";
+									} else {
+										location.href="<%=request.getContextPath()%>/myPageMessage?deptId=" + $(this).val();
+									}
+								});
+							});
+<%-- 							function selectedFilter(option) {
+								console.log(option);
+								
+								
+							} --%>
 						</script>
 					</td>
 				</tr>

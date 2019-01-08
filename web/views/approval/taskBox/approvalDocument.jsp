@@ -22,6 +22,15 @@
 <script>
 	var jsonData = treeviewJson.approvalJson;
 	var nodeName = "결재할 문서";
+	
+	$(function () {
+		setTimeout(function() {
+			console.log("결재가 완료되어 알람을 뿌립니다.");
+			console.log('대기...');
+		 	console.log("0,apprEnd")
+			sendAlarm("0,apprEnd");
+		}, 3000);
+	});
 </script> 
 
 <section class="content">

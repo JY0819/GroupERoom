@@ -1,5 +1,6 @@
 package com.semi.myPage.controller.Msg.list;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -66,7 +67,15 @@ public class ShowMyPageMessage extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<Msg> list = ms.showMyPageMain(userId, currentPage, limit);
+		ArrayList<Msg> list = null;
+		if (request.getParameter("deptId") == null) {
+			list = ms.showMyPageMain(userId, currentPage, limit);
+		} else {
+			list = ms.showMyPageMain(userId, currentPage, limit, Integer.parseInt(request.getParameter("deptId")));
+		}
+		
+		
+		
 		
 		String page = "";
 		
