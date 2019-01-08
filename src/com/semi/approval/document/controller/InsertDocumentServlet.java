@@ -89,7 +89,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			
 			//문서종류
 			String documentKind = multipartRequest.getParameter("documentKind");
-			System.out.println(documentKind);
+
 			//제목
 			String title = multipartRequest.getParameter("title");
 			
@@ -107,6 +107,7 @@ public class InsertDocumentServlet extends HttpServlet {
 		
 			//사원 입사일
 			String entry = multipartRequest.getParameter("entryDay");
+			System.out.println("entry : " + entry);
 			//===================================================
 		
 			//결재자가 비어있지 않으면 결재차수 카운트
@@ -190,7 +191,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			
 			//재직증명서일때
 			else if(documentKind.equals("재직증명서")) {
-
+				System.out.println("재직증명서 실행");
 				if(!wDate.equals("")) {
 					//작성일
 					String[] dateArr = wDate.split("-");
@@ -212,6 +213,15 @@ public class InsertDocumentServlet extends HttpServlet {
 				}else {
 					//입력받은 날짜가 없을 때 현재시간 넣어줌
 					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					String[] dateArr = entry.split("-");
+					int[] drr = new  int[dateArr.length];
+					dateArr = entry.split("-");
+					drr = new  int[dateArr.length];
+					
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					entryDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
 				}
 			}else {
 				if(!wDate.equals("")) {
@@ -333,6 +343,7 @@ public class InsertDocumentServlet extends HttpServlet {
 				request.setAttribute("msg", "문서 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
+			//=======================================================
 			//파일없을때
 		}else {
 			//값 변수에 담기
@@ -483,6 +494,13 @@ public class InsertDocumentServlet extends HttpServlet {
 				}else {
 					//입력받은 날짜가 없을 때 현재시간 넣어줌
 					writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+					String[] dateArr = entry.split("-");
+					int[] drr = new  int[dateArr.length];
+					for(int i=0; i<dateArr.length; i++) {
+						drr[i] = Integer.parseInt(dateArr[i]);
+					}
+					entryDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+					
 				}
 			}else {
 				if(!wDate.equals("")) {

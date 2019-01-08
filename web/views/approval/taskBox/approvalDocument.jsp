@@ -1,3 +1,4 @@
+<%@page import="com.semi.approval.approve.model.vo.PageInfo"%>
 <%@page import="com.semi.approval.approve.model.vo.ApprLine"%>
 <%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@page import="com.semi.approval.document.vo.MyDocument"%>
@@ -8,6 +9,12 @@
 	Employee employee = (Employee)session.getAttribute("loginUser");
 	ArrayList<ApprLine> appr = (ArrayList<ApprLine>)request.getAttribute("appr");
 	ArrayList<MyDocument> list = (ArrayList<MyDocument>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 %>
 <jsp:include page="/views/layout/treeview/approval/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/approval/taskBox.css">
@@ -55,13 +62,13 @@
 					<th>제 목</th>
 					<th>작 성 날 짜</th>			
 							
-					<% for(int i=0; i<appr.size(); i++) {
+				<% for(int i=0; i<appr.size(); i++) {
         		if(employee.getEmpid() == appr.get(i).getApprEmpId()) { %>
         		<th><input class="apprEmpId" type="hidden" name="apprEmpId" value=<%= appr.get(i).getApprEmpId()  %>></th>
         		<th><input class="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>></th>
         		<th><input class="apprNo" type="hidden" name="apprNo" value=<%= appr.get(i).getApprNo() %>></th>
         		<% } %>
-        		<% } %> 
+        		<% } %>  
 				</tr>				
 			</thead>
 			<tbody>
@@ -145,6 +152,38 @@
 		</table>
 		<div class="btnArea">
 				<div class="paging" align="center">
+			
+				<ul class="pagination">
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=1'"><<</a></li> 
+					<% if(currentPage <=1){ %>
+					<li><a><</a></li> <!-- 비활성화 -->
+					<%}else{%>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
+					<%} %>
+					<% for(int p = startPage; p <= endPage; p++){
+					if(p == currentPage){
+					
+			
+				
+					%>
+					<li ><a style="background-color: rgb(128, 181, 240) " ><%= p %></a></li>
+					<%  }else{ %>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%= p %>'"><%= p %></a></li>
+			 
+			
+					<%         } %>
+					<%} %>
+					
+					<%if(currentPage >= maxPage){ %>
+					<li><a >></a></li> <!-- 비활성화 -->
+					<%}else{%>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
+					<%} %>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=maxPage%>'">>></a></li>
+				</ul>
+				
+			</div>
+				<!-- <div class="paging" align="center">
 				<ul class="pagination">
 					<li><a href="#">1</a></li>
 					<li><a href="#">2</a></li>
@@ -152,7 +191,7 @@
 					<li><a href="#">4</a></li>
 					<li><a href="#">5</a></li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</div>
 

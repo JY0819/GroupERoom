@@ -251,6 +251,7 @@ public class DocumentDao {
 			pstmt.setString(7, document.getManageClass());
 			pstmt.setInt(8, document.getManageNo());
 			pstmt.setString(9, document.getSubmission());
+			System.out.println("DAO입사일: " + document.getEntryDay());
 			pstmt.setDate(10, document.getEntryDay());
 			result = pstmt.executeUpdate();
 			
@@ -366,6 +367,7 @@ public class DocumentDao {
 			pstmt.setString(6, document.getManageClass());
 			pstmt.setInt(7, document.getManageNo());
 			pstmt.setString(8, document.getSubmission());
+			System.out.println("DAO 첨부파일 없는 입사일 :" + document.getEntryDay());
 			pstmt.setDate(9, document.getEntryDay());
 			result = pstmt.executeUpdate();
 			
@@ -426,7 +428,7 @@ public class DocumentDao {
 			Statement stmt = null;
 			int listCount = 0;
 			ResultSet rset = null;
-			String query = prop.getProperty("listCount");
+			String query = prop.getProperty("listMyDocCount");
 			try {
 				stmt = con.createStatement();
 				rset = stmt.executeQuery(query);
@@ -510,16 +512,21 @@ public class DocumentDao {
 	}
 
 	//결재할 문서페이지 상신된 문서 조회
-	public ArrayList<MyDocument> selectSubmitList(Connection con) {
+	public ArrayList<MyDocument> selectSubmitList(Connection con, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		MyDocument myDocument = null;
 		ArrayList<MyDocument> list = null;
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		
 		
 		String query = prop.getProperty("selectSubmitDocument");
 		int count = 1;
 		try {
 			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rset = pstmt.executeQuery();
 			list = new ArrayList<MyDocument>();
 			
@@ -534,6 +541,7 @@ public class DocumentDao {
 				myDocument.setTitle(rset.getString("MANAGETITLE"));
 				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
 				myDocument.setApprNum(rset.getInt("APPRNO"));
+				myDocument.setResult(rset.getString("APPRYN"));
 				
 				count++;
 				list.add(myDocument);
@@ -566,9 +574,13 @@ public class DocumentDao {
 				while(rset.next()) {
 					ApprLine apprLine = new ApprLine();
 					apprLine.setApprEmpId(rset.getInt("APPREMPID"));
+					System.out.println(apprLine.getApprEmpId());
 					apprLine.setApprOrder(rset.getInt("APPRORDER"));
+					System.out.println(apprLine.getApprOrder());
 					apprLine.setApprName(rset.getString("EMPNAME"));
+					System.out.println(apprLine.getApprName());
 					apprLine.setApprNo(rset.getInt("APPRNO"));
+					System.out.println(apprLine.getApprNo());
 					apprLine.setCheck(false);
 					apprLine.setApproval(rset.getString("APPROVAL"));
 					list.add(apprLine);
@@ -617,7 +629,7 @@ public class DocumentDao {
 		MyDocument myDocument = null;
 		ArrayList<MyDocument> list = null;
 		
-		String query = prop.getProperty("selectReturnDocument1");
+		String query = prop.getProperty("selectReturnDocument");
 		
 		try {
 			int startRow = (currentPage - 1) * limit + 1;
@@ -636,18 +648,9 @@ public class DocumentDao {
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
 				myDocument.setDocNum(rset.getInt("DOCNO"));
-				int docNum = myDocument.getDocNum();
 				myDocument.setWriteDay(rset.getDate("MANAGEDAY"));
-				myDocument.setApprNum(rset.getInt("APPRNO"));
-				String query2 = prop.getProperty("selectReturnDocument2");
-				pstmt2 = con.prepareStatement(query2);
-				pstmt2.setInt(1, docNum);
-				pstmt2.setInt(2, startRow);
-				pstmt2.setInt(3, endRow);
-				rset2 = pstmt2.executeQuery();
-				if(rset2.next()) {
-					myDocument.setResult(rset2.getString("APPRSTATUS"));
-				}				
+				myDocument.setResult(rset.getString("APPRSTATUS"));
+				
 				list.add(myDocument);
 				count++;
 			}
@@ -730,17 +733,22 @@ public class DocumentDao {
 		return attachments;
 	}
 	//문서진행현황 페이지에 넣을 데이터들 조회
-	public ArrayList<MyDocument> selectStatus(Connection con, int empId) {
+	public ArrayList<MyDocument> selectStatus(Connection con, int empId, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		MyDocument myDocument = new MyDocument();
 		ArrayList<MyDocument> list = null;
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 		
 		String query = prop.getProperty("selectStatus");
 		try {
 			
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, empId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
 			rset = pstmt.executeQuery();
 			list = new ArrayList<MyDocument>();
 			int count = 1;
@@ -761,8 +769,7 @@ public class DocumentDao {
 		}finally {
 			close(rset);
 			close(pstmt);
-		}
-		
+		}		
 		return list;
 	}
 	
@@ -942,6 +949,47 @@ public class DocumentDao {
 			}
 			
 			
+			return listCount;
+		}
+
+		public int getListApprovalCount(Connection con) {
+			Statement stmt = null;
+			int listCount = 0;
+			ResultSet rset = null;
+			String query = prop.getProperty("listApprovalCount");
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(stmt);
+			}
+			return listCount;
+		}
+
+		public int getListStatusCount(Connection con, int empId) {
+			PreparedStatement pstmt = null;
+			int listCount = 0;
+			ResultSet rset = null;
+			String query = prop.getProperty("listStatusCount");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, empId);
+				rset = pstmt.executeQuery();
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
 			return listCount;
 		}
 }
