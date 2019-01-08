@@ -1,6 +1,8 @@
-package com.semi.myPage.controller.Msg.list;
+package com.semi.myPage.controller.Etc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,30 +11,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.myPage.model.Msg.service.MsgService;
+import com.semi.admin.user.model.service.EmployeeService;
+import com.semi.admin.user.model.vo.Employee;
+import com.semi.common.service.AttachmentsService;
+import com.semi.common.vo.Attachments;
 
-@WebServlet("/sendMsg")
-public class SendMsg extends HttpServlet {
+@WebServlet("/selectOneEmp")
+public class SelectOneMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SendMsg() {
+    public SelectOneMemberServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("empNo"));
-		System.out.println(request.getParameter("receiver"));
-		System.out.println(request.getParameter("contents"));
+		Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
 		
-		int result = new MsgService().sendMsg(Integer.parseInt(request.getParameter("empNo")), request.getParameter("contents"), Integer.parseInt(request.getParameter("receiver")));
+		int userPhotoId = loginUser.getPhotoId();
 		
+		System.out.println();
+		
+		String file = new AttachmentsService().getAttachmentPath(userPhotoId);
 		
 		String page = "";
-		if (result > 0) {
-			page = "myPageSendMessage?sendAlarm=" + Integer.parseInt(request.getParameter("receiver"));
-		} else {
-			page = "error";
-		}
+		
+		page = "views/myPage/myInfo/ChangeInfo.jsp";
+		request.setAttribute("file", file);
+	
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	}

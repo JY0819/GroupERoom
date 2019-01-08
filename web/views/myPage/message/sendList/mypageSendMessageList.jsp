@@ -131,5 +131,18 @@
 			}
 		});
 	});
+	$(function () {
+		console.log("알람을 " + <%=request.getAttribute("sendAlarm")%> + "에게 전송 시도합니다.");
+		var AlarmId = "" + <%=request.getAttribute("sendAlarm")%>;
+		setTimeout(function() {
+			console.log('대기...');
+			if(isNull(AlarmId)) {
+		 		console.log(AlarmId + ",msg")
+				sendAlarm(AlarmId + ",msg");
+			} else {
+		 		
+			}
+		}, 3000);
+	});
 </script>
 <jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />
