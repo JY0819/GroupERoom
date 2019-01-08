@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.semi.board.Free.model.vo.Free;
 import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.vo.Notice;
 
@@ -133,7 +134,7 @@ public class NoticeDao {
 
 		return result;
 	}
-	//글 상세보기
+	//글 상세보기(유파일)
 	public HashMap<String, Object> selectOne(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -892,6 +893,54 @@ System.out.println("상세보기 dao : "+query);
 		}	
 		
 		return file;
+	}
+	//글 상세보기(노파일)
+	public Notice selectOneNoFile(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Notice n = null;
+		
+		String query = prop.getProperty("selectOneNoFile");
+		System.out.println("첨부파일 없는 글 상세보기 dao query: "+query);
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				 n=new Notice();
+				
+				n.setBno(rset.getInt("BOARDNO"));
+				n.setbClass(rset.getString("BOARDCLASS"));
+				n.setbTitle(rset.getString("BOARDTITLE"));
+				n.setbContent(rset.getString("BOARDCONTENTS"));
+				n.setbDate(rset.getDate("BOARDDATE"));
+				n.setbClicks(rset.getInt("BOARDCLICKS"));
+				n.setbAttach(rset.getString("BOARDATTACH"));
+				n.setComNo(rset.getInt("COMMENTNO"));
+				n.setComLevel(rset.getInt("COMMENTLEVEL"));
+				n.setRecomId(rset.getString("RECOMMENTID"));
+				
+				n.setReplebno(rset.getInt("REPLEBOARDNO"));
+				n.setWriterId(rset.getString("EMPNAME"));
+				n.setStatus(rset.getString("WHETHEROFDELETE"));
+				n.setFile01(rset.getInt("FILE01"));
+				n.setFile02(rset.getInt("FILE02"));
+				n.setFile03(rset.getInt("FILE03"));
+				
+			}
+			System.out.println("노파일 dao ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		
+		return n;
 	}
 
 	

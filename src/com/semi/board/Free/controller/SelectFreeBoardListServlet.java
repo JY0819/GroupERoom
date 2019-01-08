@@ -111,7 +111,7 @@ System.out.println("maxPage: "+maxPage);
 		page = "views/board/free/boardFree.jsp";
 
 		request.setAttribute("list", list);
-
+System.out.println(list);
 		request.setAttribute("pi", pi);
 
 		}else {

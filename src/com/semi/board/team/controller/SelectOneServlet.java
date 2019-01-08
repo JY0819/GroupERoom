@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.service.TeamService;
+import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
 
 /**
@@ -38,32 +38,52 @@ public class SelectOneServlet extends HttpServlet {
 		
 		System.out.println("글번호: "+num);
 	
-		HashMap<String, Object> hmap = new TeamService().selectOne(num);
-
-		Team t = (Team)hmap.get("Team");
-		Attachment at = (Attachment)hmap.get("attachment");
+		String fileName = request.getParameter("fileName");
+		System.out.println("select servlet fileName: "+fileName);
 		
-		
-		ArrayList<Team> reply = new TeamService().selectReply(num);
 		String page ="";
-		
-		if(t != null) {
-			page ="views/board/team/viewTeam.jsp";
-			if(reply != null) {
-				request.setAttribute("reply", reply);
+		System.out.println(page + "ddddd");
+		if(Integer.parseInt(fileName) != 0) {
+			HashMap<String, Object> hmap = new TeamService().selectOne(num);
+			Team t = (Team)hmap.get("Team");
+			Attachment at = (Attachment)hmap.get("attachment");
+			System.out.println(page + "ddddd");
+			ArrayList<Team> reply = new TeamService().selectReply(num);
+			System.out.println(page + "ddddd");
+			if(t != null) {
+				if(reply != null) {
+					request.setAttribute("reply", reply);
+				}
+				System.out.println(page + "ddddd");
+				request.setAttribute("at", at);
+				request.setAttribute("t", t);
+				page ="views/board/team/viewTeam.jsp";
+			}else {
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "부서 게시글 상세보기 실패!");
+				System.out.println(page + "ddddd");
 			}
-			request.setAttribute("t", t);
-			request.setAttribute("at", at);
+			
 		}else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "부서게시판 게시글 상세보기 실패!");
+			System.out.println(page + "ddddd");
+			Team t = new TeamService().selectOneNoFile(num);
+			Attachment at = new Attachment();
+			
+			System.out.println(page + "ddddd");
+			if(t != null) {
+				request.setAttribute("t", t);
+				request.setAttribute("at", at);
+				page ="views/board/team/viewTeam.jsp";
+				
+			}else {
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "글 상세보기 실패!");
+			}
 		}
-
+		System.out.println(page + "ddddd");
 		//새고하면 조회수 늘어나는 거 생각하기!->forward로 해야함
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-	
-	
 	
 	
 	

@@ -150,7 +150,7 @@ public class TeamDao {
 		
 		
 		String query = prop.getProperty("selectOne");
-System.out.println("selectOne dao query: "+query);
+		System.out.println("selectOne dao queryㅁㅁㅁㅁㅁㅁ: "+query);
 		try {
 			pstmt=con.prepareStatement(query);
 			pstmt.setInt(1, num);
@@ -977,6 +977,53 @@ System.out.println("시퀀스값 조회쿼리 : "+query);
 		}	
 		
 		return file;
+	}
+	//글 상세보기(노파일)
+	public Team selectOneNoFile(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Team t = null;
+		
+		String query = prop.getProperty("selectOneNoFile");
+		System.out.println("첨부파일 없는 글 상세보기 dao query: "+query);
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				 t=new Team();
+					
+				 t.setBno(rset.getInt("BOARDNO"));
+					t.setbClass(rset.getString("BOARDCLASS"));
+					t.setbTitle(rset.getString("BOARDTITLE"));
+					t.setbContent(rset.getString("BOARDCONTENTS"));
+					t.setbDate(rset.getDate("BOARDDATE"));
+					t.setbClicks(rset.getInt("BOARDCLICKS"));
+					t.setbAttach(rset.getString("BOARDATTACH"));
+					t.setComNo(rset.getInt("COMMENTNO"));
+					t.setComLevel(rset.getInt("COMMENTLEVEL"));
+					t.setRecomId(rset.getString("RECOMMENTID"));
+					
+					t.setReplebno(rset.getInt("REPLEBOARDNO"));
+					t.setWriterId(rset.getString("EMPNAME"));
+					t.setStatus(rset.getString("WHETHEROFDELETE"));
+					t.setFile01(rset.getInt("FILE01"));
+					t.setFile02(rset.getInt("FILE02"));
+					t.setFile03(rset.getInt("FILE03"));
+			}
+			System.out.println("노파일 dao ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		
+		return t;
 	}
 	
 	

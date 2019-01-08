@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.semi.board.Free.model.dao.FreeDao;
 import com.semi.board.team.model.dao.TeamDao;
 import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
@@ -39,12 +38,12 @@ public class TeamService {
 
 		return result;
 	}
-	//글 상세보기
+	//글 상세보기(유파일)
 	public HashMap<String, Object> selectOne(int num) {
 		Connection con = getConnection();
 		HashMap<String, Object> hmap = null;
 
-		System.out.println("service num: "+num);
+		
 		int result = new TeamDao().updateCount(con, num);
 
 		if(result > 0) {
@@ -296,6 +295,26 @@ public class TeamService {
 		
 		
 		return file;
+	}
+	//글 상세보기(노파일)
+	public Team selectOneNoFile(int num) {
+		Connection con = getConnection();
+		
+		Team t = null;
+		
+		//조회수 증가
+		int result = new TeamDao().updateCount(con,  num);
+		System.out.println("noFile service 조회수 result : "+result);
+		if(result > 0) {
+			commit(con);
+			t = new TeamDao().selectOneNoFile(con, num);
+		System.out.println("noFile service 상세보기 ");
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return t;
 	}
 	
 }

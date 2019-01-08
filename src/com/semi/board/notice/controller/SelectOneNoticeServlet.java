@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.service.NoticeService;
+import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.vo.Notice;
 
 /**
@@ -36,36 +36,52 @@ public class SelectOneNoticeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int num = Integer.parseInt(request.getParameter("num"));
 	
-		System.out.println(num);
+		System.out.println("글번호: "+num);
 		
-		HashMap<String, Object> hmap = new NoticeService().selectOne(num);
-		Notice n = (Notice)hmap.get("Notice");
-		Attachment at = (Attachment)hmap.get("attachment");
 
+		String fileName = request.getParameter("fileName");
+		System.out.println("select servlet fileName: "+fileName);
 		
-		
-		ArrayList<Notice> reply = new NoticeService().selectReply(num);
-
 		String page ="";
-		
-		if(n != null) {
-			page ="views/board/notice/viewNotice.jsp";
-			if(reply != null) {
-				request.setAttribute("reply", reply);
 
+		if(Integer.parseInt(fileName) != 0) {
+			HashMap<String, Object> hmap = new NoticeService().selectOne(num);
+			Notice n = (Notice)hmap.get("Notice");
+			Attachment at = (Attachment)hmap.get("attachment");
+			
+			ArrayList<Notice> reply = new NoticeService().selectReply(num);
+			
+			if(n != null) {
+				page ="views/board/notice/viewNotice.jsp";
+				if(reply != null) {
+					request.setAttribute("reply", reply);
+				}
+				
+				request.setAttribute("at", at);
+				request.setAttribute("n", n);
+			}else {
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "자유게시판 게시글 상세보기 실패!");
 			}
-			request.setAttribute("at", at);
-
-			request.setAttribute("n", n);
+			
 		}else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 게시글 상세보기 실패!");
+			Notice n = new NoticeService().selectOneNoFile(num);
+			Attachment at = new Attachment();
+			
+			
+			if(n != null) {
+				page ="views/board/free/viewFree.jsp";
+				request.setAttribute("n", n);
+				request.setAttribute("at", at);
+				
+			}else {
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "글 상세보기 실패!");
+			}
 		}
-
-		//새고하면 조회수 늘어나는 거 생각하기!->forward로 해야함
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-	
 	
 	
 	
