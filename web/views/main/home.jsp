@@ -50,7 +50,7 @@ p.imgText {
 #calendar td{
 	width:60px;
 	height:60px;
-	text-align:right;
+	text-align:center;
 }
 #calendar tbody td{
 	border-top: 1px solid #EAEAEA;
@@ -58,21 +58,28 @@ p.imgText {
 }
 .day{
 	color: darkgray;
-	text-align:right;
+	line-height: 25px;
+	text-align:center;
 }
 .sunday{
 	color:#BF7272;
-	text-align:right;
+	line-height: 25px;
+	text-align:center;
 }
 .saturday{
 	color:#728ABF;
-	text-align:right;
+	line-height: 25px;
+	text-align:center;	
 }
 #announce{
 	padding:10px 40px 10px 10px;
 }
-i{
-
+div.dayBack{
+	text-align:center;
+	width:25px;
+	height:25px;
+	margin:15px;
+	border-radius:50%;
 }
 </style>
 
@@ -83,7 +90,7 @@ i{
 
 	function move(e) {
 		if (e.id == 'app') {
-			location.href="/semi/views/approval/approvalMain.jsp";
+			location.href="<%=request.getContextPath()%>/selectMainServlet.sm";
 		} else if (e.id == 'board') {
 			location.href="<%=request.getContextPath()%>/selectList.fr";
 		} else if (e.id == 'myP') {
@@ -129,9 +136,9 @@ i{
 			
 			cell = row.insertCell();
 			cnt=cnt+1;
-			cell.innerHTML ='<span class="day">'+i+'</span>';
-			if(cnt%7 ==1) {cell.innerHTML='<span class="sunday">'+i+'</span>';}
-			if(cnt%7 ==0) {cell.innerHTML='<span class="saturday">'+i+'</span>';}
+			cell.innerHTML ='<div class="dayBack"><span class="day">'+i+'</span></div>';
+			if(cnt%7 ==1) {cell.innerHTML='<div class="dayBack"><span class="sunday">'+i+'</span></div>';}
+			if(cnt%7 ==0) {cell.innerHTML='<div class="dayBack"><span class="saturday">'+i+'</span></div>';}
 			cell.id='calSchedule'+holis; //일정 입력용 Id 부여
 			
 			if (cnt%7 == 0) {row = calendar.insertRow();}
@@ -142,10 +149,10 @@ i{
 			for(int i=0;i<scheduleList.size();i++){ %>
 			<%--				if(Number(<%=scheduleList.get(i).getCalendarClass()%>)==3){
 			$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=scheduleList.get(i).getCalendarNo()%>'><%=scheduleList.get(i).getScheduleTime()%>"+' '+"<%=scheduleList.get(i).getCalendarContents()%></p>");
---%>
-				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children("span").css("font-size","17px");
-				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children("span").css("font-weight","bold");
-			
+--%>			$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children("div").css("background","#ECECEC");
+				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children().children("span").css("font-size","16px");
+<%-- 				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children().children("span").css("font-weight","bold");
+ --%>				
 	<%}%>	 
 		
 	}
@@ -203,7 +210,7 @@ i{
 	<div><h1>　</h1><h3>　</h3></div>
 	<table id="announce" style="display:table-cell;">
 		<tr>
-			<th colspan="2" style="text-align: left;">공지사항</th>
+			<th colspan="2" style="font-weight:100;text-align:left;color:gray;" >공 지 사 항</th>
 		</tr>
 		<tr>
 			<td colspan="2"><hr></td>
@@ -213,14 +220,14 @@ i{
 				<td width="500px"><p style="text-align: left;">
 					<%Date today=new Date();
 						boolean time;
-						time= (today.getTime()-n.getbDate().getTime()) / (24*3600*1000) < 1.5;
+						time=(today.getTime()-n.getbDate().getTime())/(24*3600*1000)<=1.5;
 						if(time){
-					%><i style="color:red;" class="fas fa-exclamation-circle"></i><%} %>
+					%><i style="color:#D76464;" class="xi-new-o xi-2x"></i><%} %>
 				<input type="hidden" name="bno" value="<%=n.getBno()%>"><%=n.getbTitle() %></p></td>
 				<td width="200px"><p style="text-align: right;"><%=n.getbDate() %></p></td>
 			</tr>
 			<tr>
-				<td colspan="2" height="3px" colspan="7"><hr></td>
+				<td colspan="2" style="height:3px; padding:0px" colspan="7"><hr></td>
 			</tr>
 		<% }%>
 		<%if(noticeList.size()==0){ %>

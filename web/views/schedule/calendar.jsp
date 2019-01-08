@@ -41,8 +41,10 @@ css 좀 더 보기좋게 수정
 	function goCalendar(){
 		var goYear=$("#goCalYear").val();
 		var goMonth=$("#goCalMonth").val();
+		if(goMonth>12) {goMonth=12; alert("정상입력 되지 않아 "+goYear+"년 12월로 이동합니다.");}
+		else if(goMonth<1){goMonth=1; alert("정상입력 되지 않아 "+goYear+"년 1월로 이동합니다.");}
+		
 		today=new Date(goYear, goMonth-1, 1);
-
 		buildCalendar(); //
 	}
 	
@@ -131,9 +133,11 @@ css 좀 더 보기좋게 수정
 					holidaySol[j][1]+'</span>';
 					
 					//어린이날 대체휴일일 경우 대체휴일
-					if(holis.toString().substring(4)==holidaySol[2][0]){
-						if(cnt%7==1){replaceHolis=1;}
-						if(cnt%7==0){replaceHolis=2;}
+					if(today.getFullYear()>2014){
+						if(holis.toString().substring(4)==holidaySol[2][0]){
+							if(cnt%7==1){replaceHolis=1;}
+							if(cnt%7==0){replaceHolis=2;}
+						}
 					}
 				} 
 			}
@@ -143,23 +147,43 @@ css 좀 더 보기좋게 수정
 				if(lunar_date.lunHolis.toString().substring(4,8)===holidayLun[j][0].toString()){
 					//음력 공휴일 적용
 					cell.innerHTML='<span class="sunday">'+i+'<br>'+holidayLun[j][1]+'</span>';
-					
-					//대체 휴일이 적용 될 경우 대체휴일
-					if(j==0 && cnt%7==1){replaceHolis=3;}
-					if(j==1 && cnt%7==1){replaceHolis=4;}
-					if(j==2 && cnt%7==1){replaceHolis=5;}
-					if(j==4 && cnt%7==1){replaceHolis=6;}
-					if(j==5 && cnt%7==1){replaceHolis=7;}
-					if(j==6 && cnt%7==1){replaceHolis=8;}
+						
+					if(today.getFullYear()>2014){
+						//대체 휴일이 적용 될 경우 대체휴일
+						if(j==0 && cnt%7==1){replaceHolis=3;}
+						if(j==1 && cnt%7==1){replaceHolis=4;}
+						if(j==2 && cnt%7==1){replaceHolis=5;}
+					}
+					if(today.getFullYear()>=2014){
+						if(j==4 && cnt%7==1){replaceHolis=6;}
+						if(j==5 && cnt%7==1){replaceHolis=7;}
+						if(j==6 && cnt%7==1){replaceHolis=8;}
+					}
 				}
 				console.log(replaceHolis);
 			} 	
 			
 			if(lunar_date.lunHolis.toString().substring(4,8)==='0103'){replaceLunHolis1=holis;}
 			if(lunar_date.lunHolis.toString().substring(4,8)==='0817'){replaceLunHolis2=holis;}
-
+			
+			/* 
+			if(lunar_date.lunHolis.toString().substring(6,8)==='15'){
+				if(lunar_date.lunHolis.toString().substring(4,5)==='0'){
+					if(lunar_date.lunMonth){
+						cell.innerHTML+='<br><span class="day">윤'+lunar_date.lunHolis.toString().substring(5,6)+'/'+lunar_date.lunHolis.toString().substring(6,8)+'</span>';
+					}else{
+						cell.innerHTML+='<br><span class="day">'+lunar_date.lunHolis.toString().substring(5,6)+'/'+lunar_date.lunHolis.toString().substring(6,8)+'</span>';
+					}
+				}else{
+					if(lunar_date.lunMonth){
+						cell.innerHTML+='<br><span class="day">윤'+lunar_date.lunHolis.toString().substring(4,6)+'/'+lunar_date.lunHolis.toString().substring(6,8)+'</span>';
+					}else{
+						cell.innerHTML+='<br><span class="day">'+lunar_date.lunHolis.toString().substring(4,6)+'/'+lunar_date.lunHolis.toString().substring(6,8)+'</span>';
+					}
+				}
+			}
+			 */
 		}
-		
 		switch(replaceHolis){
 		//어린이날 대체휴일
 		case 1:$("#calSchedule"+holis.toString().substring(0,4)+"0506").html('<span class="sunday">6<br>대체휴일</span><p></p>'); replaceHolis=0; break;
@@ -182,12 +206,12 @@ css 좀 더 보기좋게 수정
 			if((hmap.get("calendarContents")).toString().length()>9){%>
 				if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
 					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
-					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#269752");
 				}
 				
 				if(Number(<%=hmap.get("calendarClass")%>)==2 && $("#Teamschedule").is(":checked") ){
 					$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents").toString().substring(0, 9)%>"+"..."+"</p>");
-					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+					$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#3069A8");
 				}
 				
 				if(Number(<%=hmap.get("calendarClass")%>)==3 && $("#Companyschedule").is(":checked")){
@@ -197,12 +221,12 @@ css 좀 더 보기좋게 수정
 			<%}else{%>
 			if(Number(<%=hmap.get("calendarClass")%>)==1 && $("#Myschedule").is(":checked")){
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='1'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#2ebe8b");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='1']").css("color","#269752");
 			}
 			
 			if(Number(<%=hmap.get("calendarClass")%>)==2 && $("#Teamschedule").is(":checked") ){
 				$("#calSchedule"+<%=hmap.get("calendarId")%>).append("<p name='calendarClass' value='2'><input type='hidden' value='<%=hmap.get("calendarNo")%>'><%=hmap.get("calendarTime")%>"+' '+"<%=hmap.get("calendarContents")%></p>");
-				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#736DCC");
+				$("#calSchedule"+<%=hmap.get("calendarId")%>).children("p[value='2']").css("color","#3069A8");
 			}
 			
 			if(Number(<%=hmap.get("calendarClass")%>)==3 && $("#Companyschedule").is(":checked")){
@@ -224,7 +248,7 @@ css 좀 더 보기좋게 수정
 						
 					}else{						
 						$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).append("<p name='calendarClass' value='4'><%=hmap.get("empName")%> 휴가</p>");
-						$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("p[value='4']").css("color","#736DCC");
+						$("#calSchedule"+<%=((ArrayList<String>)hmap.get("useDays")).get(j)%>).children("p[value='4']").css("color","#3069A8");
 					}
 			<%}%>
 			
@@ -249,7 +273,11 @@ css 좀 더 보기좋게 수정
 		// 휴가 불러오기 >
 		//setLabel();
 		view(); //일정 입력 기본정보 불러오는 함수
-		
+		if(today.getFullYear()<=1950){
+			alert("더이상 음력공휴일이 지원되지 않습니다!");
+		}else if(today.getFullYear()>=2051){
+			alert("더이상 음력공휴일이 지원되지 않습니다!");
+		}
 	}
 		
 	//음력 월 data

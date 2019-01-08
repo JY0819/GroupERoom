@@ -55,10 +55,10 @@
 		cursor:pointer;
 	}
 	td > p[value='1']:hover{
-		background:#D2EFE5;
+		background:#D2EFDB;
 	}
 	td > p[value='2']:hover{
-		background:#D3D1EF;
+		background:#D1E1EF;
 	}
 	td > p[value='3']:hover{
 		background:#F4C2C2;
@@ -200,7 +200,7 @@
 		left:42.5%;
 		width:230px;
 		height:140px;
-		background:#ffeded;
+		background:#FFF6F6;
 		z-index:10;
 		padding:5px 5px 5px 5px;
 		border:1px solid #ffcfcf;
@@ -279,7 +279,7 @@
 	    position: relative;  
 	    padding-left: 25px;  
 	    margin-right: 10px;  
-	    color:#2ebe8b;
+	    color:#269752;
 	}
 	#Teamschedule + label{
 	    display: inline-block;  
@@ -287,7 +287,7 @@
 	    position: relative;  
 	    padding-left: 25px;  
 	    margin-right: 10px;  
-	    color:#736DCC;
+	    color:#3069A8;
 	}
 	#Companyschedule + label{
 	    display: inline-block;  
@@ -304,7 +304,7 @@
 	    position: relative;  
 	    padding-left: 25px;  
 	    margin-right: 10px;  
-	    color:#736DCC;
+	    color:#3069A8;
 	}
 	input[type=checkbox]+ label:before {     
 
@@ -327,14 +327,14 @@
 	    font-weight: 600;
 	    text-align: center;  
 	    /* line-height: 18px;  */ 
-	    color:#2ebe8b;
+	    color:#269752;
 	} 
 	#Teamschedule:checked + label:before {
 	    content: "\2713";  /* 체크모양 */
 	    font-size: 22px; 
 	    font-weight: 600;
 	    text-align: center;
-	    color:#736DCC;
+	    color:#3069A8;
 	} 
 
 	#Companyschedule:checked + label:before {
@@ -350,7 +350,7 @@
 	    font-size: 22px; 
 	    font-weight: 600;
 	    text-align: center;
-	    color:#736DCC;
+	    color:#3069A8;
 	} 
 	
 	#nonClick{
