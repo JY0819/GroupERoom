@@ -4,7 +4,7 @@
 	Team t = (Team)request.getAttribute("t"); 
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 	ArrayList<Team> reply = (ArrayList<Team>)request.getAttribute("reply");
-	Attachment at = (Attachment)request.getAttribute("at");
+	com.semi.board.team.model.vo.Attachment at = (com.semi.board.team.model.vo.Attachment)request.getAttribute("at");
 
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
@@ -86,6 +86,7 @@ body {
 				</tbody>
 			</table>
 			</form>
+			<%if(at != null){ %>
 			
 			<div class="attachfile">
 				<label for="inputattach">첨부된 파일</label>
@@ -94,13 +95,14 @@ body {
 					<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
 						 <span class="group-span-filestyle input-group-btn" tabindex="0">
 <!-- 						 <label for="fileInput" class="btn btn-default ">
- -->							<span><i  onclick="location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'"></i></span>
+ -->							<span><i  onclick="location.href='<%=request.getContextPath() %>/download.tm?num=<%=at.getAno() %>'"></i></span>
   					<!-- </label>  -->
 						
 					</span> 
 						<button onclick="location.href='<%=request.getContextPath() %>/download.tm?num=<%=at.getAno() %>'">다운로드</button>
 					
 				</div>
+				<%} %>
 				<br>
 				
 		<BR>

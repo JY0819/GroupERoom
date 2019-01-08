@@ -227,7 +227,7 @@ public class FreeDao {
 
 			return result;
 		}
-		//글 상세보기
+		//글 상세보기(유파일)
 		public HashMap<String, Object> selectOne(Connection con, int num) {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -1349,7 +1349,7 @@ System.out.println("query: "+query);
 			Free f = null;
 			
 			String query = prop.getProperty("selectOneNoFile");
-			
+			System.out.println("첨부파일 없는 글 상세보기 dao query: "+query);
 			try {
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, num);
@@ -1377,6 +1377,7 @@ System.out.println("query: "+query);
 						f.setFile02(rset.getInt("FILE02"));
 						f.setFile03(rset.getInt("FILE03"));
 				}
+				System.out.println("노파일 dao ");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

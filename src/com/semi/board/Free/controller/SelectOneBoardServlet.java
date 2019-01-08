@@ -35,15 +35,15 @@ public class SelectOneBoardServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int num = Integer.parseInt(request.getParameter("num"));
-		
+		System.out.println("설마@@@@@@@@@@@@@@@");
 		System.out.println("글번호: "+num);
 	
-		String fileName = request.getParameter("fileNameAt");
+		String fileName = request.getParameter("fileName");
 		System.out.println("select servlet fileName: "+fileName);
 		
 		String page ="";
 
-		if(fileName != null) {
+		if(Integer.parseInt(fileName) != 0) {
 			HashMap<String, Object> hmap = new FreeService().selectOne(num);
 			Free f = (Free)hmap.get("Free");
 			Attachment at = (Attachment)hmap.get("attachment");
@@ -65,12 +65,13 @@ public class SelectOneBoardServlet extends HttpServlet {
 			
 		}else {
 			Free f = new FreeService().selectOneNoFile(num);
-			
+			Attachment at = new Attachment();
 			
 			
 			if(f != null) {
 				page ="views/board/free/viewFree.jsp";
 				request.setAttribute("f", f);
+				request.setAttribute("at", at);
 				
 			}else {
 				page = "views/common/errorPage.jsp";
@@ -78,11 +79,6 @@ public class SelectOneBoardServlet extends HttpServlet {
 			}
 		}
 		
-		
-		
-		
-		
-
 		//새고하면 조회수 늘어나는 거 생각하기!->forward로 해야함
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

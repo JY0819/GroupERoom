@@ -54,7 +54,7 @@
 			<%if(loginUser.getDeptId().equals(t.getDeptId())){ %>
 				 <tr>
 				
-					<td><%=t.getDeptId() %></td>
+					<td><input type="hidden" name="fileName" value="<%=t.getFile02()%>"><%=t.getDeptId() %></td>
 					
 					 <td><%=t.getBno() %></td> 
 					<td><%=t.getbTitle() %></td>
@@ -167,8 +167,10 @@ if(p == currentPage){
 		}).click(function(){
 			var num = $(this).parent().children().eq(1).text();//->글번호 가져오기
 			console.log(num);
+			var fileName = $("input[name='fileName']").val();
+			console.log(fileName);
 			
-			location.href="<%=request.getContextPath()%>/selectOne.tm?num="+num;
+			location.href="<%=request.getContextPath()%>/selectOne.tm?num="+num+"&fileName="+fileName;		
 		});
 	});
 </script>

@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.semi.board.Free.model.dao.FreeDao;
 import com.semi.board.notice.model.dao.NoticeDao;
 import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.vo.Notice;
@@ -43,25 +42,22 @@ public class NoticeService {
 		
 		
 	}
-	//글 상세보기
+	//글 상세보기(유파일)
 	public HashMap<String, Object> selectOne(int num) {
 		Connection con = getConnection();
 		HashMap<String, Object> hmap = null;
+
 		
 		int result = new NoticeDao().updateCount(con, num);
-System.out.println("조회수업뎃 service result : "+result);
+
 		if(result > 0) {
 			commit(con);
 			hmap = new NoticeDao().selectOne(con, num);
-			
-			
 		}else {
 			rollback(con);
 		}
-		
 		close(con);
-		
-		
+
 		return hmap;
 		
 		
@@ -287,6 +283,26 @@ System.out.println("조회수업뎃 service result : "+result);
 		
 		
 		return file;
+	}
+	//글 상세보기(노파일)
+	public Notice selectOneNoFile(int num) {
+		Connection con = getConnection();
+		
+		Notice n = null;
+		
+		//조회수 증가
+		int result = new NoticeDao().updateCount(con,  num);
+		System.out.println("noFile service 조회수 result : "+result);
+		if(result > 0) {
+			commit(con);
+			n = new NoticeDao().selectOneNoFile(con, num);
+		System.out.println("noFile service 상세보기 ");
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return n;
 	}
 	
 

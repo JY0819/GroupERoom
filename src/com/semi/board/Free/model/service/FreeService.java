@@ -41,7 +41,7 @@ public class FreeService {
 
 			return result;
 		}
-		//글 상세보기
+		//글 상세보기(유파일)
 		public HashMap<String, Object> selectOne(int num) {
 			Connection con = getConnection();
 			HashMap<String, Object> hmap = null;
@@ -368,11 +368,11 @@ public class FreeService {
 			
 			//조회수 증가
 			int result = new FreeDao().updateCount(con,  num);
-			
+			System.out.println("noFile service 조회수 result : "+result);
 			if(result > 0) {
 				commit(con);
 				f = new FreeDao().selectOneNoFile(con, num);
-			
+			System.out.println("noFile service 상세보기 ");
 			}else {
 				rollback(con);
 			}

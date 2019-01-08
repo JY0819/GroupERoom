@@ -54,15 +54,15 @@
 			<% for(Free f : list){ %>
 				 <tr>
 					
-					 <td><%=f.getBno() %></td> 
+					 <td><%=f.getBno() %><input type="hidden" name="fileName" value="<%=f.getFile02()%>"></td> 
 					<td><%=f.getbTitle() %></td>
 					<td><%=f.getWriterId() %></td>
 					<td><%=f.getbDate() %></td>
 					<td><%=f.getbClicks() %></td>
+					 
 					
 				</tr>
-				<input type="hidden" name="fileNameAt" value="<%=f.getFile02()%>">
-				<%System.out.println(f.getFile02());%>
+ 				<%System.out.println(f.getFile02());%>
 					<%} %>
 	
 			<% %>
@@ -170,8 +170,10 @@ if(p == currentPage){
 		}).click(function(){
 			var num = $(this).parent().children().eq(0).text();//->글번호 가져오기
 			console.log(num);
+			var fileName = $("input[name='fileName']").val();
+			console.log(fileName);
 			
-			location.href="<%=request.getContextPath()%>/selectOne.fr?num="+num;
+			location.href="<%=request.getContextPath()%>/selectOne.fr?num="+num+"&fileName="+fileName;
 		});
 	});
 </script>
