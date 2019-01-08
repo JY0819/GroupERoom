@@ -254,7 +254,7 @@ public class DocumentService {
 	}
 	
 	//결재 비밀번호 체크
-		public boolean checkPassword(int empId, int password) {	
+		public boolean checkPassword(int empId, String password) {	
 			Connection con = getConnection();
 			boolean check = new DocumentDao().checkPassword(con, empId,  password);
 			return check;

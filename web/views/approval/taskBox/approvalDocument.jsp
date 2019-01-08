@@ -97,7 +97,7 @@
 								<td><%= list.get(k).getNum() %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
-								<td><%= list.get(k).getDocNum() %></td>
+								<td name="mouseent"><%= list.get(k).getDocNum() %></td>
 								<td><%= list.get(k).getTitle() %></td>
 								<td><%= list.get(k).getWriteDay() %></td>
 							</tr>
@@ -116,7 +116,7 @@
 								<td><%= list.get(k).getNum() %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
-								<td><%= list.get(k).getDocNum() %></td>
+								<td name="mouseent"><%= list.get(k).getDocNum() %></td>
 								<td><%= list.get(k).getTitle() %></td>
 								<td><%= list.get(k).getWriteDay() %></td>
 							</tr>
@@ -134,7 +134,7 @@
 								<td><%= list.get(k).getNum() %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
-								<td><%= list.get(k).getDocNum() %></td>
+								<td name="mouseent"><%= list.get(k).getDocNum() %></td>
 								<td><%= list.get(k).getTitle() %></td>
 								<td><%= list.get(k).getWriteDay() %></td>
 							</tr>
@@ -243,15 +243,16 @@
 		});
 	}
 
-/* 	function closePopUp() {
-		if(choice == '결재자1선택'){
-			$("#person1").val("");
-		}else if(choice == '결재자2선택'){
-			$("#person2").val("");
-		}else {
-			$("#person3").val("");
-		}
-	} */ 
+	$("td[name=mouseent]").mouseenter(function() {
+		$(this).css({"cursor":"pointer"});
+	}).mouseout(function() {
+		/* $(this).parent().css({"background":"white"}); */
+	}).click(function() {
+		var docno = $(this).parent().children().eq(4).text();
+		
+		location.href="<%= request.getContextPath()%>/detailOne.one?docno=" + docno;
+	}); 
+	
 	function success() {
 		var sendArr = new Array();
 		var checkbox = $("input[name=checkTd]:checked");
@@ -282,6 +283,7 @@
 			success: function(data) {
 				if(data === "true"){
 					alert("비밀번호가 일치합니다.");
+					location.href="<%= request.getContextPath()%>/submitDocumentApproval.sda";
 				}else{
 					alert("비밀번호가 틀립니다.");
 				}
