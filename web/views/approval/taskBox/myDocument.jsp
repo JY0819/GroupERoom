@@ -181,7 +181,7 @@
 		}).click(function() {
 			var docno = $(this).parent().children().eq(4).text();
 			
-			location.href="<%= request.getContextPath()%>/detailOne.one?docno=" + docno;
+			location.href="<%= request.getContextPath()%>/documentAppr.da?docno=" + docno;
 		}); 
 </script>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />
