@@ -1,6 +1,8 @@
 package com.semi.approval.document.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,19 +20,25 @@ public class PassCheckServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int password = Integer.parseInt(request.getParameter("password"));
-		int empId = Integer.parseInt(request.getParameter("apprWriter"));
+		int password = Integer.parseInt(request.getParameter("pass"));
+		int empId = Integer.parseInt(request.getParameter("userId"));
 		boolean check = new DocumentService().checkPassword(empId, password);
+
+		PrintWriter out = response.getWriter();
 		
 		String page = "";
 		if(check) {
-			page = "/semi/selectSubmitDocumentServlet.sds?check=" + check;
+			out.append("true");
+			page = "/semi/submitDocumentApproval.sda";
 			response.sendRedirect(page);
 		}else {
+			out.append("false");
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("check", check);
 			request.getRequestDispatcher(page).forward(request, response);
 		}
+		out.flush();
+		out.close();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

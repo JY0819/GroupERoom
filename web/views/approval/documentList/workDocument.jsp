@@ -36,9 +36,9 @@
 		<tr>
 			<td class="td">이미지첨부</td>
 			<td class="content"><input type="file" name="file"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson1"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson2"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson3"></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>

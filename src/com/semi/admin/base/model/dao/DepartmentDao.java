@@ -207,7 +207,7 @@ public class DepartmentDao {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return list;
 	}
 
 }

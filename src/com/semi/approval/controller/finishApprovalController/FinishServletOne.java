@@ -42,6 +42,9 @@ public class FinishServletOne extends HttpServlet {
 		DetailDoc d =  (DetailDoc)hmap.get("detaildoc");
 		ArrayList<Attachment> fileList = (ArrayList<Attachment>)hmap.get("attachment");
 		ArrayList<ApprLine> linelist = new DetailOneService().selectLineList(docno);
+		
+		System.out.println("파일번호: " + d.getAttachno());
+		
 		String page = "";
 		if(hmap != null) {
 			page = "views/approval/documentList/documentDetail.jsp";

@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 	  
 	  if(loginUser != null) {
 		  request.getSession().setAttribute("loginUser", loginUser);
-		  response.sendRedirect("views/main/home.jsp");
+		  response.sendRedirect("/semi/main");
 	  } else {
 		  request.setAttribute("msg", "로그인에 실패했습니다.");
 		  request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

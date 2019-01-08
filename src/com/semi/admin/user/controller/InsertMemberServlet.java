@@ -54,6 +54,7 @@ public class InsertMemberServlet extends HttpServlet {
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
 			}
+			
 			Integer multiUserId = Integer.parseInt(multiRequest.getParameter("userId"));
 			String multiUserName = multiRequest.getParameter("userName");
 			String multiUserPwd = multiRequest.getParameter("userPwd");
@@ -66,6 +67,7 @@ public class InsertMemberServlet extends HttpServlet {
 			String multiApprovePwd = multiRequest.getParameter("approvePwd");
 			String multiDept = multiRequest.getParameter("dept");
 			String multiPosition = multiRequest.getParameter("position");
+			Integer multiVacCount = Integer.parseInt(multiRequest.getParameter("vacCount"));
 		
 
 			// 사원 생일
@@ -110,6 +112,7 @@ public class InsertMemberServlet extends HttpServlet {
 			emp.setEntryDay(entryday);
 			emp.setAdminAuthority(multiAdminYN);
 			emp.setApprovePwd(multiApprovePwd);
+			emp.setEmpVacCount(multiVacCount);
 			
 			LogDepartment ld = new LogDepartment();
 			ld.setDeptId(multiDept);

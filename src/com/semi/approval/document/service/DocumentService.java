@@ -157,9 +157,9 @@ public class DocumentService {
 		return result;
 	}
 	//결재할 문서 불러오기
-	public ArrayList<MyDocument> selectSubmitList() {
+	public ArrayList<MyDocument> selectSubmitList(int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<MyDocument> list = new DocumentDao().selectSubmitList(con);
+		ArrayList<MyDocument> list = new DocumentDao().selectSubmitList(con, currentPage, limit);
 		if(list != null) {
 			commit(con);
 		}else {
@@ -240,9 +240,9 @@ public class DocumentService {
 	}
 	
 	//문서진행현황 불러오기
-	public ArrayList<MyDocument> selectStatus(int empId) {
+	public ArrayList<MyDocument> selectStatus(int empId, int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<MyDocument> list = new DocumentDao().selectStatus(con, empId);
+		ArrayList<MyDocument> list = new DocumentDao().selectStatus(con, empId, currentPage, limit);
 		
 		if(list != null) {
 			commit(con);
@@ -323,6 +323,20 @@ public class DocumentService {
 	public int getReturnListCount() {
 		Connection con = getConnection();
 		int listCount = new DocumentDao().getListReturnCount(con);
+		close(con);
+		return listCount;
+	}
+
+	public int getListApprovalCount() {
+		Connection con = getConnection();
+		int listCount = new DocumentDao().getListApprovalCount(con);
+		close(con);
+		return listCount;
+	}
+
+	public int getStatusListCount(int empId) {
+		Connection con = getConnection();
+		int listCount = new DocumentDao().getListStatusCount(con, empId);
 		close(con);
 		return listCount;
 	}

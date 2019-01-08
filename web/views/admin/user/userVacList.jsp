@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  	pageEncoding="UTF-8" import="java.util.*, com.semi.admin.user.model.vo.*, com.semi.common.vo.*"%>
 <%
@@ -30,17 +31,17 @@
 			
 			console.log(num);
 			
-<%-- 			location.href="<%=request.getContextPath()%>/selectOne.me?num=" + num; --%>
+			location.href="<%=request.getContextPath()%>/selectOne.me?num=" + num;
 		});
 	
 	$("#searchBtn").click(function() {
 		var searchName = $("#searchName").val();
 		
 		$.ajax({
-			url : "/semi/searchVacName.me",
-			type : "post",
+			url : "/semi/searchVacName.me", // 요청할 서블릿 매핑 주소
+			type : "post",	// 방식 get, post
 			data : {
-					searchName : searchName
+					searchName : searchName	// 전달 파라미터 키 : 값 
 					},
 			success : function(data) {
 				console.log(data);
@@ -56,33 +57,34 @@
 	function resetTable(data){
 		console.log($("#listArea").not("#listHeader"))
 		$("#listArea tr").not("#listHeader").remove(); // 초기화
-		
-		// html 그려주기
+
 		if(data.length > 0){	// 배열의 크기
 			var html = "";
 			 for(var i = 0; i < data.length; i++){
 				var empId = data[i].empId || "";
-				var empName = data[i]["empName"] || "";
 				var deptName = data[i].deptName || "";
-				var totalDay = data[i].totalDay || "";
+				var empName = data[i]["empName"] || "";
+				var apprEmpId = data[i].apprEmpId || "";
 				var useStart = data[i].useStart || "";
 				var useEnd = data[i].useEnd || "";
-				
-			 	html += "<tr>                             ";
-				html += "	<td>" + empId + "</td>        ";
-				html += "	<td>" + empName + "</td>      ";
-				html += "	<td>" + deptName + "</td>     ";
-				html += "	<td>" + totalDay + "</td>     ";
-				html += "	<td>" + useStart + "</td>     ";
-				html += "	<td>" + useEnd + "</td>       ";
-				html += "</tr>                            ";
+				var days = data[i].days || "";
+				var useVacAppDay = data[i].useVacAppDay || "";
+
+				html += "<tr>                                           ";
+				html += "	<td>" + empId + "</td>                      ";
+				html += "	<td>" + deptName + "</td>                   ";
+				html += "	<td>" + empName + "</td>      				";
+				html += "	<td>" + apprEmpId + "</td>       			";
+				html += "	<td>" + useStart + " ~ " + useEnd +"</td>   ";
+				html += "	<td>" + days + "</td>    					";
+				html += "	<td>" + useVacAppDay + "</td>               ";
+				html += "</tr>                                          ";
 			
 			 }
 			 var header = $("#listArea").html();
 			 var totalhtml = header + html;
 			 $("#listArea").not("#listHeader").html(totalhtml);
 		}	 
-			 
 	}
 });
 </script>
@@ -112,30 +114,51 @@
 					<th>승인자</th>
 					<th>휴가 기간</th>
 					<th>사용일</th>
-					<th>잔여일</th>
+<!-- 					<th>잔여일</th> -->
 					<th>승인일</th>
 				</tr>
-				
+					
 				<%
+					String getDays = "";
+					String totDays = "";
+					SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd");
+					
 					for (LogOfVacation vac : list) {
+						getDays = "";
+						totDays = "";
+						Date sta_ymd = vac.getUseStart(); 	
+						Date end_ymd = vac.getUseEnd(); 	
+	
+						if(vac.getType().equals("반차")) {
+							getDays = "0.5";
+						}else{
+							if(sta_ymd.equals(end_ymd)){
+								getDays = "1";
+							}else{
+								getDays = Integer.toString(vac.getDays());
+							}
+						}
+	
+						if (end_ymd == null) 
+						{
+							totDays = sdft.format(sta_ymd);	
+						} else {	
+							totDays = sdft.format(sta_ymd) + " ~ " + sdft.format(end_ymd);
+						}
 				%>
-				
-				<tr>
-					<td><%=vac.getEmpId()%></td>
-					<td><%=vac.getDeptName()%></td>
-					<td><%=vac.getEmpName()%></td>
-					<td><%=vac.getApprEmpId()%></td>
-					<td><%=vac.getUseStart()%> ~ <%=vac.getUseEnd() == null ? "" : vac.getUseEnd()%></td>
-					<td><%=vac.getDays()%></td>
-					<td></td>
-					<td><%=vac.getUseVacAppDay()%></td>
-					
-					
-				</tr>
-				
+					<tr>
+						<td><%=vac.getEmpId()%></td>
+						<td><%=vac.getDeptName()%></td>
+						<td><%=vac.getEmpName()%></td>
+						<td><%=vac.getApprEmpId()%></td>
+						<td><%=totDays %></td>
+						<td><%=getDays%></td>
+						<td><%=vac.getUseVacAppDay()%></td>
+					</tr>
 				<%
 					}
 				%>
+
 			</table>
 		</div>
 		<div class="text-center">

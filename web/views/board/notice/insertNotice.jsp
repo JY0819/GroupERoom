@@ -37,7 +37,11 @@ body {
 	<div class="container">
 
 		<div class="row">
+
 			<form action="<%= request.getContextPath()%>/insertFile.no" method="post" encType="multipart/form-data">
+
+			<!--<form id="sendNotice" action="<%= request.getContextPath()%>/insert.no" method="post">-->
+
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>

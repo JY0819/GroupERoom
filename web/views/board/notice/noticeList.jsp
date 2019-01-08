@@ -228,7 +228,21 @@ if(p == currentPage){
 		});
 	});
 	
-	
-	
+	$(function(){
+		$("#deleteBtn").click(function(){
+			var num = $("tbody").children().children().eq(1).text();
+			console.log(num);
+			alert("정말로 삭제하시겠습니까?");
+			$("#formId").attr("action", "<%=request.getContextPath()%>/deleteNotice.no?num="+num);
+			$("#formId").submit();
+		});
+	});
+      
+	$(function () {
+		setTimeout(function() {
+			sendAlarm("0" + ",board");
+		}, 3000);
+	});
+      
 </script>
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

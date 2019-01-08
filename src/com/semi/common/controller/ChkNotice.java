@@ -17,18 +17,26 @@ import com.semi.common.service.AlarmService;
 import com.semi.common.vo.DeptEmp;
 import com.semi.schedule.model.service.ScheduleService;
 
-@WebServlet("/chkAlarm")
-public class ChkAlarm extends HttpServlet {
+@WebServlet("/chkNotice")
+public class ChkNotice extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ChkAlarm() {
+    public ChkNotice() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int empid = Integer.parseInt(request.getParameter("empid"));
 		
-		int result = new AlarmService().checkingMsg(empid);
+		// 먼저 알림 테이블의 contents를 뽑고
+		HashMap<Integer, String> list = new AlarmService().getNotice(empid); // K : alarmNo, V : contents
+		ArrayList<Integer> noList = new AlarmService().getNoticeNo(empid);
+		// contents에 ,empid를 추가하여 수정한다.
+		for (int i = 0; i < noList.size(); i++) {
+			list.put(i, list.get(noList.get(i)) + "," + empid);
+		}
+		
+		
 		
 		String page = "";
 		

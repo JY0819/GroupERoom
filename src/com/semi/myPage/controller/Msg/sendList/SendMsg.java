@@ -29,7 +29,7 @@ public class SendMsg extends HttpServlet {
 		
 		String page = "";
 		if (result > 0) {
-			page = "myPageSendMessage";
+			page = "myPageSendMessage?sendAlarm=" + Integer.parseInt(request.getParameter("receiver"));
 		} else {
 			page = "error";
 		}
