@@ -33,6 +33,7 @@ public class UpdateMemberServlet extends HttpServlet {
 		String position = request.getParameter("position");
 		String retireYN = request.getParameter("retireYN");
 		String leaveDay = request.getParameter("leaveDay");
+		int vacCount = Integer.parseInt(request.getParameter("vacCount"));
 
 		// 사원 퇴사일
 		java.sql.Date lDay = null;
@@ -57,6 +58,7 @@ public class UpdateMemberServlet extends HttpServlet {
 		emp.setEmpAddr(address);
 		emp.setWhetherOfRetire(retireYN);
 		emp.setLeaveDay(lDay);
+		emp.setEmpVacCount(vacCount);
 		
 		LogDepartment ld = new LogDepartment();
 		ld.setDeptId(dept);

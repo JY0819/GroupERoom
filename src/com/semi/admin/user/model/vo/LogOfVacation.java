@@ -17,12 +17,13 @@ public class LogOfVacation {
 	private String empName;
 	private String deptName;
 	private int remainDay;
+	private int empVacCount;
 
 	public LogOfVacation() {
 	}
 
 	public LogOfVacation(int rnum, int no, String useReason, Date useStart, Date useEnd, Date useVacAppDay, int empId,
-			String apprEmpId, String type, int days, String empName, String deptName, int remainDay) {
+			String apprEmpId, String type, int days, String empName, String deptName, int remainDay, int empVacCount) {
 		super();
 		this.rnum = rnum;
 		this.no = no;
@@ -37,6 +38,7 @@ public class LogOfVacation {
 		this.empName = empName;
 		this.deptName = deptName;
 		this.remainDay = remainDay;
+		this.empVacCount = empVacCount;
 	}
 
 	public int getRnum() {
@@ -143,13 +145,21 @@ public class LogOfVacation {
 		this.remainDay = remainDay;
 	}
 
+	public int getEmpVacCount() {
+		return empVacCount;
+	}
+
+	public void setEmpVacCount(int empVacCount) {
+		this.empVacCount = empVacCount;
+	}
+
 	@Override
 	public String toString() {
 		return "LogOfVacation [rnum=" + rnum + ", no=" + no + ", useReason=" + useReason + ", useStart=" + useStart
 				+ ", useEnd=" + useEnd + ", useVacAppDay=" + useVacAppDay + ", empId=" + empId + ", apprEmpId="
 				+ apprEmpId + ", type=" + type + ", days=" + days + ", empName=" + empName + ", deptName=" + deptName
-				+ ", remainDay=" + remainDay + "]";
+				+ ", remainDay=" + remainDay + ", empVacCount=" + empVacCount + "]";
 	}
 
-
+	
 }

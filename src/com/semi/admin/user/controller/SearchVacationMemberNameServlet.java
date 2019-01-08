@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.semi.admin.user.model.service.EmployeeService;
-import com.semi.admin.user.model.vo.Employee;
-import com.semi.admin.user.model.vo.UseVac;
+import com.semi.admin.user.model.vo.LogOfVacation;
 
 @WebServlet("/searchVacName.me")
 public class SearchVacationMemberNameServlet extends HttpServlet {
@@ -25,7 +24,7 @@ public class SearchVacationMemberNameServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("searchName");
 
-		ArrayList<UseVac> list = new EmployeeService().searchVac(userName);
+		ArrayList<LogOfVacation> list = new EmployeeService().searchVac(userName);
 		
 		response.setContentType("application/x-json; charset=UTF-8");
 		new Gson().toJson(list, response.getWriter());

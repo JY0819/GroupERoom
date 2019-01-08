@@ -110,9 +110,10 @@ public class EmployeeDao {
 			pstmt.setString(9, emp.getAdminAuthority());
 			pstmt.setInt(10, photoId); // PHOTOID
 			pstmt.setDate(11, emp.getEntryDay());
+			pstmt.setInt(12, emp.getEmpVacCount());
 
 			// System.out.println("insertMember photoId > " + photoId);
-			System.out.println(" emp : >> \n" + emp.toString());
+//			System.out.println(" emp : >> \n" + emp.toString());
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -353,6 +354,7 @@ public class EmployeeDao {
 				emp.setWhetherOfRetire(rset.getString("WHETHEROFRETIRE"));
 				emp.setEntryDay(rset.getDate("ENTRYDAY"));
 				emp.setLeaveDay(rset.getDate("LEAVEDAY"));
+				emp.setEmpVacCount(rset.getInt("EMPVACCOUNT"));
 				emp.setDeptId(rset.getString("DEPTID"));
 				emp.setDeptName(rset.getString("DEPTNAME"));
 				emp.setPositionId(rset.getString("POSITIONID"));
@@ -489,6 +491,7 @@ public class EmployeeDao {
 			pstmt.setString(3, emp.getEmpAddr());
 			pstmt.setString(4, emp.getWhetherOfRetire());
 			pstmt.setDate(5, emp.getLeaveDay());
+			pstmt.setInt(7, emp.getEmpVacCount());
 			pstmt.setInt(6, emp.getEmpid());
 			
 			result = pstmt.executeUpdate();
@@ -624,42 +627,6 @@ public class EmployeeDao {
 		}
 		return list;
 	}
-
-	/*// 사원 휴가 내역 리스트
-	public ArrayList<UseVac> selectVacList(Connection con) {
-		Statement stmt = null;
-		ResultSet rset = null;
-		ArrayList<UseVac> list = null;
-
-		String query = prop.getProperty("selectMemberVacList");
-
-		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(query);
-
-			list = new ArrayList<UseVac>();
-
-			while (rset.next()) {
-				UseVac vac = new UseVac();
-
-				vac.setEmpId(rset.getInt("EMPID"));
-				vac.setEmpName(rset.getString("EMPNAME"));
-				vac.setDeptName(rset.getString("DEPTNAME"));
-				vac.setTotalDay(rset.getString("TOTALDAY"));
-				vac.setUseStart(rset.getDate("USESTART"));
-				vac.setUseEnd(rset.getDate("USEEND"));
-				
-				list.add(vac);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(stmt);
-		}
-		return list;
-	}*/
 	
 	// 페이징 처리 - 사원 휴가 리스트 조회
 	public ArrayList<LogOfVacation> selectVacList(Connection con, int currentPage, int limit) {
@@ -706,12 +673,12 @@ public class EmployeeDao {
 		
 		return list;
 	}
-	/*
+	
 	// 휴가 사원 이름으로 검색
-	public ArrayList<UseVac> searchVac(Connection con, String userName) {
+	public ArrayList<LogOfVacation> searchVac(Connection con, String userName) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<UseVac> list = null;
+		ArrayList<LogOfVacation> list = null;
 
 		String query = prop.getProperty("searchVacation");
 
@@ -722,19 +689,22 @@ public class EmployeeDao {
 			
 			rset = pstmt.executeQuery();
 
-			list = new ArrayList<UseVac>();
+			list = new ArrayList<LogOfVacation>();
 
 			while (rset.next()) {
-				UseVac vac = new UseVac();
+				LogOfVacation v = new LogOfVacation();
 
-				vac.setEmpId(rset.getInt("EMPID"));
-				vac.setEmpName(rset.getString("EMPNAME"));
-				vac.setDeptName(rset.getString("DEPTNAME"));
-				vac.setTotalDay(rset.getString("TOTALDAY"));
-				vac.setUseStart(rset.getDate("USESTART"));
-				vac.setUseEnd(rset.getDate("USEEND"));
+				v.setEmpId(rset.getInt("EMPID"));
+				v.setUseReason(rset.getString("USEREASON"));
+				v.setEmpName(rset.getString("EMPNAME"));
+				v.setDeptName(rset.getString("DEPTNAME"));
+				v.setUseStart(rset.getDate("USESTART"));
+				v.setUseEnd(rset.getDate("USEEND"));
+				v.setUseVacAppDay(rset.getDate("USEVACAPPDAY"));
+				v.setApprEmpId(rset.getString("APPREMPID"));
+				v.setDays(rset.getInt("CNT"));	// 사용일
 
-				list.add(vac);
+				list.add(v);
 			}
 
 		} catch (SQLException e) {
@@ -745,7 +715,7 @@ public class EmployeeDao {
 		}
 		return list;
 	}
-	*/
+	
 	// 전체 사원 수 조회
 	public int getListCount(Connection con) {
 		Statement stmt = null;
