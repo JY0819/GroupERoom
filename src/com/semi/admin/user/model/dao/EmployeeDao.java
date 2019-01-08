@@ -491,8 +491,8 @@ public class EmployeeDao {
 			pstmt.setString(3, emp.getEmpAddr());
 			pstmt.setString(4, emp.getWhetherOfRetire());
 			pstmt.setDate(5, emp.getLeaveDay());
-			pstmt.setInt(7, emp.getEmpVacCount());
-			pstmt.setInt(6, emp.getEmpid());
+			pstmt.setInt(6, emp.getEmpVacCount());
+			pstmt.setInt(7, emp.getEmpid());
 			
 			result = pstmt.executeUpdate();
 			
@@ -522,7 +522,7 @@ public class EmployeeDao {
 			pstmt.setString(2, ld.getDeptId());
 			
 			result = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -549,7 +549,7 @@ public class EmployeeDao {
 			pstmt.setInt(2, emp.getEmpid());
 			
 			result = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -768,8 +768,5 @@ public class EmployeeDao {
 		return listCount;
 	}
 
-	
-
-	
 
 }

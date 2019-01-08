@@ -16,7 +16,7 @@ import com.semi.admin.user.model.vo.LogOfVacation;
 import com.semi.common.vo.PageInfo;
 import com.semi.common.vo.PageInfoDetail;
 
-@WebServlet("/vacList.me")
+@WebServlet("/vacList.va")
 public class SelectVacListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      

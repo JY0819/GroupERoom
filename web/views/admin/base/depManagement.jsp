@@ -10,7 +10,7 @@
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "부서 관리";
 	
-	function addDept(){
+	function addDept(m){
 		location.href="/semi/views/admin/base/depForm.jsp";
 	}
 	
@@ -30,14 +30,19 @@
 	}); --%>
 	function startAjax(deptId){
 		console.log("부서 id = " + deptId);
-		
-				
-		
+
+		var header = "";
+			header += "<tr>";
+			header += "<th>아이디</th> ";
+			header += "<th>이름</th>  ";
+			header += "<th>직책</th>  ";
+			header += "</tr>";
+			
+			
 		$.ajax({
 			url :  "/semi/searchDeptMember.me",	//서블릿 맵핑 url
 			type : "post",	//http method
 			/*
-			이거래
 			POST	: POST를 통해 해당 URI를 요청하면 리소스를 생성합니다.
 			GET		: GET를 통해 해당 리소스를 조회합니다. 리소스를 조회하고 해당 도큐먼트에 대한 자세한 정보를 가져온다.
 			PUT		: PUT를 통해 해당 리소스를 수정합니다.
@@ -46,9 +51,25 @@
 			data : {
 					deptId : deptId // 자바에서 받을 수 있는 데이터 정의
 					},
+					
 			success : function(data){// 성공시 
-				console.log("응답 데이터 ");
-				console.log(data);
+				var htmlCode = "";
+				for(var i = 0; i < data.length; i++){
+					var rowData = data[i];
+
+					var id 		 = rowData["empid"];
+					var name 	 = rowData.empName;
+					var position = rowData.positionName;
+					
+					htmlCode += "<tr>                                     ";
+					htmlCode += "	<td>" + id + "</td>          ";
+					htmlCode += "	<td>" + name + "    </td>	   ";
+					htmlCode += "	<td>" + position + "  </td>	 	";
+					htmlCode += "</tr>                                    ";
+				}
+
+				$("#deptUser").html(header + htmlCode);
+				
 			},
 			error : function(){
 				console.log("실패!");
@@ -87,7 +108,8 @@
 					</tr>
 					
 					<%
-						for (Department dep : list)	{
+						for(int i = 0; i < list.size(); i++){
+							Department dep = list.get(i);
 					%>
 					
 					<tr>
@@ -122,16 +144,7 @@
 	      </div>
 	      <div class="modal-body">
 	        <table class="table" id="deptUser">
-				<tr>
-					<th>아이디</th>
-					<th>이름</th>
-					<th>직책</th>
-				</tr>
-				<%-- <tr>
-					<td><%=emp.getEmpid()%></td>
-					<td><%=emp.getEmpName()%></td>
-					<td><%=emp.getPositionName()%></td>
-				</tr> --%>
+
 			</table>
 	      </div>
 	      <div class="modal-footer">
