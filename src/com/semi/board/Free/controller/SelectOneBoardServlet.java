@@ -38,25 +38,50 @@ public class SelectOneBoardServlet extends HttpServlet {
 		
 		System.out.println("글번호: "+num);
 	
-		HashMap<String, Object> hmap = new FreeService().selectOne(num);
-		Free f = (Free)hmap.get("Free");
-		Attachment at = (Attachment)hmap.get("attachment");
+		String fileName = request.getParameter("fileNameAt");
+		System.out.println("select servlet fileName: "+fileName);
 		
-		ArrayList<Free> reply = new FreeService().selectReply(num);
 		String page ="";
-		
-		if(f != null) {
-			page ="views/board/free/viewFree.jsp";
-			if(reply != null) {
-				request.setAttribute("reply", reply);
+
+		if(fileName != null) {
+			HashMap<String, Object> hmap = new FreeService().selectOne(num);
+			Free f = (Free)hmap.get("Free");
+			Attachment at = (Attachment)hmap.get("attachment");
+			
+			ArrayList<Free> reply = new FreeService().selectReply(num);
+			
+			if(f != null) {
+				page ="views/board/free/viewFree.jsp";
+				if(reply != null) {
+					request.setAttribute("reply", reply);
+				}
+				
+				request.setAttribute("at", at);
+				request.setAttribute("f", f);
+			}else {
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "자유게시판 게시글 상세보기 실패!");
 			}
 			
-			request.setAttribute("at", at);
-			request.setAttribute("f", f);
 		}else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "자유게시판 게시글 상세보기 실패!");
+			Free f = new FreeService().selectOneNoFile(num);
+			
+			
+			
+			if(f != null) {
+				page ="views/board/free/viewFree.jsp";
+				request.setAttribute("f", f);
+				
+			}else {
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "글 상세보기 실패!");
+			}
 		}
+		
+		
+		
+		
+		
 
 		//새고하면 조회수 늘어나는 거 생각하기!->forward로 해야함
 		RequestDispatcher view = request.getRequestDispatcher(page);

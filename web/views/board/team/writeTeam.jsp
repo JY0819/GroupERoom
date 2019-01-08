@@ -40,7 +40,7 @@ body {
 	<div class="container">
 
 		<div class="row">
-			<form action="<%= request.getContextPath()%>/insert.tm" method="post">				
+			<form action="<%= request.getContextPath()%>/insertFile.tm" method="post" encType="multipart/form-data">				
 			<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
@@ -79,7 +79,7 @@ body {
 				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
-					<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+					<input id="fileInput" type="file" name="fileInput" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
 						<div class="bootstrap-filestyle input-group">
 						<input type="text" id="userfile" class="form-control" name="userfile" disabled="">
 							<span class="group-span-filestyle input-group-btn" tabindex="0">

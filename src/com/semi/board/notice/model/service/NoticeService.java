@@ -7,10 +7,11 @@ import static com.semi.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.semi.board.Free.model.dao.FreeDao;
-import com.semi.board.Free.model.vo.Free;
 import com.semi.board.notice.model.dao.NoticeDao;
+import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.vo.Notice;
 
 public class NoticeService {
@@ -43,22 +44,25 @@ public class NoticeService {
 		
 	}
 	//글 상세보기
-	public Notice selectOne(int num) {
+	public HashMap<String, Object> selectOne(int num) {
 		Connection con = getConnection();
-		Notice n = null;
+		HashMap<String, Object> hmap = null;
 		
 		int result = new NoticeDao().updateCount(con, num);
-
+System.out.println("조회수업뎃 service result : "+result);
 		if(result > 0) {
 			commit(con);
-			n = new NoticeDao().selectOne(con, num);
+			hmap = new NoticeDao().selectOne(con, num);
+			
+			
 		}else {
 			rollback(con);
 		}
+		
 		close(con);
 		
 		
-		return n;
+		return hmap;
 		
 		
 		
@@ -99,15 +103,15 @@ public class NoticeService {
 		return list;
 	}
 	//글 수정
-	public Notice selectOne(String num) {
+	public HashMap<String, Object> editOne(int num) {
 		Connection con = getConnection();
 		
-		Notice n = new NoticeDao().selectOne(con, num);
+		HashMap<String, Object> hmap = new NoticeDao().editOne(con, num);
 		
 		int result = 0;
 		
-		if(n != null) {
-			result = new NoticeDao().updateCount(con, n.getBno());
+		if(hmap != null) {
+			result = new NoticeDao().updateCount(con, num);
 			if(result > 0) commit(con);
 			else rollback(con);	
 			
@@ -115,7 +119,7 @@ public class NoticeService {
 		
 		close(con);
 		
-		return n;
+		return hmap;
 	}
 	//수정용
 	public int updateNotice(Notice n) {
@@ -215,6 +219,74 @@ public class NoticeService {
 		close(con);
 		
 		return list;
+	}
+	//선택한 공지사항 삭제
+	public int deleteNotice2(ArrayList<Integer> deleteList) {
+		Connection con = getConnection();
+		
+		int result = new NoticeDao().deleteNotice2(con, deleteList);
+		System.out.println("service");
+		close(con);
+		
+		return result;
+	}
+	//첨부파일 등록
+	public int insertThumbnail(Notice n, ArrayList<Attachment> fileList) {
+		Connection con = getConnection();
+
+		int result = 0;
+		int result2 = 0;
+		int result1 = new NoticeDao().insertAttachment(con, fileList);
+		System.out.println("service result1 : "+result1);
+					//트랜잭션 처리
+		if(result1 > 0) {
+
+			int ano = new NoticeDao().selectCurrval(con); //지금가지고있는 시퀀스값을 조회하기 위함
+																	 //메모 확인
+			for(int i=0;i<fileList.size(); i++) {
+						
+				fileList.get(i).setAno(ano); 
+				if(i==0) {
+					n.setFile01(fileList.get(i).getAno());
+				}
+				
+			} 
+			result2 = new NoticeDao().insertThumbnailContent(con, n);
+		
+		}			
+
+		System.out.println("service result2 : "+result2);
+		System.out.println("service fileList 사이즈 : "+fileList.size());
+		//board가 부모고 file이 자식이라 부모에 값 먼저 넣어줘야함
+
+		
+	
+
+		if(result1 > 0 &&result2 > 0) {
+			
+			commit(con);
+			
+			result = 1; //0보다만 크면 되니까 1 처리 해주기
+		}else {
+
+			rollback(con);
+
+		}
+
+		close(con);
+
+		return result;
+	}
+	//다운로드
+	public Attachment selectOneAttachment(int num) {
+		Connection con = getConnection();
+		
+		Attachment file = new NoticeDao().selectOneAttachment(con, num);
+		
+		close(con);
+		
+		
+		return file;
 	}
 	
 

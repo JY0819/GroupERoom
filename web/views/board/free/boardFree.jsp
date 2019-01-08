@@ -40,7 +40,6 @@
 		</div>
 		<br>
 		<table class="table table-striped" id="listArea">
-			
 				<tr>
 					
 					<th>번호</th>
@@ -60,10 +59,13 @@
 					<td><%=f.getWriterId() %></td>
 					<td><%=f.getbDate() %></td>
 					<td><%=f.getbClicks() %></td>
+					
 				</tr>
+				<input type="hidden" name="fileNameAt" value="<%=f.getFile02()%>">
+				<%System.out.println(f.getFile02());%>
 					<%} %>
 	
-			
+			<% %>
 		</table>
 		
 		<form action="<%=request.getContextPath() %>/search.fr" method="get" >

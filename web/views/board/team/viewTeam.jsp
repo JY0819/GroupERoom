@@ -4,6 +4,8 @@
 	Team t = (Team)request.getAttribute("t"); 
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 	ArrayList<Team> reply = (ArrayList<Team>)request.getAttribute("reply");
+	Attachment at = (Attachment)request.getAttribute("at");
+
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
 
@@ -47,16 +49,15 @@ body {
 					</tr> 
 				</thead>
 	<form action="", method="post" id="viewTable">
-				<tbody>
-				<tr>
+				<tbody text-align="left">
+					 <tr>				  
 						<td>부서</td>
-						<td>
-						
-						<input type="hidden" name="searchValue" value="<%=t.getDeptId() %>"><%=loginUser.getDeptName() %></td>
-					</tr>
-				<tr>
+						<td><input type="hidden" name="deptId" class="form-control" value="<%=loginUser.getDeptName() %>" maxlength="30" readOnly><%=loginUser.getDeptName() %></td>
+					</tr> 
+					<tr>	
+				  
 						<td>글번호</td>
-						<td><input type="hidden" id="bno" value="<%=t.getBno() %>" name="bno" ><%=t.getBno() %></td>
+						<td readonly><input type="hidden" id="bno" value="<%=t.getBno() %>" name="bno" ><%=t.getBno() %></td>
 					</tr>
 					<tr>
 						<td>조회수</td>
@@ -75,12 +76,12 @@ body {
 					</tr>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
-<%-- 						<td colspan="3"><%= %></td> --%>
+
 						<td readonly><%=t.getbTitle() %></td>
 					</tr>
 					<tr>
-						<td>내용</td>
-						<td style="min-height: 200px; text-align: left; readonly"><%=t.getbContent() %></td>
+						<td>내용</td>					
+						<td style="min-height: 200px; /* text-align: left; */ readonly"><%=t.getbContent() %></td>
 					</tr>
 				</tbody>
 			</table>
@@ -90,12 +91,15 @@ body {
 				<label for="inputattach">첨부된 파일</label>
 				<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
 					<div class="bootstrap-filestyle input-group">
-					<input type="text" id="userfile" class="form-control" name="userfile" disabled="">
-						<span class="group-span-filestyle input-group-btn" tabindex="0">
-						<label for="fileInput" class="btn btn-default ">
-							<span><i class="fas fa-file-upload"></i></span>
-						</label>
-					</span>
+					<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
+						 <span class="group-span-filestyle input-group-btn" tabindex="0">
+<!-- 						 <label for="fileInput" class="btn btn-default ">
+ -->							<span><i  onclick="location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'"></i></span>
+  					<!-- </label>  -->
+						
+					</span> 
+						<button onclick="location.href='<%=request.getContextPath() %>/download.tm?num=<%=at.getAno() %>'">다운로드</button>
+					
 				</div>
 				<br>
 				
