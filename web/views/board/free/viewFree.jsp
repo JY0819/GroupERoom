@@ -88,13 +88,22 @@ body {
 				<label for="inputattach">첨부된 파일</label>
 				<!-- <input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
 					<div class="bootstrap-filestyle input-group"> -->
-					<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
+					<% if(at.getOriginName() == null){ %>
+											<input type="text" id="userfile" class="form-control" name="userfile" disabled="" >
+					
+					<%}else{ %>
+										<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
+					
+					<% }%>
 						<span class="group-span-filestyle input-group-btn" tabindex="0">
 <!-- 						<label for="fileInput" class="btn btn-default ">
  -->							<span><i  onclick="location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'"></i></span>
 						<!-- </label> -->
 					</span>
+										<% if(at.getOriginName() != null){ %>
+					
 											<button onclick="location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'">다운로드</button>
+										<% }%>
 					
 				</div>
 				<br>
@@ -165,7 +174,7 @@ body {
 	$(function(){
 		$("#deleteBtn").click(function(){
 			
-			alert("정말로 삭제하시겠습니까?");
+			alert("해당 게시물이 삭제됐습니다");
 			
 		$("#viewTable").attr("action", "<%=request.getContextPath()%>/deleteFree.fr");
 		$("#viewTable").submit();	

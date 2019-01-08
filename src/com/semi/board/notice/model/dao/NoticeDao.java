@@ -1,5 +1,8 @@
 package com.semi.board.notice.model.dao;
 
+import static com.semi.common.JDBCTemplate.close;
+import static com.semi.common.JDBCTemplate.commit;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,11 +12,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
-import com.semi.board.Free.model.vo.Free;
+import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.vo.Notice;
-import static com.semi.common.JDBCTemplate.*;
 
 public class NoticeDao {
 	
@@ -131,55 +134,66 @@ public class NoticeDao {
 		return result;
 	}
 	//글 상세보기
-	public Notice selectOne(Connection con, int num) {
+	public HashMap<String, Object> selectOne(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Notice n = null;
-			
+		HashMap<String, Object> hmap = null;
+		Attachment at = null;
 		
 		String query = prop.getProperty("selectOne");
-		System.out.println(query);
-					try {
-						pstmt=con.prepareStatement(query);
-						pstmt.setInt(1, num);
+System.out.println("상세보기 dao : "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, num);
 
-						rset=pstmt.executeQuery();
+			rset=pstmt.executeQuery();
 
-						if(rset.next()) {
-							n = new Notice();
+			if(rset.next()) {
+				n = new Notice();
 
-							n.setBno(rset.getInt("BOARDNO"));
-							n.setbClass(rset.getString("BOARDCLASS"));
-							n.setbTitle(rset.getString("BOARDTITLE"));
-							n.setbContent(rset.getString("BOARDCONTENTS"));
-							n.setbDate(rset.getDate("BOARDDATE"));
-							n.setbClicks(rset.getInt("BOARDCLICKS"));
-							n.setbAttach(rset.getString("BOARDATTACH"));
-							n.setComNo(rset.getInt("COMMENTNO"));
-							n.setComLevel(rset.getInt("COMMENTLEVEL"));
-							n.setRecomId(rset.getString("RECOMMENTID"));
-							
-							n.setReplebno(rset.getInt("REPLEBOARDNO"));
-							n.setWriterId(rset.getString("EMPNAME"));
-							n.setStatus(rset.getString("WHETHEROFDELETE"));
-							n.setFile01(rset.getInt("FILE01"));
-							n.setFile02(rset.getInt("FILE02"));
-							n.setFile03(rset.getInt("FILE03"));
+				n.setBno(rset.getInt("BOARDNO"));
+				n.setbClass(rset.getString("BOARDCLASS"));
+				n.setbTitle(rset.getString("BOARDTITLE"));
+				n.setbContent(rset.getString("BOARDCONTENTS"));
+				n.setbDate(rset.getDate("BOARDDATE"));
+				n.setbClicks(rset.getInt("BOARDCLICKS"));
+				n.setbAttach(rset.getString("BOARDATTACH"));
+				n.setComNo(rset.getInt("COMMENTNO"));
+				n.setComLevel(rset.getInt("COMMENTLEVEL"));
+				n.setRecomId(rset.getString("RECOMMENTID"));
+				
+				n.setReplebno(rset.getInt("REPLEBOARDNO"));
+				n.setWriterId(rset.getString("EMPNAME"));
+				n.setStatus(rset.getString("WHETHEROFDELETE"));
+				n.setFile01(rset.getInt("FILE01"));
+				n.setFile02(rset.getInt("FILE02"));
+				n.setFile03(rset.getInt("FILE03"));
+				
+				at = new Attachment();
+				at.setAno(rset.getInt("ATTACHNO"));
+				at.setOriginName(rset.getString("ATTACHPRENAME"));
+				at.setChangeName(rset.getString("ATTACHNAME"));
+				at.setFilePath(rset.getString("ATTACHPATH"));
+				at.setUploadDate(rset.getDate("ATTACHDAY"));
+				at.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
+				
+			}
+			
+			hmap = new HashMap<String, Object>();
+			
+			hmap.put("Notice", n);
+			hmap.put("attachment", at);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
 
-							rset=pstmt.executeQuery();
 
-
-
-						}
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}finally {
-						close(pstmt);
-						close(rset);
-					}
-
-
-					return n;
+		return hmap;
 	}
 	//글 삭제
 	public int deleteNotice(Connection con, int bno) {
@@ -290,16 +304,18 @@ public class NoticeDao {
 		return list;
 	}
 	//글 수정
-	public Notice selectOne(Connection con, String num) {
+	public HashMap<String, Object> editOne(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Notice n = null;
+		HashMap<String, Object> hmap = null;
+		Attachment at = null;
 		
 		String query = prop.getProperty("selectOne");
 		
 		try {
 			pstmt=con.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(num));
+			pstmt.setInt(1, num);
 			
 			rset=pstmt.executeQuery();
 			
@@ -327,8 +343,19 @@ public class NoticeDao {
 				n.setFile02(rset.getInt("FILE02"));
 				n.setFile03(rset.getInt("FILE03"));
 				
+				at = new Attachment();
+				at.setAno(rset.getInt("ATTACHNO"));
+				at.setOriginName(rset.getString("ATTACHPRENAME"));
+				at.setChangeName(rset.getString("ATTACHNAME"));
+				at.setFilePath(rset.getString("ATTACHPATH"));
+				at.setUploadDate(rset.getDate("ATTACHDAY"));
+				at.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
 				
 			}
+			hmap = new HashMap<String, Object>();
+			
+			hmap.put("Notice", n);
+			hmap.put("attachment", at);
 			
 			
 		} catch (SQLException e) {				
@@ -338,7 +365,7 @@ public class NoticeDao {
 			close(rset);
 		}
 
-		return n;
+		return hmap;
 	}
 	//수정용
 	public int updateNotice(Connection con, Notice n) {
@@ -706,5 +733,167 @@ public class NoticeDao {
 		
 		return list;
 	}
+	//선택한 공지사항 삭제
+	public int deleteNotice2(Connection con, ArrayList<Integer> deleteList) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		for (int i = 0; i < deleteList.size(); i++) {
+			pstmt = null;
+			String query = prop.getProperty("deleteNotice2");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				
+				pstmt.setInt(1, deleteList.get(i));
+				
+				result += pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		close(pstmt);
+		
+		System.out.println("dao result:"+result);
+		return result;
+	}
+	//시퀀스조회
+	public int selectCurrval(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		//select관련은 무조건 ResultSet!!
+
+		int ano =0;
+
+		String query = prop.getProperty("selectCurrval");
+		System.out.println("시퀀스값 조회쿼리 : "+query);
+		try {
+
+		stmt=con.createStatement();
+
+		rset=stmt.executeQuery(query);
+
+		if(rset.next()) {
+			ano = rset.getInt("CURRVAL");
+		}
+		System.out.println("시퀀스dao의 ano : "+ano);
+		} catch (SQLException e) {
+		e.printStackTrace();
+
+		}finally {
+
+		close(stmt);
+		close(rset);
+		//여기서 close(con)해버리면 service에서 트랜잭션 처리가 안되니 주의할 것~~!!!
+
+		}
+
+		return ano;
+	}
+	//첨부파일 등록1
+	public int insertAttachment(Connection con, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("insertAttachment");
+		System.out.println("query2 "+query);
+		System.out.println("insertAttachment dao fileList 사이즈 : "+fileList.size());
+		try {
+
+		for(int i=0; i < fileList.size(); i++) {
+
+		pstmt=con.prepareStatement(query);
+
+		
+		pstmt.setString(1, fileList.get(i).getOriginName());
+		pstmt.setString(2, fileList.get(i).getChangeName());
+		pstmt.setString(3, fileList.get(i).getFilePath());
+
+	
+
+		result += pstmt.executeUpdate(); //'='하면 안돼
+
+		}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}finally {
+		close(pstmt);
+		}
+
+		return result;
+	}
+	//첨부파일 등록2
+	public int insertThumbnailContent(Connection con, Notice n) {
+		PreparedStatement pstmt = null;
+
+		int result=0;
+
+		String query = prop.getProperty("insertThumb");
+		System.out.println("첨부파일 등록 dao query: "+query);
+		try {
+
+		pstmt=con.prepareStatement(query);
+
+		pstmt.setString(1, n.getbTitle());
+		pstmt.setString(2, n.getbContent());
+		pstmt.setString(3, n.getDeptId());
+		pstmt.setInt(4, Integer.parseInt(n.getWriterId()));
+		pstmt.setInt(5, n.getFile01());
+		result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+
+		e.printStackTrace();
+
+		}finally {
+
+		close(pstmt);
+		commit(con);
+		}
+
+		return result;
+	}
+	//다운로드
+	public Attachment selectOneAttachment(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		Attachment file = null;
+		
+		String query = prop.getProperty("selectOneAttachment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				file = new Attachment();
+				
+				file.setAno(rset.getInt("ATTACHNO"));
+				file.setOriginName(rset.getString("ATTACHPRENAME"));
+				
+				file.setChangeName(rset.getString("ATTACHNAME"));
+				file.setFilePath(rset.getString("ATTACHPATH"));
+				file.setUploadDate(rset.getDate("ATTACHDAY"));
+				file.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
+				
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}	
+		
+		return file;
+	}
+
+	
 
 }

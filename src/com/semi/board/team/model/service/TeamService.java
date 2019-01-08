@@ -7,8 +7,11 @@ import static com.semi.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.semi.board.Free.model.dao.FreeDao;
 import com.semi.board.team.model.dao.TeamDao;
+import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
 
 public class TeamService {
@@ -37,22 +40,22 @@ public class TeamService {
 		return result;
 	}
 	//글 상세보기
-	public Team selectOne(int num) {
+	public HashMap<String, Object> selectOne(int num) {
 		Connection con = getConnection();
-		Team t = null;
+		HashMap<String, Object> hmap = null;
 
 		System.out.println("service num: "+num);
 		int result = new TeamDao().updateCount(con, num);
 
 		if(result > 0) {
 			commit(con);
-			t = new TeamDao().selectOne(con, num);
+			hmap = new TeamDao().selectOne(con, num);
 		}else {
 			rollback(con);
 		}
 		close(con);
 
-		return t;
+		return hmap;
 	}
 	//글삭제
 	public int deleteteam(int bno) {
@@ -236,6 +239,63 @@ public class TeamService {
 		close(con);
 		
 		return list;
+	}
+	//첨부파일 등록
+	public int insertThumbnail(Team t, ArrayList<Attachment> fileList) {
+		Connection con = getConnection();
+
+		int result = 0;
+		int result2 = 0;
+		int result1 = new TeamDao().insertAttachment(con, fileList);
+		System.out.println("service result1 : "+result1);
+					//트랜잭션 처리
+		if(result1 > 0) {
+
+			int ano = new TeamDao().selectCurrval(con); //지금가지고있는 시퀀스값을 조회하기 위함
+			System.out.println("service ano : "+ano);														 //메모 확인
+			for(int i=0;i<fileList.size(); i++) {
+						
+				fileList.get(i).setAno(ano); 
+				if(i==0) {
+					t.setFile01(fileList.get(i).getAno());
+				}
+				
+			} 
+			result2 = new TeamDao().insertThumbnailContent(con, t);
+		}			
+
+		System.out.println("service result2 : "+result2);
+		System.out.println("service fileList 사이즈 : "+fileList.size());
+		//board가 부모고 file이 자식이라 부모에 값 먼저 넣어줘야함
+
+		
+	
+
+		if(result1 > 0 &&result2 > 0) {
+			
+			commit(con);
+			
+			result = 1; //0보다만 크면 되니까 1 처리 해주기
+		}else {
+
+			rollback(con);
+
+		}
+
+		close(con);
+
+		return result;
+	}
+	//다운로드
+	public Attachment selectOneAttachment(int num) {
+		Connection con = getConnection();
+		
+		Attachment file = new TeamDao().selectOneAttachment(con, num);
+		
+		close(con);
+		
+		
+		return file;
 	}
 	
 }

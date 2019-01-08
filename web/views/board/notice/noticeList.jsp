@@ -50,7 +50,7 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 		</div>
 		<%} %>
 		<br>
-		<form action="" id="formId" method="get">
+		<form action="" id="listForm" name="form1" method="post">
 		<table class="table table-striped" id="listArea">
 			<thead>
 				<tr>
@@ -67,7 +67,7 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 	
 					<% for(Notice n : list){ %>
 				 <tr>
-					<td><input type="checkbox" name="checkRow" value="${content.IDX}" /></td>
+					<td><input type="checkbox" name="checkRow"  value="<%=n.getBno() %>"  /></td>
 					 <td><input type="hidden" name="bno"><%=n.getBno() %></td> 
 					<td id="realTitle"><%=n.getbTitle() %></td>
 					<td><%=n.getWriterId() %></td>
@@ -79,6 +79,15 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 			</tbody>
 		</table>
 		</form>
+		<script>
+		$("#th_checkAll").click(function(){
+			if($("#th_checkAll").prop("checked")){
+				$("input[name=checkRow]").prop("checked", true);
+			}else{
+				$("input[name=checkRow]").prop("checked", false);
+			}
+		});
+		</script>
 		
 		<form action="<%=request.getContextPath() %>/search.no" method="get" >
 		
@@ -158,6 +167,39 @@ if(p == currentPage){
 </section>
 
 <script>
+
+ $(function(){
+	$("#deleteBtn").click(function(){
+		/* var checks = document.getElementsByName('check');
+
+		 var chkFirList = document.getElementsByName('check');
+
+
+		console.log(checks);
+		var arrChk = new Array();
+		var cnt = 0;
+		for(var idx = checks.length -1; 0 <=idx; idx--){
+			if(checks[idx].checked){
+				arrChk[cnt] = listForm[idx].value;
+				cnt++;
+			}
+		}
+			console.log(arrChk);
+			 if(arrChk.length != 0){ 
+				document.form1.submit();
+			 }else{
+				 alert('삭제할 게시물을 선택하세요');
+				 return;
+			 } */
+	
+		
+		
+			$("#listForm").attr("action", "<%=request.getContextPath()%>/deleteNotice2.no");
+			$("#listForm").submit(); 
+			alert('해당 게시물을 삭제하였습니다');
+		
+	});
+}); 
 	
 		$(function(){
 			$("#writeBtn").click(function(){
@@ -166,13 +208,7 @@ if(p == currentPage){
 		});
 		
 		
-		function checkAll(){
-		      if( $("#th_checkAll").is(':checked') ){
-		        $("input[name=checkRow]").prop("checked", true);
-		      }else{
-		        $("input[name=checkRow]").prop("checked", false);
-		      }
-		}
+		
 
 		
 		
@@ -194,14 +230,5 @@ if(p == currentPage){
 	
 	
 	
-	$(function(){
-		$("#deleteBtn").click(function(){
-			var num = $("tbody").children().children().eq(1).text();
-			console.log(num);
-			alert("정말로 삭제하시겠습니까?");
-			$("#formId").attr("action", "<%=request.getContextPath()%>/deleteNotice.no?num="+num);
-			$("#formId").submit();
-		});
-	});
 </script>
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

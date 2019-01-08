@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+
 import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
 
@@ -262,22 +263,60 @@ System.out.println("상세보기 dao : "+query);
 					f.setFile01(rset.getInt("FILE01"));
 					f.setFile02(rset.getInt("FILE02"));
 					f.setFile03(rset.getInt("FILE03"));
+					
+					
+						at = new Attachment();
+						at.setAno(rset.getInt("ATTACHNO"));
+						at.setOriginName(rset.getString("ATTACHPRENAME"));
+						at.setChangeName(rset.getString("ATTACHNAME"));
+						at.setFilePath(rset.getString("ATTACHPATH"));
+						at.setUploadDate(rset.getDate("ATTACHDAY"));
+						at.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
+						
+						if(rset == null) {
+							query = prop.getProperty("selectOneNoFile");
+							System.out.println("첨부파일 없는 dao query: "+query);
+							
+								pstmt=con.prepareStatement(query);
+								pstmt.setInt(1, num);
 
-					at = new Attachment();
-					at.setAno(rset.getInt("ATTACHNO"));
-					at.setOriginName(rset.getString("ATTACHPRENAME"));
-					at.setChangeName(rset.getString("ATTACHNAME"));
-					at.setFilePath(rset.getString("ATTACHPATH"));
-					at.setUploadDate(rset.getDate("ATTACHDAY"));
-					at.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
+								rset=pstmt.executeQuery();
+
+								if(rset.next()) {
+									f = new Free();
+
+									f.setBno(rset.getInt("BOARDNO"));
+									f.setbClass(rset.getString("BOARDCLASS"));
+									f.setbTitle(rset.getString("BOARDTITLE"));
+									f.setbContent(rset.getString("BOARDCONTENTS"));
+									f.setbDate(rset.getDate("BOARDDATE"));
+									f.setbClicks(rset.getInt("BOARDCLICKS"));
+									f.setbAttach(rset.getString("BOARDATTACH"));
+									f.setComNo(rset.getInt("COMMENTNO"));
+									f.setComLevel(rset.getInt("COMMENTLEVEL"));
+									f.setRecomId(rset.getString("RECOMMENTID"));
+									
+									f.setReplebno(rset.getInt("REPLEBOARDNO"));
+									f.setWriterId(rset.getString("EMPNAME"));
+									f.setStatus(rset.getString("WHETHEROFDELETE"));
+									f.setFile01(rset.getInt("FILE01"));
+									f.setFile02(rset.getInt("FILE02"));
+									f.setFile03(rset.getInt("FILE03"));
+									
+						}
+								hmap = new HashMap<String, Object>();
+								hmap.put("Free", f);
+						}else {
 					
 				}
+					
+				
 				
 				hmap = new HashMap<String, Object>();
 				
 				hmap.put("Free", f);
 				hmap.put("attachment", at);
-				
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
@@ -373,7 +412,7 @@ System.out.println("상세보기 dao : "+query);
 		}
 		
 		//글 수정하기
-		public int updateFree(Connection con, Free f, Attachment at) {
+		public int updateFree(Connection con, Free f) {
 			PreparedStatement pstmt = null;
 			int result=0;
 			String query = prop.getProperty("updateFree");
@@ -1250,6 +1289,104 @@ System.out.println("query: "+query);
 			
 			
 			return result;
+		}
+		//글 상세보기 도전
+	/*	public HashMap<String, Object> selectOne(Connection con, int num) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			Free f = null;
+			HashMap<String, Object> hmap = null;
+			Attachment at = null;
+			
+			String query = prop.getProperty("selectOneNoFile");
+			System.out.println("최신 dao query ㅋㅋ: "+query);
+
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, num);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					 f=new Free();
+					
+					f.setBno(rset.getInt("BOARDNO"));
+					f.setbClass(rset.getString("BOARDCLASS"));
+					f.setbTitle(rset.getString("BOARDTITLE"));
+					f.setbContent(rset.getString("BOARDCONTENTS"));
+					f.setbDate(rset.getDate("BOARDDATE"));
+					f.setbClicks(rset.getInt("BOARDCLICKS"));
+					f.setbAttach(rset.getString("BOARDATTACH"));
+					f.setComNo(rset.getInt("COMMENTNO"));
+					f.setComLevel(rset.getInt("COMMENTLEVEL"));
+					f.setRecomId(rset.getString("RECOMMENTID"));
+					
+					f.setReplebno(rset.getInt("REPLEBOARDNO"));
+					f.setWriterId(rset.getString("EMPNAME"));
+					f.setStatus(rset.getString("WHETHEROFDELETE"));
+					f.setFile01(rset.getInt("FILE01"));
+					f.setFile02(rset.getInt("FILE02"));
+					f.setFile03(rset.getInt("FILE03"));
+				}
+				hmap = new HashMap<String, Object>();
+				
+				hmap.put("Free", f);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+
+			
+			return hmap;
+		}*/
+		//첨부파일 없는 글 상세보기
+		public Free selectOneNoFile(Connection con, int num) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			Free f = null;
+			
+			String query = prop.getProperty("selectOneNoFile");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, num);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					 f=new Free();
+						
+						f.setBno(rset.getInt("BOARDNO"));
+						f.setbClass(rset.getString("BOARDCLASS"));
+						f.setbTitle(rset.getString("BOARDTITLE"));
+						f.setbContent(rset.getString("BOARDCONTENTS"));
+						f.setbDate(rset.getDate("BOARDDATE"));
+						f.setbClicks(rset.getInt("BOARDCLICKS"));
+						f.setbAttach(rset.getString("BOARDATTACH"));
+						f.setComNo(rset.getInt("COMMENTNO"));
+						f.setComLevel(rset.getInt("COMMENTLEVEL"));
+						f.setRecomId(rset.getString("RECOMMENTID"));
+						
+						f.setReplebno(rset.getInt("REPLEBOARDNO"));
+						f.setWriterId(rset.getString("EMPNAME"));
+						f.setStatus(rset.getString("WHETHEROFDELETE"));
+						f.setFile01(rset.getInt("FILE01"));
+						f.setFile02(rset.getInt("FILE02"));
+						f.setFile03(rset.getInt("FILE03"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+
+			
+			return f;
 		}
 		
 		

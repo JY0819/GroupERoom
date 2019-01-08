@@ -1,6 +1,5 @@
 package com.semi.board.team.model.dao;
 
-import static com.kh.jsp.common.JDBCTemplate.close;
 import static com.semi.common.JDBCTemplate.close;
 
 import java.io.FileNotFoundException;
@@ -12,9 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
-import com.semi.board.Free.model.vo.Free;
+import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
 
 public class TeamDao {
@@ -140,11 +140,15 @@ public class TeamDao {
 		return result;
 	}
 	//글 상세보기
-	public Team selectOne(Connection con, int num) {
+	public HashMap<String, Object> selectOne(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Team t = null;
-
+		HashMap<String, Object> hmap = null;
+		Attachment at = null;
+		
+		
+		
 		String query = prop.getProperty("selectOne");
 System.out.println("selectOne dao query: "+query);
 		try {
@@ -152,7 +156,7 @@ System.out.println("selectOne dao query: "+query);
 			pstmt.setInt(1, num);
 
 			rset=pstmt.executeQuery();
-
+			System.out.println("dao rset: "+rset);
 			if(rset.next()) {
 				t = new Team();
 
@@ -175,10 +179,22 @@ System.out.println("selectOne dao query: "+query);
 				t.setFile02(rset.getInt("FILE02"));
 				t.setFile03(rset.getInt("FILE03"));
 
-
+				at = new Attachment();
+				at.setAno(rset.getInt("ATTACHNO"));
+				at.setOriginName(rset.getString("ATTACHPRENAME"));
+				at.setChangeName(rset.getString("ATTACHNAME"));
+				at.setFilePath(rset.getString("ATTACHPATH"));
+				at.setUploadDate(rset.getDate("ATTACHDAY"));
+				at.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
+				
 
 
 			}
+			hmap = new HashMap<String, Object>();
+			
+			hmap.put("Team", t);
+			hmap.put("attachment", at);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -187,7 +203,7 @@ System.out.println("selectOne dao query: "+query);
 		}
 
 
-		return t;
+		return hmap;
 	}
 	//글삭제
 	public int deleteTeam(Connection con, int bno) {
@@ -827,21 +843,23 @@ System.out.println("selectOne dao query: "+query);
 		
 		return list;
 	}
-	//첨부파일 등록
-	public int insertThumbnailContent(Connection con, Free f) {
+	//첨부파일 등록1
+	public int insertThumbnailContent(Connection con, Team t) {
 		PreparedStatement pstmt = null;
 
 		int result=0;
 
 		String query = prop.getProperty("insertThumb");
-
+System.out.println("insertThumb dao query: "+query);
 		try {
 
 		pstmt=con.prepareStatement(query);
 
-		pstmt.setString(1, f.getbTitle());
-		pstmt.setString(2, f.getbContent());
-		pstmt.setInt(3, Integer.parseInt(f.getWriterId()));
+		pstmt.setString(1, t.getbTitle());
+		pstmt.setString(2, t.getbContent());
+		pstmt.setString(3, t.getDeptId());
+		pstmt.setInt(4, Integer.parseInt(t.getWriterId()));
+		pstmt.setInt(5, t.getFile01());
 
 		result = pstmt.executeUpdate();
 
@@ -856,6 +874,109 @@ System.out.println("selectOne dao query: "+query);
 		}
 
 		return result;
+	}
+	//첨부파일 등록
+	public int insertAttachment(Connection con, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("insertAttachment");
+		System.out.println("query2 "+query);
+		System.out.println("insertAttachment dao fileList 사이즈 : "+fileList.size());
+		try {
+
+		for(int i=0; i < fileList.size(); i++) {
+
+		pstmt=con.prepareStatement(query);
+
+		
+		pstmt.setString(1, fileList.get(i).getOriginName());
+		pstmt.setString(2, fileList.get(i).getChangeName());
+		pstmt.setString(3, fileList.get(i).getFilePath());
+
+	
+
+		result += pstmt.executeUpdate(); //'='하면 안돼
+
+		}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}finally {
+		close(pstmt);
+		}
+
+		return result;
+	}
+	//ㅅㅣ퀀스값 조회
+	public int selectCurrval(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		//select관련은 무조건 ResultSet!!
+
+		int ano =0;
+
+		String query = prop.getProperty("selectCurrval");
+System.out.println("시퀀스값 조회쿼리 : "+query);
+		try {
+
+		stmt=con.createStatement();
+
+		rset=stmt.executeQuery(query);
+
+		if(rset.next()) {
+			ano = rset.getInt("CURRVAL");
+		}
+		System.out.println("시퀀스dao의 ano : "+ano);
+		} catch (SQLException e) {
+		e.printStackTrace();
+
+		}finally {
+
+		close(stmt);
+		close(rset);
+		//여기서 close(con)해버리면 service에서 트랜잭션 처리가 안되니 주의할 것~~!!!
+
+		}
+
+		return ano;
+	}
+	//다운로드
+	public Attachment selectOneAttachment(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		Attachment file = null;
+		
+		String query = prop.getProperty("selectOneAttachment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				file = new Attachment();
+				
+				file.setAno(rset.getInt("ATTACHNO"));
+				file.setOriginName(rset.getString("ATTACHPRENAME"));
+				
+				file.setChangeName(rset.getString("ATTACHNAME"));
+				file.setFilePath(rset.getString("ATTACHPATH"));
+				file.setUploadDate(rset.getDate("ATTACHDAY"));
+				file.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}	
+		
+		return file;
 	}
 	
 	

@@ -19,6 +19,9 @@
 body {
 	height: 780px;
 }
+#td{
+	width: 10px;
+}
 </style>
 
 <section class="content">
@@ -38,25 +41,28 @@ body {
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
-							<th id="formtitle" colspan="1" style="background-color: #eeeeee; text-align: center;">공지사항 수정</th>
+							<th id="formtitle" colspan="2" style="background-color: #eeeeee; text-align: center;">공지사항 수정</th>
 						</tr> 
 					</thead>
 			<form action="", method="post" id="editTable">
 
 					<tbody>
 						<tr>
+						<td>작성자</td>
 							<td>
 						<input type="hidden" id="bno" value="<%=n.getBno() %>" name="bno" >
 						<input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly>
 							</td>
 						</tr>
 						<tr>
+						<td>제목</td>
 							<td>
 							
 							<input type="text" name ="title"class="form-control" value="<%=n.getbTitle() %>" maxlength="50">
 							</td>						
 						</tr>
 						<tr>
+						<td>내용</td>
 						<td>
 						<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=n.getbContent() %></textarea>							</td>						</tr>
 						</td>
@@ -66,9 +72,6 @@ body {
 					</form>
 				</table>
 				
-					</tbody>
-					
-				</table>
 				
 				<div class="form-group">
 					<label for="inputattach">파일첨부</label>
@@ -90,7 +93,7 @@ body {
 		</div>
 
 	</div>
-	
+	</section>
 	<script>
 		$(function(){
 			$("#fileInput").on('change', function(){  // 값이 변경되면

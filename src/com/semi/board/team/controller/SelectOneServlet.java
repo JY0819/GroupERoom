@@ -2,6 +2,7 @@ package com.semi.board.team.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.board.Free.model.service.FreeService;
-import com.semi.board.Free.model.vo.Free;
+import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.service.TeamService;
 import com.semi.board.team.model.vo.Team;
 
@@ -38,7 +38,12 @@ public class SelectOneServlet extends HttpServlet {
 		
 		System.out.println("글번호: "+num);
 	
-		Team t = new TeamService().selectOne(num);
+		HashMap<String, Object> hmap = new TeamService().selectOne(num);
+
+		Team t = (Team)hmap.get("Team");
+		Attachment at = (Attachment)hmap.get("attachment");
+		
+		
 		ArrayList<Team> reply = new TeamService().selectReply(num);
 		String page ="";
 		
@@ -48,6 +53,7 @@ public class SelectOneServlet extends HttpServlet {
 				request.setAttribute("reply", reply);
 			}
 			request.setAttribute("t", t);
+			request.setAttribute("at", at);
 		}else {
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "부서게시판 게시글 상세보기 실패!");

@@ -1,6 +1,7 @@
 package com.semi.board.notice.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.board.Free.model.service.FreeService;
+import com.semi.board.Free.model.vo.Attachment;
+import com.semi.board.Free.model.vo.Free;
 import com.semi.board.notice.model.service.NoticeService;
 import com.semi.board.notice.model.vo.Notice;
 
@@ -32,9 +36,12 @@ public class SelectNoticeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String num = request.getParameter("num");
+		int num = Integer.parseInt(request.getParameter("num"));
 		
-		Notice n = new NoticeService().selectOne(num);
+		HashMap<String, Object> hmap = new NoticeService().editOne(num);
+		Notice n = (Notice)hmap.get("Notice");
+		Attachment at 
+        = (Attachment)hmap.get("attachment");
 		
 		System.out.println("servlet num: "+num);
 		

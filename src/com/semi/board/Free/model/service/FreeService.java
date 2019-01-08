@@ -1,6 +1,7 @@
 package com.semi.board.Free.model.service;
 
 
+
 import static com.semi.common.JDBCTemplate.close;
 import static com.semi.common.JDBCTemplate.commit;
 import static com.semi.common.JDBCTemplate.getConnection;
@@ -13,7 +14,6 @@ import java.util.HashMap;
 import com.semi.board.Free.model.dao.FreeDao;
 import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
-import com.semi.board.team.model.dao.TeamDao;
 
 public class FreeService {
 	//글 목록 조회
@@ -86,21 +86,23 @@ public class FreeService {
 			Connection con = getConnection();
 			
 			int result=0;
+			
 			int result0 = new FreeDao().updateAttachment(con, at);
 			System.out.println("updateAttachment result0 : "+result0);
-			if(result0>0) {
-				commit(con);
-			}
-			int ano=new FreeDao().selectCurrval(con);
+			if(result0 > 0) {
+				int ano=new FreeDao().selectCurrval(con);
+				
+				f.setFile02(ano);
 			
-			f.setFile02(ano);
+			}
 			
 			int result2=0;
 			
-				result2= new FreeDao().updateFree(con, f, at);
-				System.out.println("service result2: "+result2);
+			result2= new FreeDao().updateFree(con, f);
+			System.out.println("service result2: "+result2);
 
-			
+				
+				
 			int result4 = new FreeDao().deleteOriginFile(con, originAno);
 				System.out.println("service result4: "+result4);
 			int result3 = new FreeDao().deleteAttachment(con, originAno);
@@ -357,6 +359,26 @@ public class FreeService {
 			
 			
 			return file;
+		}
+		//첨부파일 없는 글 상세보기
+		public Free selectOneNoFile(int num) {
+			Connection con = getConnection();
+			
+			Free f = null;
+			
+			//조회수 증가
+			int result = new FreeDao().updateCount(con,  num);
+			
+			if(result > 0) {
+				commit(con);
+				f = new FreeDao().selectOneNoFile(con, num);
+			
+			}else {
+				rollback(con);
+			}
+			
+			close(con);
+			return f;
 		}
 		
 }
