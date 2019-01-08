@@ -197,6 +197,7 @@ public class DepartmentDao {
 
 				emp.setEmpid(rset.getInt("EMPID"));
 				emp.setEmpName(rset.getString("EMPNAME"));
+				emp.setDeptName(rset.getString("DEPTNAME"));
 				emp.setPositionName(rset.getString("POSITIONNAME"));
 
 				list.add(emp);

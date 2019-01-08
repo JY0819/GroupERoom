@@ -26,7 +26,7 @@ public class SelectDepartmentMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String deptId = request.getParameter("deptId");
 		
-		System.out.println(deptId); // 부서 아이디 들어왔지 ?응근데 조회를 어떻게 했길래 null이 나와 ? 몰라 이거 저번주꺼라 뒤는 기억안남
+		System.out.println(deptId); 
 		
 		ArrayList<Employee> list = new DepartmentService().deptMember(deptId);
 

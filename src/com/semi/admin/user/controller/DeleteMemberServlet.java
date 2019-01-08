@@ -12,8 +12,8 @@ import com.semi.admin.user.model.service.EmployeeService;
 @WebServlet("/deleteMember.me")
 public class DeleteMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public DeleteMemberServlet() {
+
+	public DeleteMemberServlet() {
         super();
     }
 

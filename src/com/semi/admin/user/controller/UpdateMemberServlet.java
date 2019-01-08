@@ -67,7 +67,7 @@ public class UpdateMemberServlet extends HttpServlet {
 		lp.setPositionId(position);
 		
 		int result = new EmployeeService().updateEmployee(emp, ld, lp);
-		
+
 		String page = "";
 		if (result > 0) {
 			page = "/memberList.me";

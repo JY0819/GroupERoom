@@ -10,7 +10,7 @@ var treeviewJson = {
 								  ,nodes: [ 
 										     {text: "사원 추가", href: "/semi/views/admin/user/addUserForm.jsp"}
 										    ,{text: "사원 조회", href: "/semi/memberList.me"} 
-										    ,{text: "휴가 조회", href: "/semi/vacList.me"} 
+										    ,{text: "휴가 조회", href: "/semi/vacList.va"} 
 								  		  ]
 								}
 							   ,{ 
@@ -20,14 +20,6 @@ var treeviewJson = {
 									 	   ,{text: "직책 관리", href: "/semi/posList.po"}
 								 		]
 								}
-							  ,{
-								  text: "게시판 관리"
-								 ,nodes: [
-									 		{text: "공지 관리", href: "/semi/views/admin/board/noticeList.jsp"}
-									 	   ,{text: "일정 관리"}
-								 		]
-							   }
-					   
 						 ]
 						   
 					}

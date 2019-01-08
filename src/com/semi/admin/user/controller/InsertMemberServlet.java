@@ -39,7 +39,7 @@ public class InsertMemberServlet extends HttpServlet {
 			int maxSize = 1024 * 1024 * 10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
-//			System.out.println(root);
+			System.out.println(root);
 
 			String filePath = root + "assets/images/upload_EmpImg/";
 			

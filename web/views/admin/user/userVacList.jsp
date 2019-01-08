@@ -1,4 +1,4 @@
-<%@page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  	pageEncoding="UTF-8" import="java.util.*, com.semi.admin.user.model.vo.*, com.semi.common.vo.*"%>
 <%
@@ -31,14 +31,14 @@
 			
 			console.log(num);
 			
-			location.href="<%=request.getContextPath()%>/selectOne.me?num=" + num;
+<%-- 			location.href="<%=request.getContextPath()%>/selectOne.va?num=" + num; --%>
 		});
 	
 	$("#searchBtn").click(function() {
 		var searchName = $("#searchName").val();
 		
 		$.ajax({
-			url : "/semi/searchVacName.me", // 요청할 서블릿 매핑 주소
+			url : "/semi/searchVacName.va", // 요청할 서블릿 매핑 주소
 			type : "post",	// 방식 get, post
 			data : {
 					searchName : searchName	// 전달 파라미터 키 : 값 
@@ -61,6 +61,7 @@
 		if(data.length > 0){	// 배열의 크기
 			var html = "";
 			 for(var i = 0; i < data.length; i++){
+				 
 				var empId = data[i].empId || "";
 				var deptName = data[i].deptName || "";
 				var empName = data[i]["empName"] || "";
@@ -69,24 +70,25 @@
 				var useEnd = data[i].useEnd || "";
 				var days = data[i].days || "";
 				var useVacAppDay = data[i].useVacAppDay || "";
-
-				html += "<tr>                                           ";
-				html += "	<td>" + empId + "</td>                      ";
-				html += "	<td>" + deptName + "</td>                   ";
-				html += "	<td>" + empName + "</td>      				";
-				html += "	<td>" + apprEmpId + "</td>       			";
-				html += "	<td>" + useStart + " ~ " + useEnd +"</td>   ";
-				html += "	<td>" + days + "</td>    					";
-				html += "	<td>" + useVacAppDay + "</td>               ";
-				html += "</tr>                                          ";
+				
+				html += "<tr>                               ";
+				html += "	<td>" + empId + "</td>          ";
+				html += "	<td>" + deptName + "</td>       ";
+				html += "	<td>" + empName + "</td>      	";
+				html += "	<td>" + apprEmpId + "</td>     	";
+				html += "	<td>" + useStart + " ~ " + useEnd + "</td>		";
+				html += "	<td>" + days + "</td>    		";
+				html += "	<td>" + useVacAppDay + "</td>   ";
+				html += "</tr>                              ";
+				}
+			 
 			
+				 var header = $("#listArea").html();
+				 var totalhtml = header + html;
+			 	$("#listArea").not("#listHeader").html(totalhtml);
 			 }
-			 var header = $("#listArea").html();
-			 var totalhtml = header + html;
-			 $("#listArea").not("#listHeader").html(totalhtml);
-		}	 
-	}
-});
+		}
+	});
 </script>
 
 <section class="content">
@@ -114,7 +116,6 @@
 					<th>승인자</th>
 					<th>휴가 기간</th>
 					<th>사용일</th>
-<!-- 					<th>잔여일</th> -->
 					<th>승인일</th>
 				</tr>
 					
@@ -163,7 +164,7 @@
 		</div>
 		<div class="text-center">
 			<ul class="pagination">
-			<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=1'"><<</button>
+			<button onclick="location.href='<%=request.getContextPath()%>/vacList.va?currentPage=1'"><<</button>
 				<%
 					if (currentPage <= 1){
 				%>
@@ -171,7 +172,7 @@
 				<%
 					} else {
 				%>
-					<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%=currentPage - 1%>'"><</button>
+					<button onclick="location.href='<%=request.getContextPath()%>/vacList.va?currentPage=<%=currentPage - 1%>'"><</button>
 				<%
 					}
 				%>
@@ -186,7 +187,7 @@
 				<%
 						} else {
 				%>
-						<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%= p %>'"><%= p %></button>
+						<button onclick="location.href='<%=request.getContextPath()%>/vacList.va?currentPage=<%= p %>'"><%= p %></button>
 				<%
 						}
 				%>
@@ -202,12 +203,12 @@
 				<%
 					} else {
 				%>
-					<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%=currentPage + 1%>'">></button>
+					<button onclick="location.href='<%=request.getContextPath()%>/vacList.va?currentPage=<%=currentPage + 1%>'">></button>
 				<%
 					}
 				%>
 
-				<button onclick="location.href='<%=request.getContextPath()%>/vacList.me?currentPage=<%=maxPage%>'">>></button>
+				<button onclick="location.href='<%=request.getContextPath()%>/vacList.va?currentPage=<%=maxPage%>'">>></button>
 				
 			</ul>
 		</div>

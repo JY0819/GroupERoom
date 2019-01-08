@@ -54,7 +54,10 @@
 	</div>
 	
 	<div class="nav-right">
-		<i class="far fa-user fa-2x"></i> <i class="fas fa-chevron-down"></i>
+		<!-- 일단 임시로 로그아웃 a태그 -->
+		<span><a href="<%=request.getContextPath()%>/logout.me">LogOut</a></span>
+		<i class="far fa-user fa-2x"></i>
+		<i class="fas fa-chevron-down"></i>
 	</div>
 </nav>
 <input type="hidden" value="<%= empid %>" name="empId">

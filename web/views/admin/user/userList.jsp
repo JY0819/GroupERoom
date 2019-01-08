@@ -67,7 +67,7 @@
 					var empPhone = data[i]["empPhone"] || "";
 					var whetherOfRetire = data[i]["whetherOfRetire"] || "";
 					
-				 	html += "<tr>                                           ";
+				 	html += "<tr>                                    ";
 					html += "	<td>" + empid + "</td>               ";
 					html += "	<td>" + empName + "</td>             ";
 					html += "	<td>" + deptName + "</td>            ";
@@ -75,7 +75,7 @@
 					html += "	<td>" + empGender + "</td>           ";
 					html += "	<td>" + empPhone + "</td>            ";
 					html += "	<td>" + whetherOfRetire + "</td>     ";
-					html += "</tr>                                          ";
+					html += "</tr>                                   ";
 				
 				 }
 				 var header = $("#listArea").html();
