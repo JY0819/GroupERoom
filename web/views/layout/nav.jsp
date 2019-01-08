@@ -19,7 +19,7 @@
 		document.getElementById('sidemenu').style.width = '0';
 	}
 	function openHome() {
-		location.href="/semi/views/main/home.jsp";
+		location.href="/semi/main";
 	}
 </script>
 
@@ -30,10 +30,17 @@
 		
 		<!--결재 게시판 넘어가게 a태그에 경로 입력함
 		css부분 클릭시 글씨 색이나 밑줄 변경 안하게 하려고 a태그 부분 추가함-->
+
+		<%--<span><a href="/semi/views/approval/approvalMain.jsp">Approve</a></span>
+		<span><a href="<%=request.getContextPath()%>/selectList.no">Board</a></span>
+		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
+		<span><a href="<%=request.getContextPath()%>/myPageMain">My Page</a></span>--%>
+
 		<span><a href="/semi/views/approval/approvalMain.jsp">결재</a></span>
 		<span><a href="<%=request.getContextPath()%>/selectList.no">게시판</a></span>
 		<span><a href="<%=request.getContextPath()%>/schedule.sche">일정</a></span>
 		<span><a href="<%=request.getContextPath()%>/myPageMain">마이페이지</a></span>
+
 		<%
 			if(adminAuthority.equals("Y")) {
 		%>
@@ -69,14 +76,14 @@
 							if (data == 1) {
 								
 							}else {
-								$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/getOffQR?empid=" + empId + "'>퇴근</a></span>");
+								$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/getOffQR?empid=" + empId + "'>Leave Work</a></span>");
 							}
 						},error:function(data){ // 데이터 통신에 실패한 것
 							console.log("출근 데이터 서버 통신 실패");	
 						}
 					});
 				} else if (data == -1) {
-					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR?empid=" + empId + "'>출근</a></span>");
+					$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/createQR?empid=" + empId + "'>Attend</a></span>");
 				} else {
 					console.log("오류");
 				}

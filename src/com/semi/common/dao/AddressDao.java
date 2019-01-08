@@ -17,7 +17,7 @@ import com.semi.schedule.model.dao.ScheduleDao;
 
 public class AddressDao {
 
-private Properties prop=new Properties();
+	private Properties prop=new Properties();
 	
 	public AddressDao() {
 		String fileName=AddressDao.class.getResource("/sql/address.properties").getPath();

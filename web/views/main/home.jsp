@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+	pageEncoding="UTF-8" import="com.semi.schedule.model.vo.Schedule, com.semi.board.notice.model.vo.Notice, java.util.*"%>
+<%
+	HashMap<String, Object> hmap=(HashMap<String, Object>)request.getAttribute("hmap");
+	ArrayList<Notice> noticeList=(ArrayList<Notice>)hmap.get("notice");
+	ArrayList<Schedule> scheduleList=(ArrayList<Schedule>)hmap.get("schedule");
+%>
 <jsp:include page="/views/main/mainPage.jsp" />
 
 <style>
@@ -40,6 +44,36 @@ p.imgText {
 .tdPadding {
 	border: 2px solid #205181;
 }
+#calendar{
+	padding:20px 20px 20px 60px;
+}
+#calendar td{
+	width:60px;
+	height:60px;
+	text-align:right;
+}
+#calendar tbody td{
+	border-top: 1px solid #EAEAEA;
+	border-bottom: 1px solid #EAEAEA;
+}
+.day{
+	color: darkgray;
+	text-align:right;
+}
+.sunday{
+	color:#BF7272;
+	text-align:right;
+}
+.saturday{
+	color:#728ABF;
+	text-align:right;
+}
+#announce{
+	padding:10px 40px 10px 10px;
+}
+i{
+
+}
 </style>
 
 <script type="text/javascript">
@@ -54,8 +88,8 @@ p.imgText {
 			location.href="<%=request.getContextPath()%>/selectList.fr";
 		} else if (e.id == 'myP') {
 			location.href="<%=request.getContextPath()%>/myPageMain";
-		} else if (e.id == 'admin') {
-			location.href = "/semi/views/admin/user/userList.jsp";
+		} else if (e.id == 'schedule') {
+			location.href = "<%=request.getContextPath()%>/schedule.sche";
 		}
 
 	}
@@ -67,7 +101,7 @@ p.imgText {
 
 		var tblCalendar=document.getElementById("calendarMain");     // 테이블 달력을 만들 테이블
 		var tblCalendarYM=document.getElementById("calendarTitle");    // 몇년몇월인지 출력할 곳
-		tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // 연월 출력
+		//tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth()+1) + "월";  // 연월 출력
 		
 		var row = null; //주차별 열추가
 		row = tblCalendar.insertRow();
@@ -95,7 +129,7 @@ p.imgText {
 			
 			cell = row.insertCell();
 			cnt=cnt+1;
-			cell.innerHTML ='<span style="font-weight:bold;">'+i+'</span>';
+			cell.innerHTML ='<span class="day">'+i+'</span>';
 			if(cnt%7 ==1) {cell.innerHTML='<span class="sunday">'+i+'</span>';}
 			if(cnt%7 ==0) {cell.innerHTML='<span class="saturday">'+i+'</span>';}
 			cell.id='calSchedule'+holis; //일정 입력용 Id 부여
@@ -103,6 +137,16 @@ p.imgText {
 			if (cnt%7 == 0) {row = calendar.insertRow();}
 			
 		}
+ 		//불러온 일정 삽입
+		<%
+			for(int i=0;i<scheduleList.size();i++){ %>
+			<%--				if(Number(<%=scheduleList.get(i).getCalendarClass()%>)==3){
+			$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=scheduleList.get(i).getCalendarNo()%>'><%=scheduleList.get(i).getScheduleTime()%>"+' '+"<%=scheduleList.get(i).getCalendarContents()%></p>");
+--%>
+				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children("span").css("font-size","17px");
+				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children("span").css("font-weight","bold");
+			
+	<%}%>	 
 		
 	}
 	
@@ -143,12 +187,12 @@ p.imgText {
 				</div>
 			</td>
 			<td class="tdPadding">
-				<div onclick="move(this);" id="admin" class="cursor">
+				<div onclick="move(this);" id="schedule" class="cursor">
 					<div class="alignleft">
-						<i class="fas fa-unlock fa-4x"></i>
+						<i class="fas fa-calendar-alt fa-4x"></i>
 					</div>
 					<div class="alignleftText">
-						<p class="imgText">관리자</p>
+						<p class="imgText">일정</p>
 					</div>
 				</div>
 			</td>
@@ -156,84 +200,71 @@ p.imgText {
 		</tr>
 	</table>
 	<!-- 이미지 버튼 밑의 공백 -->
-	<br> <br> <br> <br> <br> <br> <br> <br>
-	<table>
+	<div><h1>　</h1><h3>　</h3></div>
+	<table id="announce" style="display:table-cell;">
 		<tr>
-			<!-- 공지사항 -->
-			<td>
-				<table id="announce">
-					<tr>
-						<th style="text-align: left;">공지사항</th>
-					</tr>
-					<tr>
-						<td colspan="3"><hr></td>
-					</tr>
-					<tr>
-						<td><img src="/semi/assets/images/exclamation-mark.png"
-							alt="New 이미지" width="20" height="5" /></td>
-						<td>
-							<p style="text-align: left;">문서 결재 관련 공지사항입니다.</p>
-						</td>
-						<td>
-							<p style="text-align: right;">2018.11.30</p>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3"><hr></td>
-					</tr>
-					<tr>
-						<td><img src="/semi/assets/images/exclamation-mark.png"
-							alt="New 이미지" width="20" height="5" /></td>
-						<td>
-							<p style="text-align: left;">문서 결재 관련 공지사항입니다.</p>
-						</td>
-						<td>
-							<p style="text-align: right;">2018.11.30</p>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3"><hr></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<p style="text-align: left;">문서 결재 관련 공지사항입니다.</p>
-						</td>
-						<td>
-							<p style="text-align: right;">2018.11.30</p>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3"><hr></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<p style="text-align: left;">문서 결재 관련 공지사항입니다.</p>
-						</td>
-						<td>
-							<p style="text-align: right;">2018.11.30</p>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3"><hr></td>
-					</tr>
-
-				</table>
-
-
-			</td>
+			<th colspan="2" style="text-align: left;">공지사항</th>
 		</tr>
+		<tr>
+			<td colspan="2"><hr></td>
+		</tr>
+		<%for (Notice n:noticeList){%>
+			<tr>
+				<td width="500px"><p style="text-align: left;">
+					<%Date today=new Date();
+						boolean time;
+						time= (today.getTime()-n.getbDate().getTime()) / (24*3600*1000) < 1.5;
+						if(time){
+					%><i style="color:red;" class="fas fa-exclamation-circle"></i><%} %>
+				<input type="hidden" name="bno" value="<%=n.getBno()%>"><%=n.getbTitle() %></p></td>
+				<td width="200px"><p style="text-align: right;"><%=n.getbDate() %></p></td>
+			</tr>
+			<tr>
+				<td colspan="2" height="3px" colspan="7"><hr></td>
+			</tr>
+		<% }%>
+		<%if(noticeList.size()==0){ %>
+			<tr>
+				<td colspan="2" height="3px" colspan="7">등록된 공지사항이 없습니다.</td>
+			</tr>
+			<tr>
+				<td colspan="2" height="3px" colspan="7"><hr></td>
+			</tr>
+		<%} %>
+		<!-- 
+			<td><img src="/semi/assets/images/exclamation-mark.png" alt="New 이미지" width="20" height="5" /></td>-->
 	</table>
-	<table id="calendar" style="border:1px solid black">
+	<table id="calendar" style="display:table-cell;">
 		<thead>
 			<tr>
-				<td id="calendarTitle" colspan="7" text-align="center"></td>
+				<th id="calendarTitle" colspan="7"></th>
+			</tr>
+			<tr>
+				<td class="sunday">S</td><td class="day">M</td><td class="day">T</td>
+				<td class="day">W</td><td class="day">T</td><td class="day">F</td><td class="saturday">S</td>
 			</tr>
 		</thead>
 		<tbody id="calendarMain">
 		</tbody>
 	</table>
-	<div style="height: 80px;"></div>
+	<div style="height: 50px;"></div>
 </div>
 <script>
-buildCalendar();
+
+	buildCalendar();
+
+	$(function(){
+		<%if(noticeList.size()==0){}else{ %>
+
+		$("#announce td").mouseenter(function(){
+			$(this).parent().css({"color":"darkgrey", "cursor":"pointer"});
+		}).mouseout(function(){
+			$(this).parent().css({"color":"black"})
+		}).click(function(){
+			var num = $('input[name="bno"]').val()//->글번호 가져오기
+			console.log(num);
+			location.href="<%=request.getContextPath()%>/selectOne.no?num="+num;
+		});
+		<%}%>
+	});
 </script>
