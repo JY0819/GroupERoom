@@ -57,7 +57,7 @@
 						<td><%= count %></td>
 						<td><%= list.get(i).getWriter() %></td>
 						<td><%= list.get(i).getDeptName() %></td>
-						<td><%= list.get(i).getDocNum() %></td>
+						<td name="mouseent"><%= list.get(i).getDocNum() %></td>
 						<td><%= list.get(i).getWriteDay() %></td>
 						<% if(list.get(i).getResult().equals("N")) { %>
 						<% String result = "반려"; %>
@@ -161,5 +161,14 @@ function sendTrash() {
         location.href="<%= request.getContextPath()%>/sendTrash.st?docNum=" + sendArr + ",";
 	});
 }
+ $("td[name=mouseent]").mouseenter(function() {
+	$(this).css({"cursor":"pointer"});
+}).mouseout(function() {
+	/* $(this).parent().css({"background":"white"}); */
+}).click(function() {
+	var docno = $(this).parent().children().eq(4).text();
+	
+	location.href="<%= request.getContextPath()%>/detailOne.one?docno=" + docno;
+}); 
 </script>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />

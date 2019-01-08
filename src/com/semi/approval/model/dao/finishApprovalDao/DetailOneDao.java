@@ -32,8 +32,10 @@ public class DetailOneDao {
 
 	public HashMap<String, Object> selectDetailMap(Connection con, int docno) {
 		PreparedStatement pstmt = null;
-	
+		PreparedStatement pstmt2 = null;
+		
 		ResultSet rset = null;
+		ResultSet rset2 = null;
 	
 		HashMap<String, Object> hmap = null;
 		DetailDoc d = null;
@@ -41,11 +43,13 @@ public class DetailOneDao {
 		ArrayList<Attachment> list = null;
 		
 		String query = prop.getProperty("selectdetail1");
+		String query2 = prop.getProperty("selectdetail2");
 		
 		
 			try {
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, docno);
+				
 				rset = pstmt.executeQuery();
 				
 				list = new ArrayList<Attachment>();
@@ -61,14 +65,19 @@ public class DetailOneDao {
 					d.setVacReason(rset.getString("VACAPPRREASON"));
 					d.setTitle(rset.getString("MANAGETITLE"));
 					d.setManageDay(rset.getDate("MANAGEDAY"));
-					d.setEntryDay(rset.getDate("ENTRYDAY"));
 					d.setContents(rset.getString("MANAGECONTENTS"));
+					d.setEntryDay(rset.getDate("ENTRYDAY"));
 					
-					d.setAttachno(rset.getInt("ATTACHNO"));		
-					at = new Attachment();
-					at.setChangeName(rset.getString("ATTACHNAME"));
-					at.setFilePath(rset.getString("ATTACHPATH"));
+					d.setAttachno(rset.getInt("ATTACHNO"));
 					
+					pstmt2 = con.prepareStatement(query2);
+					pstmt2.setInt(1, d.getAttachno());
+					rset2 = pstmt2.executeQuery();
+					if(rset2.next()) {
+						at = new Attachment();
+						at.setFilePath(rset2.getString("ATTACHPATH"));
+						at.setChangeName(rset2.getString("ATTACHNAME"));
+					}
 					list.add(at);
 			}
 				
@@ -84,6 +93,8 @@ public class DetailOneDao {
 			}finally {
 				close(rset);
 				close(pstmt);
+				close(rset2);
+				close(pstmt2);
 			}
 		
 		
