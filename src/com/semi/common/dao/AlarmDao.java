@@ -163,6 +163,124 @@ public class AlarmDao {
 		return list;
 	}
 
+	public ArrayList<Integer> chkApprEndMsg(Connection con) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		query = prop.getProperty("chkApprEndMsg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				list.add(rset.getInt("empid"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+	
+	public ArrayList<Integer> chkApprInMsg(Connection con) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		query = prop.getProperty("chkApprInMsg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				list.add(rset.getInt("empid"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public int updateNoticeAlarm(Connection con, Integer alarmNo, String contents) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		query = prop.getProperty("updateNoticeAlarm");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, contents);
+			pstmt.setInt(2, alarmNo);
+			
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int checkingApprLine(Connection con, int empid) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		query = prop.getProperty("checkingApprLine");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, empid);
+			
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int checkingApprEnd(Connection con, int empid) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		query = prop.getProperty("checkingApprEnd");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, empid);
+			
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 	
 

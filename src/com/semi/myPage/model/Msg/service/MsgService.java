@@ -172,5 +172,19 @@ public class MsgService {
 		return listCount;
 	}
 
+	public ArrayList<Msg> showMyPageMain(int userId, int currentPage, int limit, int deptId) {
+		Connection con = getConnection();
+		
+		
+		
+		ArrayList<Msg> list = new MsgDao().selectList(con, userId, currentPage, limit);
+		
+		
+		
+		close(con);
+		
+		return list;
+	}
+
 
 }

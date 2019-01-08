@@ -63,4 +63,58 @@ public class AlarmService {
 		return list;
 	}
 
+	public ArrayList<Integer> chkApprEndMsg() {
+		Connection con = getConnection();
+		
+		ArrayList<Integer> list = new AlarmDao().chkApprEndMsg(con);
+		
+		close(con);
+		
+		return list;
+	}
+	
+	public ArrayList<Integer> chkApprInMsg() {
+		Connection con = getConnection();
+		
+		ArrayList<Integer> list = new AlarmDao().chkApprInMsg(con);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public int updateNoticeAlarm(HashMap<Integer, String> list, ArrayList<Integer> noList) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		for (int i = 0; i < noList.size(); i++) {
+			
+			result += new AlarmDao().updateNoticeAlarm(con, noList.get(i), list.get(noList.get(i)));
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int checkingApprLine(int empid) {
+		Connection con = getConnection();
+		
+		int result = new AlarmDao().checkingApprLine(con, empid);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int checkingApprEnd(int empid) {
+		Connection con = getConnection();
+		
+		int result = new AlarmDao().checkingApprEnd(con, empid);
+		
+		close(con);
+		
+		return result;
+	}
+
 }

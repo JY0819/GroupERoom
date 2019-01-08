@@ -204,14 +204,31 @@
 				$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkNotice?empid=<%=empid%>'>" + count +"개의 공지 알람</a></span>");
 			}
 			
-		} else if (serverMessage[1] == "apprIn" && serverMessage[2] == <%=empid%>) {
-			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 결재승인 알람</a></span>");
+		} else if (serverMessage[1] == "apprEnd") {
+			var empInfo = serverMessage[0].split("|");
+			var count = 0;
+			for (var i = 0; i < empInfo.length; i++) {
+				if (empInfo[i] == <%=empid%>) {
+					count++
+				}
+			}
+			if (count > 0) {
+				$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkApprEnd?empid=<%=empid%>'>" + count +"개의 결재선 승인</a></span>");
+			}
 			
-		} else if (serverMessage[1] == "appr" && serverMessage[2] == <%=empid%>) {
-			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 결재 알람</a></span>");
-			
+		} else if (serverMessage[1] == "apprIn") {
+			var empInfo = serverMessage[0].split("|");
+			var count = 0;
+			for (var i = 0; i < empInfo.length; i++) {
+				if (empInfo[i] == <%=empid%>) {
+					count++
+				}
+			}
+			if (count > 0) {
+				$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkApprLine?empid=<%=empid%>'>" + count +"개의 결재 요청</a></span>");
+			}
 		} else {
-			console.log("알람 오류 발생");
+			console.log("해당 알람 없음");
 		}
 		
 	}
@@ -229,6 +246,8 @@
 		setTimeout(function() {
 			sendAlarm(<%=empid%> + ",msg");
 			sendAlarm("0" + ",board");
+			sendAlarm("0,apprIn");
+			sendAlarm("0,apprEnd");
 		}, 3000);
 	})
 	function isNull(obj) {
