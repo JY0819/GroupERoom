@@ -23,12 +23,12 @@ public class SelectDepartmentListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Department> list = new DepartmentService().selectList();
-
+		
 		String page = "";
 		if (list != null) {
 //			System.out.println(list);
 			page = "views/admin/base/depManagement.jsp";
-			request.setAttribute("list", list);
+			request.setAttribute("list", list); // ArrayList<Department> 이거지 ?웅
 		} else {
 			page = "views/common/errorPage";
 			request.setAttribute("msg", "부서 조회에 실패했습니다.");

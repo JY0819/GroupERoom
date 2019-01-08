@@ -17,7 +17,6 @@ import com.semi.admin.user.model.vo.Employee;
 import com.semi.admin.user.model.vo.LogDepartment;
 import com.semi.admin.user.model.vo.LogOfVacation;
 import com.semi.admin.user.model.vo.LogPosition;
-import com.semi.admin.user.model.vo.UseVac;
 import com.semi.common.service.CommonSeqService;
 import com.semi.common.vo.Attachments;
 
@@ -214,10 +213,10 @@ public class EmployeeService {
 	}
 
 	// 휴가 사원 이름으로 검색
-	public ArrayList<UseVac> searchVac(String userName) {
+	public ArrayList<LogOfVacation> searchVac(String userName) {
 		Connection con = getConnection();
 		
-		ArrayList<UseVac> list = new EmployeeDao().searchVac(con, userName);
+		ArrayList<LogOfVacation> list = new EmployeeDao().searchVac(con, userName);
 		
 		close(con);
 		

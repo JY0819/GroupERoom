@@ -75,6 +75,16 @@ public class ShowMyPageSendMessage extends HttpServlet {
 			request.setAttribute("pi", pi);
 			page = "views/myPage/message/sendList/mypageSendMessageList.jsp";
 		}
+		// @@@@@@@@@@@@@@@@@@@@@@ 알람 추가부분
+		try {
+			if (request.getParameter("sendAlarm") != null) {
+				System.out.println(request.getParameter("sendAlarm") + " - 알람 실행");
+				request.setAttribute("sendAlarm", request.getParameter("sendAlarm"));
+			}
+		} catch (NullPointerException e) {
+			System.out.println("알람을 실행하지 않아요.");
+		}
+		
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

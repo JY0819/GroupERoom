@@ -166,8 +166,13 @@
 			
 			<div class="form-group" id="divApprovalPwd">
 				<label for="inputApprovePassword" class="col-lg-2 control-label">결재 비밀번호</label>
-				<div class="col-lg-7">
+				<div class="col-lg-3">
 					<input type="password" class="form-control" id="approvePwd" name="approvePwd" data-rule-required="true" placeholder="결재 시 사용할 비밀번호를 입력하세요." maxlength="30">
+				</div>
+				
+				<label for="inputVacCount" class="col-lg-1 control-label">휴가</label>
+				<div class="col-lg-3">
+					<input type="number" class="form-control" id="vacCount" name="vacCount" data-rule-required="true" value = "15" maxlength="30">
 				</div>
 			</div>
 
