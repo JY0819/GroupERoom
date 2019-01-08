@@ -329,11 +329,11 @@ public class EmployeeDao {
 		ArrayList<Attachments> list = null;
 
 		String query = prop.getProperty("selectMemberOne");
-
+		System.out.println(query);
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, num);
-
+			
 			rset = pstmt.executeQuery();
 
 			list = new ArrayList<Attachments>();

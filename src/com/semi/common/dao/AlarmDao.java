@@ -9,9 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.semi.admin.user.model.vo.Employee;
+import com.semi.common.vo.Alarm;
 import com.semi.common.vo.DeptEmp;
 import com.semi.schedule.model.dao.ScheduleDao;
 
@@ -56,6 +58,109 @@ public class AlarmDao {
 		
 		
 		return result;
+	}
+
+	public ArrayList<Alarm> chkNoticeMsg(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Alarm> alarm = new ArrayList<Alarm>();
+		
+		query = prop.getProperty("chkNoticeMsg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				Alarm a = new Alarm();
+
+				a.setAlarmContents(rset.getString("alarmContents"));
+				
+				alarm.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return alarm;
+	}
+
+	public int checkingMsg(Connection con, int empid) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		query = prop.getProperty("checkingMsg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, empid);
+			
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public HashMap<Integer, String> getNotice(Connection con) {
+		HashMap<Integer, String> list = new HashMap<Integer, String>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		query = prop.getProperty("getNotice");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				list.put(rset.getInt("alarmNo"), rset.getString("alarmContents"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public ArrayList<Integer> getNoticeNo(Connection con) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		query = prop.getProperty("getNoticeNo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				list.add(rset.getInt("alarmNo"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
 	}
 
 

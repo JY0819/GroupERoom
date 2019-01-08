@@ -31,7 +31,7 @@ public class SendAddressMsg extends HttpServlet {
 		
 		String page = "";
 		if (result > 0) {
-			page = "myPageSendMessage";
+			page = "myPageSendMessage?sendAlarm=" + Integer.parseInt(request.getParameter("receiveEmpid"));
 		} else {
 			page = "error";
 		}

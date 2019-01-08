@@ -30,15 +30,15 @@
 		
 		<!--결재 게시판 넘어가게 a태그에 경로 입력함
 		css부분 클릭시 글씨 색이나 밑줄 변경 안하게 하려고 a태그 부분 추가함-->
-		<span><a href="/semi/views/approval/approvalMain.jsp">Approve</a></span>
-		<span><a href="<%=request.getContextPath()%>/selectList.no">Board</a></span>
-		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
-		<span><a href="<%=request.getContextPath()%>/myPageMain">MyPage</a></span>
+		<span><a href="/semi/views/approval/approvalMain.jsp">결재</a></span>
+		<span><a href="<%=request.getContextPath()%>/selectList.no">게시판</a></span>
+		<span><a href="<%=request.getContextPath()%>/schedule.sche">일정</a></span>
+		<span><a href="<%=request.getContextPath()%>/myPageMain">마이페이지</a></span>
 		<%
 			if(adminAuthority.equals("Y")) {
 		%>
 		
-		<span><a href="<%=request.getContextPath()%>/memberList.me">Admin</a></span>
+		<span><a href="<%=request.getContextPath()%>/memberList.me">관리자</a></span>
 		
 		<%
 			}
@@ -142,7 +142,6 @@
 	// alarm
 	$(function(){
 			getConnection();
-			
 	})
 	function getConnection(){	
 		ws = new WebSocket("<%= socketLink %>");
@@ -176,10 +175,26 @@
 		console.log(event.data);
 		// serverMessage[0] 알람 갯수, serverMessage[1] 알람 분류, serverMessage[2] 알람 받을 empid
 		if (serverMessage[1] == "msg" && serverMessage[2] == <%=empid%>) {
-			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 쪽지 알람</a></span>");
+			$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkAlarm?empid=<%=empid%>'>" + serverMessage[0] +"개의 쪽지 알람</a></span>");
 
-		} else if (serverMessage[1] == "board" && serverMessage[2] == <%=empid%>) {
-			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 공지 알람</a></span>");
+		} else if (serverMessage[1] == "board") {
+			var countBoard = serverMessage[0].split("|");
+			var data = null;
+			var count = countBoard.length;
+			console.log(countBoard.length);
+			for (var i = 0; i < countBoard.length; i++) {
+				data = countBoard[1].split("-");
+				console.log(data);
+				for (var j = 0; j < data.length; j++) {
+					if (data[j] == <%=empid%>) {
+						count--;
+					}
+				}
+				data = null;
+			}
+			if (count > 0) {
+				$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkNotice?empid=<%=empid%>'>" + count +"개의 공지 알람</a></span>");
+			}
 			
 		} else if (serverMessage[1] == "apprIn" && serverMessage[2] == <%=empid%>) {
 			$(".nav-left").append("<span><a href='#'>" + serverMessage[0] +"개의 결재승인 알람</a></span>");
@@ -203,6 +218,12 @@
 	
 	
 	$(function(){ // 자기 알람 불러오는 코드
-		
+		setTimeout(function() {
+			sendAlarm(<%=empid%> + ",msg");
+			sendAlarm("0" + ",board");
+		}, 3000);
 	})
+	function isNull(obj) {
+		return (typeof obj != "undefined" && obj != null && obj != "null" && obj != "")?true:false;
+	}
 </script>

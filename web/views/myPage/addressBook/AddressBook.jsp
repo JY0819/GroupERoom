@@ -7,7 +7,6 @@
 <%
 	HashMap<String, ArrayList<DeptEmp>> hmap = (HashMap<String, ArrayList<DeptEmp>>)request.getAttribute("map");
 	ArrayList<String> deptIdList = (ArrayList<String>)request.getAttribute("deptIdList");
-	String socketLink = "ws://" + request.getLocalAddr() +":" + request.getLocalPort() + request.getContextPath() + "/sendAlarm";
 %>
 <jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
 
@@ -123,7 +122,6 @@
 </section>
 
 <script type="text/javascript">
-	console.log("<%=socketLink%>")
 	var selectedEmp;
 	$(function () {
 		$(".empNo").click(function() {
@@ -136,11 +134,6 @@
 				selectedEmp.css({"background":"white", "color":"black"});
 			}
 			selectedEmp = $(this);
-		});
-	});
-	$(function () {
-		$("#sendMsg").submit(function() {
-			sendAlarm($("#receiveEmpid").val() + ",msg");
 		});
 	});
 </script>
