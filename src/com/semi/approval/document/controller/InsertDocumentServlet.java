@@ -32,7 +32,6 @@ public class InsertDocumentServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		//=======================================================
 		//파일처리
 		if(ServletFileUpload.isMultipartContent(request)) {

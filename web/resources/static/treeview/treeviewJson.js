@@ -68,10 +68,10 @@ var treeviewJson = {
 			   			
 			   		},
 					{ 
-					   text: "작업 문서함"
+					   text: "작업 문서함", href : "/semi/selectDocument.sd"
 					  ,nodes: [ 
 							     {text: "결재할 문서", href: "/semi/selectSubmitDocumentServlet.sds"}
-							    ,{text: "문서 진행 현황", href: "/semi/selectStatusServlet.sss?"} 
+							    ,{text: "문서 진행 현황", href: "/semi/selectStatusServlet.sss"} 
 							    ,{text: "반려함", href: "/semi/returnBox.rb"}
 							    ,{text: "내 문서함", href: "/semi/selectDocument.sd"}
 							    ,{text: "임시 보관함", href: "/semi/views/approval/taskBox/temporaryDocument.jsp"}

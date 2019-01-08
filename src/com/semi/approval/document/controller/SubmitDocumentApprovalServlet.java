@@ -15,18 +15,15 @@ import com.semi.approval.approve.model.vo.PageInfo;
 import com.semi.approval.document.service.DocumentService;
 import com.semi.approval.document.vo.MyDocument;
 
-@WebServlet("/selectSubmitDocumentServlet.sds")
-public class SelectSubmitDocumentServlet extends HttpServlet {
+@WebServlet("/submitDocumentApproval.sda")
+public class SubmitDocumentApprovalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static boolean choice = false;
-	
-    public SelectSubmitDocumentServlet() {
+       
+    public SubmitDocumentApprovalServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//승인 버튼 유지
-		
 		int currentPage; //현재 페이지를 표시할 변수(현재 어디페이지를 보고 있는지 표시)
 		int limit;		//한페이지에 게시글이 몇 개가 보여질 것인지 표시
 		int maxPage;	//전체 페이지에서 가장 마지막 페이지
@@ -74,22 +71,18 @@ public class SelectSubmitDocumentServlet extends HttpServlet {
 			apprNum[i] = list.get(i).getApprNum();
 		}
 		
-		ArrayList<ApprLine> apprList = new DocumentService().selectSubmitApprList(apprNum);
-		
-		System.out.println("리스트 사이즈: " + list.size());
-		System.out.println("apprList사이즈 : " + apprList.size());
+		ArrayList<ApprLine> apprList = new DocumentService().selectSubmitApprList(apprNum);		
 		
 		String page = "";
 		if(list != null && apprList != null) {
 			boolean check = false;
 			if(temp != null) {
-				check = Boolean.valueOf(temp);
 				for(int i=0; i<apprList.size(); i++) {
 				 apprList.get(i).setCheck(check);
 				}
 			}
 			
-			page = "views/approval/taskBox/approvalDocument.jsp";
+			page = "views/approval/taskBox/doApprovalDocument.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("appr", apprList);
 			request.setAttribute("pi", pi);

@@ -39,9 +39,9 @@
 		<tr>
 			<td class="td">이미지첨부</td>
 			<td class="content"><input type="file" name="file"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
-			<td class="approvalTd" rowspan="2"><input type="image"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson1"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson2"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson3"></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
@@ -127,10 +127,15 @@
 		</tr>
 	</table>
 	<button class="saveBtn">저장</button>
-	<button class="closeBtn">닫기</button>
+	<button class="closeBtn"  type="reset" onclick="back();">닫기</button>
 	</form>
 	<script>
 	var choice;
+	
+	function back() {
+		location.href="views/approval/taskBox/choiceDocument.jsp";
+	}
+	
 	function popupOpen(){
 		var popUrl = "test.html";	//팝업창에 출력될 페이지 URL
 		var popOption = "width=370, height=360, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
@@ -144,10 +149,11 @@
 				choice = $(this).text();			
 			});
 		});
-		function choiceEmpNo() {
-			$(".empNo").bind('mouseenter', function() {
+		$(function() {			
+			$(".empNo").on('mouseenter', function() {
 				$(this).css({"background":"black", "color":"white"});
-			}).bind('mouseleave', function() {
+				$(this).css({'cursor':"pointer"});
+			}).on('mouseleave', function() {
 				$(this).css({"background":"white", "color":"black"});
 			});
 			$(".empNo").click(function() {
@@ -163,7 +169,7 @@
 					$("#appr3").val(name.substring(0, name.length-4));
 				}
 			});
-		}
+		});
 		function closePopUp() {
 			if(choice == '결재자1선택'){
 				$("#person1").val("");

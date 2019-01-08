@@ -31,25 +31,21 @@
 	</div>
 
 	<div class="content-right container">
-		<% for(int i=0; i<list.size(); i++){ 
-		if(appr.get(i).isCheck()) { %>
+ 
 		<button class="success" onclick="success()">승인</button>
 		<button class="return" onclick="returnBox()">반려</button>
-		<% }else { %>
-		<a href="#open"><button class="success">결재하기</button></a>
-		<% } %>
-		<% } %>
-		<div class="white_content" id="open">
+
+		<%-- <div class="white_content" id="open">
 		
         	<div>
-<%--         	<form action="<%= request.getContextPath()%>/passCheck.pc" method="post"> --%>   
+        	<form action="<%= request.getContextPath()%>/passCheck.pc" method="post">   
         		<h3>결재 비밀번호를 입력해주세요.</h3>
-        		<input type="password" id="password" name="password">&nbsp;&nbsp;<button onclick="passCheck();">확인</button>
-        		<input type="hidden" id="empId" name="apprWriter" value="<%= employee.getEmpid()%>">
-<!--         	</form> -->		                 		
+        		<input type="password" name="password">&nbsp;&nbsp;<button type="submit">확인</button>
+        		<input type="hidden" name="apprWriter" value="<%= employee.getEmpid()%>">
+        	</form>		                 		
             	<a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
         	</div>
-    	</div>
+    	</div> --%>
 		<table>
 			<thead>
 				<tr>
@@ -154,11 +150,11 @@
 				<div class="paging" align="center">
 			
 				<ul class="pagination">
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=1'"><<</a></li> 
+					<li><a onclick="location.href='<%=request.getContextPath()%>/submitDocumentApproval.sda?currentPage=1'"><<</a></li> 
 					<% if(currentPage <=1){ %>
 					<li><a><</a></li> <!-- 비활성화 -->
 					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
+					<li><a onclick="location.href='<%=request.getContextPath()%>/submitDocumentApproval.sda?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
 					<%} %>
 					<% for(int p = startPage; p <= endPage; p++){
 					if(p == currentPage){
@@ -168,7 +164,7 @@
 					%>
 					<li ><a style="background-color: rgb(128, 181, 240) " ><%= p %></a></li>
 					<%  }else{ %>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%= p %>'"><%= p %></a></li>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/submitDocumentApproval.sda?currentPage=<%= p %>'"><%= p %></a></li>
 			 
 			
 					<%         } %>
@@ -177,9 +173,9 @@
 					<%if(currentPage >= maxPage){ %>
 					<li><a >></a></li> <!-- 비활성화 -->
 					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
+					<li><a onclick="location.href='<%=request.getContextPath()%>/submitDocumentApproval.sda?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
 					<%} %>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=maxPage%>'">>></a></li>
+					<li><a onclick="location.href='<%=request.getContextPath()%>/submitDocumentApproval.sda?currentPage=<%=maxPage%>'">>></a></li>
 				</ul>
 				
 			</div>
@@ -257,30 +253,6 @@
             sendArr.push(docNum);
             location.href="<%= request.getContextPath()%>/successUpdate.su?docNum=" + sendArr + ","+"&apprEmpId=" + apprEmpId + "&apprOrder=" + apprOrder + "&apprNo=" + apprNo;
 	 	});
-	}
-	
-	function passCheck() {
-		var pass = "";
-		var userId = "";
-		userId = $("#empId").val();
-		pass = $("#password").val();
-		
-		$.ajax({
-			url: "/semi/passCheck.pc",
-			type: "post",
-			data: {pass:pass,
-					   userId:userId},
-			success: function(data) {
-				if(data === "true"){
-					alert("비밀번호가 일치합니다.");
-				}else{
-					alert("비밀번호가 틀립니다.");
-				}
-			},
-			error: function(data) {
-				
-			}
-		});
 	}
 </script>
 

@@ -46,8 +46,15 @@
 							</td>
 						</tr>
 					</table>
+					
+					<button class="closeBtn" onclick="back();">닫기</button>
 		</div>
 		<script>
+		
+		function back() {
+			 location.href="/semi/selectDocument.sd"; 			
+		}
+		
 		/*문서 선택시 빨간 테두리  */
 		$(function() {
 			$("#contentImgArea1").on({'mouseenter':function(){
@@ -82,13 +89,13 @@
 		}); 
 	    $(function() {
 			$("#contentImgArea2").click(function() {
-				var id = <%=emp.getEmpid() %> + "wo";
+				var id = <%=emp.getEmpid() %> + "em";
 				location.href="<%= request.getContextPath()%>/selectDocumentNum.sdn?id=" + id;
 			});
 		}); 
 	    $(function() {
 			$("#contentImgArea3").click(function() {
-				var id = <%=emp.getEmpid() %> + "em";
+				var id = <%=emp.getEmpid() %> + "wo";
 				location.href="<%= request.getContextPath()%>/selectDocumentNum.sdn?id=" + id;
 			}); 
 		});  
