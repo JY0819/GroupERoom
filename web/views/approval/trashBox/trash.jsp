@@ -72,7 +72,7 @@
 						<% if(trashTable.getResult().equals("N")) {%>
 						<td><%= trashTable.getResult().replaceAll("N", "승인대기중") %></td>
 						<%} else{%>
-						<td><%= trashTable.getResult().replaceAll("Y", "승인")%></td>
+						<td><%= trashTable.getResult().replaceAll("Y", "처리")%></td>
 						<%} %>
 						</tr>
 						
@@ -216,7 +216,7 @@
              location.href="<%=request.getContextPath()%>/trashmove.tm?apprno=" + tdArr+",";
 		 	}
 		 	else{
-		 		alert("승인된 문서는 내문서함으로 이동할 수 없습니다.");
+		 		alert("처리된 문서는 내문서함으로 이동할 수 없습니다.");
 		 	}
 		 	});
 			
