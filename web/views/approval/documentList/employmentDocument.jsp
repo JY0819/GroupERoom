@@ -24,7 +24,7 @@
 <body>
 
 	<jsp:include page ="/views/main/mainPage.jsp"/>
-	<form action="<%=request.getContextPath()%>/insertDocument.id" method="post">
+	<form action="<%=request.getContextPath()%>/insertDocument.id" method="post" encType="multipart/form-data">
 	<h1>재직증명서</h1>
 	<table>
 		<tr>
@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<td class="td">이미지첨부</td>
-			<td class="content"><input type="file" name="file"></td>
+			<td class="content">&nbsp;<input type="file" name="file"></td>
 			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson1"></td>
 			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson2"></td>
 			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson3"></td>

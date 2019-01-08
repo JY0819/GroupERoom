@@ -774,7 +774,7 @@ public class DocumentDao {
 	}
 	
 	//결재 비밀번호 체크
-	public boolean checkPassword(Connection con, int empId, int password) {
+	public boolean checkPassword(Connection con, int empId, String password) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		boolean check = false;
@@ -787,9 +787,11 @@ public class DocumentDao {
 			pstmt.setInt(1, empId);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				int temp = rset.getInt("APPROVEPWD");
-				if(temp == password) {
+				String temp = rset.getString("APPROVEPWD");
+				System.out.println("db 패스워드: " + temp);
+				if(temp.equals(password)) {
 					check = !check;
+					System.out.println(check);
 				}
 			}
 		} catch (SQLException e) {
@@ -839,9 +841,8 @@ public class DocumentDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		PreparedStatement pstmt2 = null;
-		PreparedStatement pstmt3 = null;
 		int result = 0;	
-		System.out.println("dao 옴");
+
 			String query = prop.getProperty("selectApprKind");
 			
 			try {
@@ -869,14 +870,33 @@ public class DocumentDao {
 							result += pstmt2.executeUpdate();
 						}
 					}				
-				}
+				}				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
 				close(pstmt);
 				close(pstmt2);
-			}		
-		return result;
+			}
+			int alramResult = 0;
+			// 알람 처리
+			if(result > 0) {
+				PreparedStatement alramPstmt = null;
+				
+				String alramQuery = prop.getProperty("chkApprLine");
+				try {
+					alramPstmt = con.prepareStatement(alramQuery);
+					alramPstmt.setInt(1, apprEmpId);
+					alramPstmt.setInt(2, listApprNo);
+					alramPstmt.setInt(3, apprOrder);
+					alramResult = alramPstmt.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(alramPstmt);
+				}
+				
+			}
+		return alramResult;
 	}
 
 	
@@ -926,7 +946,27 @@ public class DocumentDao {
 				close(pstmt);
 				close(pstmt2);
 			}
-			return result;
+			int alramResult = 0;
+			// 알람 처리
+			if(result > 0) {
+				PreparedStatement alramPstmt = null;
+				
+				String alramQuery = prop.getProperty("chkApprLine");
+				try {
+					alramPstmt = con.prepareStatement(alramQuery);
+					alramPstmt.setInt(1, apprEmpId);
+					alramPstmt.setInt(2, listApprNo);
+					alramPstmt.setInt(3, listApprOrder);
+					alramResult = alramPstmt.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(alramPstmt);
+				}
+				
+			}
+			
+			return alramResult;
 		}
 
 		//반려함 listCount
