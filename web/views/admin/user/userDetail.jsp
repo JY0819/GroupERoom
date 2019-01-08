@@ -98,13 +98,20 @@
 			
 			<div class="form-group">
 				<label for="inputAddress" class="col-lg-2 control-label">주소</label>
-				<div class="col-lg-4">
+				<div class="col-lg-7">
 					<input type="text" class="form-control" id="address" name="address" value="<%=emp.getEmpAddr() %>">
 				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="inputBirth" class="col-lg-2 control-label">생년월일</label>
+					<div class="col-lg-3">
+						<input id="fromDate" type="date" class="form-control onlyNumber" id="birth" name="birth" value="<%=emp.getEmpBirth() %>" readonly> 
+					</div>
 				
-				<label for="inputBirth" class="col-lg-1 control-label">생년월일</label>
-				<div class="col-lg-2">
-					<input id="fromDate" type="date" class="form-control onlyNumber" id="birth" name="birth" value="<%=emp.getEmpBirth() %>" readonly> 
+				<label for="inputVacCount" class="col-lg-1 control-label">휴가</label>
+				<div class="col-lg-3">
+					<input type="number" class="form-control" id="vacCount" name="vacCount" value = "<%=emp.getEmpVacCount() %>" maxlength="30">
 				</div>
 			</div>
 			
