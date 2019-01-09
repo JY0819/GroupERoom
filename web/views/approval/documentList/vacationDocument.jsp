@@ -136,9 +136,10 @@
 				choice = $(this).text();			
 			});
 		});
-		function choiceEmpNo() {
+		$(function() {
 			$(".empNo").bind('mouseenter', function() {
 				$(this).css({"background":"black", "color":"white"});
+				$(this).css({'cursor':"pointer"});
 			}).bind('mouseleave', function() {
 				$(this).css({"background":"white", "color":"black"});
 			});
@@ -155,7 +156,7 @@
 					$("#appr3").val(name.substring(0, name.length-4));
 				}
 			});
-		}
+		});
 		function closePopUp() {
 			if(choice == '결재자1선택'){
 				$("#person1").val("");
