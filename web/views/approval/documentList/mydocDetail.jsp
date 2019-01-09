@@ -35,8 +35,8 @@
 	<table class="detailDoc">
 		
 		<tr>
-			<td class="td">분류<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value="휴가계획서" readonly="readonly"></td>
+			<td class="td" 	>분류<input type="hidden" name="va" value="va"></td>
+			<td class="content" colspan="4"><input type="text" name="num" value="휴가계획서" readonly="readonly"></td>
 			<!-- <td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차 결재 확인</td>
@@ -48,11 +48,11 @@
 		
 		<tr>
 		<!--이미지 태그넣기  -->
-			<td class="td">첨부파일</td>
+			<td class="td" >첨부파일</td>
 			<%if(d.getAttachno() == 0) {%>
-			<td class="content">&nbsp;<input type="file" name="file"></td>
+			<td class="content">&nbsp;<input type="file" name="file" colspan="4"></td>
 			<%} else{%>
-			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"><input type="file" name="file"></td>
+			<td class="content" colspan="4">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"><input type="file" name="file"></td>
 			<%} %>
 			<%-- <%if(lineList.size()>=1 && lineList.size()<4){ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"></td>
@@ -72,37 +72,37 @@
 		</tr>
 		<%if(lineList.size()>=1 && lineList.size()<4){ %>
 		<tr>
-			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="td" >1차<br>결재자</td>
+			<td class="content" colspan="4"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%}else{ %>
 		
 		<tr>
-			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" ><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="td" >1차<br>결재자</td>
+			<td class="content" colspan="4"><input type="text" id="person1" name="person1" ><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%} %>
 		<%if(lineList.size()>=2 && lineList.size()<4){ %>
 		<tr>
-			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="td" >2차<br>결재자</td>
+			<td class="content" colspan="4"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%}else {%>
 		<tr>
-			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" ><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="td" >2차<br>결재자</td>
+			<td class="content" colspan="4"><input type="text" id="person2" name="person2" ><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%} %>
 		<%if(lineList.size()>=3 && lineList.size()<4){ %>
 		<tr>
-			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="td" >3차<br>결재자</td>
+			<td class="content" colspan="4"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%}else{ %>
 		
 		<tr>
-			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" ><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="td" >3차<br>결재자</td>
+			<td class="content" colspan="4"><input type="text" id="person3" name="person3" ><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%} %>
 		<tr>
@@ -135,7 +135,7 @@
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><input type="text" name="contents" value="<%=d.getContents()%>"></td>
+			<td class="lastContent" colspan="7"><textarea rows="6" cols="180"  name="contents"><%=d.getContents()%></textarea></td>
 		</tr>
 		
 		
@@ -160,22 +160,22 @@
 		
 		<tr>
 			<td class="td">분류<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value="재직증명서" readonly="readonly"></td>
-			<td rowspan="2" class="gap"></td>
+			<td class="content" colspan="4"><input type="text" name="num" value="재직증명서" readonly="readonly"></td>
+			<!-- <td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차 결재 확인</td>
 			<td class="td">2차 결재 확인</td>
-			<td class="td">3차 결재 확인</td>
+			<td class="td">3차 결재 확인</td> -->
 		</tr>
 		<tr>
 		<!--이미지 태그넣기  -->
 			<td class="td">첨부파일</td>
 			<%if(d.getAttachno() == 0) {%>
-			<td class="content">&nbsp;<input type="file" name="file"></td>
+			<td class="content" colspan="4">&nbsp;<input type="file" name="file"></td>
 			<%} else{%>
-			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"><input type="file" name="file"></td>
+			<td class="content" colspan="4">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"><input type="file" name="file"></td>
 			<%} %>
-			<%if(lineList.size()>=1 && lineList.size()<4){ %>
+			<%-- <%if(lineList.size()>=1 && lineList.size()<4){ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1"></td>
@@ -188,42 +188,42 @@
 			<%if(lineList.size()>=3 && lineList.size()<4){ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"></td>
 			<%}else{ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
-			<%} %>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td> --%>
+			<%-- <%} %> --%>
 		</tr>
 		<%if(lineList.size()>=1 && lineList.size()<4){ %>
 		<tr>
-			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="td" >1차<br>결재자</td>
+			<td class="content" colspan="4"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%}else{ %>
 		
 		<tr>
 			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" ><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="content" colspan="4"><input type="text" id="person1" name="person1" ><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%} %>
 		<%if(lineList.size()>=2 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%}else {%>
 		<tr>
 			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" ><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person2" name="person2" ><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%} %>
 		<%if(lineList.size()>=3 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%}else{ %>
 		
 		<tr>
 			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" ><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person3" name="person3" ><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%} %>
 		<tr>
@@ -254,7 +254,7 @@
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><input type="text" name="contents" value="<%=d.getContents()%>"></td>
+			<td class="lastContent" colspan="7"><textarea rows="6" cols="180"  name="contents"><%=d.getContents()%></textarea></td>
 		</tr>
 		
 		
@@ -277,22 +277,22 @@
 		
 		<tr>
 			<td class="td">분류<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value="업무계획서" readonly="readonly"></td>
-			<td rowspan="2" class="gap"></td>
+			<td class="content" colspan="4"><input type="text" name="num" value="업무계획서" readonly="readonly"></td>
+			<!-- <td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차 결재 확인</td>
 			<td class="td">2차 결재 확인</td>
-			<td class="td">3차 결재 확인</td>
+			<td class="td">3차 결재 확인</td> -->
 		</tr>
 		<tr>
 		<!--이미지 태그넣기  -->
 			<td class="td">첨부파일</td>
 			<%if(d.getAttachno() == 0) {%>
-			<td class="content">&nbsp;<input type="file" name="file"></td>
+			<td class="content" colspan="4">&nbsp;<input type="file" name="file"></td>
 			<%} else{%>
-			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"><input type="file" name="file"></td>
+			<td class="content" colspan="4">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"><input type="file" name="file"></td>
 			<%} %>
-			<%if(lineList.size()>=1 && lineList.size()<4){ %>
+			<%-- <%if(lineList.size()>=1 && lineList.size()<4){ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1"></td>
@@ -306,41 +306,41 @@
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
-			<%} %>
+			<%} %> --%>
 		</tr>
 		<%if(lineList.size()>=1 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="content" colspan="4"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%}else{ %>
 		
 		<tr>
 			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" ><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="content" colspan="4"><input type="text" id="person1" name="person1" ><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%} %>
 		<%if(lineList.size()>=2 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%}else {%>
 		<tr>
 			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" ><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person2" name="person2" ><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%} %>
 		<%if(lineList.size()>=3 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%}else{ %>
 		
 		<tr>
 			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" ><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="content" colspan="4"><input type="text" id="person3" name="person3" ><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%} %>
 		<tr>
@@ -371,7 +371,7 @@
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><input type="text" name="contents" value="<%=d.getContents()%>"></td>
+			<td class="lastContent" colspan="7"><textarea rows="6" cols="180"  name="contents"><%=d.getContents()%></textarea></td>
 		</tr>
 		
 		
@@ -388,7 +388,7 @@
 	</script>
 	</form>
 	<%} %>
-	<button class="closedetail" onclick="back();">닫기</button>
+	<button class="finishoneclose" onclick="back();">닫기</button>
 	
 	<script>
 		function back() {

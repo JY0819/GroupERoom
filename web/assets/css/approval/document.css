@@ -245,5 +245,37 @@
      	right: 570px;
      	position: absolute;
 	}
+	/* 상세문서함 닫기버튼 */
+	.finishoneclose{
+		text-align: center;
+	    position: absolute;
+		background-color: #F1C40F;
+		color:white;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 700px;
+		
+		right: 200px;
+	    font-size: 16px;
+	    border: 0;
+	    outline: 0;
+	}
+	/* 상세문서함 수정버튼 */
+	.updatedetail{
+	text-align: center;
+	    position: absolute;
+		background-color: #205181;
+		color:white;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 650px;
+		
+		right: 200px;
+	    font-size: 16px;
+	    border: 0;
+	    outline: 0;
+	}
 	
 </style>
