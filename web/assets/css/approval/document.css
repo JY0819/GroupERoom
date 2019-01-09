@@ -240,4 +240,10 @@
 	    outline: 0;	
 	}
 	
+	.btnArea {
+		top: 500px;
+     	right: 570px;
+     	position: absolute;
+	}
+	
 </style>

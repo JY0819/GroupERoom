@@ -43,7 +43,7 @@
 		
 		<div class="tableArea">
 		
-		<table>
+		<table class="commonTable">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="All" id="checkAlltr"

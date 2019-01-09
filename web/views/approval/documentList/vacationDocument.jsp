@@ -22,12 +22,12 @@
 <body>
 
 <jsp:include page="/views/main/mainPage.jsp"/>
-<form class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
+<form id="vaForm" class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
 <h1>휴가신청서</h1>
 	<table>
 		<tr>
 			<td class="td">번호<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value=<%= document.getManageNo()+1%>></td>
+			<td class="content"><input type="text" name="num" value=<%= document.getManageNo()+1%> readonly="readonly"></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -77,15 +77,15 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%>></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%> readonly="readonly"></td>
 			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="empNum" value=<%= document.getManageEmpId() %>></td>
+			<td class="content" colspan="3"><input type="text" name="empNum" value=<%= document.getManageEmpId() %> readonly="readonly"></td>
 			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>
 			<td class="td">휴가기간</td>
-			<td class="content" colspan="2"><input type="date" name="startDate"><br><input type="date" name="endDate"></td>
+			<td class="content" colspan="2"><input type="date" id="startDate" name="startDate"><br><input type="date" id="endDate" name="endDate"></td>
 			<td class="td">분류</td>
 			<td class="content" colspan="3">
 				<select name="documentKind">
@@ -97,26 +97,26 @@
 		</tr>
 		<tr>
 			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="title"></td>
+			<td class="content" colspan="2"><input type="text" id="title" name="title"></td>
 			<td class="td">작성일</td>
 			<td class="content" colspan="3"><input type="date" name="date"></td>
 		</tr>
 		<tr>
 			<td class="td">사유</td>
-			<td class="content" colspan="7"><input type="text" name="reason"></td>
+			<td class="content" colspan="7"><input type="text" id="reason" name="reason"></td>
 		</tr>
 		<tr>
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
+			<td class="lastContent" colspan="7"><textarea class="contentArea" id="content" name="content"></textarea></td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td class="td" colspan="7">의견</td>
 		</tr>
 		<tr>
 			<td class="lastContentDown" colspan="7"><textarea class="contentArea" name="opinion" readonly="readonly"></textarea></td>
-		</tr>
+		</tr> -->
 	</table>
 	<button class="saveBtn" type="submit">저장</button> 
 	<button class="closeBtn" type="reset" onclick="back();">닫기</button>
@@ -156,6 +156,26 @@
 					$("#appr3").val(name.substring(0, name.length-4));
 				}
 			});
+		});
+		$("#vaForm").submit(function(event) {
+			if($("#startDate").val() == ""){
+				window.alert("휴가시작일을 입력해주세요.");
+				return false;
+			}else if($("#endDate").val() == ""){
+				window.alert("휴가종료일을 입력해주세요.");
+				return false;
+			}else if($("#reason").val() == ""){
+				window.alert("휴가 사유를 입력해주세요.");
+				return false;
+			}else if($("#title").val() == ""){
+				window.alert("제목을 입력해주세요.");
+				return false;
+			}else if($("#content").val() == ""){
+				window.alert("내용을 입력해주세요.");
+				return false;
+			}else {
+				return true;
+			}
 		});
 		function closePopUp() {
 			if(choice == '결재자1선택'){

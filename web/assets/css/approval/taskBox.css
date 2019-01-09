@@ -1,12 +1,12 @@
 @charset "UTF-8";
 /* approvalDocument */
 /*결재할 문서 표*/
-table {
+.commonTable {
+    position: absolute;
 	width: 75%;
-        text-align: center;
-         left: 350px;
-         position: absolute;
-          top:230px;
+    text-align: center;
+    left: 300px;
+    top:230px;
 }
 
 table, th, td {
@@ -27,8 +27,8 @@ td {
 /*표 밑 버튼 영역*/
 .btnArea {
 	top: 500px;
-	right: 650px;
-	position: absolute;
+    right: 570px;
+    position: absolute;
 }
 /*승인버튼*/
 .success {
@@ -167,15 +167,15 @@ td {
 /* myDocument */
 /*작성버튼  */
 .writeBtn {
-	text-align: center;
 	background-color: #205181;
 	color: white;
+	position: absolute;
+	text-align: center;
 	border-radius: 10px;
 	width: 100px;
 	height: 40px;
 	top: 180px;
 	left: 300px;
-	position: absolute;
 	border: 0;
 	outline: 0;
 }
@@ -221,18 +221,6 @@ td {
 	position: absolute;
 }
 
-.delete {
-	text-align: center;
-	background-color: #F1C40F;
-	color: white;
-	border-radius: 10px;
-	width: 100px;
-	height: 40px;
-	top: 100px;
-	left: 260px;
-	position: absolute;
-}
-
 .checkBox {
 	height: 17px;
 	width: 17px;
@@ -240,21 +228,21 @@ td {
 
 /* departmentDocument */
 /*삭제버튼  */
-.delete {
+/* ..delete {
 	text-align: center;
 	background-color: #F1C40F;
 	color: white;
+	position: absolute;	
 	border-radius: 10px;
 	width: 100px;
 	height: 40px;
-	top: 100px;
-	left: 80px;
-	position: absolute;
+	top: 180px;
+	left: 300px;
 	border: 0;
 	outline: 0;
-}
+} */
 /* finishapproval */
-.delete {
+/* .delete {
 	text-align: center;
 	background-color: #F1C40F;
 	color: white;
@@ -266,7 +254,7 @@ td {
 	border: 0;
 	outline: 0;
 	position: absolute;
-}
+} */
 /* trash */
 .move {
 	text-align: center;
@@ -276,13 +264,14 @@ td {
 	width: 100px;
 	height: 40px;
 	top: 180px;
-	left: 330px;
+	left: 300px;
+	position: absolute;
 	border: 0;
 	outline: 0;
-	position: absolute;
 }
 
 .delete {
+	position: absolute;
 	text-align: center;
 	background-color: #F1C40F;
 	color: white;
@@ -290,8 +279,9 @@ td {
 	width: 100px;
 	height: 40px;
 	top: 180px;
-	left: 450px;
-	position: absolute;
+	left: 430px;
+	border: 0;
+	outline: 0;
 }
 /*a태그 속성*/
 .detailA:link, .detailA:visited, .detailA:active, .detailA:hover {

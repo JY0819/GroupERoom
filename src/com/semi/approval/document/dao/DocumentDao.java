@@ -1054,4 +1054,67 @@ public class DocumentDao {
 			
 			return result;
 		}
+
+		//결재중일때 승인한 다른 차수의 결재자 이름 담기
+		public ArrayList<ApprLine> selectLineList(Connection con, int docno) {
+				
+			PreparedStatement pstmt = null;
+				
+			ResultSet rset = null;
+
+			ArrayList<ApprLine> list = null;
+			
+			String query = prop.getProperty("successApprLineList");
+			String check = "";
+			int apprNo = 0;
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, docno);
+				rset = pstmt.executeQuery();				
+				if(rset.next()) {
+					apprNo = rset.getInt("APPRNO");
+					check = rset.getString("APPRYN");	
+				}				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			if(check.equals("Y")) {
+				query = prop.getProperty("searchApprOneY");
+				String approval = "";
+				String apprStatus = "";
+				try {
+					
+					pstmt = con.prepareStatement(query);
+					pstmt.setInt(1, apprNo);
+					rset = pstmt.executeQuery();
+					list = new ArrayList<ApprLine>();
+					
+					if(rset.next()) {
+						approval = rset.getString("APPROVAL");
+						apprStatus = rset.getString("APPRSTATUS");
+						System.out.println("approval: " + approval);
+						System.out.println("apprStatus: " + apprStatus);
+						if(approval.equals("Y") && apprStatus.equals("Y")) {
+							ApprLine apprLine = new ApprLine();
+							apprLine.setApprName(rset.getString("EMPNAME"));
+							
+							list.add(apprLine);
+						}
+					}										
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rset);
+					close(pstmt);
+				}				
+			}
+			return list;
+		}
+		
+		//반려한 결재자 이름담기
+		
 }

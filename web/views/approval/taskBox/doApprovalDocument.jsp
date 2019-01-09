@@ -46,7 +46,7 @@
             	<a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
         	</div>
     	</div> --%>
-		<table>
+		<table class="commonTable">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="checkAll" id="checkAlltr"

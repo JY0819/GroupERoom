@@ -30,7 +30,7 @@
 
 		<button class="delete" onclick="deleteFinish()">삭제</button>
 
-		<table id="listArea">
+		<table id="listArea" class="commonTable">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="checkAll" id="checkAll"
