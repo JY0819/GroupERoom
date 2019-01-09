@@ -36,7 +36,12 @@ public class SelectNoticeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int num = Integer.parseInt(request.getParameter("num"));
+		
+		String fileName = request.getParameter("fileName");
+		System.out.println("select servlet fileName: "+fileName);
+		
 		
 		HashMap<String, Object> hmap = new NoticeService().editOne(num);
 		Notice n = (Notice)hmap.get("Notice");

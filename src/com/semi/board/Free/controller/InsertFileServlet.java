@@ -2,6 +2,8 @@ package com.semi.board.Free.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -41,16 +43,16 @@ public class InsertFileServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(ServletFileUpload.isMultipartContent(request)) {
-			
 			//전송 파일 용량 제한 : 10MB로 제한
 			int maxSize = 1024 * 1024 * 10;
 
 			String root = request.getSession().getServletContext().getRealPath("/");
 
 			System.out.println("root: "+root);
-
+			 
 			String filePath = root + "uploadFiles/";
-
+			
+			System.out.println("파일 존재 여부 : ");
 			//사용자가 올린 파일명을 그대로 저장하지 않는 것이 일반적이다.
 			//1.같은 파일명이 있는 경우 이전 파일을 덮어 쓸 수 있다.
 			//2.한글로된 파일명, 특수기호, 띄어쓰기는 서버에 따라 문제가 생길 수 도 있다.
@@ -73,6 +75,7 @@ public class InsertFileServlet extends HttpServlet {
 			//저장한 파일의 이름을 저장할 arrayList 생성
 			ArrayList<String> saveFiles = new ArrayList<String>();
 
+			
 			//원본 파일의 이름을 저장할 ArrayList 생성 
 			ArrayList<String> originFiles = new ArrayList<String>();
 
@@ -96,6 +99,9 @@ public class InsertFileServlet extends HttpServlet {
 
 				System.out.println("originFile name: "+multiRequest.getOriginalFileName(name));
 			}
+			
+			
+			
 			String multiTitle = multiRequest.getParameter("title");
 
 			String multiContent = multiRequest.getParameter("content");
@@ -138,7 +144,8 @@ System.out.println("도니");
 
 			int result = new FreeService().insertThumbnail(f, fileList);
 
-
+			System.out.println("첨부파일 등록하는 쪽 result : "+result);
+			
 			if(result > 0) {
 
 				response.sendRedirect(request.getContextPath() 

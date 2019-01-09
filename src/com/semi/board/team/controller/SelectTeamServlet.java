@@ -36,6 +36,8 @@ public class SelectTeamServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int num = Integer.parseInt(request.getParameter("num"));
 		
+		System.out.println("수정페이지 가기 전 서블릿 num: "+num);
+		
 		HashMap<String, Object> hmap = new TeamService().editOne(num);
 		Team t = (Team)hmap.get("Team");
 		Attachment at 

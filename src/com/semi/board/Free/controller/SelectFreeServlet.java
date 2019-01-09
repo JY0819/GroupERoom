@@ -35,23 +35,45 @@ public class SelectFreeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int num = Integer.parseInt(request.getParameter("num"));
-		
-		HashMap<String, Object> hmap = new FreeService().editOne(num);
-		Free f = (Free)hmap.get("Free");
-		Attachment at 
-        = (Attachment)hmap.get("attachment");
+		System.out.println("select servlet num: "+num);
+
+		String fileName = request.getParameter("fileName");
+		System.out.println("select servlet fileName: "+fileName);
 		
 		String page="";
 		
-		if(f != null) {
-			page="views/board/free/modifyFree.jsp";
-			request.setAttribute("f", f);
-			request.setAttribute("at", at);
+		
+		
+		
+		if(Integer.parseInt(fileName) != 0) {
+			HashMap<String, Object> hmap = new FreeService().editOne(num);
+			Free f = (Free)hmap.get("Free");
+			Attachment at 
+	        = (Attachment)hmap.get("attachment");
+			
+			if(f != null) {
+				page="views/board/free/modifyFree.jsp";
+				request.setAttribute("f", f);
+				request.setAttribute("at", at);
+			}else {
+				page="views/common/errorPage.jsp";
+				request.setAttribute("msg", "자유 게시판 글 수정 상세보기 실패");
+			}
 		}else {
-			page="views/common/errorPage.jsp";
-			request.setAttribute("msg", "자유 게시판 글 수정 상세보기 실패");
+			Free f=new FreeService().editNoFile(num);
+			
+			System.out.println("노파일 수정 상세보기 가기 전 num: "+num);
+			System.out.println("노파일 수정 상세보기 가기 전 f : "+f);
+			if(f!=null) {
+				page="views/board/free/modifyFree.jsp";
+				request.setAttribute("f", f);
+			}else {
+				page="views/common/errorPage.jsp";
+				request.setAttribute("msg", "게시글 수정용 상세보기 실패!");
+			
+			}
 		}
-	
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	
