@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.board.Free.model.service.FreeService;
+import com.semi.board.Free.model.vo.Free;
 import com.semi.board.team.model.service.TeamService;
 import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
@@ -37,23 +39,43 @@ public class SelectTeamServlet extends HttpServlet {
 		int num = Integer.parseInt(request.getParameter("num"));
 		
 		System.out.println("수정페이지 가기 전 서블릿 num: "+num);
-		
-		HashMap<String, Object> hmap = new TeamService().editOne(num);
-		Team t = (Team)hmap.get("Team");
-		Attachment at 
-        = (Attachment)hmap.get("attachment");
+
+		String fileName = request.getParameter("fileName");
+		System.out.println("select servlet fileName: "+fileName);
 		
 		String page="";
+
+		if(Integer.parseInt(fileName) != 0) {
+			HashMap<String, Object> hmap = new TeamService().editOne(num);
+			Team t = (Team)hmap.get("Team");
+			Attachment at 
+	        = (Attachment)hmap.get("attachment");
+			
+			
+			if(t != null) {
+				page="views/board/team/modifyTeam.jsp";
+				request.setAttribute("t", t);
+				request.setAttribute("at", at);
+			}else {
+				page="views/common/errorPage.jsp";
+				request.setAttribute("msg", "부서 게시판 글 수정 상세보기 실패");
+			}
 		
-		if(t != null) {
-			page="views/board/team/modifyTeam.jsp";
-			request.setAttribute("t", t);
-			request.setAttribute("at", at);
 		}else {
-			page="views/common/errorPage.jsp";
-			request.setAttribute("msg", "부서 게시판 글 수정 상세보기 실패");
+			Team t=new TeamService().editNoFile(num);
+			
+			System.out.println("노파일 수정 상세보기 가기 전 num: "+num);
+			System.out.println("노파일 수정 상세보기 가기 전 t : "+t);
+			if(t!=null) {
+				page="views/board/team/modifyTeam.jsp";
+				request.setAttribute("t", t);
+			}else {
+				page="views/common/errorPage.jsp";
+				request.setAttribute("msg", "부서 게시글 수정용 상세보기 실패!");
+			
+			}
 		}
-	
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	

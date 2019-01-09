@@ -88,8 +88,6 @@ public class UpdateFreeServlet extends HttpServlet {
 					System.out.println("newFile: "+newFile);
 					
 
-					
-
 					if(newFile == null) {//수정 시 새로운 첨부 파일 없을 경우
 						saveFiles.add(multiRequest.getFilesystemName(preFile));
 
@@ -100,18 +98,21 @@ public class UpdateFreeServlet extends HttpServlet {
 						System.out.println("originFile name: "+multiRequest.getOriginalFileName(preFile));
 					
 
-					}else {//수정 시 새로운 파일을 첨부 한 경우
-				/*		saveFiles.add(multiRequest.getFilesystemName(newFile));
+					}else {
 
-						originFiles.add(multiRequest.getOriginalFileName(newFile));*/
-						/*System.out.println("newFile fileSystem name: "+multiRequest.getFilesystemName(newFile));
+					//수정 시 새로운 파일을 첨부 한 경우
+						saveFiles.add(multiRequest.getFilesystemName(newFile));
+
+						originFiles.add(multiRequest.getOriginalFileName(newFile));
+						System.out.println("newFile fileSystem name: "+multiRequest.getFilesystemName(newFile));
 
 						System.out.println("newFile originFile name: "+multiRequest.getOriginalFileName(newFile));
-						 */		
+						 		
 						
 						saveFiles.add(newFile);
+						
 						originFiles.add(multiRequest.getOriginalFileName(name));
-						System.out.println("saveFiles: "+saveFiles);
+						System.out.println("@@@@@@@@@@@saveFiles: "+saveFiles);
 						System.out.println("originFiles: "+originFiles);
 					}
 					
@@ -148,8 +149,8 @@ public class UpdateFreeServlet extends HttpServlet {
 				
 
 					at.setFilePath(filePath);
-					at.setOriginName(originFiles.get(0));
-					at.setChangeName(saveFiles.get(0));
+					at.setOriginName(originFiles.get(1));
+					at.setChangeName(saveFiles.get(1));
 					System.out.println(at.getFilePath()
 							+at.getChangeName());
 

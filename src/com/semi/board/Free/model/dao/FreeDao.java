@@ -1110,7 +1110,7 @@ System.out.println("시퀀스값 조회쿼리 : "+query);
 			int result=0;
 
 			String query = prop.getProperty("insertThumb");
-System.out.println("query: "+query);
+System.out.println("BOARD에 넣는 dao query: "+query);
 			try {
 
 			pstmt=con.prepareStatement(query);
@@ -1152,12 +1152,7 @@ System.out.println("query: "+query);
 			pstmt.setString(2, fileList.get(i).getChangeName());
 			pstmt.setString(3, fileList.get(i).getFilePath());
 
-			/*int level=0;
 			
-			if(i == 0) level =0;
-			else level = 1;
-
-			pstmt.setInt(5, level);*/
 
 			result += pstmt.executeUpdate(); //'='하면 안돼
 
@@ -1440,7 +1435,7 @@ System.out.println("query: "+query);
 			PreparedStatement pstmt=null;
 			int result=0;
 			
-			String query=prop.getProperty("updateNoFileNotice");
+			String query=prop.getProperty("updateNoFile");
 			System.out.println("첨부파일 없는 글 수정 dao");
 			try {
 				pstmt=con.prepareStatement(query);

@@ -13,7 +13,7 @@
 <script>
 	
 	var jsonData = treeviewJson.boardJson;
-	var nodeName = "자유게시판";
+	var nodeName = "부서게시판";
 </script>
 
 <style>
@@ -33,7 +33,7 @@ body {
 	
 	<div class="content-right container">
 		<div id="title">
-			<h1 align="left"> | 자유게시판 |</h1>
+			<h1 align="left"> | 부서게시판 |</h1>
 		</div>
 		<hr>
 		
@@ -41,12 +41,12 @@ body {
 	<div class="container">
 
 		<div class="row">
-						<form action="<%= request.getContextPath()%>/updateTeam.tm" method="post" encType="multipart/form-data">
+						<form action="<%= request.getContextPath()%>/updateTeam.tm?fileName=<%=t.getFile02() %>" method="post" encType="multipart/form-data">
 			
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
-							<th id="formtitle" colspan="2" style="background-color: #eeeeee; text-align: center;">자유게시판 글 수정</th>
+							<th id="formtitle" colspan="2" style="background-color: #eeeeee; text-align: center;">부서게시판 글 수정</th>
 						</tr> 
 					</thead>
 					<tbody>
@@ -80,21 +80,25 @@ body {
 					</tbody>
 					
 				</table>
+					<% if(at!=null){ %>
+				
 				<input type="hidden" id="inputFile" class="form-control" name="originAno"  value="<%=at.getAno()%>">
 				
 				<div class="form-group">
 					<label for="inputattach">기존파일</label>
 					<br>
 					<%=at.getOriginName()%>
-
+			<%} %>
 
 						<div class="bootstrap-filestyle input-group">
 						
 							<label for="inputattach">파일첨부</label>
 							
 						 <input id="fileInput" name="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+												<%if(at!=null){ %>
+
 												<input type="hidden" class="form-control" name="userFile" value="<%=at.getOriginName()%>"disabled="" >
-					
+												<%} %>
 					<input type="text" id="userfile" class="form-control" name="newFile" disabled="" >
 							
 							<span class="group-span-filestyle input-group-btn" tabindex="0">

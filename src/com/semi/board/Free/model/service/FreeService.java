@@ -317,12 +317,7 @@ public class FreeService {
 					if(i==0) {
 						f.setFile01(fileList.get(i).getAno());
 					}
-					/*if(i==1) {
-						f.setFile02(fileList.get(i).getAno()-1);
-					}
-					if(i==2) {
-						f.setFile03(fileList.get(i).getAno()-2);
-					}*/
+					
 				
 					
 				}

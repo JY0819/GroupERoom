@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.semi.board.Free.model.vo.Free;
 import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
 
@@ -285,12 +286,18 @@ public class TeamDao {
 		PreparedStatement pstmt = null;
 		int result=0;
 		String query = prop.getProperty("updateTeam");
+		System.out.println("update쿼리:"+query);
+		System.out.println("1, f.getbTitle(): "+t.getbTitle());
+		System.out.println("2, f.getbContent() : "+t.getbContent());
+		System.out.println("3, f.getFile02() :"+t.getFile02());
+		System.out.println("4, f.getBno(): "+t.getBno());
 		
 		try {
 			pstmt=con.prepareStatement(query);
 			pstmt.setString(1, t.getbTitle());
 			pstmt.setString(2, t.getbContent());
-			pstmt.setInt(3, t.getBno());
+			pstmt.setInt(3, t.getFile02());
+			pstmt.setInt(4, t.getBno());
 			
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1191,6 +1198,99 @@ System.out.println("시퀀스값 조회쿼리 : "+query);
 		}
 		
 		
+		return result;
+	}
+	//글 작성
+	public int insertFree(Connection con, Team t) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("insertTeam");
+
+		try {
+			pstmt=con.prepareStatement(query);
+
+			pstmt.setString(1, t.getbTitle());
+			pstmt.setString(2, t.getbContent());
+			pstmt.setString(3, t.getDeptId());
+			pstmt.setString(4, t.getWriterId());
+
+			System.out.println(t.getbTitle());
+			System.out.println(t.getbContent());
+			System.out.println(t.getWriterId());
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+	//노파일 글 수정
+	public Team editNoFile(Connection con, int num) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		Team t=null;
+		
+		String query=prop.getProperty("selectNoFile");
+		System.out.println("노파일 수정페이지 가기 전 dao query: "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				 t=new Team();
+					
+					t.setBno(rset.getInt("BOARDNO"));
+					t.setbClass(rset.getString("BOARDCLASS"));
+					t.setbTitle(rset.getString("BOARDTITLE"));
+					t.setbContent(rset.getString("BOARDCONTENTS"));
+					t.setbDate(rset.getDate("BOARDDATE"));
+					t.setbClicks(rset.getInt("BOARDCLICKS"));
+					t.setbAttach(rset.getString("BOARDATTACH"));
+					t.setComNo(rset.getInt("COMMENTNO"));
+					t.setComLevel(rset.getInt("COMMENTLEVEL"));
+					t.setRecomId(rset.getString("RECOMMENTID"));
+				
+					t.setReplebno(rset.getInt("REPLEBOARDNO"));
+					t.setWriterId(rset.getString("EMPNAME"));
+					t.setStatus(rset.getString("WHETHEROFDELETE"));
+					t.setFile01(rset.getInt("FILE01"));
+					t.setFile02(rset.getInt("FILE02"));
+					t.setFile03(rset.getInt("FILE03"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return t;
+	}
+	//첨부파일 없는 글 수정
+	public int updateNoFileTeam(Connection con, Team t) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query=prop.getProperty("updateNoFile");
+		System.out.println("첨부파일 없는 글 수정 dao");
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, t.getbTitle());
+			pstmt.setString(2, t.getbContent());
+			pstmt.setInt(3, t.getBno());
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return result;
 	}
 	

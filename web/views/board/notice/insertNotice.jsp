@@ -110,7 +110,7 @@ body {
 		
 		$(function(){
 			$("#gotoList").click(function(){
-				location.href="/semi/views/board/notice/noticeList.jsp";
+				location.href="/semi/selectList.no";
 			});
 		});
 	</script>
