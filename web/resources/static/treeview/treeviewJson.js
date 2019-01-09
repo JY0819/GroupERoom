@@ -66,15 +66,10 @@ var treeviewJson = {
 							    ,{text: "문서 진행 현황", href: "/semi/selectStatusServlet.sss"} 
 							    ,{text: "반려함", href: "/semi/returnBox.rb"}
 							    ,{text: "내 문서함", href: "/semi/selectDocument.sd"}
-							    ,{text: "임시 보관함", href: "/semi/views/approval/taskBox/temporaryDocument.jsp"}
 					  		  ]
 					}
 				   ,{ 
 					  text: "완료 문서함", href: "/semi/finishappr.fi"
-					 /*,nodes: [
-						 		{text: "부서 문서함", href: "/semi/documentAppr.do"},
-						 	   {text: "결재한 문서", href: "/semi/finishappr.fi"}
-					 		]*/
 					}
 				  ,{
 					  text: "휴지통" , href: "/semi/selecttrash.tr"

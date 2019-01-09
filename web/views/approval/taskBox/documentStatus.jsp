@@ -30,7 +30,7 @@
 	</div>
 	<div class="content-right container">
 		<div>
-			<table>
+			<table class="commonTable">
 				<thead>
 				<tr>
 					<th><input type="checkbox" name="checkAll" id="checkAlltr"

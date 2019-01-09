@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
 	 /*메인 페이지 표 테이블 스타일*/
-      table {
-        width: 75%;
-        text-align: center;
-      	left: 270px;
+      .commonTable {
       	position: absolute;
+        width: 75%;
        	top:230px;
+        text-align: center;
+      	left: 300px;
       }
       
       table, th, td {

@@ -21,12 +21,12 @@
 <body>
 
 	<jsp:include page ="/views/main/mainPage.jsp"/>
-	<form class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
+	<form id="woForm" class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
 	<h1>업무계획서</h1>
 	<table>
 		<tr>
 			<td class="td">번호</td>
-			<td class="content"><input type="text" name="num" value=<%= document.getManageNo()+1%>></td>
+			<td class="content"><input type="text" name="num" value=<%= document.getManageNo()+1%> readonly="readonly"></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -36,9 +36,9 @@
 		<tr>
 			<td class="td">이미지첨부</td>
 			<td class="content"><input type="file" name="file"></td>
-			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson1"></td>
-			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson2"></td>
-			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson3"></td>
+			<td class="approvalTd" rowspan="2"></td>
+			<td class="approvalTd" rowspan="2"></td>
+			<td class="approvalTd" rowspan="2"></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
@@ -76,13 +76,13 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%>></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%> readonly="readonly"></td>
 			<td class="td">사원번호</td>
-			<td class="employeeNumber" colspan="3"><input type="text" name="empNum" value=<%= document.getManageEmpId() %>></td> 
+			<td class="employeeNumber" colspan="3"><input type="text" name="empNum" value=<%= document.getManageEmpId() %> readonly="readonly"></td> 
 		</tr>
 		<tr>
 			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="title"></td>
+			<td class="content" colspan="2"><input type="text" id="title" name="title"></td>
 			<td class="td" rowspan="2">분류</td>
 			<td class="content" colspan="3" rowspan="2">
 				<select name="documentKind">
@@ -100,14 +100,14 @@
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
+			<td class="lastContent" colspan="7"><textarea class="contentArea" id="content" name="content"></textarea></td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td class="td" colspan="7">의견</td>
 		</tr>
 		<tr>
 			<td class="lastContentDown" colspan="7"><textarea class="contentArea" name="opinion" readonly="readonly"></textarea></td>
-		</tr>
+		</tr> -->
 	</table>
 		<button class="saveBtn" type="submit">저장</button> 
 	<button class="closeBtn" type="reset" onclick="back();">닫기</button>
@@ -147,6 +147,17 @@
 					$("#appr3").val(name.substring(0, name.length-4));
 				}
 			});
+		});
+		$("#woForm").submit(function(event) {
+			if($("#title").val() == ""){
+				window.alert("제목을 입력해주세요.");
+				return false;
+			}else if($("#content").val() == ""){
+				window.alert("내용을 입력해주세요.");
+				return false;
+			}else {
+				return true;
+			}
 		});
 		function closePopUp() {
 			if(choice == '결재자1선택'){
