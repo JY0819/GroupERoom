@@ -29,6 +29,8 @@ public class SelectOneMemberServlet extends HttpServlet {
 		
 		int userPhotoId = loginUser.getPhotoId();
 		
+		System.out.println(userPhotoId);
+		
 		String file = "";
 		String page = "";
 		if (userPhotoId != 0) {
@@ -38,7 +40,7 @@ public class SelectOneMemberServlet extends HttpServlet {
 		} 
 		
 		
-		
+		System.out.println(file);
 		
 		page = "views/myPage/myInfo/ChangeInfo.jsp";
 		

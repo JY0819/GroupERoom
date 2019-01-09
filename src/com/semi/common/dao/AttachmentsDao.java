@@ -46,7 +46,7 @@ public class AttachmentsDao {
 			
 			while (rset.next()) {
 
-				result = rset.getString("attachPath");
+				result = rset.getString("attachName");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
