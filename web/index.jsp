@@ -10,8 +10,6 @@
 	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
 	crossorigin="anonymous">
 <style>
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
 body {
 	background-color: #205181;
 }
@@ -25,35 +23,21 @@ body {
 	text-align: center
 }
 
-i {
-	color: #FFF;
-	vertical-align: middle;
-}
-
-a {
-	font-family: "Roboto", sans-serif;
-	font-weight: bold;
-	display: inline-block;
-	vertical-align: middle;
-	color: white;
-	font-size: 2.5em;
-	text-decoration: none;
-}
-
-.layer .blank {
-	display: inline-block;
-	width: 0;
-	height: 100%;
-	vertical-align: middle;
-}
 </style>
+
+<script type="text/javascript">
+function goLogin(){
+	location.href="views/common/login.jsp"
+}
+</script>
 <title>GroupERoom</title>
 
 </head>
 <body>
 	<div class="layer">
-		<a href="views/common/login.jsp">Welcome to GroupERoom</a>&nbsp;&nbsp;
-		<i class="fas fa-chevron-right fa-2x"></i> <span class="blank"></span>
+		<img alt="logo" src="/semi/assets/images/IndexLogo.png" style="height: 400px; margin-top: 150px;" onclick="goLogin();">
+<!-- 		<a href="views/common/login.jsp">Welcome to GroupERoom</a>&nbsp;&nbsp; -->
+<!-- 		<i class="fas fa-chevron-right fa-2x"></i> <span class="blank"></span> -->
 	</div>
 
 </body>

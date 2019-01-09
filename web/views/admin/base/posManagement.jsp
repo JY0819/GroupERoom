@@ -6,14 +6,10 @@
 <%
 	ArrayList<Position> list = (ArrayList<Position>) request.getAttribute("list");
 %>
-<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
+<jsp:include page="/views/layout/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 
 <script type="text/javascript">
-	//참고 : https://jonmiles.github.io/bootstrap-treeview/
-	var jsonData = treeviewJson.adminJson;
-	var nodeName = "직책 관리";
-	
 	function addPos() {
 		location.href = "/semi/views/admin/base/posForm.jsp";
 	}
@@ -81,4 +77,4 @@
 	</div>
 </section>
 
-<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
+<jsp:include page="/views/layout/layout-down.jsp" />
