@@ -92,4 +92,30 @@ public class MemoDao {
 		return result;
 	}
 
+
+	public String selectEmpPhoto(Connection con, int photoId) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String imgPath="";
+		
+		String query=prop.getProperty("selectEmpPhoto");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, photoId);
+			
+			System.out.println(query);
+			
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				System.out.println(rset.getString("ATTACHPATH")+"!!@#!@#!@#"+rset.getString("ATTACHNAME"));
+				imgPath=rset.getString("ATTACHNAME");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return imgPath;
+	}
+
 }

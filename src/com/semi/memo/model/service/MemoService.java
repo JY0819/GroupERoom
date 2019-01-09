@@ -26,4 +26,12 @@ public class MemoService {
 		return result;
 	}
 
+	public String selectEmpImg(int photoId) {
+		Connection con=getConnection();
+		String imgPath=new MemoDao().selectEmpPhoto(con, photoId);
+		System.out.println("서비스 :"+imgPath);
+		close(con);
+		return imgPath;
+	}
+
 }

@@ -43,6 +43,11 @@ p.imgText {
 
 .tdPadding {
 	border: 2px solid #205181;
+/* 	border: 2px solid #E5E5E5; */
+}
+.tdPadding:active{
+	/* border: 5px inner #205181; */
+	box-shadow: 0px 0px 0px 3px #205181 inset;
 }
 #calendar{
 	padding:20px 20px 20px 60px;
@@ -79,7 +84,7 @@ div.dayBack{
 	width:25px;
 	height:25px;
 	margin:15px;
-	border-radius:50%;
+	border-radius:100%;
 }
 </style>
 
@@ -142,19 +147,14 @@ div.dayBack{
 			cell.id='calSchedule'+holis; //일정 입력용 Id 부여
 			
 			if (cnt%7 == 0) {row = calendar.insertRow();}
-			
+
 		}
  		//불러온 일정 삽입
 		<%
 			for(int i=0;i<scheduleList.size();i++){ %>
-			<%--				if(Number(<%=scheduleList.get(i).getCalendarClass()%>)==3){
-			$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).append("<p name='calendarClass' value='3'><input type='hidden' value='<%=scheduleList.get(i).getCalendarNo()%>'><%=scheduleList.get(i).getScheduleTime()%>"+' '+"<%=scheduleList.get(i).getCalendarContents()%></p>");
---%>			$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children("div").css("background","#ECECEC");
-				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children().children("span").css("font-size","16px");
-<%-- 				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children().children("span").css("font-weight","bold");
- --%>				
-	<%}%>	 
-		
+				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children("div").css("background","#ECECEC");
+				$("#calSchedule"+<%=scheduleList.get(i).getScheduleDate()%>).children().children("span").css("font-size","16px");				
+		<%}%>	 
 	}
 	
 </script>
@@ -221,9 +221,12 @@ div.dayBack{
 					<%Date today=new Date();
 						boolean time;
 						time=(today.getTime()-n.getbDate().getTime())/(24*3600*1000)<=1.5;
-						if(time){
-					%><i style="color:#D76464;" class="xi-new-o xi-2x"></i><%} %>
-				<input type="hidden" name="bno" value="<%=n.getBno()%>"><%=n.getbTitle() %></p></td>
+						if(time){%>
+							<i style="color:#D76464;" class="xi-new-o xi-2x"></i>
+					<%} %>
+				<input type="hidden" name="bno" value="<%=n.getBno()%>">
+				<input type="hidden" name="fileName" value="<%=n.getFile02()%>">
+				<%=n.getbTitle() %></p></td>
 				<td width="200px"><p style="text-align: right;"><%=n.getbDate() %></p></td>
 			</tr>
 			<tr>
@@ -268,9 +271,10 @@ div.dayBack{
 		}).mouseout(function(){
 			$(this).parent().css({"color":"black"})
 		}).click(function(){
-			var num = $('input[name="bno"]').val()//->글번호 가져오기
-			console.log(num);
-			location.href="<%=request.getContextPath()%>/selectOne.no?num="+num;
+			var num = $(this).parent().children().eq(0).children().children('input[name="bno"]').val()//->글번호 가져오기
+			var fileName=$(this).parent().children().eq(0).children().children('input[name="fileName"]').val();
+			console.log(num+''+fileName);
+			location.href="<%=request.getContextPath()%>/selectOne.no?num="+num+"&fileName="+fileName;
 		});
 		<%}%>
 	});

@@ -51,7 +51,9 @@ public class MainDao {
 				n.setbTitle(rset.getString("BOARDTITLE"));
 				n.setbDate(rset.getDate("BOARDDATE"));
 				n.setbContent(rset.getString("BOARDCONTENTS"));
-				
+				n.setFile01(rset.getInt("FILE01"));
+				n.setFile02(rset.getInt("FILE02"));
+				n.setFile03(rset.getInt("FILE03"));
 				list.add(n);
 			}
 		} catch (SQLException e) {
