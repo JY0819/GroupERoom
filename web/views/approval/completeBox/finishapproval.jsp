@@ -28,9 +28,10 @@
 
 	<div class="content-right container">
 
-		<button class="delete" onclick="deleteFinish()">삭제</button>
+		<button class="deletefinish" onclick="deleteFinish()">삭제</button>
 
 		<table id="listArea" class="commonTable">
+
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="checkAll" id="checkAll"
