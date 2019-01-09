@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.semi.board.Free.model.dao.FreeDao;
 import com.semi.board.team.model.dao.TeamDao;
 import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
@@ -322,7 +323,7 @@ public class TeamService {
 		HashMap<String, Object> hmap = new TeamDao().editOne(con, num);
 		
 		int result = 0;
-		
+		System.out.println("servlet result: "+result);
 		if(hmap != null) {
 			result = new TeamDao().updateCount(con, num);
 			if(result > 0) commit(con);
@@ -333,6 +334,42 @@ public class TeamService {
 		close(con);
 		
 		return hmap;
+	}
+	//글 수정하기
+	public int updateFree(Team t, Attachment at, int originAno) {
+		Connection con = getConnection();
+		
+		int result=0;
+		
+		int result0 = new TeamDao().updateAttachment(con, at);
+		System.out.println("updateAttachment result0 : "+result0);
+		if(result0 > 0) {
+			int ano=new TeamDao().selectCurrval(con);
+			
+			t.setFile02(ano);
+		
+		}
+		
+		int result2=0;
+		
+		result2= new TeamDao().updateFree(con, t);
+		System.out.println("service result2: "+result2);
+
+			
+			
+		int result4 = new TeamDao().deleteOriginFile(con, originAno);
+			System.out.println("service result4: "+result4);
+		int result3 = new TeamDao().deleteAttachment(con, originAno);
+		System.out.println(result0+""+result2+""+result4+""+result3);
+		
+		if(result0 > 0 && result2 > 0 && result3 > 0 && result4 > 0 ) {			
+			commit(con);
+			result=1;
+		}else {
+			rollback(con);
+		}
+		
+		return result;
 	}
 	
 }

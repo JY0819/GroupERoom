@@ -4,7 +4,7 @@
 	Team t = (Team)request.getAttribute("t"); 
 	Employee loginUser = (Employee)session.getAttribute("loginUser");
 	ArrayList<Team> reply = (ArrayList<Team>)request.getAttribute("reply");
-	com.semi.board.team.model.vo.Attachment at = (com.semi.board.team.model.vo.Attachment)request.getAttribute("at");
+	Attachment at = (Attachment)request.getAttribute("at");
 
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">

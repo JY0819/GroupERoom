@@ -1034,7 +1034,7 @@ System.out.println("시퀀스값 조회쿼리 : "+query);
 		Attachment at = null;
 		 
 		String query = prop.getProperty("selectOne");
-		
+		System.out.println("수정 dao num: "+num);
 		try {
 			pstmt=con.prepareStatement(query);
 			pstmt.setInt(1, num);
@@ -1062,6 +1062,15 @@ System.out.println("시퀀스값 조회쿼리 : "+query);
 					t.setFile02(rset.getInt("FILE02"));
 					t.setFile03(rset.getInt("FILE03"));
 				
+					at = new Attachment();
+					at.setAno(rset.getInt("ATTACHNO"));
+					at.setOriginName(rset.getString("ATTACHPRENAME"));
+					at.setChangeName(rset.getString("ATTACHNAME"));
+					at.setFilePath(rset.getString("ATTACHPATH"));
+					at.setUploadDate(rset.getDate("ATTACHDAY"));
+					at.setWhetherofDelete(rset.getString("WHETHEROFDELETE"));
+				
+			
 			}
 			
 			hmap = new HashMap<String, Object>();
@@ -1079,6 +1088,110 @@ System.out.println("시퀀스값 조회쿼리 : "+query);
 		}
 
 		return hmap;
+	}
+	//첨부파일 수정
+	public int updateAttachment(Connection con, Attachment at) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("updateAttachment");
+		System.out.println("updateAttachment dao query: "+query);
+		try {
+
+		
+
+		pstmt=con.prepareStatement(query);
+
+		
+		pstmt.setString(1, at.getOriginName());
+		pstmt.setString(2, at.getChangeName());
+		pstmt.setString(3, at.getFilePath());
+
+
+		result = pstmt.executeUpdate(); 
+
+	
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}finally {
+		close(pstmt);
+		}
+
+		return result;
+	}
+	//글 내용 수정
+	public int updateFree(Connection con, Team t) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("updateFree");
+		System.out.println("update쿼리:"+query);
+		System.out.println("1, t.getbTitle(): "+t.getbTitle());
+		System.out.println("2, t.getbContent() : "+t.getbContent());
+		System.out.println("3, t.getFile02() :"+t.getFile02());
+		System.out.println("4, t.getBno(): "+t.getBno());
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, t.getbTitle());
+			pstmt.setString(2, t.getbContent());
+		
+			pstmt.setInt(3, t.getFile02());
+			pstmt.setInt(4, t.getBno());
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+	public int deleteOriginFile(Connection con, int originAno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result=0;
+		String query = prop.getProperty("selectOneAttachment");
+		System.out.println("deleteOriginFile dao query :" +query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, originAno);
+			
+			result=pstmt.executeUpdate();
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return result;
+	}
+	//
+	public int deleteAttachment(Connection con, int originAno) {
+		PreparedStatement pstmt = null;
+		int result =0;
+		String query = prop.getProperty("deleteAttachment");
+		System.out.println("deleteAttachment dao query: "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, originAno);
+			
+			result=pstmt.executeUpdate();
+			System.out.println("deleteAttachment dao result: "+result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 	
 	

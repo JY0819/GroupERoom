@@ -53,7 +53,7 @@ body {
 				<tbody>
 				<tr>
 						<td>글번호</td>
-						<td readonly><input type="hidden" id="bno" value="<%=f.getBno() %>" name="bno" ><%=f.getBno() %></td>
+						<td readonly><input type="hidden" id="bno" value="<%=f.getBno() %>" name="bno" ><input type="hidden" name="fileName" value="<%=f.getFile02()%>"><%=f.getBno() %></td>
 					</tr>
 					<tr>
 						<td>조회수</td>
@@ -141,7 +141,7 @@ body {
 			<table>
 			<tr>
 				<button id="gotoList" class="btn btn-primary">목록으로</button>
-				<button id="editBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectFree.fr?num=<%=f.getBno()%>'">수정</button>
+				<button id="editBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/selectFree.fr?num=<%=f.getBno()%>&fileName=<%=f.getFile02()%>'">수정</button>
 				<button id="deleteBtn" class="btn btn-primary">삭제</button>
 				</tr>
 				</table>

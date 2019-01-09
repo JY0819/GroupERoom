@@ -170,7 +170,7 @@ if(p == currentPage){
 		}).click(function(){
 			var num = $(this).parent().children().eq(0).text();//->글번호 가져오기
 			console.log(num);
-			var fileName = $("input[name='fileName']").val();
+			var fileName =  $(this).parent().children().eq(0).children("input[name='fileName']").val();
 			console.log(fileName);
 			
 			location.href="<%=request.getContextPath()%>/selectOne.fr?num="+num+"&fileName="+fileName;

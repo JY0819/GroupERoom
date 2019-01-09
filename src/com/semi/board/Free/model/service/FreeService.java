@@ -305,6 +305,7 @@ public class FreeService {
 			int result2 = 0;
 			int result1 = new FreeDao().insertAttachment(con, fileList);
 			System.out.println("service result1 : "+result1);
+			
 						//트랜잭션 처리
 			if(result1 > 0) {
 
@@ -322,7 +323,9 @@ public class FreeService {
 					if(i==2) {
 						f.setFile03(fileList.get(i).getAno()-2);
 					}*/
-				} 
+				
+					
+				}
 				result2 = new FreeDao().insertThumbnailContent(con, f);
 			
 			}			
@@ -380,5 +383,36 @@ public class FreeService {
 			close(con);
 			return f;
 		}
+		//노파일 글 수정
+		public Free editNoFile(int num) {
+			Connection con=getConnection();
+			System.out.println("노파일 글 수정페이지 가기 전 서비스");
+			Free f=new FreeDao().editNoFile(con, num);
+			System.out.println("노파일 글 수정페이지 가기 전 service");
+			int result=0;
+			if(f!=null) {
+				result=new FreeDao().updateCount(con, f.getBno());
+				if(result>0) { commit(con);}
+				else { rollback(con); }
+				
+			}
+			close(con);
+			
+			return f;
+		}
+		//첨부파일 없는 글 수정
+		public int updateNoFileFree(Free f) {
+			Connection con=getConnection();
+			int result=0;
+			
+			result=new FreeDao().updateNoFileFree(con, f);
+			System.out.println("첨부파일 없는 글 수정 service");
+			if(result>0) commit(con);
+			else rollback(con);
+			
+			close(con);
+			return result;
+		}
+		
 		
 }

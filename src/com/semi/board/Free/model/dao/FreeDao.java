@@ -1392,6 +1392,71 @@ System.out.println("query: "+query);
 			
 			return f;
 		}
+		//노파일 글 수정
+		public Free editNoFile(Connection con, int num) {
+			PreparedStatement pstmt=null;
+			ResultSet rset=null;
+			Free f=null;
+			
+			String query=prop.getProperty("selectNoFile");
+			System.out.println("노파일 수정페이지 가기 전 dao query: "+query);
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setInt(1, num);
+				rset=pstmt.executeQuery();
+				
+				if(rset.next()) {
+					 f=new Free();
+						
+						f.setBno(rset.getInt("BOARDNO"));
+						f.setbClass(rset.getString("BOARDCLASS"));
+						f.setbTitle(rset.getString("BOARDTITLE"));
+						f.setbContent(rset.getString("BOARDCONTENTS"));
+						f.setbDate(rset.getDate("BOARDDATE"));
+						f.setbClicks(rset.getInt("BOARDCLICKS"));
+						f.setbAttach(rset.getString("BOARDATTACH"));
+						f.setComNo(rset.getInt("COMMENTNO"));
+						f.setComLevel(rset.getInt("COMMENTLEVEL"));
+						f.setRecomId(rset.getString("RECOMMENTID"));
+						
+						f.setReplebno(rset.getInt("REPLEBOARDNO"));
+						f.setWriterId(rset.getString("EMPNAME"));
+						f.setStatus(rset.getString("WHETHEROFDELETE"));
+						f.setFile01(rset.getInt("FILE01"));
+						f.setFile02(rset.getInt("FILE02"));
+						f.setFile03(rset.getInt("FILE03"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return f;
+		}
+		//첨부파일 없는 글 수정
+		public int updateNoFileFree(Connection con, Free f) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			
+			String query=prop.getProperty("updateNoFileNotice");
+			System.out.println("첨부파일 없는 글 수정 dao");
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setString(1, f.getbTitle());
+				pstmt.setString(2, f.getbContent());
+				pstmt.setInt(3, f.getBno());
+				
+				result=pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		}
 		
 		
 }
