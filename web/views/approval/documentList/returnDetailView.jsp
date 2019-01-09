@@ -390,11 +390,10 @@
 	
 	<button class="finishoneclose" onclick="back();">닫기</button>
 	<script>
-		function move() {
+<%-- 		function move() {
 			var docNum = $("input[name=docNum]").text();
-			var check = "Y";
-			location.href = "/semi/selectOne.so?docno=" + <%=d.getManagedocno()%> + "&check=" + check;
-		}	
+			location.href = "/semi/selectOne.so?docno=" + <%=d.getManagedocno()%>;
+		}	 --%>
 	
 		   function back() {
 			location.href = "/semi/returnBox.rb";

@@ -345,6 +345,23 @@ public class DocumentService {
 	public int updateReturn(DetailDoc detaildoc) {
 		Connection con = getConnection();
 		int result = new DocumentDao().updateReturn(con,detaildoc);
+		int apprNo = new DocumentDao().resetManagedoc(con, detaildoc.getManagedocno());
+		int apprDeleteLoa = new DocumentDao().deleteLoa(con, apprNo);
+		int apprLineReset = 0;
+		int apprReset = 0;
+		int apprResetResult = 0;
+		if(apprDeleteLoa > 0) {
+			apprLineReset = new DocumentDao().resetApprLine(con, apprNo);
+		}
+		if(apprLineReset > 0) {
+			apprReset = new DocumentDao().resetAppr(con, apprNo);
+		}
+		if(apprReset > 0) {
+			apprResetResult = 1;
+		}
+		if(apprResetResult > 0) {
+			result = 1;
+		}
 		if(result>0) commit(con);
 		else rollback(con);
 		

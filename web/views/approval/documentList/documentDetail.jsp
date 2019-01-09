@@ -359,8 +359,14 @@
 			location.href = "/semi/finishappr.fi";
 		}
 	
-	</script>
-	
+
+
+	<button class="closedetail" onclick="back();">닫기</button>
+	<script>
+		  function back() {
+			location.href = "/semi/selectDocument.sd";
+		}   
+
 
     
 	

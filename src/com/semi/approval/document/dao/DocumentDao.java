@@ -855,8 +855,6 @@ public class DocumentDao {
 					while(rset.next()) {
 						int tempApprEmpId = rset.getInt("APPREMPID");
 						int tempApprNo = rset.getInt("APPRNO");
-						System.out.println(tempApprEmpId);
-						System.out.println(tempApprNo);
 						if(apprEmpId == tempApprEmpId && listApprNo == tempApprNo) {
 							query = prop.getProperty("successInsertApprStatus");
 							pstmt = con.prepareStatement(query);
@@ -1046,7 +1044,6 @@ public class DocumentDao {
 				pstmt.setInt(3, detaildoc.getManagedocno());
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}finally {
 				close(pstmt);
@@ -1114,7 +1111,99 @@ public class DocumentDao {
 			}
 			return list;
 		}
-		
-		//반려한 결재자 이름담기
-		
+
+		public int resetManagedoc(Connection con, int docNo) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			int result = 0;
+			int apprNo = 0;
+			String query = prop.getProperty("resetManagedoc");
+			try {
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, docNo);
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			
+			if(result > 0) {
+				query = prop.getProperty("resetSearchApprNo");
+				try {
+					pstmt = con.prepareStatement(query);
+					pstmt.setInt(1, docNo);
+					rset = pstmt.executeQuery();
+					
+					if(rset.next()) {
+						apprNo = rset.getInt("APPRNO");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rset);
+					close(pstmt);
+				}						
+			}
+			return apprNo;
+		}
+
+		public int deleteLoa(Connection con, int apprNo) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("resetDeleteLogOfApprove");
+			try {
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo);
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			return result;
+		}
+
+		public int resetApprLine(Connection con, int apprNo) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("resetApprLine");
+			
+			try {
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo);
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}		
+			return result;
+		}
+
+		public int resetAppr(Connection con, int apprNo) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("resetAppr");
+			
+			try {
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo);
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}			
+			return result;
+		}
 }
