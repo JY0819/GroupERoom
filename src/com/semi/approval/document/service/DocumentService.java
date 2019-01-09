@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.approval.approve.model.vo.ApprLine;
+import com.semi.approval.approve.model.vo.DetailDoc;
 import com.semi.approval.document.dao.DocumentDao;
 import com.semi.approval.document.vo.Document;
 import com.semi.approval.document.vo.MyDocument;
@@ -339,5 +340,14 @@ public class DocumentService {
 		int listCount = new DocumentDao().getListStatusCount(con, empId);
 		close(con);
 		return listCount;
+	}
+
+	public int updateReturn(DetailDoc detaildoc) {
+		Connection con = getConnection();
+		int result = new DocumentDao().updateReturn(con,detaildoc);
+		if(result>0) commit(con);
+		else rollback(con);
+		
+		return result;
 	}
 }

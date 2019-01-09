@@ -167,8 +167,8 @@ function sendTrash() {
 	/* $(this).parent().css({"background":"white"}); */
 }).click(function() {
 	var docno = $(this).parent().children().eq(4).text();
-	
-	location.href="<%= request.getContextPath()%>/detailOne.one?docno=" + docno;
+	var check = "N";
+	location.href="<%= request.getContextPath()%>/selectOne.so?docno=" + docno + "&check=" + check;
 }); 
 </script>
 <jsp:include page="/views/layout/treeview/approval/layout-down.jsp" />

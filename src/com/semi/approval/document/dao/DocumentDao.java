@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import com.semi.admin.user.model.vo.Employee;
 import com.semi.approval.approve.model.vo.ApprLine;
+import com.semi.approval.approve.model.vo.DetailDoc;
 import com.semi.approval.document.vo.Document;
 import com.semi.approval.document.vo.MyDocument;
 import com.semi.approval.document.vo.SumEmpInfo;
@@ -1031,5 +1032,26 @@ public class DocumentDao {
 				close(pstmt);
 			}
 			return listCount;
+		}
+
+		public int updateReturn(Connection con, DetailDoc detaildoc) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			String query = prop.getProperty("updateReturn");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, detaildoc.getTitle());
+				pstmt.setString(2, detaildoc.getContents());
+				pstmt.setInt(3, detaildoc.getManagedocno());
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			
+			return result;
 		}
 }

@@ -295,7 +295,7 @@ public class InsertDocumentServlet extends HttpServlet {
 			
 			//Attachment 객체 생성하여 arrayList 객체 생성
 			ArrayList<Attachments> fileList = null;
-			
+			if(originFiles.get(0) != null) {
 			fileList = new ArrayList<Attachments>();
 				for(int i=originFiles.size() - 1; i>=0; i--) {
 					Attachments at = new Attachments();
@@ -304,7 +304,7 @@ public class InsertDocumentServlet extends HttpServlet {
 					at.setAttachName(saveFiles.get(i));
 					fileList.add(at);
 				}
-			
+			}
 			
 			//====================================================
 			
@@ -317,8 +317,12 @@ public class InsertDocumentServlet extends HttpServlet {
 			
 			//첨부파일이 구분해 SERVICE에 접근
 			int result = 0;
+			if(fileList != null) {
 				result = new DocumentService().insertDocument(list, apprLine, fileList);
 				System.out.println("결과옴");
+			}else {
+				result = new DocumentService().insertDocument(list, apprLine);
+			}
 			
 			
 			//====================================================
