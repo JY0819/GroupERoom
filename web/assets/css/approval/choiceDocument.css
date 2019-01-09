@@ -5,7 +5,7 @@
 		text-align: center;
 	}
 	/*선택 버튼들  */
-	.vacation, .proof, .work{
+	.vacation{
 	position: absolute;
 	top: 400px;
 	text-align: center;
@@ -14,22 +14,44 @@
 	border-radius: 10px;
 	width: 100px;
 	height: 25px;
-    left: 370px;
+    left: 450px;
+    position: absolute;
+    font-size: 16px;
+	}
+	.proof{
+	position: absolute;
+	top: 400px;
+	text-align: center;
+	background-color: #205181;
+	color:white;
+	border-radius: 10px;
+	width: 100px;
+	height: 25px;
+    right: 500px;
+    position: absolute;
+    font-size: 16px;
+	}
+	.work{
+	position: absolute;
+	top: 400px;
+	text-align: center;
+	background-color: #205181;
+	color:white;
+	border-radius: 10px;
+	width: 100px;
+	height: 25px;
+    left: 700px;
     position: absolute;
     font-size: 16px;
 	}
 	/*미리보기 재직증명서  */
-	.proof {
-    left: 630px;
-	}
+
 	/*미리보기 업무계획서  */
-	.work {
-    left: 880px;
-	}
+
 	/*클릭시 이동경로 영역  */
 	#contentImgArea1, #contentImgArea2, #contentImgArea3 {
 		height: 250;
-		width: 250;
+		width: 300;
 		border: 1px solid black;
 	}
 	#contentImgArea1 {
@@ -39,4 +61,17 @@
 	#contentImgArea3 {
 		position: relative;
 		left: 50px;
+	}
+	.outer .closeBtn {
+		position: absolute;
+		background-color: #205181;
+		text-align: center;
+		color: white;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		top: 500px;
+		left: 700px;
+		border: 0;
+		outline: 0;
 	}

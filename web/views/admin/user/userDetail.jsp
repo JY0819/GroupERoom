@@ -38,6 +38,25 @@
 		$("#retireYN").val(retireYN);
 	});
 	
+	$("#userImg").hide();
+	
+	function uploadClick() {
+		$("#userImg").click();
+	}
+	
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#contentImg').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	
+	$("#userImg").change(function() {
+		readURL(this);
+	});
 	
 </script>
 
@@ -56,7 +75,11 @@
 			
 			<!-- 첨부파일 ** 이미지 미리보기 -->
 			<div class="form-group" id="contentImgArea" align="center">
-				<img id="userImg" width="200" height="160" src="<%=request.getContextPath() %>/assets/images/upload_EmpImg/<%=userImg.getAttachName()%>">
+				<img id="contentImg" width="200" height="160" onclick="uploadClick();" src="<%=request.getContextPath() %>/assets/images/upload_EmpImg/<%=userImg.getAttachName()%>">
+			</div>
+			
+			<div class="form-group" id="inputFileArea" align="center">
+				<input type="file" id="userImg" name="userImg" style="display: none;"/>
 			</div>
 			
 			<!-- 회원 가입 사항 -->

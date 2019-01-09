@@ -44,7 +44,7 @@
 		<a href="/semi/views/approval/taskBox/choiceDocument.jsp"><button class="writeBtn">작성</button></a>
 		<button class="sendBtn" onclick="send()">상신</button>
 		<button class="deleteBtn" onclick="trash()">삭제</button>
-		<table>
+		<table class="commonTable">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="checkAll" id="checkAlltr"

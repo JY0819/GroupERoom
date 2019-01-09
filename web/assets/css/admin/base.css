@@ -17,7 +17,7 @@
 	width: 85px;
 	background: orange;
 } */
-#updateDeptBtn, #deleteDeptBtn, #goList {
+#updateBtn, #deleteBtn, #goList {
 	width: 75px;
 	font-weight: bold;
 	background: #205181;
@@ -30,7 +30,7 @@
 	margin-top: 15px;
 }
 
-.deptDetailBtns {
+.detailBtns {
 	margin-top: 15px;
 }
 
@@ -39,7 +39,7 @@
 	width: 85px;
 }
 
-#deleteDeptBtn {
+#deleteBtn {
 	background: red;
 }
 
@@ -49,3 +49,17 @@
 	margin-top: 100px !important;
 	vertical-align: middle;
 }
+
+#addPosBtn {
+	width: 75px;
+	font-weight: bold;
+	background: #205181;
+	color: white;
+	margin-right: 5px;
+}
+
+table *{
+    text-align: center;
+}
+
+

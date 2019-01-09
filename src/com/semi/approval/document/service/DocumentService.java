@@ -350,4 +350,16 @@ public class DocumentService {
 		
 		return result;
 	}
+
+	public ArrayList<ApprLine> selectLineList(int docno) {
+		Connection con = getConnection();
+		ArrayList<ApprLine> list = new DocumentDao().selectLineList(con, docno);
+		if(list != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return list;
+	}
 }

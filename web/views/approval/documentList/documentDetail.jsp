@@ -37,9 +37,9 @@
 			<td class="content"><input type="text" name="num" value="휴가계획서" disabled="disabled"></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
-			<td class="td">1차 결재 확인</td>
+			<!-- <td class="td">1차 결재 확인</td>
 			<td class="td">2차 결재 확인</td>
-			<td class="td">3차 결재 확인</td>
+			<td class="td">3차 결재 확인</td> -->
 		</tr>
 		
 			
@@ -348,15 +348,28 @@
 		
 		
 	</table>
+
 	<%} %>
 	<button class="finishoneclose" onclick="back();">닫기</button>
 	
+  
+  <!--깃에서 
 	<script>
 		function back() {
 			location.href = "/semi/finishappr.fi";
 		}
 	
+
+	<% } %>	
+	<button class="closedetail" onclick="back();">닫기</button>
+	<script>
+		  function back() {
+			location.href = "/semi/selectDocument.sd";
+		}   
+
+    
 	</script>
-		
+-->
+  
 </body>
 </html>

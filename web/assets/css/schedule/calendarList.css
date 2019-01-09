@@ -212,7 +212,7 @@
 	    position: relative;  
 	    padding-left: 25px;  
 	    margin-right: 10px;  
-	    color:#2ebe8b;
+	    color:#269752;
 	}
 	#Teamschedule + label{
 	    display: inline-block;  
@@ -220,7 +220,7 @@
 	    position: relative;  
 	    padding-left: 25px;  
 	    margin-right: 10px;  
-	    color:#736DCC;
+	    color:#3069A8;
 	}
 	#Companyschedule + label{
 	    display: inline-block;  
@@ -252,14 +252,14 @@
 	    font-weight: 600;
 	    text-align: center;  
 	    /* line-height: 18px;  */ 
-	    color:#2ebe8b;
+	    color:#269752;
 	} 
 	#Teamschedule:checked + label:before {
 	    content: "\2713";  /* 체크모양 */
 	    font-size: 22px; 
 	    font-weight: 600;
 	    text-align: center;
-	    color:#736DCC;
+	    color:#3069A8;
 	} 
 
 	#Companyschedule:checked + label:before {

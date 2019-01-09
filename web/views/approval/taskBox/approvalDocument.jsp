@@ -42,10 +42,10 @@
 	<div class="content-right container">
 		<% for(int i=0; i<list.size(); i++){ 
 		if(appr.get(i).isCheck()) { %>
-		<button class="success" onclick="success()">승인</button>
+		<button class="writeBtn" onclick="success()">승인</button>
 		<button class="return" onclick="returnBox()">반려</button>
 		<% }else { %>
-		<a href="#open"><button class="success">결재하기</button></a>
+		<a href="#open"><button class="writeBtn">결재하기</button></a>
 		<% } %>
 		<% } %>
 		<div class="white_content" id="open">
@@ -59,7 +59,7 @@
             	<a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
         	</div>
     	</div>
-		<table>
+		<table class="commonTable">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="checkAll" id="checkAlltr"
@@ -192,15 +192,6 @@
 				</ul>
 				
 			</div>
-				<!-- <div class="paging" align="center">
-				<ul class="pagination">
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-				</ul>
-			</div> -->
 		</div>
 	</div>
 
@@ -250,7 +241,7 @@
 	}).click(function() {
 		var docno = $(this).parent().children().eq(4).text();
 		
-		location.href="<%= request.getContextPath()%>/detailOne.one?docno=" + docno;
+		location.href="<%= request.getContextPath()%>/approvalDocumentDetail.add?docno=" + docno;
 	}); 
 	
 	function success() {

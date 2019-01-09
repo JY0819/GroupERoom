@@ -2,7 +2,11 @@ package com.semi.admin.user.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -33,9 +37,6 @@ public class InsertMemberServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 첨부파일
-		/*String title = request.getParameter("title");
-		System.out.println(title);*/
 		if(ServletFileUpload.isMultipartContent(request)) {
 			int maxSize = 1024 * 1024 * 10;
 			
@@ -67,7 +68,7 @@ public class InsertMemberServlet extends HttpServlet {
 			
 			Integer multiUserId = Integer.parseInt(multiRequest.getParameter("userId"));
 			String multiUserName = multiRequest.getParameter("userName");
-			String multiUserPwd = multiRequest.getParameter("userPwd");
+			String multiUserPwd = setSha512(multiRequest.getParameter("userPwd"));
 			String multiGender = multiRequest.getParameter("gender");
 			String multiPhone = multiRequest.getParameter("phone");
 			String multiAddress = multiRequest.getParameter("address");
@@ -162,6 +163,23 @@ public class InsertMemberServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	private String setSha512(String pwd) {
+		String encPwd = "";
+
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-512");
+			byte[] bytes = pwd.getBytes(Charset.forName("UTF-8"));
+			md.update(bytes);
+			
+			encPwd = Base64.getEncoder().encodeToString(md.digest());
+			
+			
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return encPwd;
 	}
 
 }

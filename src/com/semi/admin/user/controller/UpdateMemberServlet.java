@@ -1,6 +1,10 @@
 package com.semi.admin.user.controller;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.GregorianCalendar;
 
 import javax.servlet.RequestDispatcher;
@@ -26,7 +30,7 @@ public class UpdateMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int userId = Integer.parseInt(request.getParameter("userId"));
-		String userPwd = request.getParameter("userPwd");
+		String userPwd = setSha512(request.getParameter("userPwd"));
 		String phone = request.getParameter("phone");
 		String address = request.getParameter("address");
 		String dept = request.getParameter("dept");
@@ -82,6 +86,23 @@ public class UpdateMemberServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	private String setSha512(String pwd) {
+		String encPwd = "";
+
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-512");
+			byte[] bytes = pwd.getBytes(Charset.forName("UTF-8"));
+			md.update(bytes);
+			
+			encPwd = Base64.getEncoder().encodeToString(md.digest());
+			
+			
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return encPwd;
 	}
 
 }

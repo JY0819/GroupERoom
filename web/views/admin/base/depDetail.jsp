@@ -58,9 +58,9 @@
 				</tr>
 			</table>
 
-			<div class="deptDetailBtns">
-				<button class="btn btn-default" id="updateDeptBtn" onclick="updateDept();">수정</button>
-				<button class="btn btn-default" id="deleteDeptBtn" onclick="deleteDept();">삭제</button>
+			<div class="detailBtns">
+				<button class="btn btn-default" id="updateBtn" onclick="updateDept();">수정</button>
+				<button class="btn btn-default" id="deleteBtn" onclick="deleteDept();">삭제</button>
 				<div class="btn btn-default" id="goList" onclick="location.href='<%=request.getContextPath()%>/depList.dp'">목록으로</div>
 			</div>
 			

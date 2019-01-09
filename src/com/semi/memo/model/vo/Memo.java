@@ -5,14 +5,15 @@ public class Memo {
 	private int memoNo;
 	private String memoContents;
 	private int empId;
-	
+	private String imgPath;
 	public Memo() {}
 
-	public Memo(int memoNo, String memoContents, int empId) {
+	public Memo(int memoNo, String memoContents, int empId, String imgPath) {
 		super();
 		this.memoNo = memoNo;
 		this.memoContents = memoContents;
 		this.empId = empId;
+		this.imgPath=imgPath;
 	}
 
 	public int getMemoNo() {
@@ -39,10 +40,21 @@ public class Memo {
 		this.empId = empId;
 	}
 
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
 	@Override
 	public String toString() {
-		return "Memo [memoNo=" + memoNo + ", memoContents=" + memoContents + ", empId=" + empId + "]";
+		return "Memo [memoNo=" + memoNo + ", memoContents=" + memoContents + ", empId=" + empId + ", imgPath=" + imgPath
+				+ "]";
 	}
+
+	
 	
 	
 }

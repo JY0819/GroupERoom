@@ -17,9 +17,9 @@
 	<jsp:include page="/views/main/mainPage.jsp"/>
 	<!--문서 선택 버튼 영역-->
 	<div class="btnArea">
-		<a href="../documentList/vacationDocument.jsp"><label class="vacation">휴가신청서</label></a>
-		<a href="../documentList/employmentDocument.jsp"><label class="proof">재직증명서</label></a>
-		<a href="../documentList/workDocument.jsp"><label class="work">업무계획서</label></a>
+		<label class="vacation">휴가신청서</label>
+		<label class="proof">업무계획서</label>
+		<label class="work">재직증명서</label>
 	</div>
 	<!--미리보기 문서영역-->
 	<div class="outer">

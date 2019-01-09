@@ -6,7 +6,11 @@
 	</a><!--  <a href="#" style="width:300px;">회원정보</a> -->
 	<div id="sideuserDiv">
 		<div id="sideuserPhoto"></div>
-		<div id="sideuserInfo">김사원 <br> 개발팀 <br> 대리</div>
+		<div id="sideuserInfo">
+			<p><label id="sideEmpName"></label></p>
+			<p><label id="sideEmpDept"></label></p>
+			<p><label id="sideEmpPosition"></label></p>
+		</div>
 	</div>
 	 <a style="width:300px;">메모</a>
 	<style>
@@ -21,14 +25,21 @@
 			border:1px solid #295F93;
 			width:120px;
 			height:120px;
-			padding:15px 5px 15px 5px;
-			border-radius: 50%;
-			background-image: url("assets/images/upload_EmpImg/20190109092726256246.jpg");
+			margin:15px 5px 15px 5px;
+			border-radius:100%;
 			background-position:center;
-			display:table-cell;
+			background-size:120px;
+			float:left;
 		}
 		#sideuserInfo{
-			display:table-cell;
+			float:left;
+			width:80px;
+			height:120px;
+			padding:15px 5px 15px 5px;
+			margin:15px 0px 15px 0px;
+			text-align:center;
+			color:white;
+			font-weight:light;
 		}
 		#memoDiv{
 			padding:10px 10px 10px 25px;
@@ -42,7 +53,7 @@
 			scrollbar-track-color: #FFFFFF;
 			scrollbar-arrow-color: navy;
 			width:240px;
-			height:320px;
+			height:300px;
 			padding: 5px 5px 5px 5px;
 			border:1px solid #295F93;
 			background:#295F93;
