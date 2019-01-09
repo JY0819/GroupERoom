@@ -36,12 +36,12 @@
 		
 		<tr>
 			<td class="td">분류<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value="휴가계획서" disabled="disabled"></td>
-			<td rowspan="2" class="gap"></td>
+			<td class="content"><input type="text" name="num" value="휴가계획서" readonly="readonly"></td>
+			<!-- <td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차 결재 확인</td>
 			<td class="td">2차 결재 확인</td>
-			<td class="td">3차 결재 확인</td>
+			<td class="td">3차 결재 확인</td> -->
 		</tr>
 		
 			
@@ -54,7 +54,7 @@
 			<%} else{%>
 			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"><input type="file" name="file"></td>
 			<%} %>
-			<%if(lineList.size()>=1 && lineList.size()<4){ %>
+			<%-- <%if(lineList.size()>=1 && lineList.size()<4){ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1"></td>
@@ -68,7 +68,7 @@
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
-			<%} %>
+			<%} %> --%>
 		</tr>
 		<%if(lineList.size()>=1 && lineList.size()<4){ %>
 		<tr>
@@ -112,10 +112,10 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value="<%=d.getManagedocno()%>" disabled="disabled"></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value="<%=d.getManagedocno()%>" readonly="readonly"></td>
 			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="empNum" value="<%=d.getManageempid()%>" disabled="disabled"></td>
+			<td class="content" colspan="3"><input type="text" name="empNum" value="<%=d.getManageempid()%>" readonly="readonly"></td>
 			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>
@@ -128,14 +128,14 @@
 			<td class="td">제목</td>
 			<td class="content" colspan="2"><input type="text" name="title" value="<%=d.getTitle()%>"></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay()%>"></td>
+			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay()%>" readonly="readonly"></td>
 		</tr>
 		
 		<tr>
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><%=d.getContents() %></td>
+			<td class="lastContent" colspan="7"><input type="text" name="contents" value="<%=d.getContents()%>"></td>
 		</tr>
 		
 		
@@ -155,12 +155,12 @@
 	<%}%>
 	</div>
 	<%if(d.getManageclass() ==2){ %>
-	
+	<form id="updateForm" method="post">
 	<table class="detailDoc">
 		
 		<tr>
 			<td class="td">분류<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value="재직증명서" disabled="disabled"></td>
+			<td class="content"><input type="text" name="num" value="재직증명서" readonly="readonly"></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차 결재 확인</td>
@@ -233,41 +233,51 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value="<%=d.getManagedocno()%>" disabled="disabled"></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value="<%=d.getManagedocno()%>" readonly="readonly"></td>
 			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="empNum" value="<%=d.getManageempid()%>" disabled="disabled"></td>
+			<td class="content" colspan="3"><input type="text" name="empNum" value="<%=d.getManageempid()%>" readonly="readonly"></td>
 			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>
 			<td class="td">입사기간</td>
-			<td class="content" colspan="2"><input type="text" name="startDate" value="<%=d.getEntryDay()%>"></td>
+			<td class="content" colspan="2"><input type="text" name="startDate" value="<%=d.getEntryDay()%>" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<td class="td">제목</td>
 			<td class="content" colspan="2"><input type="text" name="title" value="<%=d.getTitle()%>" ></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay()%>"></td>
+			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay()%>" readonly="readonly"></td>
 		</tr>
 		
 		<tr>
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><%=d.getContents() %></td>
+			<td class="lastContent" colspan="7"><input type="text" name="contents" value="<%=d.getContents()%>"></td>
 		</tr>
 		
 		
 	</table>
+	<button class="updatedetail" onclick="updatedetail()">수정</button>
+	<script>
+	function updatedetail(){
+		
+		
+		$("#updateForm").attr("action", "<%= request.getContextPath()%>/updatemydoc.ud"); 
 	
+		<%-- location.href="<%= request.getContextPath()%>/updatemydoc.ud?docno=" + <%=d.getManagedocno()%>; --%>
+	}
+	</script>
+	</form>
 	<%} %>
 	<%if(d.getManageclass() ==3){ %>
-	
+	<form id="updateForm" method="post">
 	<table class="detailDoc">
 		
 		<tr>
 			<td class="td">분류<input type="hidden" name="va" value="va"></td>
-			<td class="content"><input type="text" name="num" value="업무계획서" disabled="disabled"></td>
+			<td class="content"><input type="text" name="num" value="업무계획서" readonly="readonly"></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차 결재 확인</td>
@@ -340,10 +350,10 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value="<%=d.getManagedocno()%>" disabled="disabled"></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value="<%=d.getManagedocno()%>" readonly="readonly"></td>
 			<!--value=document.getManageDocNo()-->
 			<td class="td">사원번호</td>
-			<td class="content" colspan="3"><input type="text" name="empNum" value="<%=d.getManageempid()%>" disabled="disabled"></td>
+			<td class="content" colspan="3"><input type="text" name="empNum" value="<%=d.getManageempid()%>" readonly="readonly"></td>
 			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>
@@ -354,26 +364,36 @@
 			<td class="td">제목</td>
 			<td class="content" colspan="2"><input type="text" name="title" value="<%=d.getTitle()%>"></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay() %>"></td>
+			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay() %>" readonly="readonly"></td>
 		</tr>
 		
 		<tr>
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><%=d.getContents() %></td>
+			<td class="lastContent" colspan="7"><input type="text" name="contents" value="<%=d.getContents()%>"></td>
 		</tr>
 		
 		
 	</table>
+	<button class="updatedetail" onclick="updatedetail()">수정</button>
+	<script>
+	function updatedetail(){
+		
+		
+		$("#updateForm").attr("action", "<%= request.getContextPath()%>/updatemydoc.ud"); 
 	
+		<%-- location.href="<%= request.getContextPath()%>/updatemydoc.ud?docno=" + <%=d.getManagedocno()%>; --%>
+	}
+	</script>
+	</form>
 	<%} %>
 	<button class="closedetail" onclick="back();">닫기</button>
 	
 	<script>
-		  /* function back() {
+		function back() {
 			location.href = "/semi/selectDocument.sd";
-		}  */ 
+		}  
 		
 		<%-- function updatedetail(){
 			
