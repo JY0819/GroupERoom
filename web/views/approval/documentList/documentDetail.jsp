@@ -360,7 +360,6 @@
 		}
 	
 
-	<% } %>	
 	<button class="closedetail" onclick="back();">닫기</button>
 	<script>
 		  function back() {

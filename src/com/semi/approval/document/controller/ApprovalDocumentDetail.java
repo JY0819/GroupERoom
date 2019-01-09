@@ -30,14 +30,14 @@ public class ApprovalDocumentDetail extends HttpServlet {
 		HashMap<String,Object> hmap = new DetailOneService().selectDetailMap(docno);
 		DetailDoc d =  (DetailDoc)hmap.get("detaildoc");
 		ArrayList<Attachment> fileList = (ArrayList<Attachment>)hmap.get("attachment");
-		/*ArrayList<ApprLine> linelist = new DocumentService().selectLineList(docno);*/
+		ArrayList<ApprLine> linelist = new DetailOneService().selectLineList(docno);
 		
 		String page = "";
 		if(hmap != null) {
 			page = "views/approval/documentList/documentDetail.jsp";
 			request.setAttribute("d", d);
 			request.setAttribute("fileList", fileList);
-			/*request.setAttribute("linelist", linelist);*/
+			request.setAttribute("linelist", linelist);
 		}
 		else {
 			System.out.println("오류");

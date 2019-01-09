@@ -10,31 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.semi.approval.approve.model.vo.DetailDoc;
 import com.semi.approval.document.service.DocumentService;
 
-/**
- * Servlet implementation class UpdateSelectOne
- */
 @WebServlet("/updateone.uo")
 public class UpdateSelectOne extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public UpdateSelectOne() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int docno = Integer.parseInt(request.getParameter("docNum"));
 		String title = request.getParameter("title");
 		String contents = request.getParameter("contents");
-		System.out.println("docNum : " +docno);
-		System.out.println("title : "+title);
-		System.out.println("contents : "+contents);
 		DetailDoc detaildoc = new DetailDoc();
 		detaildoc.setTitle(title);
 		detaildoc.setContents(contents);
@@ -51,11 +38,7 @@ public class UpdateSelectOne extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
