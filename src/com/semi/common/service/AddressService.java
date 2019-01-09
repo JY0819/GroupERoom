@@ -31,7 +31,6 @@ public class AddressService {
 					DeptEmp emp=new AddressDao().selectEmpList(con, empIdList.get(j));
 					if(deptIdList.get(i).equals(emp.getDeptId())) {
 						empList.add(emp);		
-						//System.out.println(empList.size());
 					}
 				}
 				hmap.put(deptIdList.get(i), empList);

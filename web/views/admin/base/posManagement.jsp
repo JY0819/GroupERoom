@@ -7,11 +7,32 @@
 	ArrayList<Position> list = (ArrayList<Position>) request.getAttribute("list");
 %>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 
 <script type="text/javascript">
 	//참고 : https://jonmiles.github.io/bootstrap-treeview/
 	var jsonData = treeviewJson.adminJson;
 	var nodeName = "직책 관리";
+	
+	function addPos() {
+		location.href = "/semi/views/admin/base/posForm.jsp";
+	}
+	
+	$(function(){
+		$("#listArea td").mouseenter(function(){
+			$(this).parent().css({"background" : "#F2F2F2", "cursor" : "pointer"});
+		}).mouseout(function(){
+			$(this).parent().css({"background" : "white"})
+		}).click(function(){
+			var num = $(this).parent().children().eq(0).text();
+			
+			console.log(num);
+			
+			location.href="<%=request.getContextPath()%>/selectOne.po?num=" + num;
+			
+		});
+	});
+	
 </script>
 
 <section class="content">
@@ -45,11 +66,11 @@
 					for (Position p : list) {
 				%>
 				<tr>
-					<td><%=p.getPositionId()%></td>
-					<td><%=p.getPositionName()%></td>
-					<td><%=p.getPositionNo()%></td>
-					<td><%=p.getPositionAct()%></td>
-					<td><%=p.getPositionNote()%></td>
+					<td align="center"><%=p.getPositionId()%></td>
+					<td align="center"><%=p.getPositionName()%></td>
+					<td align="center"><%=p.getPositionNo()%></td>
+					<td align="center"><%=p.getPositionAct()%></td>
+					<td align="center"><%=p.getPositionNote()%></td>
 				</tr>
 				<%
 					}
@@ -58,36 +79,6 @@
 		</div>
 
 	</div>
-
-	<script>
-		function addPos() {
-			location.href = "/semi/views/admin/base/posForm.jsp";
-		}
-		
-		$(function(){
-			$("#listArea td").mouseenter(function(){
-				$(this).parent().css({"background" : "#F2F2F2", "cursor" : "pointer"});
-			}).mouseout(function(){
-				$(this).parent().css({"background" : "white"})
-			}).click(function(){
-				var num = $(this).parent().children().eq(0).text();
-				
-				console.log(num);
-				
-				location.href="<%=request.getContextPath()%>/selectOne.po?num=" + num;
-				
-			});
-		});
-		
-/* 		$(function(){
-			$("#listArea td").click(function(){
-				$('div.modal').modal({
-					remote : 'posDetail.jsp';
-				});
-			});
-		});
- */
-	</script>
 </section>
 
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

@@ -63,16 +63,14 @@
 				</tr>
 			</table>
 			
-			<div>
-				<button class="btn btn-default" onclick="updatePos();">수정</button>
-				<button class="btn btn-default" onclick="deletePos();">삭제</button>
+			<div class="detailBtns">
+				<button class="btn btn-default" id="updateBtn" onclick="updatePos();">수정</button>
+				<button class="btn btn-default" id="deleteBtn" onclick="deletePos();">삭제</button>
+				<div class="btn btn-default" id="goList" onclick="location.href='<%=request.getContextPath()%>/posList.po'">목록으로</div>
 			</div>
 		
 		</form>	
 		
-			<div>
-				<button class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/posList.po'">목록으로</button>
-			</div>
 		</div>
 	</div>
 </section>
