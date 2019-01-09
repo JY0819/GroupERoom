@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +40,15 @@ public class InsertMemberServlet extends HttpServlet {
 			int maxSize = 1024 * 1024 * 10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
+			
+			/*
+			String filePath = "";
+			String saveFolder = "assets/images/upload_EmpImg/";
+			
+			ServletContext context = this.getServletContext();
+			filePath = context.getRealPath(saveFolder);
+			System.out.println("서블릿 상 경로 : " + filePath);*/
+
 			System.out.println(root);
 
 			String filePath = root + "assets/images/upload_EmpImg/";

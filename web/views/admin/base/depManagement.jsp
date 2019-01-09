@@ -4,7 +4,8 @@
 	ArrayList<Department> list = (ArrayList<Department>) request.getAttribute("list");
 %>
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 
 <script type="text/javascript">
 	var jsonData = treeviewJson.adminJson;
@@ -14,7 +15,7 @@
 		location.href="/semi/views/admin/base/depForm.jsp";
 	}
 	
-	<%-- $(function(){
+	 $(function(){
 		$("#listArea td").mouseenter(function(){
 			$(this).parent().css({"background" : "#F2F2F2", "cursor" : "pointer"});
 		}).mouseout(function(){
@@ -23,14 +24,24 @@
 			var num = $(this).parent().children().eq(0).text();
 			
 			console.log(num);
-			
 			location.href="<%=request.getContextPath()%>/selectOne.dp?num=" + num;
-			
 		});
-	}); --%>
+		
+	});
+	
+	// 
+	/* $("#stopbubble").click(function(e){
+		e.stopPropagation();
+	});
+	 */
+	/* $("#stopbubble").click(function(e){
+		if	(event.stopPropagation) event.stopPropagation();
+		else event.cancelBubble = true;
+	}); */
+
 	function startAjax(deptId){
 		console.log("부서 id = " + deptId);
-
+		
 		var header = "";
 			header += "<tr>";
 			header += "<th>아이디</th> ";
@@ -42,17 +53,11 @@
 		$.ajax({
 			url :  "/semi/searchDeptMember.me",	//서블릿 맵핑 url
 			type : "post",	//http method
-			/*
-			POST	: POST를 통해 해당 URI를 요청하면 리소스를 생성합니다.
-			GET		: GET를 통해 해당 리소스를 조회합니다. 리소스를 조회하고 해당 도큐먼트에 대한 자세한 정보를 가져온다.
-			PUT		: PUT를 통해 해당 리소스를 수정합니다.
-			DELETE	: DELETE를 통해 리소스를 삭제합니다.
-			*/
 			data : {
 					deptId : deptId // 자바에서 받을 수 있는 데이터 정의
 					},
 					
-			success : function(data){// 성공시 
+			success : function(data){	// 성공시 
 				var htmlCode = "";
 				for(var i = 0; i < data.length; i++){
 					var rowData = data[i];
@@ -61,7 +66,7 @@
 					var name 	 = rowData.empName;
 					var position = rowData.positionName;
 					
-					htmlCode += "<tr>                                     ";
+					htmlCode += "<tr >                                     ";
 					htmlCode += "	<td>" + id + "</td>          ";
 					htmlCode += "	<td>" + name + "    </td>	   ";
 					htmlCode += "	<td>" + position + "  </td>	 	";
@@ -75,8 +80,12 @@
 				console.log("실패!");
 			}
 		});
-		
 	}
+	
+	/* function stop(){
+		if	(event.stopPropagation) event.stopPropagation();
+		else event.cancelBubble = true;
+	} */
 </script>
 	
 <section class="content">
@@ -88,12 +97,11 @@
 		<div>
 			<div>
 				<h1>부서 관리</h1>
+				<hr>
+				<button type="button" class="btn btn-default" id="addDeptBtn" onclick="addDept();">추가</button>
 			</div>
 			
 			<div class="form-group">
-				<div class="col-lg-offset-2 col-lg-10">
-					<button type="button" class="btn btn-default" id="addDeptBtn" onclick="addDept();">추가</button>
-				</div>
 			</div>
 		</div>
 		
@@ -118,8 +126,7 @@
 						<td><%=dep.getDeptAct()%></td>
 						<td><%=dep.getDeptNote()%></td>
 						<td>
-							<button type="button" class="btn btn-default userDetail" data-toggle="modal" data-target="#myModal" onclick="startAjax('<%=dep.getDeptId()%>')">상세보기</button>
-							
+							<button type="button" class="btn btn-default userDetail" id="modal" data-toggle="modal" data-target="#myModal" onclick="startAjax('<%=dep.getDeptId()%>');">상세보기</button>
 						</td>
 					</tr>
 					<%
@@ -127,7 +134,7 @@
 					%>
 			</table>
 		</div>
-		
+		<!-- event.cancelBubble = true; -->
 	</div>
 </section>
 

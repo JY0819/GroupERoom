@@ -169,15 +169,12 @@
 			</div>
 
 			<div class="col-lg-offset-2 col-lg-7">
-				<button class="btn btn-default" onclick="updateUser();">수정</button>
-				<button class="btn btn-default" onclick="deleteUser();">삭제</button>
+				<button class="btn btn-default" id="updateBtn" onclick="updateUser();">수정</button>
+				<button class="btn btn-default" id="deleteBtn" onclick="deleteUser();">삭제</button>
+				<div class="btn btn-default" id="goList" onclick="location.href='<%=request.getContextPath()%>/memberList.me'">목록으로</div>
 			</div>
 			
 		</form>
-		
-			<div>
-				<button class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/memberList.me'">목록으로</button>
-			</div> 
 		
 	</div>
 </section>

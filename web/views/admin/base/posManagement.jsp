@@ -23,13 +23,11 @@
 		<div>
 			<div>
 				<h1>직책 관리</h1>
+				<hr>
+				<button type="button" class="btn btn-default" id="addPosBtn" onclick="addPos();">추가</button>
 			</div>
-
+			
 			<div class="form-group">
-				<div class="col-lg-offset-2 col-lg-10">
-					<button type="button" class="btn btn-default" id="addPosBtn"
-						onclick="addPos();">추가</button>
-				</div>
 			</div>
 		</div>
 

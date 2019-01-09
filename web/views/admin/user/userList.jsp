@@ -156,7 +156,7 @@
 						if (p == currentPage) {
 				%>
 				
-						<li disabled><%= p %></li>
+						<button disabled><%= p %></button>
 				<%
 						} else {
 				%>

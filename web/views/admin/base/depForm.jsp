@@ -13,7 +13,7 @@
 		<div id="treeview"></div>
 	</div>
 
-	<div class="content-right container">"web/views/admin/base/depDetail.jsp"
+	<div class="content-right container">
 		<div class="custom_deptForm">
 			<form class="form-inline" id="addDeptForm" method="post" action="<%=request.getContextPath()%>/insertDept.dp">
 				<table>
@@ -45,8 +45,9 @@
 	
 	
 				<div class="deptSaveBtn">
-					<input type="submit" class="btn btn-default" id="saveBtn" value="저장" onclick="insertDept();">
+					<input type="submit" class="btn btn-default" id="saveDeptBtn" value="저장" onclick="insertDept();">
 				</div> 
+				
 			</form>
 		</div>
 	</div>

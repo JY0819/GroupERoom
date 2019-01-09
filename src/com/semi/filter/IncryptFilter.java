@@ -21,14 +21,10 @@ public class IncryptFilter implements Filter {
 	// 톰캣 구동시 같이 작동
     public IncryptFilter() {
 //    	System.out.println("객체 생성 2!");
-    	System.out.println("\\n\\n\\nhiiiiiiiiiiii2222222222\\n\\n\\n");
     	
     }
 
 	public void destroy() {
-		
-		System.out.println("\n\n\ndistory otot\n\n\n");
-		
 	} 
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
