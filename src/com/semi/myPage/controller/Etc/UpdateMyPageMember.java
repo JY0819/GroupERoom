@@ -39,7 +39,7 @@ public class UpdateMyPageMember extends HttpServlet {
 			String root = request.getSession().getServletContext().getRealPath("/");
 			System.out.println(root);
 			String filePath = root + "assets/images/upload_EmpImg/";
-			System.out.println(request.getParameter("userPwd"));
+			
 			MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			ArrayList<String> saveFiles = new ArrayList<String>();
 			ArrayList<String> originFiles = new ArrayList<String>();

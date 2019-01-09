@@ -33,7 +33,7 @@ public class MyFileRenamePolicy implements FileRenamePolicy {
 		String fileName = ft.format(new Date(currentTime)) + randomNumber + ext;
 
 		File newFile = new File(oldFile.getParent(), fileName);
-
+		System.out.println(newFile.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@2");
 		return newFile;
 	}
 }

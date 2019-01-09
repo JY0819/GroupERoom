@@ -137,8 +137,9 @@ a:visited {
 
 a:hover {
 	text-decoration: none;
-	color: rgb(0, 154, 200);
+	color: rgb(0, 154, 200) !important;
 	transition: 0.5s ease-in-out;
+	text-decoration: none !important;
 }
 /* home.jsp */
 p.imgText {

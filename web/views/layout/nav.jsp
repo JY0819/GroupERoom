@@ -26,6 +26,64 @@
 	}
 </script>
 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: rgb(0, 154, 200) !important;
+    text-decoration: none !important;
+    transition: 0.5s ease-in-out !important;
+    background: rgb(32, 81, 129) !important;
+}
+.dropdown-menu > li > div > a:hover, .dropdown-menu > li > div > a:focus {
+    color: rgb(0, 154, 200) !important;
+    text-decoration: none !important;
+    transition: 0.5s ease-in-out !important;
+    background: rgb(32, 81, 129) !important;
+}
+.dropdown-menu > li {
+    margin-left: 0;
+    margin-right: 0;
+}
+.dropdown-menu > li > div > a {
+    display: block;
+    padding: auto;
+    white-space: nowrap;
+    line-height: 1.42857143;
+    border-top: 1px solid #ddd;
+    width: 50%;
+   	padding-bottom: 5px;
+   	padding-top: 5px;
+	text-decoration: none;
+	text-align: center;
+}
+.fontStyle{
+	text-align: right;
+	font-size: 17px !important;
+   	color: white !important;
+   	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+#alarmCountAtagDiv{
+	border-radius: 100%;
+	background: red;
+	position: absolute;
+	left: auto;
+	right: 70px;
+	top: 10px;
+	width: 19px;
+	height: 19px;
+}
+#alarmCountAtag{
+	width: 100% !important;
+	height: 100% !important;
+	font-size: 8.5px !important;
+	font-weight: bold;
+	color: white !important;
+	line-height: 20px;
+}
+</style>
+
 <nav class="navigation">
 	<div class="nav-left">
 		<span class="openside" onclick="openHome()"><i class="fa fa-home custom_icon_size_2_5"></i></span>
@@ -37,7 +95,7 @@
 		<span><a href="<%=request.getContextPath()%>/selectMainServlet.sm">Approve</a></span>
 		<span><a href="<%=request.getContextPath()%>/selectList.no">Board</a></span>
 		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
-		<span><a href="<%=request.getContextPath()%>/myPageMain">My Page</a></span>
+		<span><a href="<%=request.getContextPath()%>/myPageMain">MyPage</a></span>
     
     <%--
     	<span><a href="<%=request.getContextPath()%>/selectMainServlet.sm">결재</a></span>
@@ -58,9 +116,25 @@
 	</div>
 	
 	<div class="nav-right">
-		<span><i class="fas fa-sign-out-alt custom_icon_size_2_5" onclick="logOut()"></i></span>
-		<i class="far fa-user fa-2x"></i>
-		<i class="fas fa-chevron-down"></i>
+		
+		<div id="alarmCountAtagDiv" data-toggle="dropdown" style="cursor: pointer; display: none;" align="center"><a id="alarmCountAtag">1</a></div>
+		
+		<i data-toggle="dropdown" class="far fa-user fa-2x" style="cursor: pointer;"></i>
+		
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true" style="color: white;"><i class="fas fa-chevron-down"></i></a>
+		<ul class="dropdown-menu" style="margin-bottom: 0px; padding-bottom: 0px; position: absolute; width: 250px; left: auto; right: 5px; top: 65px; float: right; background: rgb(32, 81, 129); padding-left: 0;, padding-right: 0; box-shadow: 5px 5px 5px #606060">
+			<li><a href="<%=request.getContextPath()%>/selectList.no" class="fontStyle" id="NoticeAlarm">0 of New Notice</a></li>
+			<li><a href="<%=request.getContextPath()%>/myPageMessage" class="fontStyle" id="MsgAlarm">0 of New Message</a></li>
+			<li><a href="<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds" class="fontStyle" id="ApprAlarm">0 of New Approval</a></li>
+			<li><a href="<%=request.getContextPath()%>/selectStatusServlet.sss" class="fontStyle" id="ApprEndAlarm">0 of New Approval End</a></li>
+			<li style="margin-bottom: 0px; padding-bottom: 0px;">
+				<div>
+					<a class="fontStyle" href="<%=request.getContextPath()%>/myPageMain" style="border-right: 1px solid #ddd; float: left;">MyPage</a>
+					<a class="fontStyle"  onclick="logOut()" style="float: right;">LogOut</a>
+				</div>
+			</li>
+		</ul>
+
 	</div>
 </nav>
 <input type="hidden" value="<%= empid %>" name="empId">
@@ -176,6 +250,7 @@
 </script>
 
 <script>
+	var alarmCount = 0;
 	// alarm
 	$(function(){
 			getConnection();
@@ -212,8 +287,9 @@
 		console.log(event.data);
 		// serverMessage[0] 알람 갯수, serverMessage[1] 알람 분류, serverMessage[2] 알람 받을 empid
 		if (serverMessage[1] == "msg" && serverMessage[2] == <%=empid%>) {
-			$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkAlarm?empid=<%=empid%>'>" + serverMessage[0] +"개의 쪽지 알람</a></span>");
-
+			$("#MsgAlarm").text(serverMessage[0] + " of New Message");
+			alarmCount += parseInt(serverMessage[0]);
+			$("#MsgAlarm").attr("href", "<%=request.getContextPath()%>/chkAlarm?empid=<%=empid%>");
 		} else if (serverMessage[1] == "board") {
 			var countBoard = serverMessage[0].split("|");
 			var data = null;
@@ -230,7 +306,9 @@
 				data = null;
 			}
 			if (count > 0) {
-				$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkNotice?empid=<%=empid%>'>" + count +"개의 공지 알람</a></span>");
+				$("#NoticeAlarm").text(count + " of New Notice");
+				alarmCount += count;
+				$("#NoticeAlarm").attr("href", "<%=request.getContextPath()%>/chkNotice?empid=<%=empid%>");
 			}
 			
 		} else if (serverMessage[1] == "apprEnd") {
@@ -242,7 +320,9 @@
 				}
 			}
 			if (count > 0) {
-				$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkApprEnd?empid=<%=empid%>'>" + count +"개의 결재선 승인</a></span>");
+				$("#ApprEndAlarm").text(count + " of New Approval End");
+				alarmCount += count;
+				$("#ApprEndAlarm").attr("href", "<%=request.getContextPath()%>/chkApprEnd?empid=<%=empid%>");
 			}
 			
 		} else if (serverMessage[1] == "apprIn") {
@@ -254,7 +334,9 @@
 				}
 			}
 			if (count > 0) {
-				$(".nav-left").append("<span><a href='<%=request.getContextPath()%>/chkApprLine?empid=<%=empid%>'>" + count +"개의 결재 요청</a></span>");
+				$("#ApprAlarm").append(count + " of New Approval");
+				alarmCount += count;
+				$("#ApprEndAlarm").attr("href", "<%=request.getContextPath()%>/chkApprLine?empid=<%=empid%>");
 			}
 		} else {
 			console.log("해당 알람 없음");
@@ -277,6 +359,15 @@
 			sendAlarm("0" + ",board");
 			sendAlarm("0,apprIn");
 			sendAlarm("0,apprEnd");
+			
+			setTimeout(function() {
+				console.log(alarmCount + "개의 알람들이 존재");
+				
+				$("#alarmCountAtag").text(alarmCount);
+				if (alarmCount > 0) {
+					$("#alarmCountAtagDiv").css("display", "block");
+				}
+			}, 2000);
 		}, 3000);
 	})
 	function isNull(obj) {

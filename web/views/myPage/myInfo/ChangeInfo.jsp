@@ -11,10 +11,13 @@
 <script>
 	var jsonData = treeviewJson.myPageJson;
 	var nodeName = "정보 수정";
-	
+</script>
+<script>
+20190109110909202559
 	$(function() {
-		if (isNull(<%=file%>)) {
-			$("#userImg").attr("src", "<%=request.getContextPath() %>/assets/images/upload_EmpImg/<%=file%>")
+		var fileNameMypage = "<%= file %>";
+		if (isNull(fileNameMypage)) {
+			$("#contentImg").attr("src", "<%=request.getContextPath() %>/assets/images/upload_EmpImg/" + fileNameMypage);
 		}
 	});
 
@@ -37,8 +40,6 @@
 		}
 	}
 	
-	$("#userImg").hide();
-	
 	function uploadClick() {
 		$("#userImg").click();
 	}
@@ -52,9 +53,12 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-	$("#userImg").change(function() {
-		readURL(this);
-	});
+	$(function() {
+		console.log("asd")
+		$("#userImg").change(function() {
+			readURL(this);
+		});
+	})
 </script>
 
 <section class="content">
@@ -118,11 +122,11 @@
 			
 			<div class="form-group">
 				<label for="inputAddress" class="col-lg-2 control-label">주소</label>
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<input type="text" class="form-control" id="address" name="address" value="<%=emp.getEmpAddr() %>">
 				</div>
 				
-				<label for="inputBirth" class="col-lg-1 control-label">생년월일</label>
+				<label for="inputBirth" class="col-lg-2 control-label">생년월일</label>
 				<div class="col-lg-2">
 					<input id="fromDate" type="date" class="form-control onlyNumber" id="birth" name="birth" value="<%=emp.getEmpBirth() %>" readonly> 
 				</div>

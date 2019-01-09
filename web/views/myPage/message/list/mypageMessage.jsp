@@ -93,13 +93,13 @@
 						<div class="alignBox">
 							<input class="btn" id="btn2" type="button" value="선택 쪽지 보관" onclick="btn2Clk()">
 						</div>
-						<div class="alignBox" style="margin: 10px;">
+<%-- 						<div class="alignBox" style="margin: 10px;">
 							<select id='selectFilter'>
 							    <option value='' selected>모두 보기</option>
 							    <option value='<%=user.getDeptId()%>'>내 부서</option>
 							</select>
 							<input type="hidden" name="filter" value="">
-						</div>
+						</div> --%>
 						<script type="text/javascript">
 							function btn1Clk() {
 								$("#formId").attr("action", "<%=request.getContextPath()%>/deleteMsg");
