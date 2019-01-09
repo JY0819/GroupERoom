@@ -29,14 +29,19 @@ public class SelectOneMemberServlet extends HttpServlet {
 		
 		int userPhotoId = loginUser.getPhotoId();
 		
-		System.out.println();
-		
-		String file = new AttachmentsService().getAttachmentPath(userPhotoId);
-		
+		String file = "";
 		String page = "";
+		if (userPhotoId != 0) {
+			file = new AttachmentsService().getAttachmentPath(userPhotoId);
+			
+			request.setAttribute("file", file);
+		} 
+		
+		
+		
 		
 		page = "views/myPage/myInfo/ChangeInfo.jsp";
-		request.setAttribute("file", file);
+		
 	
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

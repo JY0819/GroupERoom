@@ -13,14 +13,48 @@
 	var nodeName = "정보 수정";
 	
 	$(function() {
-		if (isNull(file)) {
+		if (isNull(<%=file%>)) {
 			$("#userImg").attr("src", "<%=request.getContextPath() %>/assets/images/upload_EmpImg/<%=file%>")
 		}
 	});
 
 	function updateUser(){
-		$("#userUpdateForm").attr("action", "<%=request.getContextPath()%>/admin/updateMember.me");
+		if (isNull($("#password").val())) {
+			
+		} else {
+			alert("비밀번호를 입력해주세요!");
+			return false;
+		}
+		
+		if ($("#chkPassword").val() == $("#password").val()) {
+					
+			$("#userUpdateForm").attr("action", "<%=request.getContextPath()%>/updateMyPageInfo");
+			$("#userUpdateForm").submit();
+			
+		} else {
+			alert("비밀번호를 확인해주세요!");
+			return false;
+		}
 	}
+	
+	$("#userImg").hide();
+	
+	function uploadClick() {
+		$("#userImg").click();
+	}
+	
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#contentImg').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	$("#userImg").change(function() {
+		readURL(this);
+	});
 </script>
 
 <section class="content">
@@ -34,11 +68,15 @@
 		</div>
 		<hr>
 
-		<form class="form-horizontal" id="userUpdateForm" method="post">
+		<form class="form-horizontal" id="userUpdateForm" method="post" encType="multipart/form-data">
 			
 			<!-- 첨부파일 ** 이미지 미리보기 -->
 			<div class="form-group" id="contentImgArea" align="center">
-				<img id="userImg" width="200" height="160" src="">
+				<img id="contentImg" width="180" height="180" style="border-radius: 100%" onclick="uploadClick();" src="<%=request.getContextPath() %>/assets/images/upload_EmpImg/ProfileImg-None.png">
+			</div>
+			
+			<div class="form-group" id="inputFileArea" align="center">
+				<input type="file" id="userImg" name="userImg" style="display: none;"/>
 			</div>
 			
 			<!-- 회원 가입 사항 -->
@@ -57,12 +95,12 @@
 			<div class="form-group">
 				<label for="inputPassword" class="col-lg-2 control-label">비밀번호</label>
 				<div class="col-lg-2">
-					<input type="text" class="form-control" id="password" name="userPwd" value="">
+					<input type="password" class="form-control" id="password" name="userPwd" value="">
 				</div>
 				
-				<label for="inputApprovePassword" class="col-lg-2 control-label">결재 비밀번호</label>
+				<label for="inputApprovePassword" class="col-lg-2 control-label">비밀번호 확인</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" id="approvePwd" name="approvePwd"  value="<%=emp.getApprovePwd() %>"readonly>
+					<input type="password" class="form-control" id="chkPassword" name="chkUserPwd"  value="">
 				</div>
 			</div>
 			
@@ -114,16 +152,11 @@
 				</div>
 			</div>
 
-			<div class="col-lg-offset-2 col-lg-7">
+			<div class="col-lg-offset-2 col-lg-7" align="center">
 				<button class="btn btn-default" onclick="updateUser();">수정</button>
 			</div>
 			
 		</form>
-		
-			<div>
-				<button class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/memberList.me'">목록으로</button>
-			</div> 
-		
 	</div>
 </section>
 

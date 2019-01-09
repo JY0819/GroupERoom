@@ -234,5 +234,45 @@ public class EmployeeService {
 		return listCount;
 	}
 
+	public int mypageUpdateEmployee(Employee emp, ArrayList<Attachments> fileList) {
+		Connection con = getConnection();
+		int result = 0;
+		int result1 = 0;
+		int result2 = 0;
+		
+		int photoId = new CommonSeqService(con).getFileSeq();
+
+		// 첨부 파일
+		if (fileList.size() > 0) {
+			result1 = new EmployeeDao().insertAttachment(con, fileList, photoId);
+			// 사원 정보
+			result2 = new EmployeeDao().mypageUpdateEmployee(con, emp, photoId);
+			
+			if (result1 > 0 && result2 > 0) {
+				commit(con);
+				result = 1;
+			} else {
+				rollback(con);
+			}
+		} else {
+			// 사원 정보
+			result2 = new EmployeeDao().mypageUpdateEmployee(con, emp);
+			
+			if (result2 > 0) {
+				commit(con);
+				result = 1;
+			} else {
+				rollback(con);
+			}
+		}
+		
+
+		
+
+		close(con);
+
+		return result;
+	}
+
 
 }
