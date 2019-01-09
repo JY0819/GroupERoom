@@ -24,12 +24,12 @@
 <body>
 
 	<jsp:include page ="/views/main/mainPage.jsp"/>
-	<form action="<%=request.getContextPath()%>/insertDocument.id" method="post" encType="multipart/form-data">
+	<form id="emForm" action="<%=request.getContextPath()%>/insertDocument.id" method="post" encType="multipart/form-data">
 	<h1>재직증명서</h1>
 	<table>
 		<tr>
 			<td class="td">번호</td>
-			<td class="content"><input type="text" name="num" value=<%= document.getManageDocNo()+1%>></td>
+			<td class="content"><input type="text" name="num" value=<%= document.getManageDocNo()+1%> readonly="readonly"></td>
 			<td rowspan="2" class="gap"></td>
 			<td class="td" rowspan="3">결<br>재</td>
 			<td class="td">1차</td>
@@ -39,9 +39,9 @@
 		<tr>
 			<td class="td">이미지첨부</td>
 			<td class="content">&nbsp;<input type="file" name="file"></td>
-			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson1"></td>
-			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson2"></td>
-			<td class="approvalTd" rowspan="2"><input type="text" name="aPerson3"></td>
+			<td class="approvalTd" rowspan="2"></td>
+			<td class="approvalTd" rowspan="2"></td>
+			<td class="approvalTd" rowspan="2"></td>
 		</tr>
 		<tr>
 			<td class="td">결재자</td>
@@ -80,12 +80,12 @@
 		</tr>
 		<tr>
 			<td class="td">문서번호</td>
-			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%>></td>
+			<td class="content" colspan="2"><input type="text" name="docNum" value=<%= document.getManageDocNo()+1%> readonly="readonly"></td>
 			<td class="td">사원번호</td>
-			<td class="employeeNumber" colspan="3"><input type="text" name="empNum" value=<%= document.getManageEmpId() %>></td> 
+			<td class="employeeNumber" colspan="3"><input type="text" name="empNum" value=<%= document.getManageEmpId() %> readonly="readonly"></td> 
 		</tr>
 		<tr>
-			<td class="td">직책</td>
+			<!-- <td class="td">직책</td>
 			<td class="content" colspan="2">
 				<select >
 					<option>사원</option>
@@ -93,9 +93,9 @@
 					<option>직책</option>
 					<option>직책</option>
 				</select>
-			</td>
+			</td> -->
 			<td class="td" rowspan="2">분류</td>
-			<td class="content" colspan="3" rowspan="2">
+			<td class="content" colspan="2" rowspan="2">
 				<select name="documentKind">
 					<option>휴가신청서</option>
 					<option>업무계획서</option>
@@ -105,11 +105,11 @@
 		</tr>
 		<tr>
 			<td class="td">재직기간</td>
-			<td><input type="date" name="entryDay" value=<%= employee.getEntryDay() %>></td>
+			<td class="content" colspan="3"><input type="date" name="entryDay" value=<%= employee.getEntryDay() %> readonly="readonly"></td>
 		</tr>
 		<tr>
 			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="title"></td>
+			<td class="content" colspan="2"><input type="text" id="title" name="title"></td>
 			<td class="td">작성일</td>
 			<td class="content" colspan="3"><input type="date" name="date"></td>
 		</tr>
@@ -117,17 +117,17 @@
 			<td colspan="7" class="td">내용</td>
 		</tr> 
 		<tr>
-			<td class="lastContent" colspan="7"><textarea class="contentArea" name="content"></textarea></td>
+			<td class="lastContent" colspan="7"><textarea class="contentArea" id="content" name="content"></textarea></td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td class="td" colspan="7">의견</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td class="lastContentDown" colspan="7"><textarea class="contentArea" name="opinion" readonly="readonly"></textarea></td>
-		</tr>
+		</tr> -->
 	</table>
-	<button class="saveBtn">저장</button>
-	<button class="closeBtn"  type="reset" onclick="back();">닫기</button>
+	<button class="saveBtn" style="height: 150px">저장</button>
+	<button class="closeBtn"  type="reset" onclick="back();" style="height: 150px">닫기</button>
 	</form>
 	<script>
 	var choice;
@@ -169,6 +169,17 @@
 					$("#appr3").val(name.substring(0, name.length-4));
 				}
 			});
+		});
+		$("#emForm").submit(function(event) {
+			if($("#title").val() == ""){
+				window.alert("제목을 입력해주세요.");
+				return false;
+			}else if($("#content").val() == ""){
+				window.alert("내용을 입력해주세요.");
+				return false;
+			}else {
+				return true;
+			}
 		});
 		function closePopUp() {
 			if(choice == '결재자1선택'){
