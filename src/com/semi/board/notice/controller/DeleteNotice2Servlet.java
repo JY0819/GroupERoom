@@ -33,7 +33,7 @@ public class DeleteNotice2Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] checkList = request.getParameterValues("checkRow");
 		String num = request.getParameter("num");
-		System.out.println("deleteNotice2 checkList: "+checkList);
+		System.out.println("deleteNotice2 checkList length: "+checkList.length);
 		System.out.println("delteNotice2 num: "+ num);
 		ArrayList<Integer> deleteList = new ArrayList<Integer>();
 		
@@ -45,13 +45,16 @@ public class DeleteNotice2Servlet extends HttpServlet {
 	
 	String page="";
 	if(result > 0) {
-		page="/semi/selectList.no";
+		response.sendRedirect("/semi/selectList.no");
+
 	}else {
 		request.setAttribute("msg", "공지사항 글 삭제 실패");
 		page="views/common/errorPage.jsp";
+	
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
+		
 	}
-	RequestDispatcher view = request.getRequestDispatcher(page);
-	view.forward(request, response);
 	
 	}
 

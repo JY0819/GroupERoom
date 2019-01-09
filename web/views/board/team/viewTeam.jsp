@@ -78,6 +78,7 @@ body {
 						<td style="width: 20%;">글 제목</td>
 
 						<td readonly><%=t.getbTitle() %></td>
+						
 					</tr>
 					<tr>
 						<td>내용</td>					
@@ -86,7 +87,7 @@ body {
 				</tbody>
 			</table>
 			</form>
-			<%if(at != null){ %>
+			<%if(at.getAno() != 0){ %>
 			
 			<div class="attachfile">
 				<label for="inputattach">첨부된 파일</label>

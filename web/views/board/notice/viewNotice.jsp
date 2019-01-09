@@ -81,6 +81,7 @@ body {
 				</tbody>
 			</table>
 			</form>
+			<%if(at.getAno() != 0){ %>
 			
 			<div class="attachfile">
 				<label for="inputattach">첨부된 파일</label>
@@ -96,6 +97,8 @@ body {
  
 				</div>
 				<br>
+				<%} %>
+				
 				
 		<BR>
 				<div class="repleArea">

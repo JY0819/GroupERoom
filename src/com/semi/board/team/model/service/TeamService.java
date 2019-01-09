@@ -316,5 +316,23 @@ public class TeamService {
 		close(con);
 		return t;
 	}
+	//글 수정
+	public HashMap<String, Object> editOne(int num) {
+		Connection con = getConnection();
+		HashMap<String, Object> hmap = new TeamDao().editOne(con, num);
+		
+		int result = 0;
+		
+		if(hmap != null) {
+			result = new TeamDao().updateCount(con, num);
+			if(result > 0) commit(con);
+			else rollback(con);	
+			
+		}
+		
+		close(con);
+		
+		return hmap;
+	}
 	
 }

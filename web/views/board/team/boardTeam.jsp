@@ -43,7 +43,7 @@
 		<table class="table table-striped" id="listArea">
 			
 				<tr>
-					<th>부서</th>
+				<!-- 	<th>부서</th> -->
 					<th>번호</th>
 					<th>제목</th>
 					<th>작성자</th>
@@ -54,15 +54,15 @@
 			<%if(loginUser.getDeptId().equals(t.getDeptId())){ %>
 				 <tr>
 				
-					<td><input type="hidden" name="fileName" value="<%=t.getFile02()%>"><%=t.getDeptId() %></td>
 					
-					 <td><%=t.getBno() %></td> 
+					
+					 <td><input type="hidden" name="fileName" value="<%=t.getFile02()%>"><%=t.getBno() %></td> 
 					<td><%=t.getbTitle() %></td>
 					<td><%=t.getWriterId() %></td>
 					<td><%=t.getbDate() %></td>
 					<td><%=t.getbClicks() %></td>
 				</tr>
-				
+				<%System.out.println(t.getFile02()) ;%>
 					<%}} %>
 	
 			
@@ -165,7 +165,7 @@ if(p == currentPage){
 			$(this).parent().css({"color":"black"})
 		
 		}).click(function(){
-			var num = $(this).parent().children().eq(1).text();//->글번호 가져오기
+			var num = $(this).parent().children().eq(0).text();//->글번호 가져오기
 			console.log(num);
 			var fileName = $("input[name='fileName']").val();
 			console.log(fileName);

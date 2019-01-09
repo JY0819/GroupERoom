@@ -417,7 +417,10 @@ System.out.println("상세보기 dao : "+query);
 			int result=0;
 			String query = prop.getProperty("updateFree");
 			System.out.println("update쿼리:"+query);
-			System.out.println("f.getFile02() :"+f.getFile02());
+			System.out.println("1, f.getbTitle(): "+f.getbTitle());
+			System.out.println("2, f.getbContent() : "+f.getbContent());
+			System.out.println("3, f.getFile02() :"+f.getFile02());
+			System.out.println("4, f.getBno(): "+f.getBno());
 			try {
 				pstmt=con.prepareStatement(query);
 				pstmt.setString(1, f.getbTitle());

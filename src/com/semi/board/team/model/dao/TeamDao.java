@@ -1025,6 +1025,61 @@ System.out.println("시퀀스값 조회쿼리 : "+query);
 		
 		return t;
 	}
+	//글 수정
+	public HashMap<String, Object> editOne(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Team t = null;
+		HashMap<String, Object> hmap = null;
+		Attachment at = null;
+		 
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				 t=new Team();
+					
+				 t.setBno(rset.getInt("BOARDNO"));
+					t.setbClass(rset.getString("BOARDCLASS"));
+					t.setbTitle(rset.getString("BOARDTITLE"));
+					t.setbContent(rset.getString("BOARDCONTENTS"));
+					t.setbDate(rset.getDate("BOARDDATE"));
+					t.setbClicks(rset.getInt("BOARDCLICKS"));
+					t.setbAttach(rset.getString("BOARDATTACH"));
+					t.setComNo(rset.getInt("COMMENTNO"));
+					t.setComLevel(rset.getInt("COMMENTLEVEL"));
+					t.setRecomId(rset.getString("RECOMMENTID"));
+					
+					t.setReplebno(rset.getInt("REPLEBOARDNO"));
+					t.setWriterId(rset.getString("EMPNAME"));
+					t.setStatus(rset.getString("WHETHEROFDELETE"));
+					t.setFile01(rset.getInt("FILE01"));
+					t.setFile02(rset.getInt("FILE02"));
+					t.setFile03(rset.getInt("FILE03"));
+				
+			}
+			
+			hmap = new HashMap<String, Object>();
+			
+			hmap.put("Team", t);
+			hmap.put("attachment", at);
+			
+			
+			
+		} catch (SQLException e) {				
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return hmap;
+	}
 	
 	
 

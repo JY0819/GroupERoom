@@ -181,7 +181,7 @@ if(p == currentPage){
 		
 		
 	$(function(){
-		$("#realTitle")/* .eq(2) */.mouseenter(function(){
+		$("#listArea td").mouseenter(function(){
 			$(this).css({"color":"darkgrey", "cursor":"pointer"});
 		
 		
@@ -206,8 +206,8 @@ if(p == currentPage){
 			
 			 alert('삭제되었습니다'); 
 			
-			 $("#formId").attr("action", "<%=request.getContextPath()%>/deleteNotice2.no?num="+num);
-				$("#formId").submit();
+			 $("#listForm").attr("action", "<%=request.getContextPath()%>/deleteNotice2.no?num="+num);
+				$("#listForm").submit();
 				
  		<%-- var result = confirm('삭제 하시겠습니까?');
 		if(result){

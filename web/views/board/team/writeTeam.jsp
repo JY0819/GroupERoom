@@ -118,7 +118,7 @@ body {
 		
 		$(function(){
 			$("#gotoList").click(function(){
-				location.href="/semi/views/board/team/boardTeam.jsp";
+				location.href="/semi/selectList.tm";
 			});
 		});
 	</script>

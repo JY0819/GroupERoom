@@ -115,7 +115,9 @@ public class UpdateFreeServlet extends HttpServlet {
 			String multiTitle = multiRequest.getParameter("title");
 
 			String multiContent = multiRequest.getParameter("content");
-
+			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
+		
+			
 			System.out.println("multiTitle:"+multiTitle);
 
 			System.out.println("multiContent:"+multiContent);
@@ -129,6 +131,7 @@ public class UpdateFreeServlet extends HttpServlet {
 			System.out.println("writer: "+writer);
 			// 객체 생성
 			Free f = new Free();
+			f.setBno(bno);
 			f.setbTitle(multiTitle);
 			f.setbContent(multiContent);			
 			f.setWriterId(String.valueOf(((Employee)(request.getSession().getAttribute("loginUser"))).getEmpid()));

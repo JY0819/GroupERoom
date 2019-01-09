@@ -35,7 +35,6 @@ public class SelectOneBoardServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int num = Integer.parseInt(request.getParameter("num"));
-		System.out.println("설마@@@@@@@@@@@@@@@");
 		System.out.println("글번호: "+num);
 	
 		String fileName = request.getParameter("fileName");
