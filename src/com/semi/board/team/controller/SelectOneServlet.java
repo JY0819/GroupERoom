@@ -42,14 +42,12 @@ public class SelectOneServlet extends HttpServlet {
 		System.out.println("select servlet fileName: "+fileName);
 		
 		String page ="";
-		System.out.println(page + "ddddd");
 		if(Integer.parseInt(fileName) != 0) {
 			HashMap<String, Object> hmap = new TeamService().selectOne(num);
 			Team t = (Team)hmap.get("Team");
 			Attachment at = (Attachment)hmap.get("attachment");
-			System.out.println(page + "ddddd");
 			ArrayList<Team> reply = new TeamService().selectReply(num);
-			System.out.println(page + "ddddd");
+
 			if(t != null) {
 				if(reply != null) {
 					request.setAttribute("reply", reply);

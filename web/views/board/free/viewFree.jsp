@@ -84,7 +84,7 @@ body {
 			</table>
 			</form>
 			 
-			 <%if(at != null){ %>
+			<%if(at.getAno() != 0){ %>
 			 <div class="attachfile">
 				<label for="inputattach">첨부된 파일</label>
 				<!-- <input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">

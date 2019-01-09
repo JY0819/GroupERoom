@@ -1,6 +1,7 @@
 package com.semi.board.team.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.board.team.model.service.TeamService;
+import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
 
 /**
@@ -32,16 +34,19 @@ public class SelectTeamServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String num = request.getParameter("num");
+		int num = Integer.parseInt(request.getParameter("num"));
 		
-		Team t = new TeamService().selectOne(num);
+		HashMap<String, Object> hmap = new TeamService().editOne(num);
+		Team t = (Team)hmap.get("Team");
+		Attachment at 
+        = (Attachment)hmap.get("attachment");
 		
 		String page="";
 		
 		if(t != null) {
 			page="views/board/team/modifyTeam.jsp";
 			request.setAttribute("t", t);
-			
+			request.setAttribute("at", at);
 		}else {
 			page="views/common/errorPage.jsp";
 			request.setAttribute("msg", "부서 게시판 글 수정 상세보기 실패");
