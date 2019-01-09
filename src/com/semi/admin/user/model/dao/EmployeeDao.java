@@ -768,5 +768,58 @@ public class EmployeeDao {
 		return listCount;
 	}
 
+	public int mypageUpdateEmployee(Connection con, Employee emp, int photoId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("mypageUpdateEmployeeWithPhoto");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, emp.getEmpPwd());
+			pstmt.setString(2, emp.getEmpPhone());
+			pstmt.setString(3, emp.getEmpAddr());
+			pstmt.setInt(4, photoId); // PHOTOID
+			pstmt.setInt(5, emp.getEmpid());
+
+			// System.out.println("insertMember photoId > " + photoId);
+			System.out.println(" emp : >> \n" + emp.toString());
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int mypageUpdateEmployee(Connection con, Employee emp) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("mypageUpdateEmployee");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, emp.getEmpPwd());
+			pstmt.setString(2, emp.getEmpPhone());
+			pstmt.setString(3, emp.getEmpAddr());
+			pstmt.setInt(4, emp.getEmpid());
+
+			// System.out.println("insertMember photoId > " + photoId);
+			System.out.println(" emp : >> \n" + emp.toString());
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 }
