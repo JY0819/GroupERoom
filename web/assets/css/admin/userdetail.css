@@ -8,9 +8,9 @@ body {
 	margin-right: 100px;
 }
 
-#update, #goList, #delete {
+#updateBtn, #goList, #deleteBtn {
 	float: right;
-	width: 80px;
+	width: 75px;
 	font-weight: bold;
 	background: #205181;
 	color: white;
@@ -19,9 +19,11 @@ body {
 
 #goList {
 	background: orange;
+	width : 85px;
+	float: right;
 }
 
-#delete {
+#deleteBtn {
 	background: red;
 }
 
@@ -33,6 +35,6 @@ body {
 	width: 40px;
 }
 
-.table > th{
+#listArea, #listHeader, #listHeader>th {
 	text-align: center;
 }

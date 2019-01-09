@@ -33,7 +33,7 @@
 		<form id="updateForm" method="post">
 			<table>
 				<tr>
-					<td><label for="inputDeptId">부서코드</label></td>
+					<td><label for="inputDeptId" class="control-label">부서코드</label></td>
 					<td><input type="text" class="form-control" id="deptId" name="deptId" value="<%=dept.getDeptId()%>" readonly></td>
 				</tr>
 
@@ -58,16 +58,14 @@
 				</tr>
 			</table>
 
-			<div>
-				<button class="btn btn-default" onclick="updateDept();">수정</button>
-				<button class="btn btn-default" onclick="deleteDept();">삭제</button>
+			<div class="deptDetailBtns">
+				<button class="btn btn-default" id="updateDeptBtn" onclick="updateDept();">수정</button>
+				<button class="btn btn-default" id="deleteDeptBtn" onclick="deleteDept();">삭제</button>
+				<div class="btn btn-default" id="goList" onclick="location.href='<%=request.getContextPath()%>/depList.dp'">목록으로</div>
 			</div>
 			
 		</form>
 		
-			<div>
-				<button class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/depList.dp'">목록으로</button>
-			</div> 
 		</div>
 	</div>
 </section>

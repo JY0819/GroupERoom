@@ -21,6 +21,9 @@
 	function openHome() {
 		location.href="/semi/main";
 	}
+	function logOut(){
+		location.href="<%=request.getContextPath()%>/logout.me";
+	}
 </script>
 
 <nav class="navigation">
@@ -55,8 +58,7 @@
 	</div>
 	
 	<div class="nav-right">
-		<!-- 일단 임시로 로그아웃 a태그 -->
-		<span><a href="<%=request.getContextPath()%>/logout.me">LogOut</a></span>
+		<span><i class="fas fa-sign-out-alt custom_icon_size_2_5" onclick="logOut()"></i></span>
 		<i class="far fa-user fa-2x"></i>
 		<i class="fas fa-chevron-down"></i>
 	</div>

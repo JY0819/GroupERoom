@@ -4,6 +4,7 @@
 	request.setAttribute("title", "사원 추가");
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/user.css">
+
 <jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 
 <script type="text/javascript">
@@ -33,6 +34,8 @@
 			});
 		});
 	});
+	
+	
 </script>
 
 <section class="content">
@@ -177,11 +180,11 @@
 			</div>
 
 			<div class="col-lg-offset-2 col-lg-7">
-				<button type="button" class="btn btn-default" id="goList" onclick="goList();">목록으로</button>
+				<div class="btn btn-default" id="goList" onclick="goList();">목록으로</div>
+				<button type="submit" class="btn btn-default" id="enrollBtn" onclick="insertMember();">등록</button>
 			</div>
 		</form>
 		
-		<button type="submit" class="btn btn-default" id="enrollBtn" onclick="insertMember();">등록</button>
 
 		<script>
 			function goList() {
@@ -213,147 +216,11 @@
 				});
 				
 				
-				/*
-				$('#id').keyup(function(event) {
-
-					var divId = $('#divId');
-
-					if ($('#id').val() == "") {
-						divId.removeClass("has-success");
-						divId.addClass("has-error");
-					} else {
-						divId.removeClass("has-error");
-						divId.addClass("has-success");
-					}
-				});
-
-				$('#password').keyup(function(event) {
-
-					var divPassword = $('#divPassword');
-
-					if ($('#password').val() == "") {
-						divPassword.removeClass("has-success");
-						divPassword.addClass("has-error");
-					} else {
-						divPassword.removeClass("has-error");
-						divPassword.addClass("has-success");
-					}
-				});
-
-				$('#passwordCheck').keyup(function(event) {
-
-					var passwordCheck = $('#passwordCheck').val();
-					var password = $('#password').val();
-					var divPasswordCheck = $('#divPasswordCheck');
-
-					if ((passwordCheck == "") || (password != passwordCheck)) {
-						divPasswordCheck.removeClass("has-success");
-						divPasswordCheck.addClass("has-error");
-					} else {
-						divPasswordCheck.removeClass("has-error");
-						divPasswordCheck.addClass("has-success");
-					}
-				});
-
-				$('#name').keyup(function(event) {
-
-					var divName = $('#divName');
-
-					if ($.trim($('#name').val()) == "") {
-						divName.removeClass("has-success");
-						divName.addClass("has-error");
-					} else {
-						divName.removeClass("has-error");
-						divName.addClass("has-success");
-					}
-				});
-
-				$('#phoneNumber').keyup(function(event) {
-
-					var divPhoneNumber = $('#divPhoneNumber');
-
-					if ($.trim($('#phoneNumber').val()) == "") {
-						divPhoneNumber.removeClass("has-success");
-						divPhoneNumber.addClass("has-error");
-					} else {
-						divPhoneNumber.removeClass("has-error");
-						divPhoneNumber.addClass("has-success");
-					}
-				});
 				
-				$('#address').keyup(function(event) {
-
-					var divAddress = $('#divAddress');
-
-					if ($.trim($('#address').val()) == "") {
-						divAddress.removeClass("has-success");
-						divAddress.addClass("has-error");
-					} else {
-						divAddress.removeClass("has-error");
-						divAddress.addClass("has-success");
-					}
-				});
-				
-				$('#birth').keyup(function(event) {
-
-					var divBirth = $('#divBirth');
-
-					if ($.trim($('#address').val()) == "") {
-						divBirth.removeClass("has-success");
-						divBirth.addClass("has-error");
-					} else {
-						divBirth.removeClass("has-error");
-						divBirth.addClass("has-success");
-					}
-					
-				});
-				
-				$('#entryDay').keyup(function(event) {
-
-					var divEntryDay = $('#divEntryDay');
-
-					if ($.trim($('#entryDay').val()) == "") {
-						divEntryDay.removeClass("has-success");
-						divEntryDay.addClass("has-error");
-					} else {
-						divEntryDay.removeClass("has-error");
-						divEntryDay.addClass("has-success");
-					}
-				});
-				
-				$('#adminYN').keyup(function(event) {
-
-					var divEntryDay = $('#divAdminYN');
-	
-					if ($.trim($('#adminYN').val()) == "") {
-						divAdminYN.removeClass("has-success");
-						divAdminYN.addClass("has-error");
-					} else {
-						divAdminYN.removeClass("has-error");
-						divAdminYN.addClass("has-success");
-					}
-				});
-				
-				$('#approvePwd').keyup(function(event) {
-
-					var divApprovalPwd = $('#divApprovalPwd');
-
-					if ($.trim($('#approvePwd').val()) == "") {
-						divApprovalPwd.removeClass("has-success");
-						divApprovalPwd.addClass("has-error");
-					} else {
-						divApprovalPwd.removeClass("has-error");
-						divApprovalPwd.addClass("has-success");
-					}
-				});
-				
-				*/
 				//-------------- validation 검사 -------------------
 				$("form").submit(
 						function(event) {
 
-// 							var provision = $('#provision');
-// 							var memberInfo = $('#memberInfo');
 							var divId = $('#divId');
 							var divPassword = $('#divPassword');
 							var divPasswordCheck = $('#divPasswordCheck');

@@ -13,7 +13,7 @@ body {
 
 #enrollBtn, #goList {
 	float: right;
-	width: 80px;
+	width: 75px;
 	font-weight: bold;
 	background: #205181;
 	color: white;
@@ -22,5 +22,10 @@ body {
 
 #goList {
 	background: orange;
+	width : 85px;
+}
+
+#idCheck {
+	background: #FBEFEF;
 }
 

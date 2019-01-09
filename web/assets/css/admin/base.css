@@ -4,13 +4,45 @@
 	margin-top: 100px !important;
 	vertical-align: middle;
 }
-/* .custom_deptForm > table > tr{
-	margin : 50px;
+
+#addDeptBtn, #modal, #saveDeptBtn {
+	width: 75px;
+	font-weight: bold;
+	background: #205181;
+	color: white;
+	margin-right: 5px;
+}
+
+/* #modal {
+	width: 85px;
+	background: orange;
 } */
-#saveBtn {
+#updateDeptBtn, #deleteDeptBtn, #goList {
+	width: 75px;
+	font-weight: bold;
+	background: #205181;
+	color: white;
+	margin-right: 5px;
+}
+
+#saveDeptBtn {
 	margin-left: 110px;
 	margin-top: 15px;
 }
+
+.deptDetailBtns {
+	margin-top: 15px;
+}
+
+#goList, #modal {
+	background: orange;
+	width: 85px;
+}
+
+#deleteDeptBtn {
+	background: red;
+}
+
 /* posForm */
 .custom_posForm {
 	margin-left: 400px;
