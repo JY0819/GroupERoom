@@ -105,28 +105,51 @@
 	<script> //메모 불러오기
 	function openMemo(){
 		var memoEmpId=<%=loginUser.getEmpid()%>;
+		var photoId=<%=loginUser.getPhotoId()%>;
+		<%-- 
+		var empName=<%=loginUser.getEmpName()%>;
+		var empDept=<%=loginUser.getDeptName()%>;
+		var empPosition=<%=loginUser.getPositionName()%>; --%>
 		console.log("empid:"+memoEmpId)
 		console.log("메모");
 		$.ajax({
 			url:"/semi/select.memo",
 			type:"post",
-			data:{empId:memoEmpId},
+			data:{empId:memoEmpId,photoId:photoId},
 			success:function(data){
 				console.log("메모 ajax 전송 성공");
-				console.log("result:"+data);
 				
+				//메모area 
 				var $memoDiv=$("#memoDiv");
 				var $memoArea=$("#memoArea");
 				$memoArea.html(data.memoContents);
+				
+				//사원정보 area
+				var $empPhoto=$("#sideuserPhoto");
+				//사원 이미지 없으면 기본 이미지로
+				if(<%=loginUser.getPhotoId()%>==0){
+					$empPhoto.css("background-image","url('assets/images/upload_EmpImg/ProfileImg-None.png')");
+				}else{
+					$empPhoto.css("background-image","url('assets/images/upload_EmpImg/"+data.imgPath+"')");
+				}
+				var $empName=$("#sideEmpName");
+				var $empDept=$("#sideEmpDept");
+				var $empPosition=$("#sideEmpPosition");
+				$empName.html("<%=loginUser.getEmpName()%>");
+				$empDept.html("<%=loginUser.getDeptName()%>"+"팀");
+				$empPosition.html("<%=loginUser.getPositionName()%>");
+				//부서/직책 정보 없으면 비우기
+				if("<%=loginUser.getDeptName()%>"=="null"){$empDept.html("");} 
+				if("<%=loginUser.getPositionName()%>"=="null"){$empPosition.html("")}
 				
 			},
 			error:function(data){
 				console.log("메모 ajax 전송 실패");
 			},
-			complete:function(data){
-				console.log("메모 ajax");
-			}
 		});
+		/* $("#sideEmpName").html(empName);
+		$("#sideEmpDept").html(empDept);
+		$("#sideEmpPositon").val(empPosition); */
 	}
 	$(function(){
 		$("#memoArea").focusout(function(){

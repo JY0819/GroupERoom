@@ -162,7 +162,8 @@
 		height:250px;
 		background:#f0f0f0;
 		border:1px solid #D8D8D8;
-		border-radius:5px;
+		box-shadow: 5px 5px 5px #6c6c6c;
+		/* border-radius:5px; */
 		position:absolute;
 		padding:25px 5px 5px 5px;
 		display: none;
@@ -173,9 +174,10 @@
 		left:40.5%;
 		width:280px;
 		height:200px;
-		background:#EBF0FF;
-		border:1px solid #C4D3FF;
-		border-radius:5px;
+		background:#E0E5F4;
+		box-shadow: 3px 3px 3px #6c6c6c;
+		border:1px solid #E0E5F4;
+		/* border-radius:5px; */
 		position:absolute;
 		padding:15px 5px 5px 5px;
 		display: none;
@@ -200,13 +202,15 @@
 		left:42.5%;
 		width:230px;
 		height:140px;
-		background:#FFF6F6;
+		background:#f0f0f0;
 		z-index:10;
 		padding:5px 5px 5px 5px;
-		border:1px solid #ffcfcf;
+		box-shadow: 3px 3px 3px #6c6c6c;
+		border:1px solid #f0f0f0;
+		/* border:1px solid #CCD6F3; */
 		margin-left:auto;
 		margin-right:auto;
-		border-radius:5px;
+		/* border-radius:5px; */
 		display: none;
 	}
 	.btnDiv{

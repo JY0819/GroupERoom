@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.memo.model.service.MemoService;
 import com.semi.memo.model.vo.Memo;
 
@@ -31,9 +32,12 @@ public class SelectMemoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int empId=Integer.parseInt(request.getParameter("empId"));
-		System.out.println(empId);
-		
+		int photoId=Integer.parseInt(request.getParameter("photoId"));
+		System.out.println(empId+""+photoId);
 		Memo memo=new MemoService().selectMemo(empId);
+		String imgPath=new MemoService().selectEmpImg(photoId);
+		System.out.println("서블릿:"+imgPath);
+		memo.setImgPath(imgPath);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
