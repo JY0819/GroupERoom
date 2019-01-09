@@ -74,7 +74,7 @@ public class SelectOneBoardServlet extends HttpServlet {
 				
 			}else {
 				page = "views/common/errorPage.jsp";
-				request.setAttribute("msg", "글 상세보기 실패!");
+				request.setAttribute("msg", "자유게시판 글 상세보기 실패!");
 			}
 		}
 		

@@ -76,12 +76,12 @@ body {
 				</table>
 				<% if(at!=null){ %>
 				<input type="hidden" id="inputFile" class="form-control" name="originAno"  value="<%=at.getAno()%>">
-				<%} %>
+				
 				<div class="form-group">
 					<label for="inputattach">기존파일</label>
 					<%=at.getOriginName() %>
 					<br>
-			
+			<%} %>
 
 
 						<div class="bootstrap-filestyle input-group">

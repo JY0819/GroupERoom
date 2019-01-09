@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.semi.board.Free.model.dao.FreeDao;
 import com.semi.board.team.model.dao.TeamDao;
 import com.semi.board.team.model.vo.Attachment;
 import com.semi.board.team.model.vo.Team;
@@ -371,5 +370,86 @@ public class TeamService {
 		
 		return result;
 	}
+	//글 작성
+	public int insertFree(Team t) {
+		Connection con = getConnection();
+
+		int result = new TeamDao().insertFree(con, t);
+
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+
+		return result;
+	}
+	//글 수정
+	public Team editNoFile(int num) {
+		Connection con=getConnection();
+		System.out.println("노파일 글 수정페이지 가기 전 서비스");
+		Team t=new TeamDao().editNoFile(con, num);
+		System.out.println("노파일 글 수정페이지 가기 전 service");
+		int result=0;
+		if(t!=null) {
+			result=new TeamDao().updateCount(con, t.getBno());
+			if(result>0) { commit(con);}
+			else { rollback(con); }
+			
+		}
+		close(con);
+		
+		return t;
+	}
+	//첨부파일 없는 글 수정
+	public int updateNoFileTeam(Team t) {
+		Connection con=getConnection();
+		int result=0;
+		
+		result=new TeamDao().updateNoFileTeam(con, t);
+		System.out.println("첨부파일 없는 글 수정 service");
+		if(result>0) commit(con);
+		else rollback(con);
+		
+		close(con);
+		return result;
+	}
+	//유파일 글수정
+	public int updateTeam(Team t, Attachment at, int originAno) {
+		Connection con = getConnection();
+		
+		int result=0;
+		
+		int result0 = new TeamDao().updateAttachment(con, at);
+		System.out.println("updateAttachment result0 : "+result0);
+		if(result0 > 0) {
+			int ano=new TeamDao().selectCurrval(con);
+			
+			t.setFile02(ano);
+		
+		}
+		
+		int result2=0;
+		
+		result2= new TeamDao().updateTeam(con, t);
+		System.out.println("service result2: "+result2);
+
+			
+			
+		int result4 = new TeamDao().deleteOriginFile(con, originAno);
+			System.out.println("service result4: "+result4);
+		int result3 = new TeamDao().deleteAttachment(con, originAno);
+		System.out.println(result0+""+result2+""+result4+""+result3);
+		
+		if(result0 > 0 && result2 > 0 && result3 > 0 && result4 > 0 ) {			
+			commit(con);
+			result=1;
+		}else {
+			rollback(con);
+		}
+		
+		return result;
+	}
+	
 	
 }

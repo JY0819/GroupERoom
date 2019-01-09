@@ -220,12 +220,12 @@ if(p == currentPage){
 		}--%>
 		}); 
 	});
-      
+ /*      
 	$(function () {
 		setTimeout(function() {
 			sendAlarm("0" + ",board");
 		}, 3000);
-	});
+	}); */
       
 </script>
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

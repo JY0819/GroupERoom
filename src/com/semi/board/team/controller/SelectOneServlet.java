@@ -43,11 +43,12 @@ public class SelectOneServlet extends HttpServlet {
 		
 		String page ="";
 		if(Integer.parseInt(fileName) != 0) {
+			System.out.println("#######유파일 글 상세보기");
 			HashMap<String, Object> hmap = new TeamService().selectOne(num);
 			Team t = (Team)hmap.get("Team");
 			Attachment at = (Attachment)hmap.get("attachment");
 			ArrayList<Team> reply = new TeamService().selectReply(num);
-
+fileNAme못받아오는듯
 			if(t != null) {
 				if(reply != null) {
 					request.setAttribute("reply", reply);
@@ -63,11 +64,11 @@ public class SelectOneServlet extends HttpServlet {
 			}
 			
 		}else {
-			System.out.println(page + "ddddd");
+			System.out.println("#######노파일 글 상세보기");
+
 			Team t = new TeamService().selectOneNoFile(num);
 			Attachment at = new Attachment();
 			
-			System.out.println(page + "ddddd");
 			if(t != null) {
 				request.setAttribute("t", t);
 				request.setAttribute("at", at);
