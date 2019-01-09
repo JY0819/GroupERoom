@@ -4,12 +4,9 @@
 	Position p = (Position) request.getAttribute("p");
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
-<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
+<jsp:include page="/views/layout/layout-up.jsp" />
 
 <script type="text/javascript">
-	var jsonData = treeviewJson.adminJson;
-	var nodeName = "직책 관리";
-	
 	function updatePos(){
 		$("#updateForm").attr("action", "<%=request.getContextPath()%>/updatePos.po");
 	}
@@ -74,4 +71,4 @@
 		</div>
 	</div>
 </section>
-<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
+<jsp:include page="/views/layout/layout-down.jsp" />

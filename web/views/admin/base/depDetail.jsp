@@ -4,12 +4,9 @@
 	Department dept = (Department) request.getAttribute("dept");
 %>
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
-<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
+<jsp:include page="/views/layout/layout-up.jsp" />
 
 <script type="text/javascript">
-	var jsonData = treeviewJson.adminJson;
-	var nodeName = "부서 관리";
-	
 	function updateDept(){
 		$("#updateForm").attr("action", "<%=request.getContextPath()%>/updateDept.dp");
 	}
@@ -24,24 +21,19 @@
 </script>
 
 <section class="content">
-	<div class="content-left">
-		<div id="treeview"></div>
-	</div>
-
-	<div class="content-right container">
-		<div class="custom_deptForm">
+	<div class="custom_deptForm">
 		<form id="updateForm" method="post">
 			<table>
 				<tr>
 					<td><label for="inputDeptId" class="control-label">부서코드</label></td>
 					<td><input type="text" class="form-control" id="deptId" name="deptId" value="<%=dept.getDeptId()%>" readonly></td>
 				</tr>
-
+	
 				<tr>
 					<td><label for="inputDeptName">부서명</label></td>
 					<td><input type="text" class="form-control" id="deptName" name="deptName" value="<%=dept.getDeptName()%>" readonly></td>
 				</tr>
-
+	
 				<tr>
 					<td><label for="inputDeptActive">활성화</label></td>
 					<td>
@@ -57,7 +49,7 @@
 					<td><textarea id="deptNote" name="deptNote" rows="5" cols="20" class="form-control" ><%=dept.getDeptNote()%></textarea></td>
 				</tr>
 			</table>
-
+	
 			<div class="detailBtns">
 				<button class="btn btn-default" id="updateBtn" onclick="updateDept();">수정</button>
 				<button class="btn btn-default" id="deleteBtn" onclick="deleteDept();">삭제</button>
@@ -66,7 +58,6 @@
 			
 		</form>
 		
-		</div>
 	</div>
 </section>
-<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
+<jsp:include page="/views/layout/layout-down.jsp" />

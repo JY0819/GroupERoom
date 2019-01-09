@@ -1,146 +1,114 @@
 <%@page import="com.semi.admin.user.model.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
-	int empid = loginUser.getEmpid();
-	String adminAuthority = loginUser.getAdminAuthority();
-	String socketLink = "ws://" + request.getLocalAddr() +":" + request.getLocalPort() + request.getContextPath() + "/alarmStart";
-%>
+
 
 <style type="text/css">
 	.custom_icon_size_2_5{font-size: 2.5rem;}
 </style>
 
 <script>
-	function openNav() {
-		document.getElementById('sidemenu').style.width = '300px';
-	}
-	function closeNav() {
-		document.getElementById('sidemenu').style.width = '0';
-	}
-	function openHome() {
-		location.href="/semi/main";
-	}
 	function logOut(){
 		location.href="<%=request.getContextPath()%>/logout.me";
 	}
 </script>
 
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <img alt="logo" src="/semi/assets/images/logo.png" height="50px;" style="float:left; margin-left: 15px;">
+    <a class="navbar-brand" href="/semi/main" style="padding: 15px 15px 15px 0;">groupERoom</a>
+</div>
+            
+<!-- /.navbar-header -->
+<ul class="nav navbar-top-links navbar-right">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-alerts">
+            <li>
+                <a href="<%=request.getContextPath()%>/selectList.no">
+                    <div>
+                        <i class="fa fa-comment fa-fw"></i> 0
+                        <span class="pull-right text-muted small">New Notice</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="<%=request.getContextPath()%>/myPageMessage">
+                    <div>
+                        <i class="fa fa-twitter fa-fw"></i> 0
+                        <span class="pull-right text-muted small">New Message</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds">
+                    <div>
+                        <i class="fa fa-envelope fa-fw"></i> 0
+                        <span class="pull-right text-muted small">New Approval</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="<%=request.getContextPath()%>/selectStatusServlet.sss">
+                    <div>
+                        <i class="fa fa-tasks fa-fw"></i> 0
+                        <span class="pull-right text-muted small">New Approval End</span>
+                    </div>
+                </a>
+            </li>
+           <!--  
+           <li class="divider"></li>
+            <li>
+                <a href="#">
+                    <div>
+                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                        <span class="pull-right text-muted small">4 minutes ago</span>
+                    </div>
+                </a>
+            </li> 
+            <li class="divider"></li>
+            <li>
+                <a class="text-center" href="#">
+                    <strong>See All Alerts</strong>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+            -->
+        </ul>
+        <!-- /.dropdown-alerts -->
+    </li>
+    <!-- /.dropdown -->
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li><a href="<%=request.getContextPath()%>/myPageMain"><i class="fa fa-user fa-fw"></i> User Profile</a>
+            </li>
+            <li class="adminYNClass"><a href="<%=request.getContextPath()%>/memberList.me"><i class="fa fa-gear fa-fw"></i> Admin</a>
+            </li>
+            <li class="divider"></li>
+            <li><a href="javascript:void(0);" onclick="logOut()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            </li>
+        </ul>
+        <!-- /.dropdown-user -->
+    </li>
+    <!-- /.dropdown -->
+</ul>
+<!-- /.navbar-top-links -->
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    color: rgb(0, 154, 200) !important;
-    text-decoration: none !important;
-    transition: 0.5s ease-in-out !important;
-    background: rgb(32, 81, 129) !important;
-}
-.dropdown-menu > li > div > a:hover, .dropdown-menu > li > div > a:focus {
-    color: rgb(0, 154, 200) !important;
-    text-decoration: none !important;
-    transition: 0.5s ease-in-out !important;
-    background: rgb(32, 81, 129) !important;
-}
-.dropdown-menu > li {
-    margin-left: 0;
-    margin-right: 0;
-}
-.dropdown-menu > li > div > a {
-    display: block;
-    padding: auto;
-    white-space: nowrap;
-    line-height: 1.42857143;
-    border-top: 1px solid #ddd;
-    width: 50%;
-   	padding-bottom: 5px;
-   	padding-top: 5px;
-	text-decoration: none;
-	text-align: center;
-}
-.fontStyle{
-	text-align: right;
-	font-size: 17px !important;
-   	color: white !important;
-   	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-}
-#alarmCountAtagDiv{
-	border-radius: 100%;
-	background: red;
-	position: absolute;
-	left: auto;
-	right: 70px;
-	top: 10px;
-	width: 19px;
-	height: 19px;
-}
-#alarmCountAtag{
-	width: 100% !important;
-	height: 100% !important;
-	font-size: 8.5px !important;
-	font-weight: bold;
-	color: white !important;
-	line-height: 20px;
-}
-</style>
-
-<nav class="navigation">
-	<div class="nav-left">
-		<span class="openside" onclick="openHome()"><i class="fa fa-home custom_icon_size_2_5"></i></span>
-		<span class="openside" onclick="openNav()"> <i onclick='openMemo()' class="fas fa-bars"></i></span>
-		
-		<!--결재 게시판 넘어가게 a태그에 경로 입력함
-		css부분 클릭시 글씨 색이나 밑줄 변경 안하게 하려고 a태그 부분 추가함-->
-
-		<span><a href="<%=request.getContextPath()%>/selectMainServlet.sm">Approve</a></span>
-		<span><a href="<%=request.getContextPath()%>/selectList.no">Board</a></span>
-		<span><a href="<%=request.getContextPath()%>/schedule.sche">Schedule</a></span>
-		<span><a href="<%=request.getContextPath()%>/myPageMain">MyPage</a></span>
-    
-    <%--
-    	<span><a href="<%=request.getContextPath()%>/selectMainServlet.sm">결재</a></span>
-		<span><a href="<%=request.getContextPath()%>/selectList.no">게시판</a></span>
-		<span><a href="<%=request.getContextPath()%>/schedule.sche">일정</a></span>
-		<span><a href="<%=request.getContextPath()%>/myPageMain">마이페이지</a></span>
-	--%>
-
-		<%
-			if(adminAuthority.equals("Y")) {
-		%>
-		
-		<span><a href="<%=request.getContextPath()%>/memberList.me">Admin</a></span>
-		
-		<%
-			}
-		%>
-	</div>
-	
-	<div class="nav-right">
-		
-		<div id="alarmCountAtagDiv" data-toggle="dropdown" style="cursor: pointer; display: none;" align="center"><a id="alarmCountAtag">1</a></div>
-		
-		<i data-toggle="dropdown" class="far fa-user fa-2x" style="cursor: pointer;"></i>
-		
-		<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true" style="color: white;"><i class="fas fa-chevron-down"></i></a>
-		<ul class="dropdown-menu" style="margin-bottom: 0px; padding-bottom: 0px; position: absolute; width: 250px; left: auto; right: 5px; top: 65px; float: right; background: rgb(32, 81, 129); padding-left: 0;, padding-right: 0; box-shadow: 5px 5px 5px #606060">
-			<li><a href="<%=request.getContextPath()%>/selectList.no" class="fontStyle" id="NoticeAlarm">0 of New Notice</a></li>
-			<li><a href="<%=request.getContextPath()%>/myPageMessage" class="fontStyle" id="MsgAlarm">0 of New Message</a></li>
-			<li><a href="<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds" class="fontStyle" id="ApprAlarm">0 of New Approval</a></li>
-			<li><a href="<%=request.getContextPath()%>/selectStatusServlet.sss" class="fontStyle" id="ApprEndAlarm">0 of New Approval End</a></li>
-			<li style="margin-bottom: 0px; padding-bottom: 0px;">
-				<div>
-					<a class="fontStyle" href="<%=request.getContextPath()%>/myPageMain" style="border-right: 1px solid #ddd; float: left;">MyPage</a>
-					<a class="fontStyle"  onclick="logOut()" style="float: right;">LogOut</a>
-				</div>
-			</li>
-		</ul>
-
-	</div>
-</nav>
-<input type="hidden" value="<%= empid %>" name="empId">
 <script>
 	$(function() {
-		var empId = $("input[name=empId]").val();
+		var empId = loginUserInfo.emp_id;
 		console.log(empId);
 		$.ajax({
 			url:"/semi/chkToDayAttend",
@@ -178,12 +146,8 @@
 	
 	<script> //메모 불러오기
 	function openMemo(){
-		var memoEmpId=<%=loginUser.getEmpid()%>;
-		var photoId=<%=loginUser.getPhotoId()%>;
-		<%-- 
-		var empName=<%=loginUser.getEmpName()%>;
-		var empDept=<%=loginUser.getDeptName()%>;
-		var empPosition=<%=loginUser.getPositionName()%>; --%>
+		var memoEmpId=loginUserInfo.emp_id;
+		var photoId=loginUserInfo.photo_id;
 		console.log("empid:"+memoEmpId)
 		console.log("메모");
 		$.ajax({
@@ -201,7 +165,7 @@
 				//사원정보 area
 				var $empPhoto=$("#sideuserPhoto");
 				//사원 이미지 없으면 기본 이미지로
-				if(<%=loginUser.getPhotoId()%>==0){
+				if(loginUserInfo.photo_id==0){
 					$empPhoto.css("background-image","url('assets/images/upload_EmpImg/ProfileImg-None.png')");
 				}else{
 					$empPhoto.css("background-image","url('assets/images/upload_EmpImg/"+data.imgPath+"')");
@@ -209,12 +173,12 @@
 				var $empName=$("#sideEmpName");
 				var $empDept=$("#sideEmpDept");
 				var $empPosition=$("#sideEmpPosition");
-				$empName.html("<%=loginUser.getEmpName()%>");
-				$empDept.html("<%=loginUser.getDeptName()%>"+"팀");
-				$empPosition.html("<%=loginUser.getPositionName()%>");
+				$empName.html(loginUserInfo.emp_name);
+				$empDept.html(loginUserInfo.dept_name+"팀");
+				$empPosition.html(loginUserInfo.position_name);
 				//부서/직책 정보 없으면 비우기
-				if("<%=loginUser.getDeptName()%>"=="null"){$empDept.html("");} 
-				if("<%=loginUser.getPositionName()%>"=="null"){$empPosition.html("")}
+				if(loginUserInfo.dept_name==""){$empDept.html("");} 
+				if(loginUserInfo.position_name==""){$empPosition.html("")}
 				
 			},
 			error:function(data){
@@ -228,7 +192,7 @@
 	$(function(){
 		$("#memoArea").focusout(function(){
 			var memoContents=$("#memoArea").val();
-			var empId=<%=empid%>;
+			var empId=loginUserInfo.emp_id;
 			console.log(memoContents);
 			$.ajax({
 				url:"/semi/insert.memo",
@@ -256,7 +220,7 @@
 			getConnection();
 	})
 	function getConnection(){	
-		ws = new WebSocket("<%= socketLink %>");
+		ws = new WebSocket(loginUserInfo.socket_link);
 		//서버 시작할 때 동작		
 		ws.onopen = function(event){
 			
@@ -286,10 +250,10 @@
 		var serverMessage = event.data.split(",");
 		console.log(event.data);
 		// serverMessage[0] 알람 갯수, serverMessage[1] 알람 분류, serverMessage[2] 알람 받을 empid
-		if (serverMessage[1] == "msg" && serverMessage[2] == <%=empid%>) {
+		if (serverMessage[1] == "msg" && serverMessage[2] == loginUserInfo.emp_id) {
 			$("#MsgAlarm").text(serverMessage[0] + " of New Message");
 			alarmCount += parseInt(serverMessage[0]);
-			$("#MsgAlarm").attr("href", "<%=request.getContextPath()%>/chkAlarm?empid=<%=empid%>");
+			$("#MsgAlarm").attr("href", "<%=request.getContextPath()%>/chkAlarm?empid=" + loginUserInfo.emp_id);
 		} else if (serverMessage[1] == "board") {
 			var countBoard = serverMessage[0].split("|");
 			var data = null;
@@ -299,7 +263,7 @@
 				data = countBoard[1].split("-");
 				console.log(data);
 				for (var j = 0; j < data.length; j++) {
-					if (data[j] == <%=empid%>) {
+					if (data[j] == loginUserInfo.emp_id) {
 						count--;
 					}
 				}
@@ -308,35 +272,35 @@
 			if (count > 0) {
 				$("#NoticeAlarm").text(count + " of New Notice");
 				alarmCount += count;
-				$("#NoticeAlarm").attr("href", "<%=request.getContextPath()%>/chkNotice?empid=<%=empid%>");
+				$("#NoticeAlarm").attr("href", "<%=request.getContextPath()%>/chkNotice?empid=" + loginUserInfo.emp_id);
 			}
 			
 		} else if (serverMessage[1] == "apprEnd") {
 			var empInfo = serverMessage[0].split("|");
 			var count = 0;
 			for (var i = 0; i < empInfo.length; i++) {
-				if (empInfo[i] == <%=empid%>) {
+				if (empInfo[i] == loginUserInfo.emp_id) {
 					count++
 				}
 			}
 			if (count > 0) {
 				$("#ApprEndAlarm").text(count + " of New Approval End");
 				alarmCount += count;
-				$("#ApprEndAlarm").attr("href", "<%=request.getContextPath()%>/chkApprEnd?empid=<%=empid%>");
+				$("#ApprEndAlarm").attr("href", "<%=request.getContextPath()%>/chkApprEnd?empid=" + loginUserInfo.emp_id);
 			}
 			
 		} else if (serverMessage[1] == "apprIn") {
 			var empInfo = serverMessage[0].split("|");
 			var count = 0;
 			for (var i = 0; i < empInfo.length; i++) {
-				if (empInfo[i] == <%=empid%>) {
+				if (empInfo[i] == loginUserInfo.emp_id) {
 					count++
 				}
 			}
 			if (count > 0) {
 				$("#ApprAlarm").append(count + " of New Approval");
 				alarmCount += count;
-				$("#ApprEndAlarm").attr("href", "<%=request.getContextPath()%>/chkApprLine?empid=<%=empid%>");
+				$("#ApprEndAlarm").attr("href", "<%=request.getContextPath()%>/chkApprLine?empid=" + loginUserInfo.emp_id);
 			}
 		} else {
 			console.log("해당 알람 없음");
@@ -355,7 +319,7 @@
 	
 	$(function(){ // 자기 알람 불러오는 코드
 		setTimeout(function() {
-			sendAlarm(<%=empid%> + ",msg");
+			sendAlarm(loginUserInfo.emp_id + ",msg");
 			sendAlarm("0" + ",board");
 			sendAlarm("0,apprIn");
 			sendAlarm("0,apprEnd");

@@ -5,9 +5,10 @@
 	ArrayList<Notice> noticeList=(ArrayList<Notice>)hmap.get("notice");
 	ArrayList<Schedule> scheduleList=(ArrayList<Schedule>)hmap.get("schedule");
 %>
-<jsp:include page="/views/main/mainPage.jsp" />
+<jsp:include page="/views/layout/layout-up.jsp" />
 
-<style>
+
+<style type="text/css">
 #mainTable {
 	position: relative;
 	top: 100px;
@@ -160,9 +161,9 @@ div.dayBack{
 </script>
 
 <div align="center">
-	<table id="mainTable" align="center">
+<!-- 	<table id="mainTable" align="center">
 		<tr>
-			<!-- 결재 게시판 마이페이지 관리자 -->
+			결재 게시판 마이페이지 관리자
 			<td class="tdPadding">
 				<div onclick="move(this);" id="app" class="cursor">
 					<div class="alignleft">
@@ -206,7 +207,8 @@ div.dayBack{
 
 		</tr>
 	</table>
-	<!-- 이미지 버튼 밑의 공백 -->
+ -->	
+ <!-- 이미지 버튼 밑의 공백 -->
 	<div><h1>　</h1><h3>　</h3></div>
 	<table id="announce" style="display:table-cell;">
 		<tr>
@@ -259,6 +261,7 @@ div.dayBack{
 	</table>
 	<div style="height: 50px;"></div>
 </div>
+
 <script>
 
 	buildCalendar();
@@ -279,3 +282,5 @@ div.dayBack{
 		<%}%>
 	});
 </script>
+
+<jsp:include page="/views/layout/layout-down.jsp" />

@@ -3,15 +3,10 @@
 <%
 	ArrayList<Department> list = (ArrayList<Department>) request.getAttribute("list");
 %>
-<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
-<!-- modal js -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<jsp:include page="/views/layout/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 
 <script type="text/javascript">
-	var jsonData = treeviewJson.adminJson;
-	var nodeName = "부서 관리";
-	
 	function addDept(m){
 		location.href="/semi/views/admin/base/depForm.jsp";
 	}
@@ -159,4 +154,4 @@
 	  </div>
 	</div>
 </section>
-<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
+<jsp:include page="/views/layout/layout-down.jsp" />
