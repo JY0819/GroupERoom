@@ -53,17 +53,17 @@
 			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"></td>
 			<%} %>
 			<%if(lineList.size()>=1 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>" disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1"></td>
 			<%} %>
 			<%if(lineList.size()>=2 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve2" value="<%=lineList.get(1).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve2" value="<%=lineList.get(1).getApprName()%>" disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve2"></td>
 			<%} %>
 			<%if(lineList.size()>=3 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>" disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
 			<%} %>
@@ -71,7 +71,7 @@
 		<%if(lineList.size()>=1 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="content"><%=lineList.get(0).getApprName()%><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%}else{ %>
 		
@@ -83,7 +83,7 @@
 		<%if(lineList.size()>=2 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="content"><%=lineList.get(1).getApprName()%><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%}else {%>
 		<tr>
@@ -94,7 +94,7 @@
 		<%if(lineList.size()>=3 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="content"><%=lineList.get(2).getApprName()%><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%}else{ %>
 		
@@ -118,15 +118,15 @@
 		</tr>
 		<tr>
 			<td class="td">휴가기간</td>
-			<td class="content" colspan="2"><input type="text" name="startDate" value="<%=d.getVacStart()%>"><br><input type="text" name="endDate" value="<%=d.getVarEnd()%>"></td>
+			<td class="content" colspan="2"><input type="text" name="startDate" value="<%=d.getVacStart()%>"disabled="disabled"><br><input type="text" name="endDate" value="<%=d.getVarEnd()%>"disabled="disabled"></td>
 			<td class="td">사유</td>
-			<td class="content" colspan="7"><input type="text" name="reason" value="<%=d.getVacReason()%>"></td>
+			<td class="content" colspan="7"><%=d.getVacReason()%></td>
 		</tr>
 		<tr>
 			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="title" value="<%=d.getTitle()%>"></td>
+			<td class="content" colspan="2"><%=d.getTitle()%></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay()%>"></td>
+			<td class="content" colspan="3"><%=d.getManageDay()%></td>
 		</tr>
 		
 		<tr>
@@ -160,17 +160,17 @@
 			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"></td>
 			<%} %>
 			<%if(lineList.size()>=1 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1"></td>
 			<%} %>
 			<%if(lineList.size()>=2 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve2" value="<%=lineList.get(1).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve2" value="<%=lineList.get(1).getApprName()%>"disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve2"></td>
 			<%} %>
 			<%if(lineList.size()>=3 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
 			<%} %>
@@ -178,7 +178,7 @@
 		<%if(lineList.size()>=1 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="content"><%=lineList.get(0).getApprName()%><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%}else{ %>
 		
@@ -190,7 +190,7 @@
 		<%if(lineList.size()>=2 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="content"><%=lineList.get(1).getApprName()%><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%}else {%>
 		<tr>
@@ -201,7 +201,7 @@
 		<%if(lineList.size()>=3 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="content"><%=lineList.get(2).getApprName()%><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%}else{ %>
 		
@@ -216,22 +216,22 @@
 			<td colspan="4"  class="gap3"></td>
 		</tr>
 		<tr>
-			<td class="td">문서번호</td>
+			<td class="td" >문서번호</td>
 			<td class="content" colspan="2"><input type="text" name="docNum" value="<%=d.getManagedocno()%>" disabled="disabled"></td>
 			<!--value=document.getManageDocNo()-->
-			<td class="td">사원번호</td>
+			<td class="td" >사원번호</td>
 			<td class="content" colspan="3"><input type="text" name="empNum" value="<%=d.getManageempid()%>" disabled="disabled"></td>
 			<!--value=document.getManageNo()  --> 
 		</tr>
 		<tr>
 			<td class="td">입사기간</td>
-			<td class="content" colspan="2"><input type="text" name="startDate" value="<%=d.getEntryDay()%>"></td>
+			<td class="content" colspan="2"><input type="text" name="startDate" value="<%=d.getEntryDay()%>"disabled="disabled"></td>
 		</tr>
 		<tr>
 			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="title" value="<%=d.getTitle()%>" ></td>
+			<td class="content" colspan="2"><%=d.getTitle()%></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay()%>"></td>
+			<td class="content" colspan="3"><%=d.getManageDay()%></td>
 		</tr>
 		
 		<tr>
@@ -265,17 +265,17 @@
 			<td class="content">&nbsp;<img id="titleImg" src="<%= request.getContextPath()%>/assets/images/approval/approvalUpload/<%= img.getChangeName()%>"></td>
 			<%} %>
 			<%if(lineList.size()>=1 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve1" value="<%=lineList.get(0).getApprName()%>"disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve1"></td>
 			<%} %>
 			<%if(lineList.size()>=2 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve2" value="<%=lineList.get(1).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve2" value="<%=lineList.get(1).getApprName()%>"disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve2"></td>
 			<%} %>
 			<%if(lineList.size()>=3 && lineList.size()<4){ %>
-			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"></td>
+			<td class="approvalTd" rowspan="2"><input type="text" name="approve3" value="<%=lineList.get(2).getApprName()%>"disabled="disabled"></td>
 			<%}else{ %>
 			<td class="approvalTd" rowspan="2"><input type="text" name="approve3"></td>
 			<%} %>
@@ -283,7 +283,7 @@
 		<%if(lineList.size()>=1 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">1차<br>결재자</td>
-			<td class="content"><input type="text" id="person1" name="person1" value="<%=lineList.get(0).getApprName()%>"><input type="hidden" id="appr1" name="empNo1" ></td>
+			<td class="content"><%=lineList.get(0).getApprName()%><input type="hidden" id="appr1" name="empNo1" ></td>
 		</tr>
 		<%}else{ %>
 		
@@ -295,7 +295,7 @@
 		<%if(lineList.size()>=2 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">2차<br>결재자</td>
-			<td class="content"><input type="text" id="person2" name="person2" value="<%=lineList.get(1).getApprName()%>"><input type="hidden" id="appr2"  name="empNo2" value=""></td>
+			<td class="content"><%=lineList.get(1).getApprName()%><input type="hidden" id="appr2"  name="empNo2" value=""></td>
 		</tr>
 		<%}else {%>
 		<tr>
@@ -306,7 +306,7 @@
 		<%if(lineList.size()>=3 && lineList.size()<4){ %>
 		<tr>
 			<td class="td">3차<br>결재자</td>
-			<td class="content"><input type="text" id="person3" name="person3" value="<%=lineList.get(2).getApprName()%>"><input type="hidden" id="appr3"  name="empNo3" value=""></td>
+			<td class="content"><%=lineList.get(2).getApprName()%><input type="hidden" id="appr3"  name="empNo3" value=""></td>
 		</tr>
 		<%}else{ %>
 		
@@ -334,9 +334,9 @@
 		</tr>
 		<tr>
 			<td class="td">제목</td>
-			<td class="content" colspan="2"><input type="text" name="title" value="<%=d.getTitle()%>"></td>
+			<td class="content" colspan="2"><%=d.getTitle()%></td>
 			<td class="td">작성일</td>
-			<td class="content" colspan="3"><input type="text" name="date" value="<%=d.getManageDay() %>"></td>
+			<td class="content" colspan="3"><%=d.getManageDay() %></td>
 		</tr>
 		
 		<tr>
@@ -349,11 +349,14 @@
 		
 	</table>
 	<%} %>
-	<button class="closedetail" onclick="back();">닫기</button>
+	<button class="finishoneclose" onclick="back();">닫기</button>
+	
 	<script>
-		  /* function back() {
-			location.href = "/semi/selectDocument.sd";
-		}  */ 
+		function back() {
+			location.href = "/semi/finishappr.fi";
+		}
+	
 	</script>
+		
 </body>
 </html>
