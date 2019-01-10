@@ -331,9 +331,11 @@
 				}
 			}
 			if (count > 0) {
-				$("#ApprAlarm").append(count + " of New Approval");
+				$("#ApprAlarm").text(count + " of New Approval");
 				alarmCount += count;
-				$("#ApprEndAlarm").attr("href", "<%=request.getContextPath()%>/chkApprLine?empid=<%=empid%>");
+				console.log("asdasdasdasdasdasdasdasd")
+				$("#ApprAlarm").attr("href", "<%=request.getContextPath()%>/chkApprLine?empid=<%=empid%>");
+				console.log("asdasdasdasdasdasdasdasd")
 			}
 		} else {
 			console.log("해당 알람 없음");

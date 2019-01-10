@@ -27,7 +27,7 @@ public class ChkApprIn extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int empid = Integer.parseInt(request.getParameter("empid"));
-		
+		System.out.println(empid + "가즈아아아아아아아아아아아아");
 		int result = new AlarmService().checkingApprLine(empid);
 		
 		String page = "";

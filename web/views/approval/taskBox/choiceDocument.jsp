@@ -24,7 +24,7 @@
 	<!--미리보기 문서영역-->
 	<div class="outer">
 			<br>
-					<table align="center">
+					<table align="center" style="margin-top: 80px;">
 						<tr>
 							<td colspan="3"><h1>문서 양식 선택</h1></td>
 						</tr>

@@ -24,6 +24,7 @@ public class CheckAttendance extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
 		
 		int userId = loginUser.getEmpid();

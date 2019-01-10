@@ -28,7 +28,7 @@
 	
 %>
 
-<jsp:include page="/views/layout/layout-up.jsp" />
+<jsp:include page="/views/layout/treeview/mypage/layout-up.jsp" />
 
 <style>
 .btn{
@@ -177,4 +177,4 @@
 	</div>
 </section>
 
-<jsp:include page="/views/layout/layout-down.jsp" />
+<jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />
