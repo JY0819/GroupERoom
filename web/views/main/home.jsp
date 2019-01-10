@@ -7,8 +7,7 @@
 %>
 <jsp:include page="/views/layout/layout-up.jsp" />
 
-
-<style type="text/css">
+<style>
 #mainTable {
 	position: relative;
 	top: 100px;

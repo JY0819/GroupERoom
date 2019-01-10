@@ -6,7 +6,7 @@
 <%
 	ArrayList<Position> list = (ArrayList<Position>) request.getAttribute("list");
 %>
-<jsp:include page="/views/layout/layout-up.jsp" />
+<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 
 <script type="text/javascript">
@@ -77,4 +77,4 @@
 	</div>
 </section>
 
-<jsp:include page="/views/layout/layout-down.jsp" />
+<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
