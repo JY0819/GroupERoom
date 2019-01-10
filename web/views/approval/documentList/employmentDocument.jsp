@@ -24,7 +24,7 @@
 <body>
 
 	<jsp:include page="/views/layout/layout-up.jsp"/>
-	<form id="emForm" action="<%=request.getContextPath()%>/insertDocument.id" method="post" encType="multipart/form-data">
+	<form id="emForm" class="documentForm" action="<%=request.getContextPath()%>/insertDocument.id" method="post" encType="multipart/form-data">
 	<h1>재직증명서</h1>
 	<table>
 		<tr>
@@ -126,8 +126,8 @@
 			<td class="lastContentDown" colspan="7"><textarea class="contentArea" name="opinion" readonly="readonly"></textarea></td>
 		</tr> -->
 	</table>
-	<button class="saveBtn" style="height: 150px">저장</button>
-	<button class="closeBtn"  type="reset" onclick="back();" style="height: 150px">닫기</button>
+	<button class="saveBtn" type="submit">저장</button> 
+	<button class="closeBtn" type="reset" onclick="back();">닫기</button>
 	</form>
 	<script>
 	var choice;
