@@ -95,7 +95,7 @@ body {
 						
 <!-- 						<label for="fileInput" class="btn btn-default ">
  -->							<span><i class="fas fa-file-upload"></i></span>
-<!-- 						</label>
+<!-- 						</label>//수정
  -->					</span>
  
 				</div>
