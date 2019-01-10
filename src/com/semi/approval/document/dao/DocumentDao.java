@@ -433,8 +433,7 @@ public class DocumentDao {
 			try {
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, userId);
-				
-				rset = pstmt.executeQuery(query);
+				rset = pstmt.executeQuery();
 				if(rset.next()) {
 					listCount = rset.getInt(1);
 				}
@@ -471,7 +470,7 @@ public class DocumentDao {
 
 			while(rset.next()) {
 				myDocument = new MyDocument();
-				myDocument.setNum(count);
+				myDocument.setNum(rset.getInt("RNUM"));
 				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
@@ -524,7 +523,6 @@ public class DocumentDao {
 		
 		
 		String query = prop.getProperty("selectSubmitDocument");
-		int count = 1;
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, startRow);
@@ -535,7 +533,7 @@ public class DocumentDao {
 			while(rset.next()) {
 				myDocument = new MyDocument();
 				
-				myDocument.setNum(count);
+				myDocument.setNum(rset.getInt("RNUM"));
 				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
@@ -545,7 +543,6 @@ public class DocumentDao {
 				myDocument.setApprNum(rset.getInt("APPRNO"));
 				myDocument.setResult(rset.getString("APPRYN"));
 				
-				count++;
 				list.add(myDocument);
 			}
 		} catch (SQLException e) {
@@ -636,7 +633,6 @@ public class DocumentDao {
 		try {
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;		
-			int count = 1;
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -645,7 +641,7 @@ public class DocumentDao {
 			
 			while(rset.next()) {
 				myDocument = new MyDocument();
-				myDocument.setNum(count);
+				myDocument.setNum(rset.getInt("RNUM"));
 				myDocument.setWriterNum(rset.getInt("EMPID"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
@@ -654,7 +650,6 @@ public class DocumentDao {
 				myDocument.setResult(rset.getString("APPRSTATUS"));
 				
 				list.add(myDocument);
-				count++;
 			}
 			
 		} catch (SQLException e) {
@@ -753,11 +748,10 @@ public class DocumentDao {
 			
 			rset = pstmt.executeQuery();
 			list = new ArrayList<MyDocument>();
-			int count = 1;
 			
 			while(rset.next()) {
 				myDocument = new MyDocument();
-				myDocument.setNum(count);
+				myDocument.setNum(rset.getInt("RNUM"));
 				myDocument.setWriterNum(rset.getInt("APPRWRITER"));
 				myDocument.setWriter(rset.getString("EMPNAME"));
 				myDocument.setDeptName(rset.getString("DEPTNAME"));
@@ -820,7 +814,7 @@ public class DocumentDao {
 				pstmt.setInt(1, Integer.parseInt(docNumList[i]));
 				rset = pstmt.executeQuery();
 				
-				while(rset.next()) { 
+				if(rset.next()) { 
 					apprLine = new ApprLine();
 					apprLine.setApprOrder(rset.getInt("APPRORDER"));
 					apprLine.setApprNo(rset.getInt("APPRNO"));
@@ -929,12 +923,12 @@ public class DocumentDao {
 			String query = prop.getProperty("returnInsertApprStatus");
 			
 			try {			
-				for(int i=0; i<docNumList.length; i++) {
+
 					pstmt = con.prepareStatement(query);
 					pstmt.setInt(1, listApprNo);
 					pstmt.setInt(2, listApprOrder);
 					result = pstmt.executeUpdate();
-				}
+
 					query = prop.getProperty("updateApprDate");
 	
 						pstmt2 = con.prepareStatement(query);

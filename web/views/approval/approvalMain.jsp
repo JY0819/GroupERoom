@@ -40,13 +40,12 @@
 					</tr>
 				</thead>
 				<tbody>
-			<% if(list != null) { 
-			int count = 1;%>
+			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
 				%>
 				<tr>
-					<td><%= count %></td>
+					<td><%= listCount - list.get(i).getNum() + 1 %></td>
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getDeptName() %></td>
 					<td><%= list.get(i).getDocNum() %></td>
@@ -57,8 +56,7 @@
 					<td>결재대기중</td>
 					<% } %>
 				</tr>
-				<% }
-				   	count++;%>
+				<% }%>
 				<% } %>
 				<% }else { %>
 					<tr>

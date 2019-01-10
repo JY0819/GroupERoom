@@ -94,7 +94,7 @@
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
-								<td><%= list.get(k).getNum() %></td>
+								<td><%= listCount - list.get(k).getNum() + 1 %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
 								<td name="mouseent"><%= list.get(k).getDocNum() %></td>
@@ -113,7 +113,7 @@
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
-								<td><%= list.get(k).getNum() %></td>
+								<td><%= listCount - list.get(k).getNum() + 1 %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
 								<td name="mouseent"><%= list.get(k).getDocNum() %></td>
@@ -131,7 +131,7 @@
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
-								<td><%= list.get(k).getNum() %></td>
+								<td><%= listCount - list.get(k).getNum() + 1 %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
 								<td name="mouseent"><%= list.get(k).getDocNum() %></td>
@@ -163,12 +163,7 @@
 				<div class="paging" align="center">
 			
 				<ul class="pagination">
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=1'"><<</a></li> 
-					<% if(currentPage <=1){ %>
-					<li><a><</a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
-					<%} %>
+
 					<% for(int p = startPage; p <= endPage; p++){
 					if(p == currentPage){
 					
@@ -182,13 +177,6 @@
 			
 					<%         } %>
 					<%} %>
-					
-					<%if(currentPage >= maxPage){ %>
-					<li><a >></a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
-					<%} %>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectSubmitDocumentServlet.sds?currentPage=<%=maxPage%>'">>></a></li>
 				</ul>
 				
 			</div>

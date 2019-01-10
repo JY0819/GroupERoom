@@ -46,15 +46,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% if(list != null) { 
-					   		int count = 1; %>
+				<% if(list != null) { %>
 				<% for(int i=0; i<list.size(); i++) { 
 					   	if(list.get(i).getWriterNum() == employee.getEmpid()) {	
 					%>
 					<tr>
 						<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
-						<td><%= count %></td>
+						<td><%= listCount - list.get(i).getNum() + 1%></td>
 						<td><%= list.get(i).getWriter() %></td>
 						<td><%= list.get(i).getDeptName() %></td>
 						<td name="mouseent"><%= list.get(i).getDocNum() %></td>
@@ -64,7 +63,7 @@
 						<td><%= result %></td>
 						<% } %> 
 					</tr>
-					<%	count++; 
+					<%
 					} %>
 					<% } %>
 					<% }else { %>
@@ -84,13 +83,7 @@
 		<div class="btnArea">
 		<div class="paging" align="center">
 			
-				<ul class="pagination">
-					<li><a onclick="location.href='<%=request.getContextPath()%>/returnBox.rb?currentPage=1'"><<</a></li> 
-					<% if(currentPage <=1){ %>
-					<li><a><</a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/returnBox.rb?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
-					<%} %>
+				<ul class="pagination">			
 					<% for(int p = startPage; p <= endPage; p++){
 					if(p == currentPage){
 					
@@ -103,14 +96,7 @@
 			 
 			
 					<%         } %>
-					<%} %>
-					
-					<%if(currentPage >= maxPage){ %>
-					<li><a >></a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/returnBox.rb?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
-					<%} %>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/returnBox.rb?currentPage=<%=maxPage%>'">>></a></li>
+					<%} %>							
 				</ul>
 				
 			</div>

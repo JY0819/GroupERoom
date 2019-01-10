@@ -34,18 +34,6 @@
  
 		<button class="success" onclick="success()">승인</button>
 		<button class="return" onclick="returnBox()">반려</button>
-
-		<%-- <div class="white_content" id="open">
-		
-        	<div>
-        	<form action="<%= request.getContextPath()%>/passCheck.pc" method="post">   
-        		<h3>결재 비밀번호를 입력해주세요.</h3>
-        		<input type="password" name="password">&nbsp;&nbsp;<button type="submit">확인</button>
-        		<input type="hidden" name="apprWriter" value="<%= employee.getEmpid()%>">
-        	</form>		                 		
-            	<a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>
-        	</div>
-    	</div> --%>
 		<table class="commonTable">
 			<thead>
 				<tr>
@@ -81,7 +69,7 @@
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
-								<td><%= list.get(k).getNum() %></td>
+								<td><%= listCount - list.get(k).getNum() + 1 %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
 								<td><%= list.get(k).getDocNum() %></td>
@@ -100,7 +88,7 @@
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
-								<td><%= list.get(k).getNum() %></td>
+								<td><%= listCount - list.get(k).getNum() + 1 %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
 								<td><%= list.get(k).getDocNum() %></td>
@@ -118,7 +106,7 @@
 							 <tr>
 								<td><input type="checkbox" name="checkTd"
 									style="height: 17px; width: 17px;"></td>
-								<td><%= list.get(k).getNum() %></td>
+								<td><%= listCount - list.get(k).getNum() + 1 %></td>
 								<td><%= list.get(k).getWriter() %></td>
 								<td><%= list.get(k).getDeptName() %></td>
 								<td><%= list.get(k).getDocNum() %></td>
