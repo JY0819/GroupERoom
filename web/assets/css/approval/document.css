@@ -72,8 +72,8 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 950px;
-		left: 490px;
+		top: 920px;
+		left: 660px;
 	    font-size: 16px;
 	    border: 0;
 	    outline: 0;
@@ -87,8 +87,8 @@
 		border-radius: 10px;
 		width: 100px;
 		height: 40px;
-		top: 950px;
-		left: 650px;
+		top: 920px;
+		left: 820px;
 	    font-size: 16px;
 	    border: 0;
 	    outline: 0;
@@ -256,7 +256,7 @@
 		height: 40px;
 		top: 700px;
 		
-		right: 200px;
+		right: 40px;
 	    font-size: 16px;
 	    border: 0;
 	    outline: 0;
@@ -272,7 +272,7 @@
 		height: 40px;
 		top: 650px;
 		
-		right: 200px;
+		right: 40px;
 	    font-size: 16px;
 	    border: 0;
 	    outline: 0;
