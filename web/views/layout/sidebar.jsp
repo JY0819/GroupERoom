@@ -3,7 +3,7 @@
 <div id="sidemenu" class="sidebar">
 	<a href="#" class="closebtn" onclick='closeNav()'> <i
 		class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>
-	</a><!--  <a href="#" style="width:300px;">회원정보</a> -->
+	</a>
 	<div id="sideuserDiv">
 		<div id="sideuserPhoto"></div>
 		<div id="sideuserInfo">
@@ -16,7 +16,7 @@
 	<style>
 		#sideuserDiv{
 			padding: 10px 10px 10px 10px;
-			background:#295F93;
+			background:#295F93; 
 			margin:0px 0px 10px 25px;
 			width:240px;
 			height:170px;

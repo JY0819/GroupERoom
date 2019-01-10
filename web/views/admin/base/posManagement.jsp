@@ -10,6 +10,10 @@
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 
 <script type="text/javascript">
+	//참고 : https://jonmiles.github.io/bootstrap-treeview/
+	var jsonData = treeviewJson.adminJson;
+	var nodeName = "직책 관리";
+	
 	function addPos() {
 		location.href = "/semi/views/admin/base/posForm.jsp";
 	}

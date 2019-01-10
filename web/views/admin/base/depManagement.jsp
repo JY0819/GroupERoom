@@ -3,10 +3,15 @@
 <%
 	ArrayList<Department> list = (ArrayList<Department>) request.getAttribute("list");
 %>
-<jsp:include page="/views/layout/layout-up.jsp" />
+<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
+<!-- modal js -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
 
 <script type="text/javascript">
+	var jsonData = treeviewJson.adminJson;
+	var nodeName = "부서 관리";
+	
 	function addDept(m){
 		location.href="/semi/views/admin/base/depForm.jsp";
 	}
@@ -37,7 +42,6 @@
 	
 	function startAjax(deptId){
 		console.log("부서 id = " + deptId);
-
 		var header = "";
 			header += "<tr>";
 			header += "<th>아이디</th> ";
@@ -68,7 +72,6 @@
 					htmlCode += "	<td>" + position + "  </td>	 	";
 					htmlCode += "</tr>                              ";
 				}
-
 				$("#deptUser").html(header + htmlCode);
 				
 			},
@@ -154,4 +157,4 @@
 	  </div>
 	</div>
 </section>
-<jsp:include page="/views/layout/layout-down.jsp" />
+<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

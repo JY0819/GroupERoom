@@ -9,9 +9,15 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 %>
-<jsp:include page="/views/layout/layout-up.jsp" />
+<%
+	request.setAttribute("title", "사원 조회");
+%>
+<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/userdetail.css">
 <script type="text/javascript">
+	var jsonData = treeviewJson.adminJson;
+	var nodeName = "<%= request.getAttribute("title")%>";
+	
 	$(function(){
 		$("#listArea td").mouseenter(function(){
 			$(this).parent().css({"background" : "#F2F2F2", "cursor" : "pointer"});
@@ -82,106 +88,111 @@
 </script>
 
 <section class="content">
-	<div>
-		<div>
-			<h1>사원 조회</h1>
-		</div>
-
-		<div class="form-inline">
-			<input class="form-control mr-sm-2" type="search" placeholder="사원 이름을 입력하세요" aria-label="Search" id="searchName"> 
-			<button class="btn btn-outline-success my-2 my-sm-0" id="searchBtn">Search</button>
-		</div>
-
-		<hr>
-		<table class="table" id= "listArea">
-			<tr id="listHeader">
-				<th>사원 번호</th>
-				<th>이름</th>
-				<th>부서</th>
-				<th>직책</th>
-				<th>성별</th>
-				<th>연락처</th>
-				<th>퇴사여부</th>
-			</tr>
-			
-			<%
-				for (Employee emp : list) {
-			%>
-			
-			<tr>
-				<td><%=emp.getEmpid()%></td>
-				<td><%=emp.getEmpName()%></td>
-				<td><%=emp.getDeptName()%></td>
-				<td><%=emp.getPositionName()%></td>
-				<td><%=emp.getEmpGender()%></td>
-				<td><%=emp.getEmpPhone()%></td>
-				<td><%=emp.getWhetherOfRetire()%></td>
-			</tr>
-			
-			<%
-				}
-			%>
-		</table>
+	<div class="content-left">
+		<div id="treeview"></div>
 	</div>
 	
-	<div class="text-center">
-		<ul class="pagination">
-			<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=1'"><<</button>
-			<%
-				if (currentPage <= 1){
-			%>
-				<button disabled><</button>
-			<%
-				} else {
-			%>
-				<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=currentPage - 1%>'"><</button>
-			<%
-				}
-			%>
-			
-			<%
-			for (int p = startPage; p <= endPage; p++) {
+	<div class="content-right container">
+		<div>
+			<div>
+				<h1><%= request.getAttribute("title")%></h1>
+			</div>
 
-					if (p == currentPage) {
-			%>
-			
-					<button disabled><%= p %></button>
-			<%
-					} else {
-			%>
-					<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%= p %>'"><%= p %></button>
-			<%
+			<div class="form-inline">
+				<input class="form-control mr-sm-2" type="search" placeholder="사원 이름을 입력하세요" aria-label="Search" id="searchName"> 
+				<button class="btn btn-outline-success my-2 my-sm-0" id="searchBtn">Search</button>
+			</div>
+
+			<hr>
+			<table class="table" id= "listArea">
+				<tr id="listHeader">
+					<th>사원 번호</th>
+					<th>이름</th>
+					<th>부서</th>
+					<th>직책</th>
+					<th>성별</th>
+					<th>연락처</th>
+					<th>퇴사여부</th>
+				</tr>
+				
+				<%
+					for (Employee emp : list) {
+				%>
+				
+				<tr>
+					<td><%=emp.getEmpid()%></td>
+					<td><%=emp.getEmpName()%></td>
+					<td><%=emp.getDeptName()%></td>
+					<td><%=emp.getPositionName()%></td>
+					<td><%=emp.getEmpGender()%></td>
+					<td><%=emp.getEmpPhone()%></td>
+					<td><%=emp.getWhetherOfRetire()%></td>
+				</tr>
+				
+				<%
 					}
-			%>
-			<%
-				}
-			%>
-			
-			
-			<%
-				if (currentPage >= maxPage) {
-			%>
-				<button disabled>></button>
-			<%
-				} else {
-			%>
-				<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=currentPage + 1%>'">></button>
-			<%
-				}
-			%>
+				%>
+			</table>
+		</div>
+		
+		<div class="text-center">
+			<ul class="pagination">
+				<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=1'"><<</button>
+				<%
+					if (currentPage <= 1){
+				%>
+					<button disabled><</button>
+				<%
+					} else {
+				%>
+					<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=currentPage - 1%>'"><</button>
+				<%
+					}
+				%>
+				
+				<%
+				for (int p = startPage; p <= endPage; p++) {
+						if (p == currentPage) {
+				%>
+				
+						<button disabled><%= p %></button>
+				<%
+						} else {
+				%>
+						<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%= p %>'"><%= p %></button>
+				<%
+						}
+				%>
+				<%
+					}
+				%>
+				
+				
+				<%
+					if (currentPage >= maxPage) {
+				%>
+					<button disabled>></button>
+				<%
+					} else {
+				%>
+					<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=currentPage + 1%>'">></button>
+				<%
+					}
+				%>
 
-			<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=maxPage%>'">>></button>
-			
-			
-			<!-- 
-			<li><a href="#"><<</a></li>
-			<li><a href="#"><</a></li>
-			<li><a href="#"></a></li>
-			<li><a href="#">></a></li>
-			<li><a href="#">>></a></li> -->
-		</ul>
+				<button onclick="location.href='<%=request.getContextPath()%>/memberList.me?currentPage=<%=maxPage%>'">>></button>
+				
+				
+				<!-- 
+				<li><a href="#"><<</a></li>
+				<li><a href="#"><</a></li>
+				<li><a href="#"></a></li>
+				<li><a href="#">></a></li>
+				<li><a href="#">>></a></li> -->
+			</ul>
+		</div>
 	</div>
 	
 </section>
 
-<jsp:include page="/views/layout/layout-down.jsp" />
+<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

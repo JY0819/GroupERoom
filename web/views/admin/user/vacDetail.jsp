@@ -1,23 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<jsp:include page="/views/layout/layout-up.jsp" />
+<%
+	request.setAttribute("title", "휴가 조회");
+%>
+<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
+<script type="text/javascript">
+	var jsonData = treeviewJson.adminJson;
+	var nodeName = "<%=request.getAttribute("title")%>";
+</script>
 
 <section class="content">
-	<div>
-		<h1>휴가 조회</h1>
+	<div class="content-left">
+		<div id="treeview"></div>
 	</div>
 	
-	<table class="table" id="listArea">
-		<tr id="listHeader">
-			<th>사원 번호</th>
-			<th>이름</th>
-			<th>직책</th>
-		</tr>
+	<div class="content-right container">
+		<div>
+			<h1><%= request.getAttribute("title")%></h1>
+		</div>
 		
-		<tr>
-		</tr>
-	</table>
-
+		<table class="table" id="listArea">
+			<tr id="listHeader">
+				<th>사원 번호</th>
+				<th>이름</th>
+				<th>직책</th>
+			</tr>
+		</table>
+	</div>
+	
 	
 </section>
-<jsp:include page="/views/layout/layout-down.jsp" />
+<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
