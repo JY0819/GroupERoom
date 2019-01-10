@@ -69,7 +69,12 @@ public class SelectOneServlet extends HttpServlet {
 			Team t = new TeamService().selectOneNoFile(num);
 			Attachment at = new Attachment();
 			
+			ArrayList<Team> reply = new TeamService().selectReply(num);
+
 			if(t != null) {
+				if(reply != null) {
+					request.setAttribute("reply", reply);
+				}
 				request.setAttribute("t", t);
 				request.setAttribute("at", at);
 				page ="views/board/team/viewTeam.jsp";

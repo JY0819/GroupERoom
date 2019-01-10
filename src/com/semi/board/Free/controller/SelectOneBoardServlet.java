@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.semi.board.Free.model.service.FreeService;
 import com.semi.board.Free.model.vo.Attachment;
 import com.semi.board.Free.model.vo.Free;
+import com.semi.board.notice.model.service.NoticeService;
+import com.semi.board.notice.model.vo.Notice;
 
 /**
  * Servlet implementation class SelectOneBoardServlet
@@ -67,7 +69,12 @@ public class SelectOneBoardServlet extends HttpServlet {
 			Attachment at = new Attachment();
 			
 			
+			ArrayList<Free> reply = new FreeService().selectReply(num);
+
 			if(f != null) {
+				if(reply != null) {
+					request.setAttribute("reply", reply);
+				}
 				page ="views/board/free/viewFree.jsp";
 				request.setAttribute("f", f);
 				request.setAttribute("at", at);
