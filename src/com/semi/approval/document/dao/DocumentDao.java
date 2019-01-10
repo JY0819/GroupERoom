@@ -425,14 +425,16 @@ public class DocumentDao {
 		return result;
 	}
 	
-		public int getListCount(Connection con) {
-			Statement stmt = null;
+		public int getListCount(Connection con, int userId) {
+			PreparedStatement pstmt = null;
 			int listCount = 0;
 			ResultSet rset = null;
 			String query = prop.getProperty("listMyDocCount");
 			try {
-				stmt = con.createStatement();
-				rset = stmt.executeQuery(query);
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, userId);
+				
+				rset = pstmt.executeQuery(query);
 				if(rset.next()) {
 					listCount = rset.getInt(1);
 				}
@@ -440,15 +442,13 @@ public class DocumentDao {
 				e.printStackTrace();
 			}finally {
 				close(rset);
-				close(stmt);
-			}
-			
-			
+				close(pstmt);
+			}						
 			return listCount;
 		}
 	
 	//내문서함 문서 조회
-	public ArrayList<MyDocument> selectList(Connection con, int currentPage, int limit) {
+	public ArrayList<MyDocument> selectList(Connection con, int currentPage, int limit, int empid) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		MyDocument myDocument = null;
@@ -462,8 +462,9 @@ public class DocumentDao {
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;		
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1,  empid);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
 			
 			list = new ArrayList<MyDocument>();

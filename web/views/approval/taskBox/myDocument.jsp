@@ -57,9 +57,9 @@
 				</tr>
 			</thead>
 			<tbody>
-			<% if(list != null) { %>
+			<% if(list != null) { 
+					int count = 1;%>
 			<% for(int i=0; i<list.size(); i++) { 
-					int count = 1;
 				   	if(list.get(i).getWriterNum() == employee.getEmpid() && list.get(i).getSubmission().equals("N")) {
 				   		
 				%>

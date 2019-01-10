@@ -120,17 +120,17 @@ public class DocumentService {
 		return result;
 	}
 	
-	public int getListCount() {
+	public int getListCount(int userId) {
 		Connection con = getConnection();
-		int listCount = new DocumentDao().getListCount(con);
+		int listCount = new DocumentDao().getListCount(con, userId);
 		close(con);
 		return listCount;
 	}
 	
 	//내문서함 불러오기
-	public ArrayList<MyDocument> selectList(int currentPage, int limit) {
+	public ArrayList<MyDocument> selectList(int currentPage, int limit, int empid) {
 		Connection con = getConnection();
-		ArrayList<MyDocument> list = new DocumentDao().selectList(con, currentPage, limit);
+		ArrayList<MyDocument> list = new DocumentDao().selectList(con, currentPage, limit, empid);
 		
 		if(list != null) {
 			commit(con);

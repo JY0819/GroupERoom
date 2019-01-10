@@ -46,14 +46,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% if(list != null) { %>
+				<% if(list != null) { 
+					   		int count = 1; %>
 				<% for(int i=0; i<list.size(); i++) { 
 					   	if(list.get(i).getWriterNum() == employee.getEmpid()) {	
-					   		int count = 1;
 					%>
 					<tr>
 						<td><input type="checkbox" name="checkTd"
-							style="height: 17px; width: 17px;"></td>
+						style="height: 17px; width: 17px;"></td>
 						<td><%= count %></td>
 						<td><%= list.get(i).getWriter() %></td>
 						<td><%= list.get(i).getDeptName() %></td>
