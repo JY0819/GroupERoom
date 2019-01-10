@@ -21,7 +21,8 @@
 </head>
 <body>
 
-<jsp:include page="/views/main/mainPage.jsp"/>
+<%-- <jsp:include page="/views/main/mainPage.jsp"/> --%>
+<jsp:include page="/views/layout/layout-up.jsp" />
 <form id="vaForm" class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
 <h1>휴가신청서</h1>
 	<table>
