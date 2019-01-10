@@ -57,8 +57,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<% if(list != null) { 
-					int count = 1;%>
+			<% if(list != null) { %>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid() && list.get(i).getSubmission().equals("N")) {
 				   		
@@ -66,14 +65,13 @@
 				<tr>
 					<td><input type="checkbox" name="checkTd"
 						style="height: 17px; width: 17px;"></td>
-					<td><%= count %></td>
+					<td><%= list.get(i).getNum() %></td>
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getDeptName() %></td>
 					<td name="mouseent"><%= list.get(i).getDocNum() %></td>
 					<td><%= list.get(i).getWriteDay() %></td>
 				</tr>
-				<% count++; 
-				} %>
+				<% } %>
 				<% } %>
 				<% }else { %>
 				<tr>

@@ -76,9 +76,6 @@ public class SelectSubmitDocumentServlet extends HttpServlet {
 		
 		ArrayList<ApprLine> apprList = new DocumentService().selectSubmitApprList(apprNum);
 		
-		System.out.println("리스트 사이즈: " + list.size());
-		System.out.println("apprList사이즈 : " + apprList.size());
-		
 		String page = "";
 		if(list != null && apprList != null) {
 			boolean check = false;

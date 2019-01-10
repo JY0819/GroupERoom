@@ -64,14 +64,6 @@ public class ReturnBox extends HttpServlet {
 		
 		ArrayList<MyDocument> list = new DocumentService().selectReturnDocumentList(currentPage,limit);
 		
-		for(int i=0; i<list.size(); i++) {
-			System.out.println(list.get(i).getWriter());
-			System.out.println(list.get(i).getDeptName());
-			System.out.println(list.get(i).getDocNum());
-			System.out.println(list.get(i).getWriteDay());
-			System.out.println(list.get(i).getResult());
-		}
-		
 		String page = "";
 		if(list != null) {
 			page = "views/approval/taskBox/returnBox.jsp";
