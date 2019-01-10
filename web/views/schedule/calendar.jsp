@@ -271,7 +271,7 @@ css 좀 더 보기좋게 수정
 		<%-- <%ArrayList<DeptEmp> empList=address.get(loginUser.getDeptId());%> --%>
 		
 		// 휴가 불러오기 >
-		//setLabel();
+		setLabel();
 		view(); //일정 입력 기본정보 불러오는 함수
 		if(today.getFullYear()<=1950){
 			alert("더이상 음력공휴일이 지원되지 않습니다!");
