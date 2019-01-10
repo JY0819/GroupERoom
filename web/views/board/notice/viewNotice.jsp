@@ -88,7 +88,7 @@ body {
 				<input id="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
 					<div class="bootstrap-filestyle input-group">
 					<input type="text" id="userfile" class="form-control" name="userfile" disabled="" value="<%=at.getOriginName()%>">
-						<span class="group-span-filestyle input-group-btn" tabindex="0"><button class="btn btn-primaryonclick=" location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'">다운로드</button>
+						<span class="group-span-filestyle input-group-btn" tabindex="0"><button class="btn btn-primary"onclick=" location.href='<%=request.getContextPath() %>/download.fr?num=<%=at.getAno() %>'">다운로드</button>
 						
 <!-- 						<label for="fileInput" class="btn btn-default ">
  -->							<span><i class="fas fa-file-upload"></i></span>
