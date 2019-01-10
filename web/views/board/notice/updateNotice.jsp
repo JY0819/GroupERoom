@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.semi.board.notice.model.vo.*, com.semi.admin.user.model.vo.*"%>
-<!-- admin 만 글 수정 가능 -->
 <%
-	Notice n = (Notice)request.getAttribute("n");
-	Employee loginUser = (Employee)session.getAttribute("loginUser");
+	
+Notice n = (Notice)request.getAttribute("n");
+Employee loginUser = (Employee)session.getAttribute("loginUser");
+com.semi.board.notice.model.vo.Attachment at = (com.semi.board.notice.model.vo.Attachment)request.getAttribute("at");
+
 %>
 
 <link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/board.css">
@@ -24,6 +26,7 @@ body {
 }
 </style>
 
+
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
@@ -35,25 +38,29 @@ body {
 		</div>
 		<hr>
 		
+
 	<div class="container">
 
 		<div class="row">
+						<form action="<%= request.getContextPath()%>/updateNotice.no?fileName=<%=n.getFile02() %>" method="post" encType="multipart/form-data">
+			
 				<table class="table table-striped" style="text-align: center; border: 1px;">
 					<thead>
 						<tr>
-							<th id="formtitle" colspan="2" style="background-color: #eeeeee; text-align: center;">공지사항 수정</th>
+							<th id="formtitle" colspan="2" style="background-color: #eeeeee; text-align: center;">자유게시판 글 수정</th>
 						</tr> 
 					</thead>
-			<form action="", method="post" id="editTable">
-
 					<tbody>
-						<tr>
+					<tr>
 						<td>작성자</td>
-							<td>
-						<input type="hidden" id="bno" value="<%=n.getBno() %>" name="bno" >
+						<td>
+						<input type="hidden" id="bno" value="<%=n.getBno() %>" name="bno" ><input type="hidden" name="fileName" value="<%=n.getFile02()%>">
+						<%System.out.println(n.getFile02()); %>
 						<input type="text" class="form-control" value="<%=loginUser.getEmpName() %>" maxlength="30" readOnly>
-							</td>
-						</tr>
+						
+						</td>
+						 
+					</tr>
 						<tr>
 						<td>제목</td>
 							<td>
@@ -62,22 +69,32 @@ body {
 							</td>						
 						</tr>
 						<tr>
-						<td>내용</td>
-						<td>
-						<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=n.getbContent() %></textarea>							</td>						</tr>
-						</td>
-						</tr>					
-					
+							<td>내용</td>
+<td>
+<textarea name="content" class="form-control"  maxlength="2048" style="height: 330px"><%=n.getbContent() %></textarea>							</td>						</tr>
 					</tbody>
-					</form>
+					
 				</table>
-				
+				<% if(at!=null){ %>
+				<input type="hidden" id="inputFile" class="form-control" name="originAno"  value="<%=at.getAno()%>">
 				
 				<div class="form-group">
-					<label for="inputattach">파일첨부</label>
-					<input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+					<label for="inputattach">기존파일</label>
+					<%=at.getOriginName() %>
+					<br>
+			<%} %>
+
+
 						<div class="bootstrap-filestyle input-group">
-						<input type="text" id="userfile" class="form-control" name="userfile" disabled="">
+						
+							<label for="inputattach">파일첨부</label>
+							
+						 <input id="fileInput" name="fileInput" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+												<%if(at!=null){ %>
+												<input type="hidden" class="form-control" name="userFile" value="<%=at.getOriginName()%>"disabled="" >
+												<%} %>
+					<input type="text" id="userfile" class="form-control" name="newFile" disabled="" >
+							
 							<span class="group-span-filestyle input-group-btn" tabindex="0">
 							<label for="fileInput" class="btn btn-default ">
 								<span><i class="fas fa-file-upload"></i></span>
@@ -85,18 +102,27 @@ body {
 						</span>
 					</div>
 				</div>
-				<div class="updateNoticeBtn">
-					<button type="submit" id="enrollBtn" class="btn btn-primary">수정</button>
+								
+				
+				<div class="insertNoticeBtn">
+					<button id="enrollBtn" class="btn btn-primary">수정</button>
 					<button type="button" id="gotoList" class="btn btn-primary">목록으로</button>
 				</div>
 			</form>
+			
+			
 		</div>
-
+		<div>
+				<h1></h1>
+				<br>
+				<h1></h1>
+			</div>
 	</div>
-	</section>
+	
 	<script>
 		$(function(){
 			$("#fileInput").on('change', function(){  // 값이 변경되면
+				console.log("dd");
 				if (window.FileReader) {  // modern browser
 					var filename = $(this)[0].files[0].name;
 				} else {  // old IE
@@ -104,6 +130,7 @@ body {
 				}
 				// 추출한 파일명 삽입
 				$("#userfile").val(filename);
+				console.log($("input[name='originAno']").val());
 			});
 		});
 		
@@ -113,19 +140,20 @@ body {
 			});
 		});
 		
-		$(function(){
+		<%-- $(function(){
 			$("#enrollBtn").click(function(){
 				
-				$("#editTable").attr("action", "<%=request.getContextPath()%>/updateNotice.no");
+				$("#editTable").attr("action", "<%=request.getContextPath()%>/updateFree.fr");
+				$("#editTable").attr("encType", "multpart/form-data");
 				$("#editTable").submit();
 				
-			});
+			}); 
 			
-		});
+		});--%>
 			
 		
 	</script>
 	
-	
-</body>
-</html>
+</section>
+
+<jsp:include page="/views/layout/treeview/board/layout-down.jsp" />

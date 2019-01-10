@@ -304,6 +304,59 @@ public class NoticeService {
 		close(con);
 		return n;
 	}
+	//노파일 글 수정
+	public Notice editNoFile(int num) {
+		Connection con=getConnection();
+		System.out.println("노파일 글 수정페이지 가기 전 서비스");
+		Notice n=new NoticeDao().editNoFile(con, num);
+		System.out.println("노파일 글 수정페이지 가기 전 service");
+		int result=0;
+		if(n!=null) {
+			result=new NoticeDao().updateCount(con, n.getBno());
+			if(result>0) { commit(con);}
+			else { rollback(con); }
+			
+		}
+		close(con);
+		
+		return n;
+	}
+	//유파일 글 수정하기
+	public int updateFileNotice(Notice n, Attachment at, int originAno) {
+		Connection con = getConnection();
+		
+		int result=0;
+		
+		int result0 = new NoticeDao().updateAttachment(con, at);
+		System.out.println("updateAttachment result0 : "+result0);
+		if(result0 > 0) {
+			int ano=new NoticeDao().selectCurrval(con);
+			
+			n.setFile02(ano);
+		
+		}
+		
+		int result2=0;
+		
+		result2= new NoticeDao().updateFileNotice(con, n);
+		System.out.println("service result2: "+result2);
+
+			
+			
+		int result4 = new NoticeDao().deleteOriginFile(con, originAno);
+			System.out.println("service result4: "+result4);
+		int result3 = new NoticeDao().deleteAttachment(con, originAno);
+		System.out.println(result0+""+result2+""+result4+""+result3);
+		
+		if(result0 > 0 && result2 > 0 && result3 > 0 && result4 > 0 ) {			
+			commit(con);
+			result=1;
+		}else {
+			rollback(con);
+		}
+		
+		return result;
+	}
 	
 
 }

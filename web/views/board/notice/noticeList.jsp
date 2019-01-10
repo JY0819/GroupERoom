@@ -30,7 +30,7 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 	var jsonData = treeviewJson.boardJson;
 	var nodeName = "공지사항";
 </script>
-
+<%if(loginUser.getEmpName() !=null){ %>
 <section class="content">
 	<div class="content-left">
 		<div id="treeview"></div>
@@ -69,11 +69,13 @@ import="java.util.*, com.semi.board.notice.model.vo.*, com.semi.admin.user.model
 				 <tr>
 					<td><input type="checkbox" name="checkRow"  value="<%=n.getBno() %>"  /></td>
 					 <td><input type="hidden" name="bno"><%=n.getBno() %><input type="hidden" name="fileName" value="<%=n.getFile02()%>"></td> 
-					<td id="realTitle"><%=n.getbTitle() %></td>
+					<td class="realTitle"><%=n.getbTitle() %></td>
 					<td><%=n.getWriterId() %></td>
 					<td><%=n.getbDate() %></td>
 					<td><%=n.getbClicks() %></td>
 				</tr>
+					<%System.out.println(n.getFile02());%>
+				
 					<%} %>
 		
 			</tbody>
@@ -165,7 +167,9 @@ if(p == currentPage){
 	<br>
 	<br>
 </section>
-
+<%}else{ %>
+	<h3>로그인 후 이용해주세요</h3>
+<%} %>
 <script>
 
 	
@@ -181,7 +185,7 @@ if(p == currentPage){
 		
 		
 	$(function(){
-		$("#listArea td").mouseenter(function(){
+		$(".realTitle").mouseenter(function(){
 			$(this).css({"color":"darkgrey", "cursor":"pointer"});
 		
 		
@@ -191,7 +195,7 @@ if(p == currentPage){
 		}).click(function(){
 			var num = $(this).parent().children().eq(1).text();//->글번호 가져오기
 			console.log(num);
-			var fileName = $("input[name='fileName']").val();
+			var fileName =  $(this).parent().children().eq(1).children("input[name='fileName']").val();
 			console.log(fileName);
 			
 			
@@ -204,10 +208,12 @@ if(p == currentPage){
 			var num = $("tbody").children().children().eq(1).text();
 			console.log(num);
 			
-			 alert('삭제되었습니다'); 
+				alert('해당 게시물이 삭제되었습니다')
+				 $("#listForm").attr("action", "<%=request.getContextPath()%>/deleteNotice2.no?num="+num);
+					$("#listForm").submit();
 			
-			 $("#listForm").attr("action", "<%=request.getContextPath()%>/deleteNotice2.no?num="+num);
-				$("#listForm").submit();
+			
+			
 				
  		<%-- var result = confirm('삭제 하시겠습니까?');
 		if(result){
@@ -220,12 +226,12 @@ if(p == currentPage){
 		}--%>
 		}); 
 	});
- /*      
+       
 	$(function () {
 		setTimeout(function() {
 			sendAlarm("0" + ",board");
 		}, 3000);
-	}); */
+	}); 
       
 </script>
 <jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />

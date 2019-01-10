@@ -82,11 +82,11 @@ public class InsertNoticeFileServlet extends HttpServlet {
 			System.out.println("servlet files:"+files);
 /*			String fileName=multiRequest.getFilesystemName("fileInput");
 			System.out.println("fileName: "+fileName);*/
-			while(files.hasMoreElements()) {//다음 요소가 있는지
+			String name=files.nextElement();
 
-				String name=files.nextElement();
+			System.out.println("name : "+name); //name:실제 파일을 가져오기 위한 key역할을 함
 
-				System.out.println("name : "+name); //name:실제 파일을 가져오기 위한 key역할을 함
+			if(multiRequest.getFilesystemName(name)!=null) {
 
 				saveFiles.add(multiRequest.getFilesystemName(name));
 
@@ -95,7 +95,7 @@ public class InsertNoticeFileServlet extends HttpServlet {
 				System.out.println("fileSystem name: "+multiRequest.getFilesystemName(name));
 
 				System.out.println("originFile name: "+multiRequest.getOriginalFileName(name));
-			}
+			
 			String multiTitle = multiRequest.getParameter("title");
 
 			String multiContent = multiRequest.getParameter("content");
@@ -163,10 +163,37 @@ System.out.println("도니");
 
 			}
 
+		
+		}else {
+			String title = multiRequest.getParameter("title");
+			String content = multiRequest.getParameter("content");
+		
+			//작성자 가져오기
+			HttpSession session = request.getSession();
+			Employee loginUser = (Employee)session.getAttribute("loginUser");
+			String writer = String.valueOf(loginUser.getEmpid());
+			
+			Notice n = new Notice();
+			n.setbTitle(title);
+			n.setbContent(content);
+			n.setDeptId(loginUser.getDeptId());
+			n.setWriterId(writer);
+			
+			int result = new NoticeService().insertNotice(n);
+			
+			String page="";
+			
+			if(result > 0) {
+				response.sendRedirect(request.getContextPath()+"/selectList.no");
+			}else {
+				request.setAttribute("msg", "공지사항 글 작성 실패");
+				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			}
+		
+		
 		}
 	
-	
-	
+		}
 	
 	}
 
