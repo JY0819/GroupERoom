@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<jsp:include page="/views/main/mainPage.jsp"/>
+<jsp:include page="/views/layout/layout-up.jsp"/>
 	<%if(d.getManageclass() == 1){ %>
 	<form id="updateForm" method="post">
 	<table class="detailDoc">
@@ -399,5 +399,6 @@
 			location.href = "/semi/returnBox.rb";
 		}  
 	</script>
+	<jsp:include page="/views/layout/layout-down.jsp"/>
 </body>
 </html>

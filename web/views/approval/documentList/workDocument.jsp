@@ -20,7 +20,7 @@
 </head>
 <body>
 
-	<jsp:include page ="/views/main/mainPage.jsp"/>
+<jsp:include page="/views/layout/layout-up.jsp"/>
 	<form id="woForm" class="documentForm" action="<%= request.getContextPath()  %>/insertDocument.id" method="post" encType="multipart/form-data">
 	<h1>업무계획서</h1>
 	<table>
@@ -170,4 +170,5 @@
 		} 
 	</script>
 </body>
+<jsp:include page="/views/layout/layout-down.jsp"/>
 </html>
