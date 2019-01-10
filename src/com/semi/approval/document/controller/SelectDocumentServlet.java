@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.admin.user.model.vo.Employee;
 import com.semi.approval.approve.model.vo.PageInfo;
 import com.semi.approval.document.service.DocumentService;
 import com.semi.approval.document.vo.MyDocument;
@@ -24,6 +25,10 @@ public class SelectDocumentServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Employee loginUser = (Employee) request.getSession().getAttribute("loginUser");
+		
+		int userId = loginUser.getEmpid();
+		
 		int currentPage; //현재 페이지를 표시할 변수(현재 어디페이지를 보고 있는지 표시)
 		int limit;		//한페이지에 게시글이 몇 개가 보여질 것인지 표시
 		int maxPage;	//전체 페이지에서 가장 마지막 페이지
@@ -43,7 +48,7 @@ public class SelectDocumentServlet extends HttpServlet {
 		
 		DocumentService documentService = new DocumentService();
 		//전체 게시글 수 조회
-		int listCount = documentService.getListCount();
+		int listCount = documentService.getListCount(userId);
 		
 		//총 페이지 수 계산
 		//예를 들어, 목록 수가 123개면 페이지수는 13페이지가 필요하다.
@@ -62,7 +67,7 @@ public class SelectDocumentServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<MyDocument> list = new DocumentService().selectList(currentPage,limit);
+		ArrayList<MyDocument> list = new DocumentService().selectList(currentPage,limit, userId);
 		
 		String page = "";
 		if(list != null) {

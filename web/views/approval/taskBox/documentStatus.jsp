@@ -33,8 +33,6 @@
 			<table class="commonTable">
 				<thead>
 				<tr>
-					<th><input type="checkbox" name="checkAll" id="checkAlltr"
-						onclick="checkAll();" style="height: 17px; width: 17px;"></th>
 						<th>번 호</th>
 						<th>작 성 자</th>
 						<th>부 서</th>
@@ -44,14 +42,13 @@
 					</tr>
 				</thead>
 				<tbody>
-			<% if(list != null) { %>
+			<% if(list != null) { 
+			int count = 1;%>
 			<% for(int i=0; i<list.size(); i++) { 
 				   	if(list.get(i).getWriterNum() == employee.getEmpid()) {
 				%>
-				<tr>
-					<td><input type="checkbox" name="checkTd"
-						style="height: 17px; width: 17px;"></td>
-					<td><%= list.get(i).getNum() %></td>
+				<tr>					
+					<td><%= count %></td>
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getDeptName() %></td>
 					<td><%= list.get(i).getDocNum() %></td>
@@ -62,7 +59,8 @@
 					<td>결재대기중</td>
 					<% } %>
 				</tr>
-				<% } %>
+				<% }
+				   	count++;%>
 				<% } %>
 				<% }else { %>
 					<tr>

@@ -179,6 +179,8 @@ public class InsertDocumentServlet extends HttpServlet {
 							drr[i] = Integer.parseInt(dateArr[i]);
 						}
 						writeDay = new java.sql.Date(new GregorianCalendar(drr[0], drr[1]-1, drr[2]).getTimeInMillis());
+					}else {
+						writeDay = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 					}
 				}else {
 					//입력받은 날짜가 없을 때 현재시간 넣어줌
