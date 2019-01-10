@@ -293,11 +293,13 @@
 			var count = countBoard.length;
 			console.log(countBoard.length);
 			for (var i = 0; i < countBoard.length; i++) {
-				data = countBoard[1].split("-");
+				data = countBoard[i].split("-");
 				console.log(data);
 				for (var j = 0; j < data.length; j++) {
 					if (data[j] == <%=empid%>) {
+						console.log(count)
 						count--;
+						break;
 					}
 				}
 				data = null;

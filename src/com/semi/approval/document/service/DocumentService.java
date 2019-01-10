@@ -284,6 +284,13 @@ public class DocumentService {
 					insertResult = new DocumentDao().insertApprStatus(con, docNumList, apprEmpId, apprOrder, list.get(i).getApprNo());			
 					updateResult = new DocumentDao().updateApprDate(con, list.get(i).getApprNo());
 				}
+				// 승인이 완료되어 휴가내역에 등록하는 쿼리
+				// 먼저 휴가 정보를 불러옴
+				Document docTemp = new DocumentDao().getAppr(con, list.get(i).getApprNo());
+				System.out.println("해당 휴가 정보 : " + docTemp.toString());
+				
+				// 이를 바탕으로 useVac에 데이터 추가
+				new DocumentDao().insertUseVac(con, docTemp, apprEmpId);
 			}
 		}
 		int result = 0;
