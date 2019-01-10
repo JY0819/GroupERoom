@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.board.Free.model.service.FreeService;
-import com.semi.board.Free.model.vo.Attachment;
-import com.semi.board.Free.model.vo.Free;
+
 import com.semi.board.notice.model.service.NoticeService;
+import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.vo.Notice;
 
 /**
@@ -36,31 +35,46 @@ public class SelectNoticeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int num = Integer.parseInt(request.getParameter("num"));
-		
+		System.out.println("select servlet num: "+num);
+
 		String fileName = request.getParameter("fileName");
 		System.out.println("select servlet fileName: "+fileName);
 		
-		
-		HashMap<String, Object> hmap = new NoticeService().editOne(num);
-		Notice n = (Notice)hmap.get("Notice");
-		Attachment at 
-        = (Attachment)hmap.get("attachment");
-		
-		System.out.println("servlet num: "+num);
-		
 		String page="";
 		
-		if(n != null) {
-			page="views/board/notice/updateNotice.jsp";
-			request.setAttribute("n", n);
+		
+		
+		
+		if(Integer.parseInt(fileName) != 0) {
+			HashMap<String, Object> hmap = new NoticeService().editOne(num);
+			Notice n = (Notice)hmap.get("Notice");
+			Attachment at 
+	        = (Attachment)hmap.get("attachment");
 			
+			if(n != null) {
+				page="views/board/notice/updateNotice.jsp";
+				request.setAttribute("n", n);
+				request.setAttribute("at", at);
+			}else {
+				page="views/common/errorPage.jsp";
+				request.setAttribute("msg", "공지사항 글 수정 상세보기 실패");
+			}
 		}else {
-			page="views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 글 수정 상세보기 실패");
+			Notice n=new NoticeService().editNoFile(num);
+			
+			System.out.println("노파일 수정 상세보기 가기 전 num: "+num);
+			System.out.println("노파일 수정 상세보기 가기 전 n : "+n);
+			if(n!=null) {
+				page="views/board/notice/updateNotice.jsp";
+				request.setAttribute("n", n);
+			}else {
+				page="views/common/errorPage.jsp";
+				request.setAttribute("msg", "공지사항 게시글 수정용 상세보기 실패!");
+			
+			}
 		}
-	
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	

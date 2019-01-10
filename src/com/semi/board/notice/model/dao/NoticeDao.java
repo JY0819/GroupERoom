@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
-import com.semi.board.Free.model.vo.Free;
 import com.semi.board.notice.model.vo.Attachment;
 import com.semi.board.notice.model.vo.Notice;
 
@@ -941,6 +940,154 @@ System.out.println("상세보기 dao : "+query);
 
 		
 		return n;
+	}
+	//노파일 글 수정
+	public Notice editNoFile(Connection con, int num) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		Notice n=null;
+		
+		String query=prop.getProperty("selectNoFile");
+		System.out.println("노파일 수정페이지 가기 전 dao query: "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				 n=new Notice();
+					
+					n.setBno(rset.getInt("BOARDNO"));
+					n.setbClass(rset.getString("BOARDCLASS"));
+					n.setbTitle(rset.getString("BOARDTITLE"));
+					n.setbContent(rset.getString("BOARDCONTENTS"));
+					n.setbDate(rset.getDate("BOARDDATE"));
+					n.setbClicks(rset.getInt("BOARDCLICKS"));
+					n.setbAttach(rset.getString("BOARDATTACH"));
+					n.setComNo(rset.getInt("COMMENTNO"));
+					n.setComLevel(rset.getInt("COMMENTLEVEL"));
+					n.setRecomId(rset.getString("RECOMMENTID"));
+				
+					n.setReplebno(rset.getInt("REPLEBOARDNO"));
+					n.setWriterId(rset.getString("EMPNAME"));
+					n.setStatus(rset.getString("WHETHEROFDELETE"));
+					n.setFile01(rset.getInt("FILE01"));
+					n.setFile02(rset.getInt("FILE02"));
+					n.setFile03(rset.getInt("FILE03"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return n;
+	}
+	//첨부파일 등록
+	public int updateAttachment(Connection con, Attachment at) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("updateAttachment");
+		System.out.println("updateAttachment dao query: "+query);
+		try {
+
+		
+
+		pstmt=con.prepareStatement(query);
+
+		
+		pstmt.setString(1, at.getOriginName());
+		pstmt.setString(2, at.getChangeName());
+		pstmt.setString(3, at.getFilePath());
+
+
+		result = pstmt.executeUpdate(); 
+
+	
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}finally {
+		close(pstmt);
+		}
+
+		return result;
+	}
+	//유파일 수정용
+	public int updateFileNotice(Connection con, Notice n) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query = prop.getProperty("updateFileNotice");
+		System.out.println("update쿼리:"+query);
+		System.out.println("1, n.getbTitle(): "+n.getbTitle());
+		System.out.println("2, n.getbContent() : "+n.getbContent());
+		System.out.println("3, n.getFile02() :"+n.getFile02());
+		System.out.println("4, n.getBno(): "+n.getBno());
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, n.getbTitle());
+			pstmt.setString(2, n.getbContent());
+		
+			pstmt.setInt(3, n.getFile02());
+			pstmt.setInt(4, n.getBno());
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+	//유파일 수정용
+	public int deleteOriginFile(Connection con, int originAno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result=0;
+		String query = prop.getProperty("selectOneAttachment");
+		System.out.println("deleteOriginFile dao query :" +query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, originAno);
+			
+			result=pstmt.executeUpdate();
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return result;
+	}
+	//유파일 수정용
+	public int deleteAttachment(Connection con, int originAno) {
+		PreparedStatement pstmt = null;
+		int result =0;
+		String query = prop.getProperty("deleteAttachment");
+		System.out.println("deleteAttachment dao query: "+query);
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, originAno);
+			
+			result=pstmt.executeUpdate();
+			System.out.println("deleteAttachment dao result: "+result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 
 	

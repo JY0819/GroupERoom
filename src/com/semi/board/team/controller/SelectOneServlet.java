@@ -48,7 +48,7 @@ public class SelectOneServlet extends HttpServlet {
 			Team t = (Team)hmap.get("Team");
 			Attachment at = (Attachment)hmap.get("attachment");
 			ArrayList<Team> reply = new TeamService().selectReply(num);
-fileNAme못받아오는듯
+
 			if(t != null) {
 				if(reply != null) {
 					request.setAttribute("reply", reply);
