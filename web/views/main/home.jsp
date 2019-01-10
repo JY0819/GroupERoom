@@ -221,7 +221,7 @@ div.dayBack{
 				<td width="500px"><p style="text-align: left;">
 					<%Date today=new Date();
 						boolean time;
-						time=(today.getTime()-n.getbDate().getTime())/(24*3600*1000)<=1.5;
+						time=(today.getTime()-n.getbDate().getTime())/(24*3600*1000)<=3;
 						if(time){%>
 							<i style="color:#D76464;" class="xi-new-o xi-2x"></i>
 					<%} %>
