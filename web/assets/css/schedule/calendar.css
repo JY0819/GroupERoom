@@ -28,7 +28,6 @@
 	}
 	#day{
 		z-index:0;
-		background:#FEFEFE;
 		text-align: center;
 		vertical-align: center;
 		font-weight:bold;
@@ -98,12 +97,12 @@
 	}
 	div.list{
 		position:relative;
-		top:50px;
-		left:120px;
+		top:100px;
+		left:200px;
 		width:150px;
 		height:200px;
-		border:1px solid lightgray;
-		border-radius: 7px;
+		/* border:1px solid lightgray; */
+		box-shadow:3px 3px 5px #959595;
 		padding:25px 0px 10px 10px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	}
@@ -119,17 +118,17 @@
 	}
 	#goCalYear{
 		width:50px;
-		border-radius: 5px;
+		border-radius: 3px;
 	}
 	#goCalMonth{
 		width:35px;
-		border-radius: 5px;
+		border-radius: 3px;
 	}
 	#goCalBtn{
 		position:relative;
 		background:#f0f0f0 !important;
 		margin: 2px 2px 2px 2px;
-		border-radius:5px;
+		border-radius:3px;
 		width:50px;
 		height:30px;
 		text-align:center;
@@ -156,7 +155,7 @@
 	}
 	div.popUpSchedule{
 		z-index:8;
-		top:50%;
+		top:43%;
 		left:40%;
 		width:300px;
 		height:250px;
@@ -170,7 +169,7 @@
 	}
 	div.deleteSchedule{
 		z-index:9;
-		top:52%;
+		top:45%;
 		left:40.5%;
 		width:280px;
 		height:200px;
@@ -198,7 +197,7 @@
 	}
 	div.confirm{
 		position:absolute;
-		top:55%;
+		top:48%;
 		left:42.5%;
 		width:230px;
 		height:140px;
@@ -241,7 +240,7 @@
 	div.scheduleBtn{
 		margin-left:auto;
 		margin-right:auto;
-		border-radius:5px;
+		border-radius:3px;
 		background:white;
 		width:50px;
 		height:30px;
@@ -360,7 +359,7 @@
 	#nonClick{
 		z-index:2;
 		position:absolute;
-		height:120%;
+		height:88%;
 		width:100%;
 		background:#000000;
 		opacity:0.3;
@@ -368,7 +367,7 @@
 	#nonClick1{
 		z-index:6;
 		position:absolute;
-		height:100%;
+		height:90%;
 		width:70%;
 		background:#E4E6E8;
 		opacity:0;

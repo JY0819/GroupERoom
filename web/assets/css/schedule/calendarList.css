@@ -13,9 +13,10 @@
 		verical-align:middle;
 	}
 	#calendarTitle{
-		width:550px !important;
+		width:700px !important;
 	}
 	table {
+		margin:auto;
 		border:0px;
 		font-size: 13px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -48,12 +49,12 @@
 	}
 	div.list{
 		position:relative;
-		top:50px;
-		left:120px;
+		top:100px;
+		left:200px;
 		width:150px;
 		height:150px;
-		border:1px solid lightgray;
-		border-radius: 7px;
+		/* border:1px solid lightgray; */
+		box-shadow:3px 3px 5px #959595;
 		padding:15px;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	}
@@ -69,17 +70,17 @@
 	}
 	#goCalYear{
 		width:50px;
-		border-radius: 5px;
+		border-radius: 3px;
 	}
 	#goCalMonth{
 		width:35px;
-		border-radius: 5px;
+		border-radius:3px;
 	}
 	#goCalBtn{
 		position:relative;
 		background:#f0f0f0 !important;
 		margin: 2px 2px 2px 2px;
-		border-radius:5px;
+		border-radius:3px;
 		width:50px;
 		height:30px;
 		text-align:center;
@@ -181,7 +182,7 @@
 	div.scheduleBtn{
 		margin-left:auto;
 		margin-right:auto;
-		border-radius:5px;
+		border-radius:3px;
 		background:white;
 		width:50px;
 		height:30px;
