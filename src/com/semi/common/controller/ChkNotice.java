@@ -31,10 +31,11 @@ public class ChkNotice extends HttpServlet {
 		// 먼저 알림 테이블의 contents를 뽑고
 		HashMap<Integer, String> list = new AlarmService().getNotice(empid); // K : alarmNo, V : contents
 		ArrayList<Integer> noList = new AlarmService().getNoticeNo(empid);
-		
+
 		// contents에 ,empid를 추가하여 수정한다.
 		for (int i = 0; i < noList.size(); i++) {
-			list.put(i, list.get(noList.get(i)) + "," + empid);
+			list.put(noList.get(i), list.get(noList.get(i)) + "," + empid);
+			System.out.println(list.get(i));
 		}
 	
 		// 그리고 나서 contents update!

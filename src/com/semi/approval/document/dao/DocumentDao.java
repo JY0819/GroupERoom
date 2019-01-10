@@ -1207,4 +1207,63 @@ public class DocumentDao {
 			}			
 			return result;
 		}
+
+		public Document getAppr(Connection con, int apprNo) {
+			Document doc = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("getAppr");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, apprNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					doc.setVacApprReason(rset.getString("VacApprReason"));
+					doc.setVacApprStart(rset.getDate("vacApprStart"));
+					doc.setVacApprEnd(rset.getDate("vacApprEnd"));
+					doc.setManageEmpId(rset.getInt("manageEmpId"));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return doc;
+		}
+
+		public void insertUseVac(Connection con, Document docTemp, int apprEmpId) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("insertUseVac");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, docTemp.getVacApprReason());
+				pstmt.setDate(2, docTemp.getVacApprStart());
+				pstmt.setDate(3, docTemp.getVacApprEnd());
+				pstmt.setInt(4, docTemp.getManageEmpId());
+				pstmt.setInt(5, apprEmpId);
+				
+				result = pstmt.executeUpdate();
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			if (result > 0) {
+				System.out.println("휴가 내역이 하나 추가되었어요!!");
+			}
+			
+		}
 }

@@ -97,7 +97,7 @@
 			<div class="form-group">
 				<label for="inputPassword" class="col-lg-2 control-label">비밀번호</label>
 				<div class="col-lg-2">
-					<input type="text" class="form-control" id="password" name="userPwd" value="<%=emp.getEmpPwd() %>">
+					<input type="text" class="form-control" id="password" name="userPwd" value="">
 				</div>
 				
 				<label for="inputApprovePassword" class="col-lg-2 control-label">결재 비밀번호</label>

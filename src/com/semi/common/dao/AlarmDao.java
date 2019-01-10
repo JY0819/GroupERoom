@@ -150,7 +150,7 @@ public class AlarmDao {
 			
 			while (rset.next()) {
 				list.add(rset.getInt("alarmNo"));
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
