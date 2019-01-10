@@ -215,7 +215,7 @@ body {
 						$replySelectTable.append($tr);
 						
 						$("#replyContent").val("");
-						window.location.reload();
+						//window.location.reload();
 					}
 					
 					
