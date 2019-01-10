@@ -480,6 +480,7 @@ css 좀 더 보기좋게 수정
 		}
 		return nDays;
 	}
+	
 
 	// 양력날짜를 음력데이터형식의 날짜로 바꾸는 함수
 	function SolarToLunar(solar_date) {
