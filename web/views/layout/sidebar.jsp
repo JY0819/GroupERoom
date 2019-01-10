@@ -23,6 +23,19 @@
 		text-align: center;
    	 	padding: 10px 0 0 0px;
 	}
+	
+	#menuIcon{
+		transition:  1s;
+	    -webkit-transition:  1s;
+    }
+	#sidemenu{
+		min-width 	: 150px;
+		z-index : 1;
+		position : absolute;
+		left : 250px;
+		margin-top : 51px;
+	}
+					  
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -47,6 +60,19 @@
 				}
 			});
 		});
+		
+		$("#menuIcon").on("click", function() {
+			console.log("hhh")
+	        $("#sidemenu").toggle(function(){
+	        	var display = $("#sidemenu").css("display") || "block";
+	        	
+	        	if(display == "none"){
+	        		$("#menuIcon").css("color", "black");
+	        	}else{
+	        		$("#menuIcon").css("color", "#205181");
+	        	}
+	        });
+	    });
 	});
 	
 	function myProfileInit(){
@@ -65,11 +91,6 @@
 		openMemo();
 	}
 	
-	$("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
- 
 	function openMemo(){
 		var memoEmpId 	= loginUserInfo.emp_id;
 		var photoId		= loginUserInfo.photo_id;
@@ -86,7 +107,6 @@
 				console.log("메모 ajax 전송 성공");
 				
 				//메모area 
-				var $memoDiv=$("#memoDiv");
 				var $memoArea=$("#memoArea");
 				$memoArea.html(data.memoContents);
 				
@@ -104,25 +124,13 @@
 			},	
 		});
 	}
-	
-
-	function openNav() {
-		$("#sidemenu").css("width", "300px")
-					  .css("z-index", "1")
-					  .css("position", "absolute")
-					  .css("left", "250px")
-					  .css("margin-top", "51px");
-	}
-	function closeNav() {
-		$("#sidemenu").css("width", "0")
-	}
 </script>
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <!-- <li class="sidebar-search"> -->
             <li class="myProfile">
-            	<div> <span class="fa fa-keyboard-o fa-fw" style="float: right; font-size: 20px;" onclick="openNav();"></span> </div>
+            	<div> <span class="fa fa-keyboard-o fa-fw" style="float: right; font-size: 20px; cursor: pointer;" id="menuIcon"></span> </div>
             	<div id="sideuserPhoto"></div>
 				<div id="sideuserInfo">
 					<p><label id="sideEmpName"></label></p>
@@ -277,11 +285,7 @@
     <!-- /.sidebar-collapse -->
 </div>
    
-<div id="sidemenu" class="sidebar" style="width: 0px; overflow: hidden;">
-	<a href="#" class="closebtn" onclick='closeNav()'> 
-		<i class="fa fa-arrow-left fa-fw" aria-hidden="true"></i>
-	</a>
-	
+<div id="sidemenu" class="sidebar" style="display:none;">
 	<div id="memoDiv">
 		<textarea id="memoArea"></textarea>
 	</div>
