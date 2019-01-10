@@ -24,14 +24,14 @@
 	var jsonData = treeviewJson.approvalJson;
 	var nodeName = "내 문서함";
 	
-	$(function () {
+	function sendAlarmApprIn() {
 		setTimeout(function() {
 			console.log("결재가 등록되어 알람을 뿌립니다.");
 			console.log('대기...');
 		 	console.log("0,apprIn")
 			sendAlarm("0,apprIn");
-		}, 3000);
-	});
+		}, 1500);
+	}
 </script>
 <section class="content">
 
@@ -41,7 +41,7 @@
 
 	<div class="content-right container">
 
-		<a href="/semi/views/approval/taskBox/choiceDocument.jsp"><button class="writeBtn">작성</button></a>
+		<a href="/semi/views/approval/taskBox/choiceDocument.jsp"><button class="writeBtn" onclick="sendAlarmApprIn()">작성</button></a>
 		<button class="sendBtn" onclick="send()">상신</button>
 		<button class="deleteBtn" onclick="trash()">삭제</button>
 		<table class="commonTable">

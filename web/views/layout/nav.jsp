@@ -280,6 +280,7 @@
 	}
 		
 	function onMessage(event){
+		
 		var serverMessage = event.data.split(",");
 		console.log(event.data);
 		// serverMessage[0] 알람 갯수, serverMessage[1] 알람 분류, serverMessage[2] 알람 받을 empid
@@ -343,6 +344,15 @@
 			console.log("해당 알람 없음");
 		}
 		
+		setTimeout(function() {
+			
+			$("#alarmCountAtag").text(Number($("#MsgAlarm").text().substring(0, 1)) + Number($("#NoticeAlarm").text().substring(0, 1)) + Number($("#ApprEndAlarm").text().substring(0, 1)) + Number($("#ApprAlarm").text().substring(0, 1)));
+			if (alarmCount > 0) {
+				$("#alarmCountAtagDiv").css("display", "block");
+			}
+			alarmCount = 0;
+		}, 750);
+		
 	}
 	
 	function onError(event){
@@ -361,15 +371,15 @@
 			sendAlarm("0,apprIn");
 			sendAlarm("0,apprEnd");
 			
-			setTimeout(function() {
+/* 			setTimeout(function() {
 				console.log(alarmCount + "개의 알람들이 존재");
 				
 				$("#alarmCountAtag").text(alarmCount);
 				if (alarmCount > 0) {
 					$("#alarmCountAtagDiv").css("display", "block");
 				}
-			}, 2000);
-		}, 3000);
+			}, 750); */
+		}, 750);
 	})
 	function isNull(obj) {
 		return (typeof obj != "undefined" && obj != null && obj != "null" && obj != "")?true:false;

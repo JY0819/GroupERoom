@@ -87,7 +87,7 @@
 			<td class="content" colspan="3" rowspan="2">
 				<select name="documentKind">
 					<option>휴가신청서</option>
-					<option>업무계획서</option>
+					<option selected>업무계획서</option>
 					<option>재직증명서</option>
 				</select>
 			</td>

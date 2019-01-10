@@ -142,7 +142,7 @@
 			} else {
 		 		
 			}
-		}, 3000);
+		}, 1500);
 	});
 </script>
 <jsp:include page="/views/layout/treeview/mypage/layout-down.jsp" />
