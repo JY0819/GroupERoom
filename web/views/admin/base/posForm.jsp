@@ -2,7 +2,13 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css"
 	href="/semi/assets/css/admin/base.css">
-<jsp:include page="/views/layout/layout-up.jsp" />
+<link rel="stylesheet" type="text/css" href="/semi/assets/css/admin/base.css">
+<jsp:include page="/views/layout/treeview/admin/layout-up.jsp" />
+
+<script type="text/javascript">
+	var jsonData = treeviewJson.adminJson;
+	var nodeName = "직책 관리";
+</script>
 
 <section class="content">
 	<div class="content-left">
@@ -59,4 +65,4 @@
 		}
 	</script>
 </section>
-<jsp:include page="/views/layout/layout-down.jsp" />
+<jsp:include page="/views/layout/treeview/admin/layout-down.jsp" />
