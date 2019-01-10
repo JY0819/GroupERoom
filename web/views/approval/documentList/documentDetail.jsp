@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<jsp:include page="/views/main/mainPage.jsp"/>
+<jsp:include page="/views/layout/layout-up.jsp"/>
 	<%if(d.getManageclass() == 1){ %>
 	<table class="detailDoc">
 		
@@ -135,6 +135,7 @@
 		<tr>
 			<td class="lastContent" colspan="7"><%=d.getContents() %></td>
 		</tr>
+		
 		
 		
 	</table>
@@ -358,18 +359,8 @@
 		function back() {
 			location.href = "/semi/finishappr.fi";
 		}
-	
+	</script>
 
 
-	<button class="closedetail" onclick="back();">닫기</button>
-	<script>
-		  function back() {
-			location.href = "/semi/selectDocument.sd";
-		}   
-
-
-    
-	
   
-</body>
-</html>
+<jsp:include page="/views/layout/layout-down.jsp"/>

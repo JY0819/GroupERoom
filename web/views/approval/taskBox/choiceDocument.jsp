@@ -14,7 +14,7 @@
 	href="/semi/assets/css/approval/choiceDocument.css">
 </head>
 <body>
-	<jsp:include page="/views/main/mainPage.jsp"/>
+	<jsp:include page="/views/layout/layout-up.jsp"/>
 	<!--문서 선택 버튼 영역-->
 	<div class="btnArea">
 		<label class="vacation">휴가신청서</label>
@@ -100,5 +100,6 @@
 			}); 
 		});  
 		</script>
+		<jsp:include page="/views/layout/layout-down.jsp"/>
 </body>
 </html>

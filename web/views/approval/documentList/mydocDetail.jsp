@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<jsp:include page="/views/main/mainPage.jsp"/>
+<jsp:include page="/views/layout/layout-up.jsp"/>
 <div class="outer">
 	<%if(d.getManageclass() == 1){ %>
 	<form id="updateForm" method="post">
@@ -404,6 +404,6 @@
 		} --%>
 		
 	</script>
-	
+	<jsp:include page="/views/layout/layout-down.jsp"/>
 </body>
 </html>
