@@ -288,7 +288,6 @@ public class DocumentService {
 				// 먼저 휴가 정보를 불러옴
 				Document docTemp = new DocumentDao().getAppr(con, list.get(i).getApprNo());
 				System.out.println("해당 휴가 정보 : " + docTemp.toString());
-				
 				// 이를 바탕으로 useVac에 데이터 추가
 				new DocumentDao().insertUseVac(con, docTemp, apprEmpId);
 			}

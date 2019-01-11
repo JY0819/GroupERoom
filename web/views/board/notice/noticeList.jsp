@@ -230,7 +230,7 @@ if(p == currentPage){
 	$(function () {
 		setTimeout(function() {
 			sendAlarm("0" + ",board");
-		}, 3000);
+		}, 1500);
 	}); 
       
 </script>

@@ -1203,7 +1203,7 @@ public class DocumentDao {
 		}
 
 		public Document getAppr(Connection con, int apprNo) {
-			Document doc = null;
+			Document doc = new Document();
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			

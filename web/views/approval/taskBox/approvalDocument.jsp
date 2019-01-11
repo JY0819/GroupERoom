@@ -29,7 +29,7 @@
 			console.log('대기...');
 		 	console.log("0,apprEnd")
 			sendAlarm("0,apprEnd");
-		}, 3000);
+		}, 1500);
 	});
 </script> 
 
@@ -73,9 +73,9 @@
 							
 				<% for(int i=0; i<appr.size(); i++) {
         		if(employee.getEmpid() == appr.get(i).getApprEmpId()) { %>
-        		<th><input class="apprEmpId" type="hidden" name="apprEmpId" value=<%= appr.get(i).getApprEmpId()  %>></th>
-        		<th><input class="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>></th>
-        		<th><input class="apprNo" type="hidden" name="apprNo" value=<%= appr.get(i).getApprNo() %>></th>
+        		<input class="apprEmpId" type="hidden" name="apprEmpId" value=<%= appr.get(i).getApprEmpId()  %>>
+        		<input class="apprOrder" type="hidden" name="apprOrder" value=<%= appr.get(i).getApprOrder() %>>
+        		<input class="apprNo" type="hidden" name="apprNo" value=<%= appr.get(i).getApprNo() %>>
         		<% } %>
         		<% } %>  
 				</tr>				
