@@ -90,12 +90,6 @@
 			<div class="paging" align="center">
 			
 				<ul class="pagination">
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectDocument.sd?currentPage=1'"><<</a></li> 
-					<% if(currentPage <=1){ %>
-					<li><a><</a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectDocument.sd?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
-					<%} %>
 					<% for(int p = startPage; p <= endPage; p++){
 					if(p == currentPage){
 					
@@ -108,29 +102,11 @@
 			 
 			
 					<%         } %>
-					<%} %>
-					
-					<%if(currentPage >= maxPage){ %>
-					<li><a >></a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectDocument.sd?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
-					<%} %>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectDocument.sd?currentPage=<%=maxPage%>'">>></a></li>
+					<%} %>								
 				</ul>
 				
 			</div>
 		</div>
-		<!-- <div class="btnArea">
-			<div class="paging" align="center">
-				<ul class="pagination">
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-				</ul>
-			</div>
-		</div> -->
 	</div>
 </section>
 

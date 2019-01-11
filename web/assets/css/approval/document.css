@@ -277,5 +277,10 @@
 	    border: 0;
 	    outline: 0;
 	}
+	.close:link, .close:visited, .close:hover, .close:active{
+		text-decoration: none;
+		color: #000000;
+		
+	}
 	
 </style>

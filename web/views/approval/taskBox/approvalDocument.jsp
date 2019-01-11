@@ -53,7 +53,7 @@
         	<div>
 <%--         	<form action="<%= request.getContextPath()%>/passCheck.pc" method="post"> --%>   
         		<h3>결재 비밀번호를 입력해주세요.</h3>
-        		<input type="password" id="password" name="password">&nbsp;&nbsp;<button onclick="passCheck();">확인</button>
+        		<input type="password" id="password" name="password">&nbsp;&nbsp;<button class="success" onclick="passCheck();">확인</button>
         		<input type="hidden" id="empId" name="apprWriter" value="<%= employee.getEmpid()%>">
 <!--         	</form> -->		                 		
             	<a class="close" href="#"><button type="button" class="closeBtn2">닫기</button></a>

@@ -93,16 +93,8 @@
 			 
 			
 					<%         } %>
-					<%} %>
-					
-					<%if(currentPage >= maxPage){ %>
-					<li><a >></a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectMainServlet.sm?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
-					<%} %>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/selectMainServlet.sm?currentPage=<%=maxPage%>'">>></a></li>
-				</ul>
-				
+					<%} %>					
+				</ul>				
 			</div>
 			</div>
 		</div>

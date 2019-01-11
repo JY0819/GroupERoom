@@ -367,3 +367,6 @@ td {
 		text-align: center;
 	
 }
+.closeBtn2:hover, .closeBtn2:link, .closeBtn2:active, .closeBtn2:active{
+	text-decoration: none;
+}

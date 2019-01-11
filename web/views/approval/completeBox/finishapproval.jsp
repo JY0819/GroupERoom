@@ -68,18 +68,9 @@
 		<div class="btnArea">
 			<div class="paging" align="center">
 			
-				<ul class="pagination">
-					<li><a onclick="location.href='<%=request.getContextPath()%>/finishappr.fi?currentPage=1'"><<</a></li> 
-					<% if(currentPage <=1){ %>
-					<li><a><</a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/finishappr.fi?currentPage=<%=currentPage - 1%>'"><</a></li> <!-- 하나 이전페이지로 이동 -->
-					<%} %>
+				<ul class="pagination">				
 					<% for(int p = startPage; p <= endPage; p++){
-					if(p == currentPage){
-					
-			
-				
+					if(p == currentPage){										
 					%>
 					<li ><a style="background-color: rgb(128, 181, 240) " ><%= p %></a></li>
 					<%  }else{ %>
@@ -87,16 +78,8 @@
 			 
 			
 					<%         } %>
-					<%} %>
-					
-					<%if(currentPage >= maxPage){ %>
-					<li><a >></a></li> <!-- 비활성화 -->
-					<%}else{%>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/finishappr.fi?currentPage=<%=currentPage + 1%>'">></a></li> <!-- 하나 다음페이지로 이동 -->
-					<%} %>
-					<li><a onclick="location.href='<%=request.getContextPath()%>/finishappr.fi?currentPage=<%=maxPage%>'">>></a></li>
-				</ul>
-				
+					<%} %>									
+				</ul>				
 			</div>
 		</div>
 	</div>
