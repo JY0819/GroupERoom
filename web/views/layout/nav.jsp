@@ -346,7 +346,11 @@
 		
 		setTimeout(function() {
 			
-			$("#alarmCountAtag").text(Number($("#MsgAlarm").text().substring(0, 1)) + Number($("#NoticeAlarm").text().substring(0, 1)) + Number($("#ApprEndAlarm").text().substring(0, 1)) + Number($("#ApprAlarm").text().substring(0, 1)));
+	         var temp1 = Number($("#MsgAlarm").text().split(/(\s+)/)[0]);
+	         var temp2 = Number($("#NoticeAlarm").text().split(/(\s+)/)[0]);
+	         var temp3 = Number($("#ApprEndAlarm").text().split(/(\s+)/)[0]);
+	         var temp4 = Number($("#ApprAlarm").text().split(/(\s+)/)[0]);
+	         $("#alarmCountAtag").text(temp1 + temp2 + temp3 + temp4);
 			if (alarmCount > 0) {
 				$("#alarmCountAtagDiv").css("display", "block");
 			}

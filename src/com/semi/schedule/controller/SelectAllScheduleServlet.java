@@ -49,6 +49,7 @@ public class SelectAllScheduleServlet extends HttpServlet {
 			
 			if(address!=null) {
 				ArrayList<DeptEmp> empList=address.get(deptId);
+				System.out.println(empList);
 				ArrayList<HashMap<String, Object>> vacList=new ScheduleService().selectVacList(empList);
 				
 				if(list!=null) {
